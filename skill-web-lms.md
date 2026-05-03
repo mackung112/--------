@@ -138,7 +138,7 @@ export default courses;
 1. **ห้ามใช้ Vanilla JS** (เช่น `document.getElementById`) — ใช้ React State/Ref เท่านั้น
 2. **ตัวอย่างโค้ดในบทเรียนต้องเป็น Python** — ห้ามใช้ C, Java, หรือภาษาอื่น
 3. **ห้ามซ้อนกรอบ (Card ซ้อน Card)** — Component ที่แทรกในเนื้อหาต้องกลมกลืนเป็นเนื้อเดียวกัน (Seamless) ห้ามมี background, shadow, หรือ border ของตัวเอง ถ้ามันจะอยู่ภายในกรอบของ `LessonViewer` อยู่แล้ว
-4. **ทุกบท ทุกเรื่อง ต้องมีสื่อ Interactive อย่างน้อย 1 ตัว** — ถ้าเพิ่มบทใหม่ต้องสร้าง Component แทรกเสมอ
+4. **ทุกบทเรียนย่อย (Lesson) ต้องมีสื่อ Interactive อย่างน้อย 1 ตัว** — ย้ำว่า "ทุกเรื่องย่อย" (51 lessons ในแผนใหม่ ก็ต้องมี Interactive ครบทุกจุด)
 
 ### 5.2 แนวทางการออกแบบ UI/UX (Design Guidelines)
 - **Rounded corners**: ใช้ `rounded-2xl` ถึง `rounded-3xl` เป็นค่าเริ่มต้น
@@ -215,16 +215,18 @@ export default courses;
 ## 8. วิชาที่มีอยู่แล้ว (Existing Courses)
 
 ### วิชา: 21910-1003 การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น (Python)
-| หน่วย | หัวข้อ | Interactive Component |
-|---|---|---|
-| 1 | หลักการเขียนโปรแกรม / ระดับภาษา | `LanguageLevels.jsx` |
-| 2 | SDLC / ผังงาน / Pseudocode | `SDLC.jsx` + `AlgorithmFlowchart.jsx` |
-| 3 | โครงสร้าง Python / ชนิดข้อมูล | `PythonStructure.jsx` |
-| 4 | Operators / If-Else / Loops | `ControlFlow.jsx` |
-| 5 | ตัวแปรอ้างอิง / Mutable-Immutable | `MemoryVisualizer.jsx` |
-| 6 | ฟังก์ชัน | `FunctionBuilder.jsx` |
-| 7 | Error Handling / Try-Except | `ErrorHandling.jsx` |
-| 8 | โปรเจกต์ธุรกิจ / Mini POS | `MiniPOS.jsx` |
+> **สถานะปัจจุบัน**: กำลังปรับปรุงหลักสูตรใหม่ แบ่งเป็น 8 เฟส 8 หน่วย รวมทั้งหมด 51 บทเรียนย่อย (Lessons) โดยมีข้อบังคับว่า **ทุกบทเรียนย่อยต้องมีสื่อ Interactive Component ของตัวเอง**
+
+| หน่วย | ชื่อหน่วย | จำนวน Lessons | ตัวอย่าง Interactive Components ที่มี/กำลังสร้าง |
+|---|---|:---:|---|
+| 1 | หลักการเขียนโปรแกรมเบื้องต้น | 7 | `ProgramMeaning.jsx`, `LanguageLevels.jsx`, `TranslatorCompare.jsx`, `PythonTimeline.jsx`, `SetupGuide.jsx`, `PythonicWay.jsx`, `IndentationDemo.jsx` |
+| 2 | ขั้นตอนการเขียนโปรแกรม | 11 | `SDLC.jsx`, `AlgorithmFlowchart.jsx` และอื่นๆ ที่ต้องสร้างเพิ่มให้ครบ 11 ตัว |
+| 3 | โครงสร้างพื้นฐานของภาษา Python | 6 | `PythonStructure.jsx` และอื่นๆ ที่ต้องสร้างเพิ่ม |
+| 4 | การใช้กระบวนการเขียนโปรแกรม | 15 | `ControlFlow.jsx` และอื่นๆ ที่ต้องสร้างเพิ่ม |
+| 5 | การจัดการข้อมูลแบบชุด | 3 | `MemoryVisualizer.jsx` และอื่นๆ ที่ต้องสร้างเพิ่ม |
+| 6 | ฟังก์ชัน (Function) | 3 | `FunctionBuilder.jsx` และอื่นๆ ที่ต้องสร้างเพิ่ม |
+| 7 | การออกแบบโปรแกรมฯ ธุรกิจ | 3 | `ErrorHandling.jsx` และอื่นๆ ที่ต้องสร้างเพิ่ม |
+| 8 | การเขียนโปรแกรมฯ ธุรกิจ | 3 | `MiniPOS.jsx` และอื่นๆ ที่ต้องสร้างเพิ่ม |
 
 ---
 
