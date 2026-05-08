@@ -9,6 +9,7 @@ import FunctionBuilder from './FunctionBuilder';
 import ErrorHandling from './ErrorHandling';
 import MiniPOS from './MiniPOS';
 import Quiz from './Quiz';
+import PracticalExam from './PracticalExam';
 import ProgramMeaning from './ProgramMeaning';
 import TranslatorCompare from './TranslatorCompare';
 import PythonTimeline from './PythonTimeline';
@@ -162,11 +163,15 @@ export default function LessonViewer({ lesson, chapter, onComplete }) {
     <div className="pb-20">
       {renderContent()}
 
+      {chapter?.practical && chapter.practical.length > 0 && (
+        <PracticalExam practicalData={chapter.practical} onComplete={() => {}} />
+      )}
+
       {chapter?.quiz && chapter.quiz.length > 0 && (
         <Quiz quizData={chapter.quiz} onComplete={onComplete} />
       )}
 
-      {(!chapter?.quiz || chapter.quiz.length === 0) && (
+      {(!chapter?.quiz || chapter.quiz.length === 0) && (!chapter?.practical || chapter.practical.length === 0) && (
         <div className="mt-8 flex justify-end">
           <button
             onClick={onComplete}

@@ -1,188 +1,47 @@
-# LMS-React Project — Context File (บริบทโปรเจกต์ฉบับสมบูรณ์)
+# 🌍 Project Context & Long-term Memory (บริบทและหน่วยความจำระยะยาว)
 
-> 📌 **วัตถุประสงค์ของไฟล์นี้**: ให้ AI อ่านแล้วเข้าใจโปรเจกต์ทั้งหมดได้ทันที โดยไม่ต้องถามผู้ใช้คำถามใดๆ เพิ่มเติม
-> สำหรับกฎเกณฑ์และวิธีทำงาน ให้อ่านไฟล์ `skill-web-lms.md` ในโฟลเดอร์เดียวกัน
+> 📌 **เป้าหมายของไฟล์นี้**: เป็น "สมองส่วนความจำถาวร" ของโปรเจกต์ เพื่อให้ AI ตัวใหม่เข้ามาอ่านแล้วเข้าใจ Architecture, โครงสร้างโค้ด, และเอกลักษณ์การออกแบบ (Design System) ได้ทันที โดยผู้ใช้ไม่ต้องเล่าใหม่ทั้งหมด
 
----
+## 🎯 1. ภาพรวมและเป้าหมายโปรเจกต์ (Project Overview & Goals)
+**ชื่อโปรเจกต์**: CODE ACADEMY (LMS Platform)
+**เป้าหมายหลัก**: แพลตฟอร์ม E-Learning สำหรับการเขียนโปรแกรม ที่ **"เน้นการมีส่วนร่วม (Highly Interactive)"** ทุกบทเรียนต้องมีสื่อที่กดเล่นได้ จำลองการทำงาน (Simulator) หรือดูภาพเคลื่อนไหว
+**Tech Stack**: React 19, Vite 8, Tailwind CSS 4, React Router 7, Lucide React
 
-## ภาพรวมโปรเจกต์
+## 🎨 2. Design System & UI/UX (ระบบการออกแบบที่ AI ต้องจดจำ)
+เพื่อให้หน้าตาโปรเจกต์ไปในทิศทางเดียวกัน แม้จะเปลี่ยน AI กี่ตัวก็ตาม ทุกตัวต้องใช้กฎเหล่านี้:
+- **โทนสีหลัก**: Indigo (สีหลัก `indigo-600`), Purple (สีรอง `purple-600`), Slate (พื้นหลังตัวอย่างโค้ด `slate-900`)
+- **Gradients (การไล่สี)**: นิยมใช้ `bg-gradient-to-r from-indigo-600 to-purple-600`
+- **ความโค้ง (Border Radius)**: ใช้ `rounded-2xl` หรือ `rounded-3xl` สำหรับกล่อง การ์ด หรือ Wrapper หลัก
+- **เอฟเฟกต์ (Interactive Animations)**: ทุกปุ่ม/การ์ดที่โต้ตอบหรือคลิกได้ ต้องมี `hover:-translate-y-1` หรือ `hover:scale-105` พร้อม `transition-all duration-300` เสมอ
+- **ความกลมกลืน (Seamless)**: สื่อ Interactive ต้องไม่มีขอบ (border) หรือเงา (shadow) ของตัวเองที่ดูแยกส่วนกับหน้าเว็บหลัก (`LessonViewer`)
 
-**CODE ACADEMY** คือเว็บไซต์ LMS (Learning Management System) ที่สร้างด้วย **React + Vite + Tailwind CSS v4** ออกแบบมาเพื่อ:
-
-1. แสดงรายวิชาที่ผู้ใช้สามารถเข้าไปเรียนรู้ได้
-2. แต่ละวิชามีหลายหน่วยการเรียนรู้ แต่ละหน่วยมีหลายบทเรียน
-3. **ทุกบท** มีสื่อ Interactive (React Component) ฝังอยู่ในเนื้อหา ไม่ใช่แค่ข้อความ
-4. ทุกหน่วยมีแบบทดสอบ (Quiz) ท้ายบท
-
----
-
-## ประวัติความเป็นมา (Timeline)
-
-1. **เริ่มต้น**: ผู้ใช้ให้ PDF แผนการสอนวิชา "การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น" แล้วให้ AI สร้างเว็บ LMS ขึ้นมา
-2. **Vanilla JS → React**: เริ่มสร้างด้วย Vanilla JS แต่ภายหลังผู้ใช้ตัดสินใจรื้อทิ้งทั้งหมดแล้วเปลี่ยนเป็น React เพราะต้องการ Component-based architecture สำหรับสื่อ Interactive
-3. **Interactive Media**: ผู้ใช้ต้องการให้ทุกบททุกเรื่องมีสื่อ Interactive เช่น Animation, Simulator, Step-by-step visualizer — ไม่ใช่แค่ข้อความเฉยๆ
-4. **Seamless Design**: ผู้ใช้เน้นว่า Component ต้องกลมกลืนกับเนื้อหา ห้ามดูเป็น Card ซ้อน Card
-
----
-
-## สถานะปัจจุบัน (Current State)
-
-**กำลังดำเนินการ Migration หลักสูตร (8 เฟส)**
-ผู้ใช้ต้องการให้ปรับโครงสร้างเนื้อหาวิชา **21910-1003 การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น (Python)** ใหม่ทั้งหมด โดยแบ่งเป็น 8 หน่วย รวม 51 บทเรียนย่อย (Lessons) และมีเงื่อนไขสำคัญคือ **ทุกบทเรียนย่อยต้องมีสื่อ Interactive ของตัวเอง**
-
-### แผนการทำงาน 8 เฟส (อัปเดตล่าสุด)
-- **เฟส 1**: หน่วยที่ 1 (7 Lessons) — *สร้างเพิ่ม: `ProgramMeaning.jsx`, `TranslatorCompare.jsx`, `PythonTimeline.jsx` และกำลังสร้างให้ครบ 7 ตัว*
-- **เฟส 2**: หน่วยที่ 2 (11 Lessons)
-- **เฟส 3**: หน่วยที่ 3 (6 Lessons)
-- **เฟส 4**: หน่วยที่ 4 (15 Lessons)
-- **เฟส 5**: หน่วยที่ 5 (3 Lessons)
-- **เฟส 6**: หน่วยที่ 6 (3 Lessons)
-- **เฟส 7**: หน่วยที่ 7 (3 Lessons)
-- **เฟส 8**: หน่วยที่ 8 (3 Lessons)
-
-### Interactive Components ที่มีอยู่ (จะถูกนำมาใช้และปรับปรุง)
-
-| ไฟล์ | หน่วย | ลูกเล่น |
-|---|---|---|
-| `ProgramMeaning.jsx` | 1 | (ใหม่) สำรวจประเภทซอฟต์แวร์ (System/App/Package) พร้อมอุปมาเปรียบเทียบ |
-| `TranslatorCompare.jsx` | 1 | (ใหม่) เปรียบเทียบ Interpreter vs Compiler + จำลองการทำงานทีละบรรทัด |
-| `PythonTimeline.jsx` | 1 | (ใหม่) ไทม์ไลน์วิวัฒนาการของ Python + จุดเด่น 6 ข้อ |
-| `LanguageLevels.jsx` | 1 | เลือกดู 3 ระดับภาษา + ตารางเปรียบเทียบแบบ Bar Chart |
-| `SDLC.jsx` | 2 | วงจร 6 ขั้นตอน กดเลือกได้ + เล่น Auto + AI สร้างสถานการณ์จำลอง |
-| `AlgorithmFlowchart.jsx` | 2 | 3 แท็บ: สัญลักษณ์ผังงาน, จำลอง Flowchart ทีละขั้น, แปลง Pseudocode→Python ทีละบรรทัด |
-| `PythonStructure.jsx` | 3 | 2 แท็บ: สำรวจชนิดข้อมูล (Shell จำลอง) + ทดลองรันโค้ดจริง |
-| `ControlFlow.jsx` | 4 | 3 แท็บ: เครื่องคิดเลข Operators, สไลเดอร์ If-Else, จำลอง Loop ทีละรอบ |
-| `MemoryVisualizer.jsx` | 5 | 3 สถานการณ์: Immutable, Mutable, Copy — เดินทีละขั้นดูหน่วยความจำ |
-| `FunctionBuilder.jsx` | 6 | 4 ฟังก์ชันตัวอย่าง ปรับ Parameter กดรันดู Input→Process→Output |
-| `ErrorHandling.jsx` | 7 | 3 Error: ValueError, ZeroDivision, IndexError — สลับดูล่ม vs ป้องกัน |
-| `MiniPOS.jsx` | 8 | ร้านค้าจำลอง เพิ่มสินค้าลงตะกร้า + แสดง Python Code เทียบเท่า Real-time |
-
----
-
-## วิธีเพิ่มวิชาใหม่จาก PDF (สำหรับ AI)
-
-เมื่อผู้ใช้โยน PDF แผนการสอนมาให้ ให้ทำตามขั้นตอนนี้:
-
-### 1. อ่าน PDF → ดึงเนื้อหา
-- ดึงรหัสวิชา, ชื่อวิชา, คำอธิบายวิชา
-- ดึงรายชื่อหน่วยการเรียนรู้ทั้งหมด
-- ดึงเนื้อหาแต่ละหน่วย (ถ้ามี)
-- ตัดข้อมูลผู้สอน ตารางเวลา การวัดผล ออก — เอาแต่เนื้อหาจริง
-
-### 2. ออกแบบ Interactive Component แต่ละหน่วย
-สำหรับแต่ละหน่วย ถามตัวเองว่า "เนื้อหานี้ทำเป็น Interactive แบบไหนได้?"
-- มีขั้นตอน/วงจร? → **Step-by-step animator** (แบบ SDLC)
-- มีการเปรียบเทียบ? → **Tab + Table** (แบบ LanguageLevels)
-- มีโค้ดตัวอย่าง? → **Code runner simulator** (แบบ PythonStructure)
-- มีการคำนวณ? → **Calculator/Slider** (แบบ ControlFlow)
-- มี Input/Output? → **Function tester** (แบบ FunctionBuilder)
-- มีกรณีศึกษาธุรกิจ? → **Working app simulator** (แบบ MiniPOS)
-
-### 3. เขียนโค้ด
-- เพิ่มข้อมูลวิชาใน `src/data.js` (เพิ่ม Object ใน Array `courses`)
-- สร้างไฟล์ Component ใน `src/components/`
-- ลงทะเบียนใน `LessonViewer.jsx` (import + COMPONENT_MAP + regex)
-
-### 4. ทดสอบ
-- `npm run dev` → เปิดเบราว์เซอร์ → ตรวจทุกบท
-
----
-
-## แนวทางเมื่อเปลี่ยนเครื่อง (Machine Transfer)
-
-```bash
-# 1. Copy โฟลเดอร์ LMS-React ไปเครื่องใหม่ (ไม่ต้อง copy node_modules)
-# 2. เปิด Terminal
-cd [ตำแหน่งที่วาง]/LMS-React
-npm install
-npm run dev
+## 📂 3. โครงสร้างไฟล์ปัจจุบัน (Directory Tree)
+```text
+LMS-React/
+├── index.html               
+├── vite.config.js           # ตั้งค่า Vite + Tailwind v4 (ไม่มี tailwind.config.js)
+├── src/
+│   ├── main.jsx             
+│   ├── App.jsx              # ระบบ Routing (HomeView, CourseView)
+│   ├── index.css            # Global CSS (@import "tailwindcss")
+│   ├── data.js              # ⭐ [Database] เก็บเนื้อหา HTML + [MARKER]
+│   └── components/
+│       ├── LessonViewer.jsx # ⭐ Engine เรนเดอร์เนื้อหา + แปลง Marker เป็น Component
+│       └── ...[Interactive Components]...
 ```
 
-ถ้า Tailwind ไม่ทำงาน ให้ตรวจ:
-1. `vite.config.js` มี `import tailwindcss from '@tailwindcss/vite'` และใช้ใน plugins
-2. `src/index.css` เริ่มต้นด้วย `@import "tailwindcss";`
-3. ไม่มีไฟล์ `tailwind.config.js` หรือ `postcss.config.js` (ไม่ต้องมี เพราะใช้ Tailwind v4 + Vite plugin)
+## ⏳ 4. ประวัติการทำงาน (History & Completed Milestones)
+*(⚠️ AI: คุณต้องมาอัปเดตหัวข้อนี้ด้วยตัวเองเมื่อทำฟีเจอร์ใหญ่ๆ หรือจบบทเรียนสำเร็จ เพื่อให้ AI ตัวใหม่รู้ว่าทำอะไรไปแล้วบ้าง)*
+- [202X-XX-XX] เซ็ตอัประบบ AI Handoff (skill.md, CONTEXT.md, task.md) สมบูรณ์
+- [202X-XX-XX] สร้างระบบ Component Marker สำหรับเชื่อมสื่อ Interactive สำเร็จ (`LessonViewer.jsx`)
+- [ ] *(รอให้ AI มาบันทึกประวัติความสำเร็จเพิ่มเติมที่นี่...)*
 
----
+## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
+- **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะแทนที่ด้วย React Component ทันที (วิธีนี้ scale การเพิ่มบทเรียนได้ง่ายสุด)
+- **ทำไมใช้ Tailwind v4?**: เพื่อลดความซับซ้อนของ PostCSS ทำงานผ่าน Vite Plugin `@tailwindcss/vite` ตรงๆ
 
-## Dependencies ที่ต้องมี
-
-```json
-{
-  "dependencies": {
-    "lucide-react": "^1.14.0",
-    "react": "^19.x",
-    "react-dom": "^19.x",
-    "react-router-dom": "^7.x"
-  },
-  "devDependencies": {
-    "@tailwindcss/vite": "^4.x",
-    "@vitejs/plugin-react": "^6.x",
-    "tailwindcss": "^4.x",
-    "vite": "^8.x"
-  }
-}
-```
-
----
-
-## ตัวอย่างการเพิ่มวิชาใหม่ (Template)
-
-### data.js — เพิ่มวิชาใหม่
-```javascript
-// เพิ่มเข้าไปใน Array courses
-{
-    id: "21900-1003",
-    title: "ออกแบบและจัดการฐานข้อมูล",
-    description: "ศึกษาเกี่ยวกับหลักการออกแบบฐานข้อมูลเชิงสัมพันธ์ ...",
-    icon: "🗄️",
-    chapters: [
-        {
-            id: 1,
-            title: "หน่วยที่ 1 ความรู้เบื้องต้นเกี่ยวกับฐานข้อมูล",
-            lessons: [
-                {
-                    id: "1.1",
-                    title: "ความหมายและประโยชน์ของฐานข้อมูล",
-                    content: `<h2>ฐานข้อมูลคืออะไร?</h2>
-                    <p>เนื้อหาอธิบาย...</p>
-                    [DATABASE_INTRO_COMPONENT]
-                    <div class="note">💡 เคล็ดลับ...</div>`
-                }
-            ],
-            quiz: [{ question: "...", options: ["..."], answer: 0 }]
-        }
-    ]
-}
-```
-
-### LessonViewer.jsx — เพิ่ม Component ใหม่
-```javascript
-// 1. เพิ่ม import
-import DatabaseIntro from './DatabaseIntro';
-
-// 2. เพิ่มใน COMPONENT_MAP
-const COMPONENT_MAP = {
-  // ... ที่มีอยู่แล้ว
-  '[DATABASE_INTRO_COMPONENT]': DatabaseIntro,
-};
-
-// 3. เพิ่มชื่อใน Regex
-const markerPattern = /(\[(?:SDLC|...|DATABASE_INTRO)_COMPONENT\])/;
-```
-
-### Component ใหม่ — Template
-```jsx
-import React, { useState } from 'react';
-
-export default function DatabaseIntro() {
-  // state, logic...
-  
-  return (
-    <div className="w-full my-12">
-      {/* ไม่มี bg, shadow, border ที่ wrapper ด้านนอก */}
-      {/* เนื้อหา interactive ข้างใน */}
-    </div>
-  );
-}
-```
+## 🚫 6. ขอบเขตที่ห้ามแก้ไข (Strictly DO NOT TOUCH)
+ระบบที่เสถียรแล้ว ห้าม AI ไปรื้อโค้ดเด็ดขาด ยกเว้นมีคำสั่งชัดเจนใน `task.md`:
+1. โครงสร้าง `App.jsx` (Routing, Layout ซ้ายขวา)
+2. `LessonViewer.jsx` (อนุญาตเฉพาะอัปเดตบรรทัด Import และเพิ่ม `COMPONENT_MAP` เท่านั้น ห้ามแก้ Logic การเรนเดอร์)
+3. `vite.config.js` และ `index.css`

@@ -18,7 +18,8 @@ const sdlcPhases = [
     icon: Search,
     color: "bg-blue-500",
     lightColor: "bg-blue-100",
-    textColor: "text-blue-500"
+    textColor: "text-blue-500",
+    ringColor: "ring-blue-300"
   },
   {
     id: 2,
@@ -33,7 +34,8 @@ const sdlcPhases = [
     icon: PenTool,
     color: "bg-purple-500",
     lightColor: "bg-purple-100",
-    textColor: "text-purple-500"
+    textColor: "text-purple-500",
+    ringColor: "ring-purple-300"
   },
   {
     id: 3,
@@ -48,7 +50,8 @@ const sdlcPhases = [
     icon: Code2,
     color: "bg-orange-500",
     lightColor: "bg-orange-100",
-    textColor: "text-orange-500"
+    textColor: "text-orange-500",
+    ringColor: "ring-orange-300"
   },
   {
     id: 4,
@@ -63,7 +66,8 @@ const sdlcPhases = [
     icon: Bug,
     color: "bg-red-500",
     lightColor: "bg-red-100",
-    textColor: "text-red-500"
+    textColor: "text-red-500",
+    ringColor: "ring-red-300"
   },
   {
     id: 5,
@@ -78,7 +82,8 @@ const sdlcPhases = [
     icon: Rocket,
     color: "bg-green-500",
     lightColor: "bg-green-100",
-    textColor: "text-green-500"
+    textColor: "text-green-500",
+    ringColor: "ring-green-300"
   },
   {
     id: 6,
@@ -93,7 +98,8 @@ const sdlcPhases = [
     icon: Settings,
     color: "bg-slate-700",
     lightColor: "bg-slate-200",
-    textColor: "text-slate-700"
+    textColor: "text-slate-700",
+    ringColor: "ring-slate-300"
   }
 ];
 
@@ -170,7 +176,7 @@ export default function SDLC() {
                     className="relative group flex flex-col items-center transition-all duration-300 outline-none"
                   >
                     <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-500 shadow-sm
-                      ${isActive ? `${phase.color} text-white shadow-xl scale-110 ring-4 ring-offset-2 ring-${phase.color.split('-')[1]}-300` : 'bg-white text-gray-400 hover:bg-gray-100 hover:scale-105 border-2 border-gray-200'}`}
+                      ${isActive ? `${phase.color} ${phase.ringColor} text-white shadow-xl scale-110 ring-4 ring-offset-2` : 'bg-white text-gray-400 hover:bg-gray-100 hover:scale-105 border-2 border-gray-200'}`}
                     >
                       <Icon className={`w-8 h-8 md:w-10 md:h-10 ${isActive ? 'animate-pulse' : ''}`} />
                     </div>
