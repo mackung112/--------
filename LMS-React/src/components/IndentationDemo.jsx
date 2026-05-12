@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const blocks = [
   { id: 0, text: 'password = "123"', correctIndent: 0, color: 'text-purple-400' },

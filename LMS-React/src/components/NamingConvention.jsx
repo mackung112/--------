@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const rules = [
   { id: 'start', rule: 'ต้องขึ้นต้นด้วยตัวอักษร (a-z, A-Z) หรือ _ (underscore)', good: 'student_name', bad: '1student', goodLabel: '✅ ถูก', badLabel: '❌ ผิด' },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function FileHandler() {
   const [tab, setTab] = useState('read');

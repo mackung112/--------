@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function IfStatement() {
   const [temp, setTemp] = useState(38);

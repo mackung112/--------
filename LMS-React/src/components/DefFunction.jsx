@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function DefFunction() {
   const [name, setName] = useState('สมชาย');

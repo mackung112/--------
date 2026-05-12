@@ -1,3 +1,5 @@
+import oopCourse from './data/oopCourse.js';
+
 const courses = [
     {
         id: "21910-1003",
@@ -88,23 +90,28 @@ const courses = [
                 id: 2,
                 title: "หน่วยที่ 2 ขั้นตอนการเขียนโปรแกรม",
                 lessons: [
-                    { id: "2.1", title: "ความหมายของอัลกอริทึม (Algorithm)", content: `<h2>อัลกอริทึมคืออะไร?</h2><p>อัลกอริทึมคือลำดับขั้นตอนในการแก้ปัญหาหรือการทำงานอย่างใดอย่างหนึ่งให้สำเร็จ ซึ่งเป็นทักษะสำคัญที่สุดก่อนเริ่มเขียนโค้ด</p>[ALGORITHM_COMPONENT]<div class="note">💡 อัลกอริทึมที่ดีต้องมีจุดเริ่มต้นและจุดสิ้นสุดที่ชัดเจนเสมอ</div>` },
+                    { id: "2.1", title: "ความหมายของอัลกอริทึม (Algorithm)", content: `<h2>อัลกอริทึมคืออะไร?</h2><p>อัลกอริทึม (Algorithm) หมายถึง <strong>ลำดับขั้นตอนที่ชัดเจนและแน่นอนในการแก้ปัญหา</strong> หรือทำงานอย่างใดอย่างหนึ่งให้สำเร็จ โดยมีจุดเริ่มต้น มีขั้นตอนที่จำกัด และมีจุดสิ้นสุดที่ชัดเจน ซึ่งเป็นพื้นฐานสำคัญที่สุดก่อนเริ่มเขียนโค้ดจริง</p>[ALGORITHM_COMPONENT]<div class="note">💡 <strong>สรุป</strong>: อัลกอริทึมคือหัวใจของการเขียนโปรแกรม ก่อนเขียนโค้ดสักบรรทัด ต้องคิดลำดับขั้นตอนให้ชัดก่อนเสมอ!</div>` },
                     { id: "2.2", title: "วงจรการพัฒนาระบบ (Systems Development Life Cycle: SDLC)", content: `<h2>วงจรการพัฒนาซอฟต์แวร์ (SDLC)</h2><p>การพัฒนาโปรแกรมที่ดีต้องมีกระบวนการที่เป็นระบบ ซึ่งเรียกว่า <strong>SDLC</strong> ประกอบด้วย 6 ขั้นตอนหลัก</p>[SDLC_COMPONENT]<div class="note">💡 SDLC = วิเคราะห์ → ออกแบบ → พัฒนา → ทดสอบ → ติดตั้ง → บำรุงรักษา</div>` },
                     { id: "2.3", title: "สัญลักษณ์มาตรฐานของผังงาน (Flowchart Symbols)", content: `<h2>สัญลักษณ์ผังงาน</h2><p>ผังงาน (Flowchart) ใช้สัญลักษณ์มาตรฐานตาม ISO 5807 เพื่อแสดงลำดับขั้นตอนการทำงาน กดที่สัญลักษณ์เพื่อเรียนรู้!</p>[FLOWCHART_SYMBOLS_COMPONENT]<div class="note">💡 การจำสัญลักษณ์: วงรี = เริ่ม/จบ, สี่เหลี่ยม = ประมวลผล, เพชร = ตัดสินใจ, ด้านขนาน = I/O</div>` },
                     { id: "2.4", title: "การออกแบบผังงานแบบเรียงลำดับ (Sequence Flowchart)", content: `<h2>ผังงานแบบเรียงลำดับ</h2><p>โครงสร้างพื้นฐานที่สุด — คำสั่งทำงานจากบนลงล่าง ไม่มีเงื่อนไข ไม่มีการวนซ้ำ</p>[SEQUENCE_FLOWCHART_COMPONENT]<div class="note">💡 โปรแกรมคำนวณพื้นที่วงกลมคือตัวอย่างที่ดีของผังงานแบบ Sequence</div>` },
                     { id: "2.5", title: "การออกแบบผังงานแบบมีทางเลือก (Selection Flowchart)", content: `<h2>ผังงานแบบมีทางเลือก</h2><p>ใช้เมื่อต้องตัดสินใจ — ผลลัพธ์จะแยกเป็น 2 ทาง (Yes/No) ตามเงื่อนไขที่กำหนด</p>[SELECTION_FLOWCHART_COMPONENT]<div class="note">💡 สัญลักษณ์เพชร (◇) คือหัวใจของผังงานแบบ Selection</div>` },
                     { id: "2.6", title: "การออกแบบผังงานแบบวนซ้ำ (Iteration Flowchart)", content: `<h2>ผังงานแบบวนซ้ำ</h2><p>ใช้เมื่อต้องทำงานซ้ำๆ จนกว่าเงื่อนไขจะเป็นเท็จ ลองจำลองการหาผลรวม 1 ถึง N</p>[ITERATION_FLOWCHART_COMPONENT]<div class="note">💡 Loop ที่ดีต้องมี 3 อย่าง: ค่าเริ่มต้น, เงื่อนไขหยุด, และการเปลี่ยนค่า</div>` },
                     { id: "2.7", title: "คุณลักษณะและข้อจำกัดของผังงานที่ดี", content: `<h2>ผังงานที่ดีเป็นอย่างไร?</h2><p>ผังงานที่ดีต้องอ่านง่าย ชัดเจน และเป็นมาตรฐาน ลองดูข้อเปรียบเทียบ</p>[FLOWCHART_BEST_PRACTICE_COMPONENT]<div class="note">💡 ผังงานที่ดี = START/STOP ชัดเจน + สัญลักษณ์ถูกต้อง + เส้นไม่ตัดกัน</div>` },
-                    { id: "2.8", title: "หลักการเขียนรหัสเทียม (Pseudocode) และการใช้คำกริยาที่เป็นกลาง", content: `<h2>รหัสเทียม (Pseudocode) คืออะไร?</h2><p>รหัสเทียมคือการเขียนขั้นตอนวิธีด้วยภาษาที่คล้ายโค้ด แต่ไม่ผูกกับภาษาใดภาษาหนึ่ง เปรียบเทียบกับ Python จริงได้เลย</p>[PSEUDOCODE_INTRO_COMPONENT]<div class="note">💡 ใช้คำกริยาที่เป็นกลาง เช่น <code>READ</code>, <code>COMPUTE</code>, <code>PRINT</code> แทนคำสั่งเฉพาะภาษา</div>` },
-                    { id: "2.9", title: "การใช้คำหลัก <code>START</code>, <code>READ</code>, <code>COMPUTE</code>, <code>PRINT</code> ในรหัสเทียม", content: `<h2>คำหลัก (Keywords) ของรหัสเทียม</h2><p>คำหลักเป็นคำที่มีหน้าที่ชัดเจนในรหัสเทียม กดเพื่อดูรายละเอียดและตัวอย่าง</p>[PSEUDOCODE_KEYWORDS_COMPONENT]<div class="note">💡 คำหลักช่วยให้รหัสเทียมเป็นมาตรฐาน อ่านเข้าใจตรงกันทุกคน</div>` },
-                    { id: "2.10", title: "การเขียนรหัสเทียมสำหรับเงื่อนไข (IF...THEN...ELSE)", content: `<h2>เงื่อนไขในรหัสเทียม</h2><p>เมื่อต้องตัดสินใจ ให้ใช้โครงสร้าง <code>IF...THEN...ELSE</code> ลองเปลี่ยนค่าเพื่อดูผล</p>[PSEUDOCODE_CONDITION_COMPONENT]<div class="note">💡 IF-THEN-ELSE ในรหัสเทียม ต้องปิดด้วย <code>ENDIF</code> เสมอ</div>` },
-                    { id: "2.11", title: "การเขียนรหัสเทียมสำหรับการวนซ้ำ (WHILE...DO)", content: `<h2>การวนซ้ำในรหัสเทียม</h2><p>ใช้ <code>WHILE...DO</code> เมื่อต้องทำงานซ้ำ ลองรันดูว่าแต่ละรอบเกิดอะไรขึ้น</p>[PSEUDOCODE_LOOP_COMPONENT]<div class="note">💡 WHILE-DO ในรหัสเทียม ต้องปิดด้วย <code>ENDWHILE</code> เสมอ</div>` },
+                    { id: "2.8", title: "หลักการเขียนรหัสเทียม (Pseudocode) และการใช้คำกริยาที่เป็นกลาง", content: `<h2>รหัสเทียม (Pseudocode) คืออะไร?</h2><p>รหัสเทียมคือการเขียนขั้นตอนวิธีด้วยภาษาที่คล้ายโค้ด แต่ไม่ผูกกับภาษาใดภาษาหนึ่ง เปรียบเทียบกับ Python จริงได้เลย</p>[PSEUDOCODE_INTRO_COMPONENT]<div class="note">💡 ใช้คำกริยาที่เป็นกลาง เช่น READ, COMPUTE, PRINT แทนคำสั่งเฉพาะภาษา</div>` },
+                    { id: "2.9", title: "การใช้คำหลัก START, READ, COMPUTE, PRINT ในรหัสเทียม", content: `<h2>คำหลัก (Keywords) ของรหัสเทียม</h2><p>คำหลักเป็นคำที่มีหน้าที่ชัดเจนในรหัสเทียม กดเพื่อดูรายละเอียดและตัวอย่าง</p>[PSEUDOCODE_KEYWORDS_COMPONENT]<div class="note">💡 คำหลักช่วยให้รหัสเทียมเป็นมาตรฐาน อ่านเข้าใจตรงกันทุกคน</div>` },
+                    { id: "2.10", title: "การเขียนรหัสเทียมสำหรับเงื่อนไข (IF...THEN...ELSE)", content: `<h2>เงื่อนไขในรหัสเทียม</h2><p>เมื่อต้องตัดสินใจ ให้ใช้โครงสร้าง IF...THEN...ELSE ลองเปลี่ยนค่าเพื่อดูผล</p>[PSEUDOCODE_CONDITION_COMPONENT]<div class="note">💡 IF-THEN-ELSE ในรหัสเทียม ต้องปิดด้วย ENDIF เสมอ</div>` },
+                    { id: "2.11", title: "การเขียนรหัสเทียมสำหรับการวนซ้ำ (WHILE...DO)", content: `<h2>การวนซ้ำในรหัสเทียม</h2><p>ใช้ WHILE...DO เมื่อต้องทำงานซ้ำ ลองรันดูว่าแต่ละรอบเกิดอะไรขึ้น</p>[PSEUDOCODE_LOOP_COMPONENT]<div class="note">💡 WHILE-DO ในรหัสเทียม ต้องปิดด้วย ENDWHILE เสมอ</div>` },
                     { id: "2.12", title: "การจัดย่อหน้าและความเป็นระเบียบของรหัสเทียม", content: `<h2>จัดย่อหน้ารหัสเทียมให้ถูกต้อง</h2><p>การย่อหน้า (Indentation) ช่วยแสดงโครงสร้างลำดับชั้นของรหัสเทียม ลองจัดให้ถูกต้อง!</p>[PSEUDOCODE_FORMAT_COMPONENT]<div class="note">💡 บรรทัดที่อยู่ภายใน IF หรือ WHILE ต้องย่อเข้าไป 1 ระดับเสมอ</div>` },
                 ],
                 quiz: [
                     { question: "ข้อใดคือความหมายของ อัลกอริทึม (Algorithm)?", options: ["ภาษาคอมพิวเตอร์ชนิดหนึ่ง", "ลำดับขั้นตอนในการแก้ปัญหา", "โปรแกรมสำหรับค้นหาข้อมูล", "เครื่องมือหาบั๊ก"], answer: 1 },
                     { question: "สัญลักษณ์รูปสี่เหลี่ยมขนมเปียกปูน (◇) ในผังงานใช้แสดงอะไร?", options: ["การประมวลผล", "การรับ/แสดงผล", "การตัดสินใจ", "จุดเริ่มต้น"], answer: 2 },
                     { question: "คำหลักใดในรหัสเทียมใช้สำหรับแสดงผลข้อมูล?", options: ["READ", "COMPUTE", "PRINT", "SET"], answer: 2 },
+                ],
+                practical: [
+                    { question: "จากรหัสเทียม 'READ age' จงเขียนคำสั่งรับค่าใน Python แล้วเก็บลงตัวแปร age (ไม่ต้องแปลงชนิดข้อมูล)", expectedPattern: /age\s*=\s*input\(\s*\)/, hint: "ใช้ฟังก์ชัน input()" },
+                    { question: "จากผังงานสัญลักษณ์ตัดสินใจ 'age >= 18' จงเขียนเงื่อนไข if ในภาษา Python", expectedPattern: /if\s+age\s*>=\s*18\s*:/, hint: "อย่าลืมเครื่องหมาย : ท้ายเงื่อนไข" },
+                    { question: "จงเขียนโครงสร้างวนซ้ำ while ที่เงื่อนไขเป็นจริงเสมอ (Infinite loop)", expectedPattern: /while\s+True\s*:/, hint: "ใช้ while True:" }
                 ]
             },
             {
@@ -175,6 +182,11 @@ const courses = [
                 quiz: [
                     { question: "ชนิดข้อมูลใดใน Python ที่ไม่สามารถแก้ไขข้อมูลภายในได้ (Immutable)?", options: ["List", "Dictionary", "Tuple", "Set"], answer: 2 },
                     { question: "ชนิดข้อมูลใดที่เก็บข้อมูลแบบ Key-Value?", options: ["List", "Dictionary", "Tuple", "Set"], answer: 1 },
+                ],
+                practical: [
+                    { question: "สร้าง List ชื่อ students เก็บข้อความ 'A', 'B', 'C'", expectedPattern: /students\s*=\s*\[\s*('A'|"A")\s*,\s*('B'|"B")\s*,\s*('C'|"C")\s*\]/, hint: "ใช้ [] ครอบรายการและคั่นด้วยลูกน้ำ" },
+                    { question: "เพิ่มข้อความ 'D' ต่อท้าย List students", expectedPattern: /students\.append\(\s*('D'|"D")\s*\)/, hint: "ใช้ method append()" },
+                    { question: "ลบข้อมูลตำแหน่งแรก (Index 0) ออกจาก List students", expectedPattern: /students\.pop\(\s*0\s*\)/, hint: "ใช้ method pop(0)" }
                 ]
             },
             {
@@ -182,9 +194,9 @@ const courses = [
                 title: "หน่วยที่ 6 ฟังก์ชัน (Function)",
                 lessons: [
                     { id: "6.1", title: "การเรียกใช้งานฟังก์ชันมาตรฐาน (Built-in Functions)", content: `<h2>ฟังก์ชันมาตรฐาน (Built-in)</h2><p>Python มีฟังก์ชันมากมายเตรียมไว้ให้ใช้ได้เลย โดยไม่ต้องสร้างเอง ลองค้นหาดู</p>[BUILTIN_FUNCTIONS_COMPONENT]<div class="note">💡 ฟังก์ชันอย่าง <code>len()</code>, <code>type()</code>, <code>print()</code> ล้วนเป็น Built-in Functions</div>` },
-                    { id: "6.2", title: "การสร้างฟังก์ชันใช้งานเองด้วยคำสั่ง <code>def</code> และการส่งค่าพารามิเตอร์", content: `<h2>สร้างฟังก์ชันเอง (Custom Function)</h2><p>เมื่อฟังก์ชันมาตรฐานไม่ตอบโจทย์ เราสามารถสร้างเองได้ด้วยคำสั่ง <code>def</code></p>[DEF_FUNCTION_COMPONENT]<div class="note">💡 การตั้ง Default Value ช่วยให้ฟังก์ชันยืดหยุ่นขึ้น เรียกโดยไม่ใส่ค่าก็ไม่ Error</div>` },
+                    { id: "6.2", title: "การสร้างฟังก์ชันใช้งานเองด้วยคำสั่ง def และการส่งค่าพารามิเตอร์", content: `<h2>สร้างฟังก์ชันเอง (Custom Function)</h2><p>เมื่อฟังก์ชันมาตรฐานไม่ตอบโจทย์ เราสามารถสร้างเองได้ด้วยคำสั่ง def</p>[DEF_FUNCTION_COMPONENT]<div class="note">💡 การตั้ง Default Value ช่วยให้ฟังก์ชันยืดหยุ่นขึ้น เรียกโดยไม่ใส่ค่าก็ไม่ Error</div>` },
                     { id: "6.3", title: "การคืนค่าจากฟังก์ชัน (return) และขอบเขตตัวแปร (Local vs Global)", content: `<h2>การคืนค่า (Return) และขอบเขตตัวแปร (Scope)</h2><p>ทำความเข้าใจว่าฟังก์ชันส่งค่ากลับมายังไง และทำไมตัวแปรข้างในถึงไม่กระทบข้างนอก</p>[RETURN_SCOPE_COMPONENT]<div class="note">💡 ถ้าไม่สั่ง <code>return</code> ฟังก์ชันจะคืนค่า <code>None</code> ออกมาโดยอัตโนมัติ</div>` },
-                ,
+
                     { id: "6.4", title: "ทดลองสร้างฟังก์ชันและทดสอบผลลัพธ์", content: `<h2>เครื่องมือสร้างฟังก์ชัน (Function Builder)</h2><p>ทดลองสร้างฟังก์ชันรับพารามิเตอร์ และดูผลลัพธ์ที่เปลี่ยนไปตามการเรียกใช้งาน</p>[FUNCTION_COMPONENT]<div class="note">💡 ฟังก์ชันที่ดีต้องทำงานเดียวให้สำเร็จ (Single Responsibility)</div>` }
                 ],
                 practical: [
@@ -208,6 +220,10 @@ const courses = [
                 quiz: [
                     { question: "คำสั่งใดใน Python ที่ใช้สำหรับดักจับข้อผิดพลาด?", options: ["if-else", "for-while", "try-except", "catch-error"], answer: 2 },
                     { question: "Mode ใดในการเปิดไฟล์ที่ใช้สำหรับ 'เขียนต่อท้าย' ข้อมูลเดิม?", options: ["r", "w", "a", "x"], answer: 2 },
+                ],
+                practical: [
+                    { question: "เขียนโครงสร้าง try-except พื้นฐาน โดยให้ print('Error') เมื่อเกิดข้อผิดพลาดในบล็อก except", expectedPattern: /try\s*:[\s\S]*except\s*:[\s\S]*print\(\s*('Error'|"Error")\s*\)/, hint: "try:\n   ...\nexcept:\n   print('Error')" },
+                    { question: "เขียนคำสั่งเปิดไฟล์ 'data.txt' ในโหมดอ่าน ('r') แล้วเก็บลงตัวแปร f", expectedPattern: /f\s*=\s*open\(\s*('data.txt'|"data.txt")\s*,\s*('r'|"r")\s*\)/, hint: "f = open('data.txt', 'r')" }
                 ]
             },
             {
@@ -220,10 +236,91 @@ const courses = [
                 quiz: [
                     { question: "ส่วนใดของเอกสารประกอบโปรแกรมที่อธิบายวิธีรันโปรแกรม?", options: ["จุดประสงค์", "วิธีติดตั้ง/ใช้งาน", "คำอธิบายโค้ด", "ผู้จัดทำ"], answer: 1 },
                     { question: "จากระบบ Mini POS ฟังก์ชันใดเหมาะสำหรับใช้หา 'ราคารวมทั้งหมด' มากที่สุด?", options: ["len()", "max()", "sum()", "count()"], answer: 2 },
+                ],
+                practical: [
+                    { question: "เปิดไฟล์ history.txt โหมดต่อท้าย ('a') เพื่อบันทึกคำว่า 'Order 1'", expectedPattern: /open\(\s*('history.txt'|"history.txt")\s*,\s*('a'|"a")\s*\)/, hint: "f = open('history.txt', 'a')" }
                 ]
             }
         ]
-    }
+    },
+    {
+        id: "21910-1001",
+        title: "ระบบปฏิบัติการเบื้องต้น",
+        description: "เรียนรู้การทำงานของระบบปฏิบัติการ Windows, Linux และ macOS การจัดการไฟล์และการใช้งานโปรแกรมยูทิลิตี้พื้นฐาน",
+        icon: "💻",
+        chapters: []
+    },
+    {
+        id: "21910-1002",
+        title: "คอมพิวเตอร์และการบำรุงรักษา",
+        description: "ศึกษาอุปกรณ์ฮาร์ดแวร์ การประกอบเครื่องคอมพิวเตอร์ การติดตั้งโปรแกรม และการดูแลรักษาระบบเบื้องต้น",
+        icon: "🔧",
+        chapters: []
+    },
+    {
+        id: "21910-1004",
+        title: "การสร้างเว็บไซต์เบื้องต้น",
+        description: "เรียนรู้โครงสร้าง HTML5, CSS3 เบื้องต้น สำหรับการออกแบบและจัดหน้าเว็บไซต์แบบ Responsive",
+        icon: "🌐",
+        chapters: []
+    },
+    {
+        id: "21910-1005",
+        title: "คณิตศาสตร์คอมพิวเตอร์",
+        description: "ศึกษาระบบเลขฐาน การแปลงเลขฐาน ตรรกศาสตร์ พีชคณิตบูลีน ที่จำเป็นสำหรับระบบคอมพิวเตอร์",
+        icon: "🔢",
+        chapters: []
+    },
+    {
+        id: "21910-1006",
+        title: "เครือข่ายคอมพิวเตอร์เบื้องต้น",
+        description: "เรียนรู้สถาปัตยกรรมเครือข่าย โปรโตคอล TCP/IP อุปกรณ์เครือข่าย และการติดตั้งระบบ LAN เบื้องต้น",
+        icon: "🖧",
+        chapters: []
+    },
+    {
+        id: "21910-1007",
+        title: "กราฟิกดีไซน์และการแต่งภาพ",
+        description: "การใช้โปรแกรมตกแต่งภาพ หลักการออกแบบ ทฤษฎีสี และการสร้างสรรค์ผลงานกราฟิกเบื้องต้น",
+        icon: "🎨",
+        chapters: []
+    },
+    {
+        id: "21910-1008",
+        title: "การวิเคราะห์และออกแบบเชิงวัตถุ",
+        description: "ศึกษาหลักการวิเคราะห์ระบบและออกแบบระบบงานเชิงวัตถุ (Object-Oriented Analysis and Design) ด้วย UML",
+        icon: "📊",
+        chapters: []
+    },
+    {
+        id: "21910-1009",
+        title: "การออกแบบส่วนติดต่อผู้ใช้ขั้นสูง",
+        description: "ศึกษาและออกแบบ UI/UX ที่ตอบสนองต่อผู้ใช้งานอย่างมีประสิทธิภาพ รวมถึงการออกแบบการโต้ตอบที่ซับซ้อน",
+        icon: "🎨",
+        chapters: []
+    },
+    {
+        id: "21910-1010",
+        title: "หลักการคิดเชิงออกแบบและนวัตกรรมธุรกิจดิจิทัล",
+        description: "เรียนรู้กระบวนการ Design Thinking เพื่อค้นหาปัญหา พัฒนาไอเดีย และสร้างสรรค์นวัตกรรมธุรกิจยุคดิจิทัล",
+        icon: "💡",
+        chapters: []
+    },
+    {
+        id: "21910-1011",
+        title: "การสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น",
+        description: "ศึกษาการใช้ภาษา SQL เพื่อดึงข้อมูล กรองข้อมูล เชื่อมโยงตาราง และประมวลผลข้อมูลในฐานข้อมูลเชิงสัมพันธ์",
+        icon: "🗄️",
+        chapters: []
+    },
+    {
+        id: "21910-1012",
+        title: "โครงงานด้านเทคโนโลยีธุรกิจดิจิทัล",
+        description: "นำความรู้ทั้งหมดมาประยุกต์ใช้ในการพัฒนาโครงงานด้านเทคโนโลยี เพื่อแก้ปัญหาในธุรกิจจริง",
+        icon: "🚀",
+        chapters: []
+    },
+    oopCourse
 ];
 
 export default courses;

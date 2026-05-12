@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Type, Hash, ToggleLeft, List, Play, RotateCcw, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { Type, Hash, ToggleLeft, List, Play, RotateCcw, CheckCircle2, } from 'lucide-react';
 
 const dataTypes = [
   { name: "str (String)", desc: "ข้อความ ใช้เครื่องหมายคำพูด", icon: Type, color: "bg-pink-500", examples: ['"สวัสดี"', "'Hello'", '"""multi-line"""'], tryValue: '"สวัสดี Python!"' },

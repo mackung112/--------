@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ShoppingCart, Plus, Trash2, Receipt, Calculator, RotateCcw } from 'lucide-react';
 
 const catalog = [

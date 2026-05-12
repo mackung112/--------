@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { Fragment } from 'react';
+import { useState } from 'react';
 import { Monitor, Cpu, Code2, ArrowDown, ChevronRight } from 'lucide-react';
 
 const levels = [
@@ -68,7 +69,7 @@ export default function LanguageLevels() {
           const Icon = level.icon;
           const isActive = activeLevel === level.id;
           return (
-            <React.Fragment key={level.id}>
+            <Fragment key={level.id}>
               {idx > 0 && (
                 <div className="flex flex-col items-center">
                   <ArrowDown className="w-5 h-5 text-gray-300" />
@@ -95,7 +96,7 @@ export default function LanguageLevels() {
                 </div>
                 <ChevronRight className={`w-5 h-5 ml-auto transition-transform ${isActive ? `${level.textColor} rotate-90` : 'text-gray-400'}`} />
               </button>
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </div>

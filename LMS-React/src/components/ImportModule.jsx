@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const modules = [
   { name: 'math', desc: 'ฟังก์ชันทางคณิตศาสตร์', funcs: [

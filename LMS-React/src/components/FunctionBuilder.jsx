@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Play, RotateCcw, ArrowRight, Box, Zap } from 'lucide-react';
+import { useState } from 'react';
+import { Play, ArrowRight, Box, Zap } from 'lucide-react';
 
 const presetFunctions = [
   {

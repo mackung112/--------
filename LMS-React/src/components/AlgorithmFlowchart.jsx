@@ -1,417 +1,293 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { 
-  ArrowDown, ArrowRight, Play, RotateCcw, CheckCircle2,
-  Diamond, RectangleHorizontal, Circle, Hexagon,
-  Lightbulb, Code2
+  ArrowRight, Play, RotateCcw, CheckCircle2,
+  ChefHat, Coffee, Droplets, Flame, PackageOpen, Lightbulb, 
+  Puzzle, BrainCircuit
 } from 'lucide-react';
 
 // ===========================
-// 1) Flowchart Symbols Guide
+// 1) Real-world Algorithm Data
 // ===========================
-const symbols = [
-  { 
-    name: "Terminal (เริ่ม/จบ)", 
-    desc: "ใช้แสดงจุดเริ่มต้นและจุดสิ้นสุดของผังงาน",
-    shape: "rounded-full",
-    color: "bg-green-100 border-green-400 text-green-800",
-    example: "เริ่มต้น / จบ"
-  },
-  { 
-    name: "Process (กระบวนการ)", 
-    desc: "ใช้แสดงการประมวลผลหรือการทำงาน เช่น การคำนวณ",
-    shape: "rounded-lg",
-    color: "bg-blue-100 border-blue-400 text-blue-800",
-    example: "total = price * qty"
-  },
-  { 
-    name: "Decision (การตัดสินใจ)", 
-    desc: "ใช้แสดงเงื่อนไข ที่ผลลัพธ์จะมีสองทาง (ใช่/ไม่ใช่)",
-    shape: "rotate-45 rounded-md",
-    color: "bg-amber-100 border-amber-400 text-amber-800",
-    example: "score >= 50?"
-  },
-  { 
-    name: "Input/Output (รับ/แสดงผล)", 
-    desc: "ใช้แสดงการรับข้อมูลเข้า หรือการแสดงผลลัพธ์ออก",
-    shape: "skew-x-[-12deg] rounded-md",
-    color: "bg-purple-100 border-purple-400 text-purple-800",
-    example: 'input("ชื่อ:")'
-  },
-];
-
-// ===========================
-// 2) Interactive Flowchart Builder (ตรวจผ่าน/ตก)
-// ===========================
-const flowSteps = [
-  { id: 1, type: "terminal", label: "เริ่มต้น", color: "bg-green-500" },
-  { id: 2, type: "io", label: "รับค่า score", color: "bg-purple-500" },
-  { id: 3, type: "decision", label: "score >= 50 ?", color: "bg-amber-500", yes: 4, no: 5 },
-  { id: 4, type: "io", label: 'แสดง "สอบผ่าน"', color: "bg-blue-500" },
-  { id: 5, type: "io", label: 'แสดง "สอบตก"', color: "bg-red-500" },
-  { id: 6, type: "terminal", label: "จบ", color: "bg-green-500" },
-];
-
-// ===========================
-// 3) Pseudocode → Python Mapper
-// ===========================
-const pseudocodeExamples = [
+const realWorldAlgorithms = [
   {
     id: 1,
-    title: "ตรวจสอบเกรด",
-    pseudo: [
-      "เริ่มต้น",
-      "รับค่า คะแนน (score)",
-      "ถ้า score >= 80 แล้ว",
-      "    แสดง \"เกรด A\"",
-      "มิฉะนั้น ถ้า score >= 70 แล้ว",
-      "    แสดง \"เกรด B\"",
-      "มิฉะนั้น ถ้า score >= 60 แล้ว",
-      "    แสดง \"เกรด C\"",
-      "มิฉะนั้น",
-      "    แสดง \"เกรด F\"",
-      "จบ"
-    ],
-    python: [
-      "# เริ่มต้น",
-      "score = int(input('กรุณาใส่คะแนน: '))",
-      "if score >= 80:",
-      "    print('เกรด A')",
-      "elif score >= 70:",
-      "    print('เกรด B')",
-      "elif score >= 60:",
-      "    print('เกรด C')",
-      "else:",
-      "    print('เกรด F')",
-      "# จบ"
-    ]
-  },
-  {
-    id: 2,
-    title: "หาค่าเฉลี่ย",
-    pseudo: [
-      "เริ่มต้น",
-      "กำหนด ผลรวม = 0",
-      "กำหนด จำนวน = 5",
-      "ทำซ้ำ i ตั้งแต่ 1 ถึง จำนวน",
-      "    รับค่า ตัวเลข",
-      "    ผลรวม = ผลรวม + ตัวเลข",
-      "ค่าเฉลี่ย = ผลรวม / จำนวน",
-      "แสดง ค่าเฉลี่ย",
-      "จบ"
-    ],
-    python: [
-      "# เริ่มต้น",
-      "total = 0",
-      "count = 5",
-      "for i in range(1, count + 1):",
-      "    num = float(input(f'ใส่ตัวเลขที่ {i}: '))",
-      "    total = total + num",
-      "average = total / count",
-      "print(f'ค่าเฉลี่ย = {average}')",
-      "# จบ"
-    ]
-  },
-  {
-    id: 3,
-    title: "นับถอยหลัง",
-    pseudo: [
-      "เริ่มต้น",
-      "กำหนด ตัวนับ = 10",
-      "ทำซ้ำ ตราบที่ ตัวนับ > 0",
-      "    แสดง ตัวนับ",
-      "    ตัวนับ = ตัวนับ - 1",
-      "แสดง \"ปล่อยจรวด!\"",
-      "จบ"
-    ],
-    python: [
-      "# เริ่มต้น",
-      "count = 10",
-      "while count > 0:",
-      "    print(count)",
-      "    count = count - 1",
-      "print('ปล่อยจรวด!')",
-      "# จบ"
+    title: "อัลกอริทึมการต้มบะหมี่กึ่งสำเร็จรูป",
+    icon: <ChefHat className="w-6 h-6" />,
+    description: "การทำสิ่งง่ายๆ ในชีวิตประจำวันก็ถือเป็นอัลกอริทึม หากมีลำดับขั้นตอนที่ชัดเจนและให้ผลลัพธ์ที่แน่นอน",
+    steps: [
+      { text: "เริ่มต้น", type: "start", icon: <Play className="w-5 h-5 text-white" />, color: "bg-green-500" },
+      { text: "ฉีกซองบะหมี่และนำใส่ชาม", type: "process", icon: <PackageOpen className="w-5 h-5 text-blue-600" />, color: "bg-blue-100 border-blue-400" },
+      { text: "ต้มน้ำให้เดือด", type: "process", icon: <Flame className="w-5 h-5 text-orange-600" />, color: "bg-orange-100 border-orange-400" },
+      { text: "เทน้ำร้อนลงในชามและปิดฝา 3 นาที", type: "process", icon: <Droplets className="w-5 h-5 text-cyan-600" />, color: "bg-cyan-100 border-cyan-400" },
+      { text: "ใส่เครื่องปรุงและคนให้เข้ากัน", type: "process", icon: <Coffee className="w-5 h-5 text-amber-600" />, color: "bg-amber-100 border-amber-400" },
+      { text: "บะหมี่พร้อมทาน", type: "output", icon: <CheckCircle2 className="w-5 h-5 text-purple-600" />, color: "bg-purple-100 border-purple-400" },
+      { text: "จบการทำงาน", type: "end", icon: <Play className="w-5 h-5 text-white" />, color: "bg-green-500" }
     ]
   }
 ];
 
+// ===========================
+// 2) Mini Game: Order the Algorithm
+// ===========================
+const puzzleSteps = [
+  { id: 1, text: "ใส่เครื่องปรุง" },
+  { id: 2, text: "รอ 3 นาที" },
+  { id: 3, text: "ต้มน้ำร้อน" },
+  { id: 4, text: "ฉีกซองใส่ชาม" },
+  { id: 5, text: "เทน้ำร้อนใส่ชาม" }
+];
+
+const correctOrder = [4, 3, 5, 2, 1]; // Logical order for making noodles
+
 export default function AlgorithmFlowchart() {
-  const [activeTab, setActiveTab] = useState("symbols");
-  const [flowActive, setFlowActive] = useState(0);
-  const [isFlowPlaying, setIsFlowPlaying] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const algorithm = realWorldAlgorithms[0];
 
-  const [selectedExample, setSelectedExample] = useState(0);
-  const [revealedLines, setRevealedLines] = useState(0);
+  // Game state
+  const [selectedOrder, setSelectedOrder] = useState([]);
+  const [gameStatus, setGameStatus] = useState('idle'); // idle, playing, correct, incorrect
 
-  // Flowchart animation
-  const startFlowAnimation = useCallback(() => {
-    setFlowActive(0);
-    setIsFlowPlaying(true);
-    let step = 0;
-    const sequence = [0, 1, 2, 3, 5, 2, 4, 5]; // simulate: start -> input -> decision -> pass -> end -> decision again -> fail -> end
-    const interval = setInterval(() => {
-      step++;
-      if (step >= sequence.length) {
-        clearInterval(interval);
-        setIsFlowPlaying(false);
-        return;
+  // Auto-play simulation
+  useEffect(() => {
+    let timer;
+    if (isPlaying) {
+      if (activeStep < algorithm.steps.length - 1) {
+        timer = setTimeout(() => {
+          setActiveStep(prev => prev + 1);
+        }, 1200);
+      } else {
+        setIsPlaying(false);
       }
-      setFlowActive(sequence[step]);
-    }, 1200);
-  }, []);
+    }
+    return () => clearTimeout(timer);
+  }, [isPlaying, activeStep, algorithm.steps.length]);
 
-  const resetFlow = () => {
-    setFlowActive(0);
-    setIsFlowPlaying(false);
+  const handlePlay = () => {
+    if (activeStep === algorithm.steps.length - 1) {
+      setActiveStep(0);
+    }
+    setIsPlaying(true);
   };
 
-  // Pseudocode reveal
-  const revealNextLine = () => {
-    const maxLines = pseudocodeExamples[selectedExample].python.length;
-    if (revealedLines < maxLines) {
-      setRevealedLines(prev => prev + 1);
+  const handleReset = () => {
+    setIsPlaying(false);
+    setActiveStep(0);
+  };
+
+  const handleSelectPuzzle = (step) => {
+    if (selectedOrder.find(s => s.id === step.id)) return;
+    
+    const newOrder = [...selectedOrder, step];
+    setSelectedOrder(newOrder);
+
+    if (newOrder.length === puzzleSteps.length) {
+      // Check answer
+      const isCorrect = newOrder.every((s, i) => s.id === correctOrder[i]);
+      setGameStatus(isCorrect ? 'correct' : 'incorrect');
     }
   };
 
-  const resetReveal = () => {
-    setRevealedLines(0);
+  const resetGame = () => {
+    setSelectedOrder([]);
+    setGameStatus('idle');
   };
-
-  const changeExample = (idx) => {
-    setSelectedExample(idx);
-    setRevealedLines(0);
-  };
-
-  const tabs = [
-    { id: "symbols", label: "สัญลักษณ์ผังงาน", icon: Diamond },
-    { id: "flowchart", label: "จำลองผังงาน", icon: Play },
-    { id: "pseudocode", label: "Pseudocode → Python", icon: Code2 },
-  ];
 
   return (
-    <div className="w-full my-12">
-      {/* Tab Navigation */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {tabs.map(tab => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
-                activeTab === tab.id
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
-                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              {tab.label}
-            </button>
-          );
-        })}
+    <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200 mt-8">
+      {/* Header Banner */}
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white flex items-center gap-4">
+        <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
+          <BrainCircuit className="w-8 h-8 text-white" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold">สำรวจแนวคิด: อัลกอริทึม (Algorithm)</h2>
+          <p className="text-indigo-100 mt-1">อัลกอริทึมคือลำดับขั้นตอนที่ชัดเจน เพื่อแก้ปัญหาอย่างใดอย่างหนึ่ง</p>
+        </div>
       </div>
 
-      {/* TAB 1: Flowchart Symbols */}
-      {activeTab === "symbols" && (
-        <div className="space-y-4">
-          <p className="text-gray-600 text-lg mb-6">
-            ผังงาน (Flowchart) ใช้สัญลักษณ์มาตรฐานในการแสดงขั้นตอนการทำงานของโปรแกรม สัญลักษณ์หลักๆ มีดังนี้:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {symbols.map((sym, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-4 mb-3">
-                  <div className={`w-16 h-12 ${sym.color} border-2 ${sym.shape} flex items-center justify-center text-xs font-bold shrink-0`}>
-                    <span className={sym.shape.includes("rotate") ? "-rotate-45 text-[10px]" : "text-[10px]"}>
-                      {sym.example}
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">{sym.name}</h4>
-                    <p className="text-gray-600 text-sm">{sym.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <div className="p-6 md:p-8">
+        {/* Section 1: Theory & Core Concept */}
+        <div className="mb-10 p-6 bg-blue-50 rounded-2xl border border-blue-100 flex gap-4">
+          <Lightbulb className="w-8 h-8 text-blue-600 shrink-0" />
+          <div>
+            <h3 className="text-lg font-bold text-blue-900 mb-2">ทำไมต้องมีอัลกอริทึม?</h3>
+            <p className="text-blue-800 leading-relaxed">
+              คอมพิวเตอร์ไม่มีความคิดเป็นของตัวเอง มันจะทำตามคำสั่งของเราแบบ <strong>"เป๊ะๆ"</strong> ทุกบรรทัด 
+              ถ้าเราเรียงลำดับคำสั่งผิด ผลลัพธ์ก็จะผิดพลาดทันที อัลกอริทึมจึงเปรียบเสมือน <strong>"สูตรอาหาร"</strong> ที่บอกคอมพิวเตอร์ว่าต้องทำอะไร ก่อน-หลัง อย่างชัดเจน
+            </p>
           </div>
         </div>
-      )}
 
-      {/* TAB 2: Interactive Flowchart */}
-      {activeTab === "flowchart" && (
-        <div>
-          <p className="text-gray-600 text-lg mb-6">
-            ลองดูการทำงานของผังงานโปรแกรม "ตรวจสอบผ่าน/ตก" กดปุ่มเล่นเพื่อดูการไหลของข้อมูลแต่ละขั้นตอน:
-          </p>
-          
-          <div className="flex justify-center gap-3 mb-8">
-            <button 
-              onClick={startFlowAnimation} 
-              disabled={isFlowPlaying}
-              className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 disabled:bg-gray-400 transition-colors shadow-md"
-            >
-              <Play className="w-5 h-5" /> เล่นจำลอง
-            </button>
-            <button 
-              onClick={resetFlow}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-gray-700 rounded-full font-semibold hover:bg-gray-100 border border-gray-200 transition-colors"
-            >
-              <RotateCcw className="w-5 h-5" /> รีเซ็ต
-            </button>
+        <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+          {algorithm.icon} ตัวอย่างในชีวิตประจำวัน: {algorithm.title}
+        </h3>
+
+        {/* Explorer Layout */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Left Column: List of steps */}
+          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+            <h4 className="font-bold text-slate-700 mb-4 flex justify-between items-center">
+              <span>ขั้นตอน (Steps)</span>
+              <span className="text-sm px-3 py-1 bg-slate-200 rounded-full">{algorithm.steps.length} ขั้นตอน</span>
+            </h4>
+            
+            <div className="space-y-3">
+              {algorithm.steps.map((step, idx) => (
+                <div 
+                  key={idx}
+                  className={`p-4 rounded-xl border-2 transition-all duration-300 flex items-center gap-4
+                    ${activeStep === idx 
+                      ? 'border-indigo-500 bg-indigo-50 shadow-md transform scale-105' 
+                      : activeStep > idx 
+                        ? 'border-green-200 bg-green-50 opacity-70'
+                        : 'border-transparent bg-white shadow-sm'
+                    }
+                  `}
+                >
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm
+                    ${activeStep > idx ? 'bg-green-500 text-white' : activeStep === idx ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500'}
+                  `}>
+                    {activeStep > idx ? <CheckCircle2 className="w-5 h-5" /> : idx + 1}
+                  </div>
+                  <span className={`font-medium ${activeStep === idx ? 'text-indigo-900' : 'text-slate-700'}`}>
+                    {step.text}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-col items-center gap-2">
-            {flowSteps.map((step, idx) => {
-              const isActive = idx === flowActive;
-
-              if (step.type === "decision") {
-                return (
-                  <div key={step.id} className="flex flex-col items-center">
-                    {idx > 0 && <ArrowDown className={`w-6 h-6 mb-2 transition-colors ${isActive ? 'text-amber-500' : 'text-gray-300'}`} />}
-                    <div className={`relative w-44 h-44 flex items-center justify-center transition-all duration-500 ${isActive ? 'scale-110' : ''}`}>
-                      <div className={`absolute inset-0 rotate-45 rounded-xl border-3 transition-all duration-500 ${isActive ? 'bg-amber-100 border-amber-500 shadow-xl shadow-amber-200' : 'bg-white border-gray-300'}`}></div>
-                      <span className={`relative z-10 text-sm font-bold text-center transition-colors ${isActive ? 'text-amber-800' : 'text-gray-600'}`}>{step.label}</span>
-                    </div>
-                    <div className="flex items-center gap-8 mt-3">
-                      <div className="flex items-center gap-1 text-sm">
-                        <span className="font-bold text-green-600">ใช่</span> <ArrowDown className="w-4 h-4 text-green-400" />
-                      </div>
-                      <div className="flex items-center gap-1 text-sm">
-                        <span className="font-bold text-red-600">ไม่ใช่</span> <ArrowDown className="w-4 h-4 text-red-400" />
-                      </div>
-                    </div>
-                    {/* Yes/No branches */}
-                    <div className="flex gap-8 mt-2">
-                      {[flowSteps[3], flowSteps[4]].map((branch, bi) => {
-                        const branchActive = (bi === 0 && flowActive === 3) || (bi === 1 && flowActive === 4);
-                        return (
-                          <div key={branch.id} className={`px-6 py-3 rounded-lg border-2 text-sm font-bold text-center transition-all duration-500 ${
-                            branchActive ? (bi === 0 ? 'bg-blue-100 border-blue-500 text-blue-800 scale-110 shadow-lg' : 'bg-red-100 border-red-500 text-red-800 scale-110 shadow-lg') : 'bg-white border-gray-200 text-gray-500'
-                          }`}>
-                            {branch.label}
-                          </div>
-                        );
-                      })}
-                    </div>
+          {/* Right Column: Visual Simulation */}
+          <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col items-center justify-center relative min-h-[400px] overflow-hidden">
+            {/* Visualizer */}
+            <div className="flex-1 flex items-center justify-center w-full relative h-full min-h-[250px]">
+              {algorithm.steps.map((step, idx) => (
+                <div 
+                  key={idx}
+                  className={`absolute transition-all duration-500 flex flex-col items-center gap-4
+                    ${activeStep === idx 
+                      ? 'opacity-100 scale-100 translate-y-0 z-10' 
+                      : activeStep > idx
+                        ? 'opacity-0 scale-90 -translate-y-8 z-0 pointer-events-none'
+                        : 'opacity-0 scale-90 translate-y-8 z-0 pointer-events-none'
+                    }
+                  `}
+                >
+                  <div className={`w-24 h-24 rounded-2xl flex items-center justify-center shadow-2xl ${step.color} ${step.type === 'start' || step.type === 'end' ? 'rounded-full' : ''} border-4`}>
+                    {step.icon}
                   </div>
-                );
-              }
-
-              // Skip steps 4,5 - already rendered as branches
-              if (step.id === 4 || step.id === 5) return null;
-
-              const shapeClass = step.type === "terminal" ? "rounded-full" : "rounded-lg";
-
-              return (
-                <div key={step.id} className="flex flex-col items-center">
-                  {idx > 0 && step.id !== 6 && <ArrowDown className={`w-6 h-6 mb-2 transition-colors ${isActive ? 'text-indigo-500' : 'text-gray-300'}`} />}
-                  {step.id === 6 && <ArrowDown className={`w-6 h-6 mt-4 mb-2 transition-colors ${isActive ? 'text-green-500' : 'text-gray-300'}`} />}
-                  <div className={`px-8 py-4 ${shapeClass} border-2 text-sm font-bold transition-all duration-500 ${
-                    isActive ? `${step.color} text-white border-transparent shadow-xl scale-110` : 'bg-white border-gray-200 text-gray-600'
-                  }`}>
-                    {step.label}
+                  <div className="bg-white/10 backdrop-blur-md text-white px-6 py-3 rounded-xl border border-white/20 font-medium text-center max-w-[250px]">
+                    {step.text}
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+              ))}
+            </div>
 
-      {/* TAB 3: Pseudocode → Python */}
-      {activeTab === "pseudocode" && (
-        <div>
-          <p className="text-gray-600 text-lg mb-6">
-            เลือกตัวอย่างด้านล่าง แล้วกดปุ่ม "เปิดเผยทีละบรรทัด" เพื่อดูว่ารหัสเทียม (Pseudocode) ภาษาไทย ถูกแปลงเป็นโค้ด Python ได้อย่างไร:
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {pseudocodeExamples.map((ex, idx) => (
+            {/* Controls */}
+            <div className="mt-8 flex gap-4 w-full max-w-xs z-20">
               <button
-                key={ex.id}
-                onClick={() => changeExample(idx)}
-                className={`px-4 py-2 rounded-xl font-medium text-sm transition-all ${
-                  selectedExample === idx
-                    ? 'bg-purple-600 text-white shadow-md'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
-                }`}
+                onClick={handlePlay}
+                disabled={isPlaying}
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded-xl font-bold transition-all"
               >
-                {ex.title}
+                <Play className="w-5 h-5" /> จำลอง
               </button>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Pseudocode Panel */}
-            <div className="bg-amber-50 rounded-2xl p-6 border border-amber-200">
-              <div className="flex items-center gap-2 mb-4">
-                <Lightbulb className="w-5 h-5 text-amber-600" />
-                <h4 className="font-bold text-amber-900">รหัสเทียม (Pseudocode)</h4>
-              </div>
-              <div className="font-mono text-sm space-y-1">
-                {pseudocodeExamples[selectedExample].pseudo.map((line, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`px-3 py-1.5 rounded-lg transition-all duration-300 ${
-                      idx < revealedLines 
-                        ? 'bg-amber-200/50 text-amber-900' 
-                        : 'text-amber-700'
-                    }`}
-                  >
-                    <span className="text-amber-400 mr-3 select-none">{idx + 1}.</span>
-                    {line}
-                  </div>
-                ))}
-              </div>
+              <button
+                onClick={handleReset}
+                className="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-all"
+              >
+                <RotateCcw className="w-5 h-5" />
+              </button>
             </div>
-
-            {/* Python Panel */}
-            <div className="bg-slate-900 rounded-2xl p-6 border border-slate-700">
-              <div className="flex items-center gap-2 mb-4">
-                <Code2 className="w-5 h-5 text-green-400" />
-                <h4 className="font-bold text-green-400">Python Code</h4>
-              </div>
-              <div className="font-mono text-sm space-y-1">
-                {pseudocodeExamples[selectedExample].python.map((line, idx) => (
-                  <div 
-                    key={idx}
-                    className={`px-3 py-1.5 rounded-lg transition-all duration-500 ${
-                      idx < revealedLines
-                        ? 'text-slate-100 bg-slate-800/50'
-                        : 'text-transparent select-none'
-                    }`}
-                  >
-                    <span className={`mr-3 select-none ${idx < revealedLines ? 'text-slate-500' : 'text-transparent'}`}>{idx + 1}.</span>
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-center gap-3 mt-6">
-            <button 
-              onClick={revealNextLine}
-              disabled={revealedLines >= pseudocodeExamples[selectedExample].python.length}
-              className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 disabled:bg-gray-400 transition-colors shadow-md"
-            >
-              <ArrowRight className="w-5 h-5" />
-              เปิดเผยทีละบรรทัด ({revealedLines}/{pseudocodeExamples[selectedExample].python.length})
-            </button>
-            <button 
-              onClick={resetReveal}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-gray-700 rounded-full font-semibold hover:bg-gray-100 border border-gray-200 transition-colors"
-            >
-              <RotateCcw className="w-5 h-5" /> รีเซ็ต
-            </button>
-            {revealedLines >= pseudocodeExamples[selectedExample].python.length && (
-              <div className="flex items-center gap-2 px-4 py-3 bg-green-100 text-green-700 rounded-full font-bold">
-                <CheckCircle2 className="w-5 h-5" /> ครบทุกบรรทัดแล้ว!
-              </div>
-            )}
           </div>
         </div>
-      )}
+
+        {/* Section 3: Gamification */}
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 md:p-8 rounded-2xl border border-indigo-100 mt-12">
+          <div className="flex items-center gap-3 mb-6">
+            <Puzzle className="w-8 h-8 text-indigo-600" />
+            <h3 className="text-xl font-bold text-indigo-900">มินิเกม: เรียงลำดับอัลกอริทึม</h3>
+          </div>
+          <p className="text-indigo-800 mb-6">
+            คอมพิวเตอร์ต้องการลำดับขั้นตอนที่ถูกต้อง! จงเรียงลำดับขั้นตอน <strong>"การต้มบะหมี่กึ่งสำเร็จรูป"</strong> ด้านล่างนี้ให้สมเหตุสมผลที่สุด
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Options */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-indigo-100">
+              <h4 className="font-bold text-slate-700 mb-4 text-center">ตัวเลือกขั้นตอน</h4>
+              <div className="flex flex-col gap-3">
+                {puzzleSteps.map(step => {
+                  const isSelected = selectedOrder.some(s => s.id === step.id);
+                  return (
+                    <button
+                      key={step.id}
+                      onClick={() => handleSelectPuzzle(step)}
+                      disabled={isSelected}
+                      className={`p-4 rounded-xl font-medium transition-all text-left flex items-center gap-3
+                        ${isSelected 
+                          ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed' 
+                          : 'bg-white border-2 border-indigo-200 text-indigo-700 hover:border-indigo-500 hover:bg-indigo-50 hover:-translate-y-1 shadow-sm'
+                        }
+                      `}
+                    >
+                      <div className="w-6 h-6 rounded-md bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">
+                        {step.id}
+                      </div>
+                      {step.text}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Answer Area */}
+            <div className="bg-slate-900 p-6 rounded-2xl shadow-inner border border-slate-800 flex flex-col">
+              <h4 className="font-bold text-indigo-300 mb-4 text-center">ลำดับอัลกอริทึมของคุณ</h4>
+              
+              <div className="flex-1 flex flex-col gap-3">
+                {Array.from({ length: 5 }).map((_, idx) => {
+                  const step = selectedOrder[idx];
+                  return (
+                    <div 
+                      key={idx}
+                      className={`p-4 rounded-xl flex items-center gap-3 border transition-all
+                        ${step 
+                          ? 'bg-indigo-900/50 border-indigo-500/50 text-indigo-100' 
+                          : 'bg-slate-800/50 border-slate-700/50 text-slate-600 border-dashed'
+                        }
+                      `}
+                    >
+                      <div className="font-mono opacity-50 w-6">{idx + 1}.</div>
+                      <div className="font-medium">{step ? step.text : 'รอเลือกขั้นตอน...'}</div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Game Result */}
+              {gameStatus !== 'idle' && (
+                <div className={`mt-6 p-4 rounded-xl font-bold flex items-center justify-between
+                  ${gameStatus === 'correct' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}
+                `}>
+                  <div className="flex items-center gap-2">
+                    {gameStatus === 'correct' ? <CheckCircle2 className="w-6 h-6" /> : <RotateCcw className="w-6 h-6" />}
+                    <span>{gameStatus === 'correct' ? 'ยอดเยี่ยม! ลำดับอัลกอริทึมถูกต้อง' : 'ยังมีข้อผิดพลาด อัลกอริทึมยังไม่สมบูรณ์!'}</span>
+                  </div>
+                  <button 
+                    onClick={resetGame}
+                    className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-sm shrink-0"
+                  >
+                    เริ่มใหม่
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

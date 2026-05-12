@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AlertTriangle, ShieldCheck, Play, RotateCcw, Bug, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { AlertTriangle, ShieldCheck, Bug, CheckCircle2 } from 'lucide-react';
 
 const errorScenarios = [
   {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const translators = [
   {
@@ -35,6 +35,7 @@ export default function TranslatorCompare() {
   const [compiled, setCompiled] = useState(false);
 
   const resetSim = () => { setCurrentLine(-1); setOutputs([]); setIsRunning(false); setCompiled(false); };
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { resetSim(); }, [simType]);
 
   const runInterpreter = () => {

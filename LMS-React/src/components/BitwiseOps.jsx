@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function BitwiseOps() {
   const [a, setA] = useState(12);

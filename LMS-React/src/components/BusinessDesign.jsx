@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const principles = [
   { title: 'ใช้ฟังก์ชันแยกงาน', desc: 'แบ่งโปรแกรมเป็นฟังก์ชันย่อย แต่ละฟังก์ชันทำงาน 1 อย่าง', icon: '🧩', good: 'def calc_tax(price):\n    return price * 0.07', bad: '# เขียนยาวๆ ไม่แบ่งฟังก์ชัน\ntax = price * 0.07\nprint(tax)' },

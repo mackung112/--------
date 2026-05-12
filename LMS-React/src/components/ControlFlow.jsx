@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Play, RotateCcw, Calculator, Repeat, GitBranch, ChevronRight } from 'lucide-react';
 
 // ===== Operator Calculator =====

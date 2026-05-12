@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import SDLC from './SDLC';
 import AlgorithmFlowchart from './AlgorithmFlowchart';
 import LanguageLevels from './LanguageLevels';
@@ -57,6 +57,14 @@ import BusinessDesign from './BusinessDesign';
 import BusinessLogic from './BusinessLogic';
 import FileHandler from './FileHandler';
 import DocGenerator from './DocGenerator';
+import OOPClassSimulator from './OOPClassSimulator';
+import TkinterPreviewer from './TkinterPreviewer';
+import TryExceptDemo from './TryExceptDemo';
+import POSProjectUML from './POSProjectUML';
+import PythonTerminalSimulator from './PythonTerminalSimulator';
+import SelfKeywordDemo from './SelfKeywordDemo';
+import EncapsulationDemo from './EncapsulationDemo';
+import InheritanceBuilder from './InheritanceBuilder';
 
 // Registry ของ Component ที่สามารถแทรกในเนื้อหาได้
 const COMPONENT_MAP = {
@@ -98,6 +106,10 @@ const COMPONENT_MAP = {
   '[COMPARISON_OPS_COMPONENT]': ComparisonOps,
   '[LOGICAL_OPS_COMPONENT]': LogicalOps,
   '[IDENTITY_OPS_COMPONENT]': IdentityOps,
+  '[OOP_CLASS_SIMULATOR_COMPONENT]': OOPClassSimulator,
+  '[TKINTER_PREVIEWER_COMPONENT]': TkinterPreviewer,
+  '[TRY_EXCEPT_DEMO_COMPONENT]': TryExceptDemo,
+  '[POS_UML_COMPONENT]': POSProjectUML,
   '[MEMBERSHIP_OPS_COMPONENT]': MembershipOps,
   '[BITWISE_OPS_COMPONENT]': BitwiseOps,
   '[IF_STATEMENT_COMPONENT]': IfStatement,
@@ -116,9 +128,13 @@ const COMPONENT_MAP = {
   '[BUSINESS_LOGIC_COMPONENT]': BusinessLogic,
   '[FILE_HANDLER_COMPONENT]': FileHandler,
   '[DOC_GENERATOR_COMPONENT]': DocGenerator,
+  '[TERMINAL_SIMULATOR]': PythonTerminalSimulator,
+  '[SELF_DEMO]': SelfKeywordDemo,
+  '[ENCAPSULATION_DEMO]': EncapsulationDemo,
+  '[INHERITANCE_DEMO]': InheritanceBuilder,
 };
 
-export default function LessonViewer({ lesson, chapter, onComplete }) {
+export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPrev, hasPrev = false, hasNext = true }) {
   const renderContent = () => {
     if (!lesson.content) return null;
 
@@ -171,16 +187,27 @@ export default function LessonViewer({ lesson, chapter, onComplete }) {
         <Quiz quizData={chapter.quiz} onComplete={onComplete} />
       )}
 
-      {(!chapter?.quiz || chapter.quiz.length === 0) && (!chapter?.practical || chapter.practical.length === 0) && (
-        <div className="mt-8 flex justify-end">
+      {/* Navigation buttons: Previous / Next */}
+      <div className="mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4">
+        {hasPrev ? (
           <button
-            onClick={onComplete}
-            className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-2"
+            onClick={onPrev}
+            className="px-6 py-4 bg-white text-gray-700 border-2 border-gray-200 rounded-2xl font-bold hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 transition-all flex items-center gap-2 group shadow-sm"
           >
-            ทำเครื่องหมายว่าเรียนจบแล้ว
+            <ChevronLeft className="w-5 h-5 transform transition-transform group-hover:-translate-x-1" />
+            เนื้อหาก่อนหน้า
           </button>
-        </div>
-      )}
+        ) : (
+          <div />
+        )}
+        <button
+          onClick={() => { if(onComplete) onComplete(); if(onNext) onNext(); }}
+          className="px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-2 group"
+        >
+          {hasNext ? 'เนื้อหาถัดไป' : 'กลับหน้ารวมวิชา'}
+          <ChevronRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
+        </button>
+      </div>
     </div>
   );
 }

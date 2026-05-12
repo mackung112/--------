@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const builtins = [
   { name: 'len()', desc: 'นับจำนวนสมาชิก', example: 'len([1,2,3])', result: '3' },

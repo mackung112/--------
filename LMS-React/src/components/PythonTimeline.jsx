@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const timeline = [
   { year: '1991', title: 'Python 0.9', desc: 'Guido van Rossum สร้าง Python ขึ้นมาจากภาษา ABC มีฟีเจอร์พื้นฐาน เช่น Exception Handling, Functions, Module', color: 'bg-blue-500', icon: '🌱' },

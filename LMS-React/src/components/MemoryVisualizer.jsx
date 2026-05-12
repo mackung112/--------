@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, ArrowRight, RefreshCw, Eye, Copy, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, RefreshCw, Eye, } from 'lucide-react';
 
 const scenarios = [
   {

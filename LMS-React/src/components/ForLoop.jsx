@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function ForLoop() {
   const [items] = useState(['🍎 แอปเปิ้ล', '🍌 กล้วย', '🍊 ส้ม', '🍇 องุ่น', '🍓 สตรอเบอร์รี่']);

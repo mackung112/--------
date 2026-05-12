@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function TupleDictExplorer() {
   const [tab, setTab] = useState('tuple');

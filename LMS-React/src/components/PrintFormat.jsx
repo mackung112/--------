@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const examples = [
   { code: 'print("Hello", "World")', output: 'Hello World', note: 'sep เริ่มต้นคือช่องว่าง' },

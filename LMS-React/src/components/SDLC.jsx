@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Search, PenTool, Code2, Bug, Rocket, Settings,
   Play, Pause, ArrowRight, Sparkles, Loader2
@@ -110,18 +110,17 @@ export default function SDLC() {
   const [projectName, setProjectName] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [aiError, setAiError] = useState("");
 
   const activePhase = sdlcPhases.find(p => p.id === activePhaseId);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAiResponse("");
-    setAiError("");
   }, [activePhaseId]);
 
   const handleGenerateAI = async () => {
     setIsGenerating(true);
-    setAiError("");
+     
     setAiResponse("");
 
     const currentProject = projectName.trim() || "แอปพลิเคชันสั่งอาหารออนไลน์";

@@ -27,3 +27,29 @@
 - **JSX Gotchas**: หากมี `>>>` ในโค้ด JSX ต้องห่อด้วย `{">>>"}`
 - **HTML in Strings**: เนื้อหาใน `data.js` ถูกเขียนครอบด้วย Backtick (\`) หากในเนื้อหามีการใช้ซ้อน ต้อง escape ด้วย `\``
 - **Component Registration**: สร้าง Component ใหม่เสร็จ ต้องนำไป Import, ใส่ใน `COMPONENT_MAP`, และอัปเดต Regex `markerPattern` ใน `LessonViewer.jsx` เสมอ
+
+## 🎮 4. รูปแบบการออกแบบ Component หลัก (Explorer Pattern)
+ทุก Interactive Component ควรใช้รูปแบบ **"Explorer Pattern"** ซึ่งเป็นแนวทางที่ทำให้บทเรียนน่าสนุกและน่าค้นหา:
+
+### โครงสร้างหลัก:
+1. **Header Section**: Badge แสดงประเภทเนื้อหา + ชื่อหัวข้อ + คำอธิบายที่ละเอียดเพียงพอ
+2. **Interactive Explorer**: ส่วนหลักที่ผู้เรียนกดเล่น/ลากเลื่อนได้ ควรใช้ 2-column layout (ซ้าย=Visual, ขวา=Control/Output)
+3. **Live Output/Console**: แสดงผลลัพธ์แบบ real-time เมื่อค่าเปลี่ยน ใช้ font-mono, bg-slate-900
+4. **Step Explanation**: อธิบายว่าแต่ละขั้นตอนเกิดอะไรขึ้น เปลี่ยนตามสถานะปัจจุบัน
+5. **Gamification Elements**: แทรกอย่างน้อย 1 อย่าง เช่น Mini Quiz, Matching Game, Spot-the-Error, Drag-and-Drop, Progress Bar, Achievement Badge
+
+### หลักการสำคัญ:
+- **ใช้ SVG** สำหรับผังงาน (Flowchart) แทนการใช้ Unicode symbols หรือ CSS rotate ให้ดูเหมือน draw.io
+- **Animation**: ใช้ transition-all duration-500 สำหรับการเปลี่ยนสถานะ, animate-pulse สำหรับ node ที่ active
+- **คำอธิบายต้องละเอียดพอ** ไม่ใช่แค่ชื่อสัญลักษณ์ ต้องบอกว่าใช้เมื่อไหร่/ใช้อย่างไร
+- **เพิ่ม 💡 เคล็ดลับ / Tips** ในแต่ละส่วน เพื่อให้ผู้เรียนเข้าใจลึกขึ้น
+
+## 🕹️ 5. แนวทาง Game-Based Learning
+- ทุก Component ควรมีองค์ประกอบที่ทำให้สนุก เช่น:
+  - **Mini Quiz**: ทดสอบความเข้าใจหลังเรียน
+  - **Matching Game**: จับคู่คำหลักกับความหมาย
+  - **Spot the Error**: หาจุดผิดในตัวอย่าง
+  - **Indentation Puzzle**: จัดย่อหน้าโค้ดให้ถูกต้อง
+  - **Progress Tracking**: แสดง Progress bar, Badge เมื่อทำสำเร็จ
+  - **Step-by-Step Simulator**: จำลองการทำงานทีละขั้น มีปุ่ม Play/Pause/Reset
+

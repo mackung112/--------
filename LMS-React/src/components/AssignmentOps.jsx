@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function AssignmentOps() {
   const [x, setX] = useState(10);

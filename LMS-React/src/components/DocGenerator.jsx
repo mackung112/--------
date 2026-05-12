@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const sections = [
   { title: '1. ปก / README', icon: '📄', content: '# ระบบ Mini POS\nผู้จัดทำ: นายสมชาย ใจดี\nรหัส: 65310001\nวิชา: การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น' },

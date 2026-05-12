@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Terminal, Play, CheckCircle2, XCircle, AlertCircle, RefreshCcw, ChevronRight } from 'lucide-react';
 
 export default function PracticalExam({ practicalData, onComplete }) {
