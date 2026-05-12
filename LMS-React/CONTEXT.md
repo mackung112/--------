@@ -28,8 +28,9 @@ LMS-React/
 │   ├── index.css            # Global CSS (@import "tailwindcss")
 │   ├── data.js              # ⭐ [Database] เก็บเนื้อหา HTML + [MARKER]
 │   └── components/
-│       ├── LessonViewer.jsx # ⭐ Engine เรนเดอร์เนื้อหา + แปลง Marker เป็น Component
-│       └── ...[Interactive Components]...
+│       ├── interactive/         # ⭐ สื่อ Interactive ทั้งหมด (Auto-loaded โหลดอัตโนมัติ)
+│       ├── LessonViewer.jsx     # ⭐ Engine เรนเดอร์เนื้อหา + Auto-Registry
+│       └── ...[UI Components]...
 ├── docs/
 │   └── curriculum/          # 📄 [Curriculum] เอกสารสรุปเนื้อหารายวิชา (OOP, Intro Programming)
 ```
@@ -42,13 +43,13 @@ LMS-React/
 - [2026-05-11] **Overhaul บทที่ 2 ทั้งหมด**: เขียนใหม่ 10 components (FlowchartSymbols, SequenceFlowchart, SelectionFlowchart, IterationFlowchart, FlowchartBestPractice, PseudocodeIntro, PseudocodeKeywords, PseudocodeCondition, PseudocodeLoop, PseudocodeFormat) ใช้ Explorer Pattern + SVG Flowcharts + Game-Based Learning
 - [2026-05-11] เพิ่ม Explorer Pattern และ Game-Based Learning ใน skill-web-lms.md
 - [2026-05-12] บันทึกโครงสร้างหลักสูตร (OOP และ การเขียนโปรแกรมเบื้องต้น) ลงใน `docs/curriculum/` เพื่อใช้เป็นฐานข้อมูลอ้างอิงถาวร
-
+- [2026-05-12] ปรับปรุงระบบ **Auto-Registry** ให้ `LessonViewer.jsx` โหลดสื่อ Interactive อัตโนมัติจากโฟลเดอร์ `interactive/` ทำให้ผู้สร้างเนื้อหาไม่ต้องเขียน Import เองอีกต่อไป
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
-- **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะแทนที่ด้วย React Component ทันที (วิธีนี้ scale การเพิ่มบทเรียนได้ง่ายสุด)
+- **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)
 - **ทำไมใช้ Tailwind v4?**: เพื่อลดความซับซ้อนของ PostCSS ทำงานผ่าน Vite Plugin `@tailwindcss/vite` ตรงๆ
 
 ## 🚫 6. ขอบเขตที่ห้ามแก้ไข (Strictly DO NOT TOUCH)
 ระบบที่เสถียรแล้ว ห้าม AI ไปรื้อโค้ดเด็ดขาด ยกเว้นมีคำสั่งชัดเจนใน `task.md`:
 1. โครงสร้าง `App.jsx` (Routing, Layout ซ้ายขวา)
-2. `LessonViewer.jsx` (อนุญาตเฉพาะอัปเดตบรรทัด Import และเพิ่ม `COMPONENT_MAP` เท่านั้น ห้ามแก้ Logic การเรนเดอร์)
+2. `LessonViewer.jsx` (ระบบเสถียรแล้วและทำงานแบบ Auto-Registry ห้ามไปเพิ่ม Import หรือแก้ Logic เด็ดขาด)
 3. `vite.config.js` และ `index.css`

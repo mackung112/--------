@@ -183,7 +183,7 @@ function CourseView() {
   let currentLesson = null;
   let currentChapter = null;
   course.chapters.forEach(ch => {
-    const lesson = ch.lessons.find(l => l.id === currentLessonId);
+    const lesson = ch.lessons?.find(l => l?.id === currentLessonId);
     if (lesson) {
       currentLesson = lesson;
       currentChapter = ch;
@@ -191,7 +191,7 @@ function CourseView() {
   });
 
   const allLessons = course.chapters.flatMap(ch => ch.lessons);
-  const currentIndex = allLessons.findIndex(l => l.id === currentLessonId);
+  const currentIndex = allLessons.findIndex(l => l?.id === currentLessonId);
 
   const markCompleted = () => {
     setCompletedLessons(prev => ({ ...prev, [currentLessonId]: true }));

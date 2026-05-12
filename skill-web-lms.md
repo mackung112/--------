@@ -26,7 +26,7 @@
 - **Component Format**: ต้องเขียนเป็น `export default function ComponentName() { ... }` 
 - **JSX Gotchas**: หากมี `>>>` ในโค้ด JSX ต้องห่อด้วย `{">>>"}`
 - **HTML in Strings**: เนื้อหาใน `data.js` ถูกเขียนครอบด้วย Backtick (\`) หากในเนื้อหามีการใช้ซ้อน ต้อง escape ด้วย `\``
-- **Component Registration**: สร้าง Component ใหม่เสร็จ ต้องนำไป Import, ใส่ใน `COMPONENT_MAP`, และอัปเดต Regex `markerPattern` ใน `LessonViewer.jsx` เสมอ
+- **Component Auto-Registry**: เมื่อสร้าง Component สื่อ Interactive ใหม่ ให้บันทึกไฟล์ไว้ในโฟลเดอร์ `src/components/interactive/` จากนั้นระบบจะโหลดให้อัตโนมัติ สามารถนำไปใช้ใน `data.js` หรือ `oopCourse.js` ด้วยชื่อไฟล์ได้ทันที เช่น `[MyDemo]` (ห้ามเพิ่ม Import ใน `LessonViewer.jsx` เด็ดขาด)
 
 ## 🎮 4. รูปแบบการออกแบบ Component หลัก (Explorer Pattern)
 ทุก Interactive Component ควรใช้รูปแบบ **"Explorer Pattern"** ซึ่งเป็นแนวทางที่ทำให้บทเรียนน่าสนุกและน่าค้นหา:
