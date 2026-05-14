@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Database, Terminal, Dumpster, Eraser, ShieldHalf, Building, Users, FileText, Key, Link as LinkIcon, TriangleAlert, Skull, RotateCcw } from 'lucide-react';
+import { Database, Terminal, Flame, Eraser, ShieldHalf, Building, Users, FileText, Key, Link as LinkIcon, TriangleAlert, RotateCcw, Code2, Trash2 } from 'lucide-react';
 import { SQLSyntaxEngine } from './utils/SQLSyntaxEngine';
 
 const initialTablesState = {
