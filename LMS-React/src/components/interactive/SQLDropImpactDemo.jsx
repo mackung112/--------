@@ -1,0 +1,58 @@
+import React from 'react';
+import SQLSyntaxEngine from './SQLSyntaxEngine';
+import { TerminalSquare } from 'lucide-react';
+
+export default function SQLDropImpactDemo() {
+  const codeParts = [
+  {
+    "text": "ลบทุกอย่าง ",
+    "key": "all"
+  },
+  {
+    "text": "กู้คืนไม่ได้ ",
+    "key": "noundo"
+  },
+  {
+    "text": "FOREIGN KEY ",
+    "key": "fk"
+  },
+  {
+    "text": "แอปพลิเคชัน ",
+    "key": "app"
+  }
+];
+  const explanations = {
+  "all": {
+    "title": "ลบทุกอย่าง",
+    "desc": "DROP DATABASE ลบตาราง ข้อมูล View Procedure ทั้งหมด",
+    "color": "text-pink-500"
+  },
+  "noundo": {
+    "title": "กู้คืนไม่ได้",
+    "desc": "เมื่อ DROP แล้วจะกู้คืนไม่ได้ ยกเว้นมี Backup",
+    "color": "text-yellow-500"
+  },
+  "fk": {
+    "title": "FOREIGN KEY",
+    "desc": "ถ้าตารางอื่นอ้างอิงอยู่ อาจ Drop ไม่ได้",
+    "color": "text-emerald-400"
+  },
+  "app": {
+    "title": "แอปพลิเคชัน",
+    "desc": "แอปที่เชื่อมต่อจะ Error ทันที",
+    "color": "text-sky-400"
+  }
+};
+  const quiz = { q: `หลัง DROP DATABASE ข้อมูลจะเป็นอย่างไร?`, opts: [{"val":"gone","label":"หายไปถาวร กู้คืนไม่ได้ (ถ้าไม่มี Backup)","correct":true},{"val":"trash","label":"ย้ายไปถังขยะ กู้คืนได้"},{"val":"hide","label":"ซ่อนไว้ แสดงได้ใหม่"}] };
+
+  return (
+    <SQLSyntaxEngine 
+      title="ผลกระทบจากการลบ"
+      description="เรียนรู้โครงสร้างคำสั่งหลักโดยการคลิกหรือนำเมาส์ไปชี้ที่ส่วนต่างๆ ของโค้ด"
+      icon={TerminalSquare}
+      codeParts={codeParts}
+      explanations={explanations}
+      quiz={quiz}
+    />
+  );
+}

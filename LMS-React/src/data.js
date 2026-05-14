@@ -1,4 +1,5 @@
 import oopCourse from './data/oopCourse.js';
+import sqlCourse from './data/sqlCourse.js';
 
 const courses = [
     {
@@ -320,7 +321,8 @@ const courses = [
         icon: "🚀",
         chapters: []
     },
-    oopCourse
+    oopCourse,
+    sqlCourse
 ];
 
 export default courses;

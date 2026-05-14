@@ -14,6 +14,7 @@
 - **ความโค้ง (Border Radius)**: ใช้ `rounded-2xl` หรือ `rounded-3xl` สำหรับกล่อง การ์ด หรือ Wrapper หลัก
 - **เอฟเฟกต์ (Interactive Animations)**: ทุกปุ่ม/การ์ดที่โต้ตอบหรือคลิกได้ ต้องมี `hover:-translate-y-1` หรือ `hover:scale-105` พร้อม `transition-all duration-300` เสมอ
 - **ความกลมกลืน (Seamless)**: สื่อ Interactive ต้องไม่มีขอบ (border) หรือเงา (shadow) ของตัวเองที่ดูแยกส่วนกับหน้าเว็บหลัก (`LessonViewer`)
+- **Ultimate Gamification & Simulators**: การสร้างเนื้อหาต้องไม่ใช้แค่ Card Click ธรรมดา แต่ต้องสร้าง **Mini-games** หรือ **Deep Simulators** ขั้นสูง (เช่น เกมยิงเลเซอร์, เกมแข่งรถจำลอง Index, Drag & Drop State Machine) เพื่อให้ความ Interactive สูงเทียบเท่าวิชา OOP หรือมากกว่า
 - **Explorer Pattern**: ทุก Component ควรใช้แนว Explorer Pattern (ดูรายละเอียดใน `skill-web-lms.md` ข้อ 4-5): Header + 2-column Interactive + Live Console + Step Explanation + Gamification
 - **SVG Flowcharts**: ใช้ SVG แทน Unicode/CSS สำหรับผังงาน คุณภาพเทียบ draw.io
 
@@ -44,6 +45,8 @@ LMS-React/
 - [2026-05-11] เพิ่ม Explorer Pattern และ Game-Based Learning ใน skill-web-lms.md
 - [2026-05-12] บันทึกโครงสร้างหลักสูตร (OOP และ การเขียนโปรแกรมเบื้องต้น) ลงใน `docs/curriculum/` เพื่อใช้เป็นฐานข้อมูลอ้างอิงถาวร
 - [2026-05-12] ปรับปรุงระบบ **Auto-Registry** ให้ `LessonViewer.jsx` โหลดสื่อ Interactive อัตโนมัติจากโฟลเดอร์ `interactive/` ทำให้ผู้สร้างเนื้อหาไม่ต้องเขียน Import เองอีกต่อไป
+- [2026-05-14] สร้างรายวิชา **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น (SQL / 21901-2001)** เสร็จสมบูรณ์ (6 หน่วย, 66 บทเรียน, 66 Interactive Components) พร้อมปรับให้ `skill-web-lms.md` รองรับการเขียน MySQL
+
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
 - **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)
 - **ทำไมใช้ Tailwind v4?**: เพื่อลดความซับซ้อนของ PostCSS ทำงานผ่าน Vite Plugin `@tailwindcss/vite` ตรงๆ

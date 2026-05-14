@@ -199,15 +199,15 @@ house2 = House("บ้านน้องแม็ค", "น้ำเงิน")<
             id: 3,
             title: "หน่วยที่ 3 การออกแบบ GUI",
             lessons: [
-                { id: "3.1", title: "พื้นฐานไลบรารี Tkinter", content: "<h2>สร้างหน้าต่างแรกด้วย Tkinter</h2><p>การเขียนโปรแกรมหน้าต่างกราฟิกใน Python ทำได้ง่ายๆ ผ่านไลบรารีมาตรฐานที่ชื่อ <code>tkinter</code></p><pre><code class=\"language-python\">import tkinter as tk\\n\\nroot = tk.Tk()\\nroot.mainloop()</code></pre>" },
-                { id: "3.2", title: "การสร้างหน้าต่างหลัก", content: "<h2>Window Object</h2><p>ตัวแปร <code>root</code> คือ Object หน้าต่างหลักที่เราต้องสร้างขึ้นมาก่อนสิ่งอื่นใด และต้องปิดท้ายด้วย <code>root.mainloop()</code> เพื่อให้หน้าต่างค้างอยู่บนจอ</p>" },
-                { id: "3.3", title: "ตั้งค่าขนาดและชื่อหน้าต่าง", content: "<h2>ปรับแต่งขนาดและชื่อ</h2><pre><code class=\"language-python\">root.title(\"โปรแกรมแรกของฉัน\")\\nroot.geometry(\"400x300\")  # กว้างxยาว</code></pre>" },
-                { id: "3.4", title: "การสร้างป้ายชื่อ (Label)", content: "<h2>แสดงข้อความด้วย Label</h2><p>Widget แรกที่ใช้แสดงตัวอักษร</p><pre><code class=\"language-python\">label = tk.Label(root, text=\"สวัสดีชาวโลก\")\\nlabel.pack()</code></pre>" },
-                { id: "3.5", title: "การสร้างช่องกรอก (Entry)", content: "<h2>รับข้อมูลด้วย Entry</h2><p>Widget สำหรับให้ผู้ใช้พิมพ์ข้อความลงไป 1 บรรทัด</p><pre><code class=\"language-python\">entry = tk.Entry(root)\\nentry.pack()</code></pre>" },
-                { id: "3.6", title: "การสร้างปุ่มกด (Button)", content: "<h2>สร้างปุ่มด้วย Button</h2><p>ปุ่มสามารถตั้งค่าให้ทำงานร่วมกับฟังก์ชันได้เมื่อถูกคลิก (ผ่าน <code>command=ฟังก์ชัน</code>)</p><pre><code class=\"language-python\">btn = tk.Button(root, text=\"คลิกฉัน\")\\nbtn.pack()</code></pre>" },
+                { id: "3.1", title: "พื้นฐานไลบรารี Tkinter", content: "<h2>สร้างหน้าต่างแรกด้วย Tkinter</h2><p>การเขียนโปรแกรมหน้าต่างกราฟิกใน Python ทำได้ง่ายๆ ผ่านไลบรารีมาตรฐานที่ชื่อ <code>tkinter</code></p><pre><code class=\"language-python\">import tkinter as tk\\n\\nroot = tk.Tk()\\nroot.mainloop()</code></pre>[TkinterIntroDemo]" },
+                { id: "3.2", title: "การสร้างหน้าต่างหลัก", content: "<h2>Window Object</h2><p>ตัวแปร <code>root</code> คือ Object หน้าต่างหลักที่เราต้องสร้างขึ้นมาก่อนสิ่งอื่นใด และต้องปิดท้ายด้วย <code>root.mainloop()</code> เพื่อให้หน้าต่างค้างอยู่บนจอ</p>[TkinterWindowDemo]" },
+                { id: "3.3", title: "ตั้งค่าขนาดและชื่อหน้าต่าง", content: "<h2>ปรับแต่งขนาดและชื่อ</h2><pre><code class=\"language-python\">root.title(\"โปรแกรมแรกของฉัน\")\\nroot.geometry(\"400x300\")  # กว้างxยาว</code></pre>[WindowConfigDemo]" },
+                { id: "3.4", title: "การสร้างป้ายชื่อ (Label)", content: "<h2>แสดงข้อความด้วย Label</h2><p>Widget แรกที่ใช้แสดงตัวอักษร</p><pre><code class=\"language-python\">label = tk.Label(root, text=\"สวัสดีชาวโลก\")\\nlabel.pack()</code></pre>[TkinterLabelDemo]" },
+                { id: "3.5", title: "การสร้างช่องกรอก (Entry)", content: "<h2>รับข้อมูลด้วย Entry</h2><p>Widget สำหรับให้ผู้ใช้พิมพ์ข้อความลงไป 1 บรรทัด</p><pre><code class=\"language-python\">entry = tk.Entry(root)\\nentry.pack()</code></pre>[TkinterEntryDemo]" },
+                { id: "3.6", title: "การสร้างปุ่มกด (Button)", content: "<h2>สร้างปุ่มด้วย Button</h2><p>ปุ่มสามารถตั้งค่าให้ทำงานร่วมกับฟังก์ชันได้เมื่อถูกคลิก (ผ่าน <code>command=ฟังก์ชัน</code>)</p><pre><code class=\"language-python\">btn = tk.Button(root, text=\"คลิกฉัน\")\\nbtn.pack()</code></pre>[TkinterButtonDemo]" },
                 { id: "3.7", title: "การจัดวางแบบ Grid และ Pack", content: "<h2>Layout Manager</h2><p>ลองเล่นกับเครื่องมือจำลองการจัดวางดูสิ ว่า Pack กับ Grid ต่างกันอย่างไร</p>[TkinterPreviewer]" },
-                { id: "3.8", title: "การสร้างกล่องเลือก (Combo)", content: "<h2>Combobox (Dropdown)</h2><p>ส่วนขยาย <code>ttk</code> (Themed Tkinter) ช่วยให้เราสร้าง Dropdown ได้สวยงามขึ้น</p><pre><code class=\"language-python\">from tkinter import ttk\\ncombo = ttk.Combobox(root, values=[\"A\", \"B\", \"C\"])\\ncombo.pack()</code></pre>" },
-                { id: "3.9", title: "การปรับแต่งสีและฟอนต์", content: "<h2>Styling</h2><p>เราสามารถแต่งสีข้อความ (fg), สีพื้นหลัง (bg) และฟอนต์ได้ เช่น <code>font=(\"Arial\", 16)</code>, <code>bg=\"#FF0000\"</code></p>" }
+                { id: "3.8", title: "การสร้างกล่องเลือก (Combo)", content: "<h2>Combobox (Dropdown)</h2><p>ส่วนขยาย <code>ttk</code> (Themed Tkinter) ช่วยให้เราสร้าง Dropdown ได้สวยงามขึ้น</p><pre><code class=\"language-python\">from tkinter import ttk\\ncombo = ttk.Combobox(root, values=[\"A\", \"B\", \"C\"])\\ncombo.pack()</code></pre>[TkinterComboDemo]" },
+                { id: "3.9", title: "การปรับแต่งสีและฟอนต์", content: "<h2>Styling</h2><p>เราสามารถแต่งสีข้อความ (fg), สีพื้นหลัง (bg) และฟอนต์ได้ เช่น <code>font=(\"Arial\", 16)</code>, <code>bg=\"#FF0000\"</code></p>[TkinterStyleDemo]" }
             ],
             quiz: [
                 { question: "ไลบรารีใดใน Python ที่ใช้สำหรับสร้างหน้าต่าง GUI ตามมาตรฐาน?", options: ["PyGame", "Django", "Tkinter", "Requests"], answer: 2 },
@@ -236,13 +236,13 @@ house2 = House("บ้านน้องแม็ค", "น้ำเงิน")<
             title: "หน่วยที่ 4 การทดสอบโค้ด",
             lessons: [
                 { id: "4.1", title: "ดักจับ Error (Try-Except)", content: "<h2>การจัดการข้อผิดพลาด</h2><p>โปรแกรมที่ดีต้องไม่ล่มเมื่อผู้ใช้กรอกข้อมูลผิดพลาด เราใช้บล็อก <code>try...except</code> เพื่อดักจับ Error</p>[TryExceptDemo]" },
-                { id: "4.2", title: "ใช้ Debugger ใน VS Code", content: "<h2>การดีบักโปรแกรม</h2><p>VS Code มีเครื่องมือ Debugger ที่ให้เราหยุดการทำงานของโปรแกรมชั่วคราว (Breakpoint) และดูค่าตัวแปรได้ทีละบรรทัด</p>" },
-                { id: "4.3", title: "การอ่าน Error ใน Terminal", content: "<h2>เข้าใจ Error Message</h2><p>เมื่อโปรแกรมเกิดข้อผิดพลาด Python จะพิมพ์ Traceback ออกมา ซึ่งจะบอกว่าเกิดบรรทัดไหน และเป็น Error ชนิดใด (เช่น ValueError, TypeError)</p>" },
-                { id: "4.4", title: "การเขียน Unit Test", content: "<h2>ทดสอบระบบย่อย</h2><p>การเขียนโค้ดเพื่อทดสอบโค้ดอีกที (Automated Testing) ด้วยไลบรารี <code>unittest</code> ช่วยให้มั่นใจว่าฟังก์ชันทำงานถูกต้องเสมอ</p>" },
-                { id: "4.5", title: "การแปลงชนิดข้อมูล (Casting)", content: "<h2>Type Casting ในระบบ</h2><p>ข้อมูลที่รับจาก Entry จะเป็นข้อความ (String) เสมอ เราต้องใช้ <code>int()</code> หรือ <code>float()</code> เพื่อนำไปคำนวณ</p>" },
-                { id: "4.6", title: "การตรวจสอบข้อมูล (Validation)", content: "<h2>ตรวจสอบก่อนบันทึก</h2><p>ก่อนนำข้อมูลไปประมวลผล ต้องเช็คก่อนว่าผู้ใช้ไม่ได้ปล่อยช่องว่างไว้ หรือกรอกข้อมูลผิดประเภท</p>" },
-                { id: "4.7", title: "การบันทึกไฟล์ JSON", content: "<h2>ทำงานร่วมกับ JSON</h2><p>ในโปรเจกต์ที่เราไม่มีฐานข้อมูล เราสามารถบันทึกข้อมูลของระบบให้อยู่ในรูปแบบไฟล์ .json ได้ง่ายๆ ด้วยไลบรารี <code>json</code></p>" },
-                { id: "4.8", title: "การทดสอบตรรกะคำนวณ", content: "<h2>ทดสอบ Business Logic</h2><p>ทดลองรันโค้ดและส่งค่าที่ถูกต้อง, ค่าที่ผิดปกติ และค่าขอบเขต (Boundary Value) เพื่อดูว่าโปรแกรมทำงานรอดหรือไม่</p>" }
+                { id: "4.2", title: "ใช้ Debugger ใน VS Code", content: "<h2>การดีบักโปรแกรม</h2><p>VS Code มีเครื่องมือ Debugger ที่ให้เราหยุดการทำงานของโปรแกรมชั่วคราว (Breakpoint) และดูค่าตัวแปรได้ทีละบรรทัด</p>[DebuggerGuideDemo]" },
+                { id: "4.3", title: "การอ่าน Error ใน Terminal", content: "<h2>เข้าใจ Error Message</h2><p>เมื่อโปรแกรมเกิดข้อผิดพลาด Python จะพิมพ์ Traceback ออกมา ซึ่งจะบอกว่าเกิดบรรทัดไหน และเป็น Error ชนิดใด (เช่น ValueError, TypeError)</p>[ErrorReadingDemo]" },
+                { id: "4.4", title: "การเขียน Unit Test", content: "<h2>ทดสอบระบบย่อย</h2><p>การเขียนโค้ดเพื่อทดสอบโค้ดอีกที (Automated Testing) ด้วยไลบรารี <code>unittest</code> ช่วยให้มั่นใจว่าฟังก์ชันทำงานถูกต้องเสมอ</p>[UnitTestDemo]" },
+                { id: "4.5", title: "การแปลงชนิดข้อมูล (Casting)", content: "<h2>Type Casting ในระบบ</h2><p>ข้อมูลที่รับจาก Entry จะเป็นข้อความ (String) เสมอ เราต้องใช้ <code>int()</code> หรือ <code>float()</code> เพื่อนำไปคำนวณ</p>[TypeCastingDemo]" },
+                { id: "4.6", title: "การตรวจสอบข้อมูล (Validation)", content: "<h2>ตรวจสอบก่อนบันทึก</h2><p>ก่อนนำข้อมูลไปประมวลผล ต้องเช็คก่อนว่าผู้ใช้ไม่ได้ปล่อยช่องว่างไว้ หรือกรอกข้อมูลผิดประเภท</p>[ValidationDemo]" },
+                { id: "4.7", title: "การบันทึกไฟล์ JSON", content: "<h2>ทำงานร่วมกับ JSON</h2><p>ในโปรเจกต์ที่เราไม่มีฐานข้อมูล เราสามารถบันทึกข้อมูลของระบบให้อยู่ในรูปแบบไฟล์ .json ได้ง่ายๆ ด้วยไลบรารี <code>json</code></p>[JsonFileDemo]" },
+                { id: "4.8", title: "การทดสอบตรรกะคำนวณ", content: "<h2>ทดสอบ Business Logic</h2><p>ทดลองรันโค้ดและส่งค่าที่ถูกต้อง, ค่าที่ผิดปกติ และค่าขอบเขต (Boundary Value) เพื่อดูว่าโปรแกรมทำงานรอดหรือไม่</p>[CalcLogicTestDemo]" }
             ],
             quiz: [
                 { question: "คำสั่งใดใช้สำหรับดักจับข้อผิดพลาดไม่ให้โปรแกรมพังปิดตัวเอง?", options: ["if...else", "try...except", "switch...case", "for...in"], answer: 1 },
@@ -262,14 +262,14 @@ house2 = House("บ้านน้องแม็ค", "น้ำเงิน")<
             id: 5,
             title: "หน่วยที่ 5 โปรเจกต์ธุรกิจ",
             lessons: [
-                { id: "5.1", title: "วิเคราะห์โจทย์ธุรกิจ", content: "<h2>Requirement Analysis</h2><p>เราจะพัฒนาระบบขายของหน้าร้าน (POS) โดยวิเคราะห์ก่อนว่าระบบต้องเก็บบันทึกอะไรบ้าง เช่น รหัสสินค้า ชื่อสินค้า ราคา และตะกร้าสินค้า</p>" },
+                { id: "5.1", title: "วิเคราะห์โจทย์ธุรกิจ", content: "<h2>Requirement Analysis</h2><p>เราจะพัฒนาระบบขายของหน้าร้าน (POS) โดยวิเคราะห์ก่อนว่าระบบต้องเก็บบันทึกอะไรบ้าง เช่น รหัสสินค้า ชื่อสินค้า ราคา และตะกร้าสินค้า</p>[BusinessAnalysisDemo]" },
                 { id: "5.2", title: "เขียนแผนผังคลาส (UML)", content: "<h2>Class Diagram</h2><p>การเขียนแผนภาพคลาสเพื่อแสดงความสัมพันธ์ระหว่าง <code>Product</code> และ <code>Cart</code> ก่อนลงมือเขียนโค้ดจริง</p>[POSProjectUML]" },
-                { id: "5.3", title: "การแยกไฟล์โมเดลข้อมูล", content: "<h2>แยกส่วนประกอบ (MVC)</h2><p>เราจะไม่เขียนโค้ดทั้งหมดลงในไฟล์เดียว แต่จะแยกไฟล์ <code>models.py</code> (สำหรับ Class) และ <code>main.py</code> (สำหรับ GUI) ออกจากกัน</p>" },
-                { id: "5.4", title: "การเชื่อม GUI กับตรรกะ", content: "<h2>ผูก UI เข้ากับโค้ดหลัก</h2><p>สร้างฟังก์ชันให้เมื่อกดปุ่ม 'เพิ่มลงตะกร้า' ให้ระบบทำการสร้างออบเจ็กต์ Product และเก็บลงในออบเจ็กต์ Cart</p>" },
-                { id: "5.5", title: "พัฒนาระบบขายของ (POS)", content: "<h2>สร้างระบบขายหน้าร้าน</h2><p>ประกอบร่าง GUI ด้วย Tkinter และนำ Data Model มาผูกเข้าด้วยกัน เพื่อแสดงราคารวมและรายการสินค้าแบบ Real-time</p>" },
-                { id: "5.6", title: "การทดสอบระบบรวม (E2E)", content: "<h2>End-to-End Testing</h2><p>ทดลองเป็นผู้ใช้จริงโดยคลิกเลือกสินค้า ลบสินค้า และคำนวณเงินทอน เพื่อหาบั๊กในระบบ</p>" },
-                { id: "5.7", title: "การเขียนคู่มือการใช้งาน", content: "<h2>User Manual</h2><p>เขียนวิธีใช้โปรแกรมแบบสั้นๆ ให้ผู้ที่นำโปรแกรมเราไปใช้สามารถทำความเข้าใจได้ง่าย</p>" },
-                { id: "5.8", title: "การนำเสนอและสาธิตผลงาน", content: "<h2>Presentation</h2><p>ฝึกฝนการอธิบายโค้ด (Code Walkthrough) และการโชว์ผลลัพธ์ (Demo) ให้เพื่อนและอาจารย์ดู</p>" }
+                { id: "5.3", title: "การแยกไฟล์โมเดลข้อมูล", content: "<h2>แยกส่วนประกอบ (MVC)</h2><p>เราจะไม่เขียนโค้ดทั้งหมดลงในไฟล์เดียว แต่จะแยกไฟล์ <code>models.py</code> (สำหรับ Class) และ <code>main.py</code> (สำหรับ GUI) ออกจากกัน</p>[ModelSeparationDemo]" },
+                { id: "5.4", title: "การเชื่อม GUI กับตรรกะ", content: "<h2>ผูก UI เข้ากับโค้ดหลัก</h2><p>สร้างฟังก์ชันให้เมื่อกดปุ่ม 'เพิ่มลงตะกร้า' ให้ระบบทำการสร้างออบเจ็กต์ Product และเก็บลงในออบเจ็กต์ Cart</p>[GUILogicConnectDemo]" },
+                { id: "5.5", title: "พัฒนาระบบขายของ (POS)", content: "<h2>สร้างระบบขายหน้าร้าน</h2><p>ประกอบร่าง GUI ด้วย Tkinter และนำ Data Model มาผูกเข้าด้วยกัน เพื่อแสดงราคารวมและรายการสินค้าแบบ Real-time</p>[POSSystemDemo]" },
+                { id: "5.6", title: "การทดสอบระบบรวม (E2E)", content: "<h2>End-to-End Testing</h2><p>ทดลองเป็นผู้ใช้จริงโดยคลิกเลือกสินค้า ลบสินค้า และคำนวณเงินทอน เพื่อหาบั๊กในระบบ</p>[E2ETestDemo]" },
+                { id: "5.7", title: "การเขียนคู่มือการใช้งาน", content: "<h2>User Manual</h2><p>เขียนวิธีใช้โปรแกรมแบบสั้นๆ ให้ผู้ที่นำโปรแกรมเราไปใช้สามารถทำความเข้าใจได้ง่าย</p>[UserManualDemo]" },
+                { id: "5.8", title: "การนำเสนอและสาธิตผลงาน", content: "<h2>Presentation</h2><p>ฝึกฝนการอธิบายโค้ด (Code Walkthrough) และการโชว์ผลลัพธ์ (Demo) ให้เพื่อนและอาจารย์ดู</p>[PresentationDemo]" }
             ],
             quiz: [
                 { question: "ทำไมเราจึงต้องเขียน Class Diagram (UML) ก่อนการเขียนโค้ดจริง?", options: ["เพื่อสร้างหน้าจอให้สวยงาม", "เพื่อให้รันโค้ดได้เร็วขึ้น", "เพื่อวางแผนและเห็นภาพรวมความสัมพันธ์ของคลาส", "เพื่อให้คอมพิวเตอร์แปลงเป็นโค้ดอัตโนมัติ"], answer: 2 },
