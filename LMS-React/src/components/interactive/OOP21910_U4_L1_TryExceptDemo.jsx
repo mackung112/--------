@@ -73,9 +73,9 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2">
-        {/* Left: Code & Controls */}
-        <div className="p-6 md:p-8 bg-slate-50 border-r border-slate-200 flex flex-col">
+      <div className="flex flex-col">
+        {/* Top: Code & Controls */}
+        <div className="p-6 md:p-8 bg-slate-50 flex flex-col">
           
           <div className="mb-6 flex gap-4">
             <button
@@ -157,9 +157,9 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
           </div>
         </div>
 
-        {/* Right: Terminal Output */}
-        <div className="bg-black p-6 flex flex-col font-mono text-sm">
-          <div className="flex items-center justify-between text-slate-400 mb-4 pb-2 border-b border-slate-800">
+        {/* Bottom Full-Width Console Output (VS Code Style) */}
+        <div className="h-48 bg-[#1e1e1e] p-4 flex flex-col font-mono text-[13px] border-t border-slate-800 shadow-inner w-full relative">
+          <div className="flex items-center justify-between text-slate-400 mb-3 pb-2 border-b border-slate-800">
             <div className="flex items-center gap-2">
               <Terminal className="w-5 h-5" /> <span>Terminal Output</span>
             </div>
