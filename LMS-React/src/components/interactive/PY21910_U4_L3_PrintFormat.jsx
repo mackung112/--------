@@ -5,7 +5,7 @@ const examples = [
   { code: 'print("A", "B", sep="-")', output: 'A-B', note: 'เปลี่ยน sep เป็น -' },
   { code: 'print("Hello", end="!\\n")', output: 'Hello!', note: 'เปลี่ยน end จาก \\n เป็น !' },
   { code: 'print(f"ราคา {100*1.07:.2f} บาท")', output: 'ราคา 107.00 บาท', note: 'f-string จัดทศนิยม 2 ตำแหน่ง' },
-  { code: 'print(f"{"Python":>10}")', output: '    Python', note: 'จัดชิดขวา 10 ตำแหน่ง' },
+  { code: 'print(f"{"Python":\>10}")', output: '    Python', note: 'จัดชิดขวา 10 ตำแหน่ง' },
 ];
 
 export default function PY21910_U4_L3_PrintFormat() {
@@ -19,11 +19,10 @@ export default function PY21910_U4_L3_PrintFormat() {
           <button key={i} onClick={() => setActive(i)} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${active === i ? 'bg-indigo-500 text-white shadow-lg' : 'bg-gray-100 text-gray-600'}`}>รูปแบบ {i + 1}</button>
         ))}
       </div>
-      
       <div className="mt-3 bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-700 text-center max-w-lg mx-auto">
         💡 {examples[active].note}
       </div>
-    
+
       {/* Bottom Full-Width Console Output (VS Code Style) */}
       <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
         <div className="text-green-400 mb-3">{examples[active].code}</div>

@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
-import { Briefcase, Users, ShoppingCart, ClipboardList, CheckCircle2, XCircle, AlertCircle, RotateCcw, ArrowRight, Check } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Briefcase, Users, ShoppingCart, ClipboardList, ArrowRight, RotateCcw } from 'lucide-react';
 
 export default function OOP21910_U5_L1_BusinessAnalysisDemo() {
   const [selectedActors, setSelectedActors] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
-  const showToast = (msg, type) => { setToast({ show: true, message: msg, type }); setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000); };
+  const [analyzed, setAnalyzed] = useState(false);
+  
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Business Analyst Workspace initialized.' },
+    { type: 'system', text: 'Waiting for requirement analysis...' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const scenario = {
     title: '☕ ร้านกาแฟ Coffee OOP',
@@ -26,97 +33,198 @@ export default function OOP21910_U5_L1_BusinessAnalysisDemo() {
     { id: 'order', name: 'รับออเดอร์', class: 'Order', correct: true },
     { id: 'calc', name: 'คำนวณราคารวม', class: 'Calculator', correct: true },
     { id: 'receipt', name: 'ออกใบเสร็จ', class: 'Receipt', correct: true },
-    { id: 'game', name: 'เล่นเกมมินิ', class: '???', correct: false },
+    { id: 'game', name: 'เล่นเกมมินิ', class: 'Game', correct: false },
     { id: 'report', name: 'รายงานยอดขาย', class: 'Report', correct: true },
   ];
 
-  const toggleActor = (id) => setSelectedActors(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
-  const toggleFeature = (id) => setSelectedFeatures(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  const toggleActor = (id) => {
+    setSelectedActors(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    setAnalyzed(false);
+  };
+  const toggleFeature = (id) => {
+    setSelectedFeatures(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    setAnalyzed(false);
+  };
 
   const checkAnalysis = () => {
+    setAnalyzed(true);
     const correctActors = actors.filter(a => a.correct).map(a => a.id);
     const correctFeatures = features.filter(f => f.correct).map(f => f.id);
+    
     const actorsOk = correctActors.every(a => selectedActors.includes(a)) && !selectedActors.some(a => !correctActors.includes(a));
     const featuresOk = correctFeatures.every(f => selectedFeatures.includes(f)) && !selectedFeatures.some(f => !correctFeatures.includes(f));
-    if (actorsOk && featuresOk) showToast('ยอดเยี่ยม! วิเคราะห์โจทย์ได้ถูกต้องครบถ้วน 🎉', 'success');
-    else showToast('ยังไม่ครบ — ลองอ่านโจทย์อีกครั้งแล้วเลือกใหม่', 'error');
+    
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `$ analyze_requirements(actors=${selectedActors.length}, features=${selectedFeatures.length})` }
+    ]);
+
+    if (!actorsOk) {
+      setConsoleHistory(prev => [...prev, { type: 'error', text: `❌ FAIL: Actor analysis is incorrect. Please re-read the scenario.` }]);
+    } else {
+      setConsoleHistory(prev => [...prev, { type: 'system', text: `✅ PASS: Actors correctly identified.` }]);
+    }
+
+    if (!featuresOk) {
+      setConsoleHistory(prev => [...prev, { type: 'error', text: `❌ FAIL: Feature analysis is incorrect. Please select only required features.` }]);
+    } else {
+      setConsoleHistory(prev => [...prev, { type: 'system', text: `✅ PASS: Features correctly identified.` }]);
+    }
+
+    if (actorsOk && featuresOk) {
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'output', text: `==============================================================` },
+        { type: 'output', text: `🎉 SUCCESS: System Requirements Document (SRD) Approved.` },
+        { type: 'output', text: `Ready to proceed to Class Design phase.` }
+      ]);
+    }
+  };
+
+  const clear = () => {
+    setSelectedActors([]);
+    setSelectedFeatures([]);
+    setAnalyzed(false);
+    setConsoleHistory([
+      { type: 'system', text: 'Workspace reset. Ready for analysis.' }
+    ]);
   };
 
   return (
-    <div className="space-y-12 my-8">
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-amber-600 to-orange-700 text-white p-5 flex items-center gap-3">
-          <Briefcase size={24} />
-          <h3 className="font-bold text-lg">วิเคราะห์โจทย์ธุรกิจ</h3>
-        </div>
-
-        <div className="p-6">
-          {/* Scenario */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6">
-            <h4 className="text-xl font-bold text-amber-800 mb-2">{scenario.title}</h4>
-            <p className="text-amber-700 leading-relaxed">{scenario.desc}</p>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-amber-100 text-amber-600 rounded-lg">
+            <Briefcase size={20} className="stroke-2" />
           </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">วิเคราะห์ความต้องการของระบบ (Requirement Analysis)</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          ขั้นตอนแรกสุดของการทำโปรเจกต์คือ <strong>การอ่านโจทย์ธุรกิจ</strong> เพื่อระบุผู้ใช้งาน (Actors) และความสามารถหลักที่ระบบต้องมี (Features)
+        </p>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Actors */}
-            <div>
-              <h4 className="font-bold text-slate-700 mb-3 flex items-center gap-2"><Users size={18} /> เลือก Actor (ผู้ใช้ระบบ)</h4>
-              <div className="space-y-2">
-                {actors.map(a => (
-                  <button key={a.id} onClick={() => toggleActor(a.id)}
-                    className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center gap-3 ${selectedActors.includes(a.id) ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 hover:border-slate-300'}`}>
-                    <span className="text-2xl">{a.icon}</span>
-                    <span className="font-semibold text-slate-700">{a.name}</span>
-                    {selectedActors.includes(a.id) && <Check size={16} className="ml-auto text-indigo-600" />}
-                  </button>
-                ))}
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Interactive Analysis Form */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+              {/* Actors Panel */}
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                <h4 className="font-bold text-slate-700 mb-4 flex items-center gap-2 border-b border-slate-100 pb-2">
+                  <Users size={18} className="text-blue-500" /> เลือก Actor (ผู้ใช้งาน)
+                </h4>
+                <div className="space-y-2">
+                  {actors.map(a => {
+                    const isSelected = selectedActors.includes(a.id);
+                    const showFeedback = analyzed;
+                    let borderClass = isSelected ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 hover:border-slate-300 bg-white';
+                    
+                    if (showFeedback) {
+                      if (isSelected && a.correct) borderClass = 'border-emerald-500 bg-emerald-50';
+                      if (isSelected && !a.correct) borderClass = 'border-red-500 bg-red-50';
+                      if (!isSelected && a.correct) borderClass = 'border-orange-400 bg-orange-50 border-dashed';
+                    }
+
+                    return (
+                      <button key={a.id} onClick={() => toggleActor(a.id)}
+                        className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center gap-3 shadow-sm ${borderClass}`}>
+                        <span className="text-2xl">{a.icon}</span>
+                        <span className="font-semibold text-slate-700 text-sm flex-1">{a.name}</span>
+                        {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-sm" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Features Panel */}
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                <h4 className="font-bold text-slate-700 mb-4 flex items-center gap-2 border-b border-slate-100 pb-2">
+                  <ClipboardList size={18} className="text-emerald-500" /> เลือก Feature (ฟังก์ชัน)
+                </h4>
+                <div className="space-y-2">
+                  {features.map(f => {
+                    const isSelected = selectedFeatures.includes(f.id);
+                    const showFeedback = analyzed;
+                    let borderClass = isSelected ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-slate-300 bg-white';
+                    
+                    if (showFeedback) {
+                      if (isSelected && f.correct) borderClass = 'border-emerald-500 bg-emerald-50';
+                      if (isSelected && !f.correct) borderClass = 'border-red-500 bg-red-50';
+                      if (!isSelected && f.correct) borderClass = 'border-orange-400 bg-orange-50 border-dashed';
+                    }
+
+                    return (
+                      <button key={f.id} onClick={() => toggleFeature(f.id)}
+                        className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center gap-3 shadow-sm ${borderClass}`}>
+                        <span className="font-semibold text-slate-700 text-sm flex-1">{f.name}</span>
+                        {isSelected && <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-mono font-bold border border-emerald-200">{f.class}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
-            {/* Features */}
-            <div>
-              <h4 className="font-bold text-slate-700 mb-3 flex items-center gap-2"><ClipboardList size={18} /> เลือก Feature (ฟีเจอร์ที่ต้องมี)</h4>
-              <div className="space-y-2">
-                {features.map(f => (
-                  <button key={f.id} onClick={() => toggleFeature(f.id)}
-                    className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center gap-3 ${selectedFeatures.includes(f.id) ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-slate-300'}`}>
-                    <span className="font-semibold text-slate-700 flex-1">{f.name}</span>
-                    {selectedFeatures.includes(f.id) && <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-mono">{f.class}</span>}
-                  </button>
-                ))}
-              </div>
+            <div className="mt-6 flex gap-3">
+              <button onClick={checkAnalysis} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2">
+                ตรวจคำตอบ <ArrowRight size={18} />
+              </button>
+              <button onClick={clear} className="bg-white border border-slate-300 text-slate-600 hover:bg-slate-100 px-4 py-3 rounded-xl font-bold transition-all flex items-center justify-center shadow-sm">
+                <RotateCcw size={18} />
+              </button>
             </div>
+
           </div>
 
-          <button onClick={checkAnalysis} className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md flex items-center gap-2 mx-auto">
-            ตรวจคำตอบ <ArrowRight size={16} />
-          </button>
-        </div>
-      </section>
+          {/* Right: Info / Scenario */}
+          <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col border-l border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โจทย์ธุรกิจ (Business Scenario)</h4>
+            
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6 shadow-sm">
+              <h4 className="text-base font-bold text-amber-900 mb-3 pb-2 border-b border-amber-200/50">{scenario.title}</h4>
+              <p className="text-sm text-amber-800/90 leading-relaxed indent-4">{scenario.desc}</p>
+            </div>
 
-      {/* Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">ขั้นตอนแรกของการทำโปรเจกต์ธุรกิจคืออะไร?</p>
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'analyze', label: 'วิเคราะห์โจทย์ — ระบุ Actor, Feature, และ Class ที่ต้องสร้าง', correct: true },
-            { val: 'code', label: 'เริ่มเขียนโค้ดทันที' },
-            { val: 'gui', label: 'ออกแบบ GUI ก่อน' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' : quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' : quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'}`}>
-              {opt.label}
-            </button>
-          ))}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex-1">
+              <h5 className="font-bold text-slate-700 text-sm mb-2">💡 ทริคการวิเคราะห์</h5>
+              <ul className="text-xs text-slate-600 space-y-3 leading-relaxed">
+                <li className="flex gap-2">
+                  <span className="text-indigo-500 font-bold">•</span>
+                  <span><strong>Actor</strong> คือ คนหรือระบบภายนอกที่มีส่วนเกี่ยวข้องกับโปรแกรมนี้โดยตรง</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-emerald-500 font-bold">•</span>
+                  <span><strong>Feature</strong> คือ สิ่งที่โปรแกรมต้องทำได้ (Requirement) มักจะกลายมาเป็น Class หรือ Method ในขั้นตอนต่อไป</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => { if (!quizAnswer) { showToast('เลือกคำตอบก่อน', 'warning'); return; } setQuizChecked(true); showToast(quizAnswer === 'analyze' ? 'ถูกต้อง!' : 'ไม่ถูกต้อง', quizAnswer === 'analyze' ? 'success' : 'error'); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
 
-      {toast.show && (<div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>{toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}{toast.type === 'error' && <XCircle className="text-red-500" />}{toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}<div className="font-medium">{toast.message}</div></div>)}
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Analysis Log</span>
+            </div>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

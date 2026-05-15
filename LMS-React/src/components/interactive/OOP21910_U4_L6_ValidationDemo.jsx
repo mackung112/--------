@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
-import { ShieldCheck, Check, X, CheckCircle2, XCircle, AlertCircle, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ShieldCheck, Check, X, RotateCcw, Send } from 'lucide-react';
 
 export default function OOP21910_U4_L6_ValidationDemo() {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
-  const showToast = (msg, type) => { setToast({ show: true, message: msg, type }); setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000); };
+  
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Validation System initialized. Waiting for form submission...' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const validations = [
     { field: 'ชื่อ', value: name, rules: [
@@ -32,79 +37,153 @@ export default function OOP21910_U4_L6_ValidationDemo() {
 
   const handleSubmit = () => {
     setSubmitted(true);
-    if (allPassed) showToast('ข้อมูลถูกต้องครบถ้วน! ส่งข้อมูลสำเร็จ', 'success');
-    else showToast('กรุณาแก้ไขข้อมูลที่ไม่ผ่านการตรวจสอบ', 'error');
+    
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `$ validate_form(name="${name}", age="${age}", email="${email}")` }
+    ]);
+
+    validations.forEach(v => {
+      const fieldPassed = v.rules.every(r => r.pass);
+      if (!fieldPassed) {
+        const failedRules = v.rules.filter(r => !r.pass).map(r => r.label).join(', ');
+        setConsoleHistory(prev => [...prev, { type: 'error', text: `  [FAIL] ${v.field}: Failed rules -> ${failedRules}` }]);
+      } else {
+        setConsoleHistory(prev => [...prev, { type: 'system', text: `  [PASS] ${v.field}: Valid.` }]);
+      }
+    });
+
+    if (allPassed) {
+      setConsoleHistory(prev => [...prev, { type: 'output', text: `✅ SUCCESS: All fields are valid. Form submitted.` }]);
+    } else {
+      setConsoleHistory(prev => [...prev, { type: 'error', text: `❌ ERROR: Form validation failed. Please fix errors.` }]);
+    }
+  };
+
+  const clear = () => {
+    setName(''); setAge(''); setEmail(''); setSubmitted(false);
+    setConsoleHistory([
+      { type: 'system', text: 'Form and Validation System reset.' }
+    ]);
   };
 
   return (
-    <div className="space-y-12 my-8">
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-5 flex items-center gap-3">
-          <ShieldCheck size={24} />
-          <h3 className="font-bold text-lg">ทดลองระบบ Validation แบบ Real-time</h3>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+            <ShieldCheck size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การตรวจสอบความถูกต้องของข้อมูล (Validation)</h3>
         </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          ก่อนนำข้อมูลไปประมวลผล ควรสร้างเงื่อนไข (Rules) ตรวจสอบความถูกต้องเสมอ เพื่อป้องกัน Error ที่อาจทำให้โปรแกรมพัง
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-          {/* Form */}
-          <div className="p-6 bg-slate-50 border-r border-slate-200 space-y-4">
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1">ชื่อ</label>
-              <input type="text" value={name} onChange={e => setName(e.target.value)} className={`w-full border-2 rounded-lg px-3 py-2 outline-none transition-colors ${submitted && !validations[0].rules.every(r => r.pass) ? 'border-red-400 bg-red-50' : 'border-slate-300 focus:border-indigo-500'}`} placeholder="กรอกชื่อ..." />
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Form Input */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex-1">
+              <h4 className="font-bold text-slate-800 text-center mb-6">ฟอร์มลงทะเบียน</h4>
+              
+              <div className="space-y-4 max-w-sm mx-auto">
+                <div>
+                  <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">ชื่อ (Name)</label>
+                  <input type="text" value={name} onChange={e => setName(e.target.value)} 
+                    className={`w-full border-2 rounded-lg px-4 py-2.5 text-sm outline-none transition-all ${submitted && !validations[0].rules.every(r => r.pass) ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 bg-white'}`} 
+                    placeholder="กรอกชื่อ-นามสกุล..." />
+                </div>
+                
+                <div>
+                  <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">อายุ (Age)</label>
+                  <input type="text" value={age} onChange={e => setAge(e.target.value)} 
+                    className={`w-full border-2 rounded-lg px-4 py-2.5 text-sm outline-none transition-all ${submitted && !validations[1].rules.every(r => r.pass) ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 bg-white'}`} 
+                    placeholder="ตัวเลขเท่านั้น เช่น 20..." />
+                </div>
+                
+                <div>
+                  <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">อีเมล (Email)</label>
+                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} 
+                    className={`w-full border-2 rounded-lg px-4 py-2.5 text-sm outline-none transition-all ${submitted && !validations[2].rules.every(r => r.pass) ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200' : 'border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 bg-white'}`} 
+                    placeholder="example@email.com" />
+                </div>
+
+                <div className="pt-4 flex gap-3">
+                  <button onClick={handleSubmit} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <Send size={16} fill="currentColor" className="text-indigo-100" /> ส่งข้อมูล (Submit)
+                  </button>
+                  <button onClick={clear} className="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 rounded-xl font-bold transition-all flex items-center justify-center">
+                    <RotateCcw size={16} />
+                  </button>
+                </div>
+              </div>
+
             </div>
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1">อายุ</label>
-              <input type="text" value={age} onChange={e => setAge(e.target.value)} className={`w-full border-2 rounded-lg px-3 py-2 outline-none transition-colors ${submitted && !validations[1].rules.every(r => r.pass) ? 'border-red-400 bg-red-50' : 'border-slate-300 focus:border-indigo-500'}`} placeholder="กรอกอายุ..." />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1">อีเมล</label>
-              <input type="text" value={email} onChange={e => setEmail(e.target.value)} className={`w-full border-2 rounded-lg px-3 py-2 outline-none transition-colors ${submitted && !validations[2].rules.every(r => r.pass) ? 'border-red-400 bg-red-50' : 'border-slate-300 focus:border-indigo-500'}`} placeholder="กรอกอีเมล..." />
-            </div>
-            <button onClick={handleSubmit} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold transition-all shadow-md">ส่งข้อมูล</button>
+
           </div>
 
-          {/* Validation Results */}
-          <div className="p-6 space-y-4">
-            <h4 className="font-bold text-slate-700 flex items-center gap-2"><ShieldCheck size={16} /> ผลการตรวจสอบ</h4>
-            {validations.map((v, i) => (
-              <div key={i} className="bg-white border border-slate-200 rounded-xl p-4">
-                <div className="font-bold text-slate-700 text-sm mb-2">{v.field}: <span className="font-mono text-indigo-600">{v.value || '(ว่าง)'}</span></div>
-                <div className="space-y-1">
-                  {v.rules.map((r, j) => (
-                    <div key={j} className={`flex items-center gap-2 text-sm ${r.pass ? 'text-emerald-600' : 'text-red-500'}`}>
-                      {r.pass ? <Check size={14} /> : <X size={14} />}
-                      {r.label}
+          {/* Right: Validation Results */}
+          <div className="w-full lg:w-[420px] bg-slate-800 p-6 flex flex-col" style={{ backgroundImage: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-400 mb-4 flex items-center gap-2">
+              <ShieldCheck size={16} /> กฎการตรวจสอบ (Rules)
+            </h4>
+            
+            <div className="space-y-4 flex-1">
+              {validations.map((v, i) => (
+                <div key={i} className={`bg-slate-900/80 border rounded-xl p-4 transition-all ${submitted ? (v.rules.every(r => r.pass) ? 'border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : 'border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.1)]') : 'border-slate-700'}`}>
+                  <div className="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
+                    <div className="font-bold text-slate-300 text-sm">{v.field}</div>
+                    <div className="font-mono text-xs text-indigo-400 max-w-[150px] truncate bg-indigo-950/50 px-2 py-0.5 rounded">
+                      "{v.value}"
                     </div>
-                  ))}
+                  </div>
+                  
+                  <div className="space-y-2">
+                    {v.rules.map((r, j) => {
+                      // show neutral slate state until submitted
+                      const isPass = r.pass;
+                      const icon = submitted ? (isPass ? <Check size={14} className="text-emerald-500 stroke-[3]" /> : <X size={14} className="text-red-500 stroke-[3]" />) : <div className="w-2 h-2 rounded-full bg-slate-600 mx-1" />;
+                      const textClass = submitted ? (isPass ? 'text-emerald-400' : 'text-red-400 font-medium') : 'text-slate-400';
+                      
+                      return (
+                        <div key={j} className={`flex items-start gap-2 text-xs ${textClass}`}>
+                          <div className="mt-0.5">{icon}</div>
+                          <div className="leading-relaxed">{r.label}</div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Validation Log</span>
+            </div>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">ทำไมเราต้องตรวจสอบข้อมูล (Validation) ก่อนนำไปใช้?</p>
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'prevent', label: 'เพื่อป้องกัน Error และข้อมูลผิดพลาดก่อนที่จะนำไปประมวลผล', correct: true },
-            { val: 'speed', label: 'เพื่อทำให้โปรแกรมทำงานเร็วขึ้น' },
-            { val: 'style', label: 'เพื่อให้โค้ดดูสวยงามและเป็นระเบียบ' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' : quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' : quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'}`}>
-              {opt.label}
-            </button>
-          ))}
-        </div>
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => { if (!quizAnswer) { showToast('เลือกคำตอบก่อน', 'warning'); return; } setQuizChecked(true); showToast(quizAnswer === 'prevent' ? 'ถูกต้อง!' : 'ไม่ถูกต้อง', quizAnswer === 'prevent' ? 'success' : 'error'); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
-
-      {toast.show && (<div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>{toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}{toast.type === 'error' && <XCircle className="text-red-500" />}{toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}<div className="font-medium">{toast.message}</div></div>)}
+      </div>
     </div>
   );
 }

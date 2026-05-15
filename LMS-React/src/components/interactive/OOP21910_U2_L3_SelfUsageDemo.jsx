@@ -1,241 +1,166 @@
-import React, { useState } from 'react';
-import { Bot, Battery, Zap, AlertCircle, CheckCircle2, XCircle, RotateCcw, MousePointerClick } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Bot, Battery, Zap, RotateCcw, Play } from 'lucide-react';
 
 export default function OOP21910_U2_L3_SelfUsageDemo() {
   const [robots, setRobots] = useState([
     { id: 1, name: 'R2D2', battery: 20 },
     { id: 2, name: 'C3PO', battery: 50 }
   ]);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  const [activeTooltip, setActiveTooltip] = useState(null);
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Robot factory initialized.' },
+    { type: 'system', text: 'Created r1 = Robot("R2D2", 20)' },
+    { type: 'system', text: 'Created r2 = Robot("C3PO", 50)' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const chargeBattery = (id) => {
-    setRobots(robots.map(r => {
+    setRobots(prevRobots => prevRobots.map(r => {
       if (r.id === id) {
         return { ...r, battery: Math.min(100, r.battery + 20) };
       }
       return r;
     }));
-    showToast(`ชาร์จแบตเตอรี่ให้หุ่นยนต์ ${id === 1 ? 'R2D2' : 'C3PO'} เรียบร้อย`, 'success');
+    
+    const botName = id === 1 ? 'r1' : 'r2';
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `$ ${botName}.charge_battery()` },
+      { type: 'system', text: `  -> Inside charge_battery, self points to ${botName}` },
+      { type: 'output', text: `  -> ${botName}'s battery increased by 20%` }
+    ]);
   };
 
-  const explanations = {
-    'self-param': {
-      title: 'ทำไมต้องมี self ?',
-      desc: 'เพราะคลาสเป็นแค่แม่พิมพ์ เมื่อเราสร้างหุ่นยนต์ 2 ตัว (R2D2, C3PO) Python ต้องรู้ว่าตอนที่สั่ง charge_battery() นั้น กำลังสั่งให้ชาร์จของตัวไหน self จึงเป็นตัวแทนที่บอกว่า "ให้จัดการกับ Object นี้นะ"',
-      color: 'text-pink-400'
-    },
-    'self-attr': {
-      title: 'self.battery',
-      desc: 'ชี้ไปยังระดับแบตเตอรี่ของหุ่นยนต์ตัวนั้นๆ โดยเฉพาะ ทำให้เวลา R2D2 ชาร์จแบต แบตของ C3PO จะไม่เพิ่มตาม',
-      color: 'text-yellow-300'
-    }
-  };
-
-  const [currentAnswers, setCurrentAnswers] = useState({ 1: null, 2: null });
-  const [activeDropzone, setActiveDropzone] = useState(1);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const showToast = (message, type) => {
-    setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
-  };
-
-  const handleOptionClick = (val) => {
-    if (activeDropzone <= 2) {
-      setCurrentAnswers({ ...currentAnswers, [activeDropzone]: val });
-      if (activeDropzone < 2) {
-        setActiveDropzone(activeDropzone + 1);
-      } else {
-        setActiveDropzone(3);
-      }
-    }
-  };
-
-  const checkAnswer = () => {
-    const ans1 = currentAnswers[1];
-    const ans2 = currentAnswers[2];
-
-    if (!ans1 || !ans2) {
-      showToast('กรุณาเติมคำในช่องว่างให้ครบถ้วน', 'warning');
-      return;
-    }
-
-    if (ans1 === 'self' && ans2 === 'self') {
-      showToast('ถูกต้อง! คุณเข้าใจการใช้ self อย่างถ่องแท้', 'success');
-      setIsSuccess(true);
-    } else {
-      let msg = 'ยังไม่ถูกต้อง ลองพิจารณาดูอีกครั้ง';
-      if (ans1 !== 'self') msg = 'พารามิเตอร์แรกในเมธอด introduce คืออะไร?';
-      else if (ans2 !== 'self') msg = 'ถ้าต้องการเข้าถึงคุณสมบัติ name ของ Object ตัวเอง ต้องใช้คำนำหน้าอะไร?';
-      
-      showToast(msg, 'error');
-    }
-  };
-
-  const resetQuiz = () => {
-    setCurrentAnswers({ 1: null, 2: null });
-    setActiveDropzone(1);
-    setIsSuccess(false);
+  const clear = () => {
+    setRobots([
+      { id: 1, name: 'R2D2', battery: 20 },
+      { id: 2, name: 'C3PO', battery: 50 }
+    ]);
+    setConsoleHistory([
+      { type: 'system', text: 'Robot factory initialized.' },
+      { type: 'system', text: 'Created r1 = Robot("R2D2", 20)' },
+      { type: 'system', text: 'Created r2 = Robot("C3PO", 50)' }
+    ]);
   };
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. Self Simulator */}
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-        <div className="flex flex-col lg:flex-row gap-8 items-center justify-center">
-            {/* Concept Side */}
-            <div className="flex-1 text-center w-full bg-slate-50 p-6 rounded-xl border-2 border-dashed border-slate-300">
-                <h3 className="text-xl font-semibold mb-4 text-indigo-600 flex items-center justify-center">
-                  <Bot className="mr-2" /> class Robot
-                </h3>
-                <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-left text-sm md:text-base shadow-inner mb-6 space-y-2">
-                    <span className="text-pink-400">def</span> <span className="text-blue-300">charge_battery</span>(<span className="text-pink-300 font-bold">self</span>):<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-pink-300 font-bold">self</span>.battery += 20
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+            <Bot size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">เข้าใจการใช้งาน self (ตัวแทนของ Object)</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้เหตุผลที่ต้องมี <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">self</code> เป็นพารามิเตอร์แรกเสมอ เพื่อให้ Object รู้ว่ามันกำลังทำงานกับตัวมันเอง ไม่ใช่วัตถุอื่น
+        </p>
+      </div>
+
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Interactive Robots */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+              {robots.map((r, index) => (
+                <div key={r.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col h-full">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-3 rounded-xl ${r.id === 1 ? 'bg-blue-100 text-blue-600' : 'bg-amber-100 text-amber-600'}`}>
+                        <Bot size={24} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-800">{r.name}</h4>
+                        <div className="text-[10px] text-slate-400 font-mono uppercase tracking-widest">
+                          Variable: {r.id === 1 ? 'r1' : 'r2'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-mono font-bold text-slate-600">
+                      <Battery size={14} className={r.battery > 50 ? 'text-emerald-500' : 'text-orange-500'} /> 
+                      {r.battery}%
+                    </div>
+                  </div>
+
+                  <div className="w-full bg-slate-100 rounded-full h-2 mb-6">
+                    <div className={`h-2 rounded-full transition-all duration-500 ${r.battery === 100 ? 'bg-emerald-500' : r.battery > 30 ? 'bg-blue-500' : 'bg-orange-500'}`} style={{ width: `${r.battery}%` }}></div>
+                  </div>
+
+                  <div className="mt-auto">
+                    <button 
+                      onClick={() => chargeBattery(r.id)}
+                      disabled={r.battery >= 100}
+                      className={`w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm transition-all ${r.battery >= 100 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md active:scale-95'}`}
+                    >
+                      <Zap size={16} className={r.battery < 100 ? "text-yellow-300" : ""} />
+                      {r.id === 1 ? 'r1' : 'r2'}.charge_battery()
+                    </button>
+                  </div>
                 </div>
-                <div className="text-sm text-slate-600 bg-white p-4 rounded-lg shadow-sm">
-                    <strong>self</strong> คือตัวเชื่อมโยง เมื่อ Object ไหนเป็นคนเรียกใช้เมธอด <code>self</code> จะชี้ไปที่ Object นั้น
-                </div>
+              ))}
             </div>
 
-            {/* Objects Side */}
-            <div className="flex-1 w-full space-y-6">
-                {robots.map(r => (
-                  <div key={r.id} className={`bg-white rounded-xl border-2 shadow-sm p-5 flex items-center gap-6 transition-colors ${r.id === 1 ? 'border-blue-200 hover:border-blue-300' : 'border-amber-200 hover:border-amber-300'}`}>
-                      <div className={`p-4 rounded-full ${r.id === 1 ? 'bg-blue-100 text-blue-600' : 'bg-amber-100 text-amber-600'}`}>
-                          <Bot size={40} />
-                      </div>
-                      <div className="flex-1">
-                          <h4 className="font-bold text-lg text-slate-800">{r.name}</h4>
-                          <div className="flex items-center gap-2 text-sm text-slate-600 mb-2">
-                              <Battery size={16} /> แบตเตอรี่: 
-                              <span className="font-mono font-bold text-emerald-600">{r.battery}%</span>
-                          </div>
-                          <div className="w-full bg-slate-200 rounded-full h-2.5 mb-3">
-                              <div className="bg-emerald-500 h-2.5 rounded-full transition-all duration-500" style={{ width: `${r.battery}%` }}></div>
-                          </div>
-                      </div>
-                      <button 
-                        onClick={() => chargeBattery(r.id)}
-                        disabled={r.battery >= 100}
-                        className={`p-3 rounded-lg flex flex-col items-center justify-center transition-all ${r.battery >= 100 ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200 active:scale-95'}`}
-                        title="เรียกใช้ r.charge_battery()"
-                      >
-                          <Zap size={20} className={r.battery < 100 ? "text-yellow-500" : ""} />
-                          <span className="text-xs font-semibold mt-1">Charge</span>
-                      </button>
-                  </div>
-                ))}
+          </div>
+
+          {/* Right: Info */}
+          <div className="w-full lg:w-[320px] bg-white p-6 flex flex-col border-l border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">เจาะลึกกลไกการทำงาน</h4>
+            
+            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose">
+              <span className="text-pink-400">class</span> <span className="text-yellow-300">Robot</span>:<br />
+              &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">charge_battery</span>(<span className="text-pink-300 font-bold">self</span>):<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-pink-300 font-bold">self</span>.battery += 20
             </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4 overflow-y-auto">
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-bold text-slate-800 text-sm mb-1">ทำไมต้องมี self?</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    เพราะคลาสเป็นแค่แม่พิมพ์ เมื่อเราสร้างหุ่นยนต์ 2 ตัว (r1, r2) Python ต้องรู้ว่าตอนที่สั่ง <code className="bg-slate-200 px-1 rounded">charge_battery()</code> นั้น กำลังสั่งให้ชาร์จของตัวไหน
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <h5 className="font-bold text-slate-800 text-sm mb-1">บทบาทของ self</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    <code className="bg-slate-200 px-1 rounded text-pink-600">self</code> จึงเป็นตัวแทนที่บอกว่า "ให้จัดการกับ Object นี้นะ" 
+                    เช่น เมื่อ r1 สั่งชาร์จ self ก็คือ r1 ทำให้แบตของ r2 ไม่เพิ่มตาม
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <button onClick={clear}
+              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl px-4 py-3 active:scale-95 transition-all flex items-center justify-center gap-2">
+              <RotateCcw size={16} /> รีเซ็ต
+            </button>
+          </div>
         </div>
-      </section>
 
-      {/* 2. Syntax Explainer */}
-      <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-slate-800 border-l-4 border-indigo-600 pl-4">เจาะลึกการใช้ self</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-              <div className="bg-slate-900 p-6 rounded-xl shadow-lg font-mono text-lg text-white leading-relaxed">
-                  <span className="text-pink-400">def</span> <span className="text-blue-300">charge_battery</span>(
-                  <span 
-                    onMouseEnter={() => setActiveTooltip('self-param')}
-                    onClick={() => setActiveTooltip('self-param')}
-                    className={`cursor-pointer border-b-2 border-dashed transition-all ${activeTooltip === 'self-param' ? 'border-yellow-300 bg-yellow-300/20 rounded' : 'border-transparent'} text-pink-300 font-bold`}
-                  >self</span>):<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <span 
-                    onMouseEnter={() => setActiveTooltip('self-attr')}
-                    onClick={() => setActiveTooltip('self-attr')}
-                    className={`cursor-pointer border-b-2 border-dashed transition-all ${activeTooltip === 'self-attr' ? 'border-yellow-300 bg-yellow-300/20 rounded' : 'border-transparent'}`}
-                  >
-                    <span className="text-pink-300">self</span>.battery += 20
-                  </span>
-              </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 min-h-[150px] flex items-center justify-center">
-                  {activeTooltip ? (
-                    <div className="w-full text-left animate-in fade-in duration-300">
-                        <h4 className={`text-lg font-bold ${explanations[activeTooltip].color} mb-2 border-b pb-2`}>
-                          {explanations[activeTooltip].title}
-                        </h4>
-                        <p className="text-slate-600 leading-relaxed">{explanations[activeTooltip].desc}</p>
-                    </div>
-                  ) : (
-                    <div className="text-center text-slate-500">
-                        <MousePointerClick className="w-8 h-8 mb-3 text-slate-300 mx-auto" />
-                        ชี้หรือคลิกที่ส่วนต่างๆ ของโค้ด<br />เพื่อดูคำอธิบาย
-                    </div>
-                  )}
-              </div>
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Event Log</span>
+            </div>
           </div>
-      </section>
-
-      {/* 3. Interactive Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl text-white">
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <span className="text-yellow-300">#</span> เติมคำสั่งสร้างความคุ้นเคย
-          </h2>
-          <p className="text-slate-300">เติมคีย์เวิร์ดที่หายไป เพื่อให้ Employee แนะนำตัวเองได้อย่างถูกต้อง</p>
-
-          <div className="bg-slate-900 p-6 rounded-xl border border-slate-700 font-mono text-lg my-6">
-              <div className="mb-2"><span className="text-pink-400">class</span> <span className="text-yellow-300">Employee</span>:</div>
-              <div className="flex flex-wrap items-center gap-2 mb-2 leading-loose pl-8">
-                  <span className="text-pink-400">def</span>
-                  <span className="text-blue-300">introduce</span>
-                  <span>(</span>
-                  <div 
-                    onClick={() => setActiveDropzone(1)}
-                    className={`inline-flex items-center justify-center min-w-16 px-3 h-10 border-2 rounded-md cursor-pointer transition-colors ${activeDropzone === 1 && !isSuccess ? 'border-yellow-300 bg-slate-700 ring-2 ring-indigo-500' : isSuccess ? 'border-emerald-500 bg-emerald-900/30 text-pink-300' : currentAnswers[1] ? 'border-indigo-500 bg-slate-800 text-pink-300' : 'border-dashed border-slate-500 bg-slate-800'}`}
-                  >
-                    {currentAnswers[1] || ''}
-                  </div>
-                  <span>):</span>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
               </div>
-              <div className="flex flex-wrap items-center gap-2 leading-loose pl-16">
-                  <span className="text-blue-300">print</span>
-                  <span>(f"สวัสดี ฉันชื่อ </span>
-                  <div 
-                    onClick={() => setActiveDropzone(2)}
-                    className={`inline-flex items-center justify-center min-w-16 px-3 h-10 border-2 rounded-md cursor-pointer transition-colors ${activeDropzone === 2 && !isSuccess ? 'border-yellow-300 bg-slate-700 ring-2 ring-indigo-500' : isSuccess ? 'border-emerald-500 bg-emerald-900/30 text-pink-300' : currentAnswers[2] ? 'border-indigo-500 bg-slate-800 text-pink-300' : 'border-dashed border-slate-500 bg-slate-800'}`}
-                  >
-                    {currentAnswers[2] || ''}
-                  </div>
-                  <span>.name")</span>
-              </div>
+            ))}
           </div>
-
-          <div className="space-y-3">
-              <p className="text-sm text-slate-400">ตัวเลือก:</p>
-              <div className="flex flex-wrap gap-3">
-                  <button onClick={() => handleOptionClick('Employee')} disabled={isSuccess} className="bg-slate-700 hover:bg-slate-600 text-yellow-300 px-4 py-2 rounded font-mono shadow transition-colors border border-slate-600">Employee</button>
-                  <button onClick={() => handleOptionClick('self')} disabled={isSuccess} className="bg-slate-700 hover:bg-slate-600 text-pink-300 px-4 py-2 rounded font-mono shadow transition-colors border border-slate-600">self</button>
-                  <button onClick={() => handleOptionClick('name')} disabled={isSuccess} className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded font-mono shadow transition-colors border border-slate-600">name</button>
-              </div>
-          </div>
-
-          <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-              <button onClick={resetQuiz} className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-sm">
-                  <RotateCcw size={16} /> เริ่มใหม่
-              </button>
-              <button onClick={checkAnswer} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">
-                  ตรวจคำตอบ
-              </button>
-          </div>
-      </section>
-
-      {/* Toast Notification */}
-      {toast.show && (
-        <div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${
-          toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : 
-          toast.type === 'error' ? 'bg-slate-800 border-red-500' : 
-          'bg-slate-800 border-yellow-500'
-        }`}>
-          {toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}
-          {toast.type === 'error' && <XCircle className="text-red-500" />}
-          {toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}
-          <div className="font-medium">{toast.message}</div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

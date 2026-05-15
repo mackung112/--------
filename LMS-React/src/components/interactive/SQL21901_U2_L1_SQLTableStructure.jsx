@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Database, Table, Columns, Rows, Grid3X3, ArrowRight, RotateCcw, CheckCircle2, ShieldAlert } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Database, Table, Columns, Rows, Grid3X3, ArrowRight, RotateCcw, CheckCircle2, ShieldAlert, TerminalSquare } from 'lucide-react';
 
 export default function SQL21901_U2_L1_SQLTableStructure() {
   const [highlight, setHighlight] = useState({ type: null, val: null });
@@ -11,12 +11,16 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
     row: null,
     field: null
   });
-  const [toast, setToast] = useState(null);
   
-  const showToast = (msg, type) => {
-    setToast({ msg, type });
-    setTimeout(() => setToast(null), 2500);
-  };
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Table Structure Analyzer Initialized.' },
+    { type: 'system', text: 'Click on table elements to inspect their properties.' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   // Info Panel Data
   const infoData = {
@@ -42,6 +46,18 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
 
   const handleCellClick = (type, val) => {
     setHighlight({ type, val });
+    
+    let command = '';
+    if (type === 'column') command = `SELECT ${['PK', 'emp_id', 'first_name', 'department', 'salary'][val]} FROM employees;`;
+    else if (type === 'row') command = `SELECT * FROM employees WHERE PK = ${val};`;
+    else command = `SELECT data FROM employees WHERE ...;`;
+
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `$ INSPECT ${type.toUpperCase()}` },
+      { type: 'output', text: `> Related SQL: ${command}` },
+      { type: 'system', text: `> Definition: ${infoData[type].title}` }
+    ]);
   };
 
   const handleDragStart = (e, item) => {
@@ -55,23 +71,33 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
     if (draggedItem === zone) {
       setDropZones(prev => ({ ...prev, [zone]: draggedItem }));
       setDraggedItem(null);
-      showToast('ถูกต้องครับ!', 'success');
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'success', text: `> Match Success: ${zone} correctly identified.` }
+      ]);
     } else {
-      showToast('อ๊ะ! ยังไม่ถูกนะ ลองใหม่ครับ', 'error');
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'error', text: `> Error: Invalid assignment. Try again.` }
+      ]);
     }
   };
 
   const resetQuiz = () => {
     setDropZones({ column: null, row: null, field: null });
     setDraggedItem(null);
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'system', text: `> Knowledge Check Reset.` }
+    ]);
   };
 
   const isQuizComplete = Object.values(dropZones).every(v => v !== null);
 
   const getCellClasses = (type, colIdx, rowIdx) => {
-    let classes = "bg-white p-3 text-center transition-all cursor-pointer border border-slate-200 relative ";
-    if (type === 'header') classes = "bg-slate-100 font-bold text-slate-800 p-3 text-center transition-all cursor-pointer border border-slate-200 ";
-    if (type === 'id') classes = "bg-slate-200 font-bold text-slate-500 p-3 text-center transition-all cursor-pointer border border-slate-200 ";
+    let classes = "bg-white p-2.5 text-center text-xs md:text-sm transition-all cursor-pointer border border-slate-200 relative ";
+    if (type === 'header') classes = "bg-slate-100 font-bold text-slate-800 p-2.5 text-xs md:text-sm text-center transition-all cursor-pointer border border-slate-200 ";
+    if (type === 'id') classes = "bg-slate-200 font-bold text-slate-500 p-2.5 text-center text-xs md:text-sm transition-all cursor-pointer border border-slate-200 ";
 
     // Highlight Logic
     if (highlight.type === 'column' && highlight.val === colIdx) {
@@ -94,173 +120,186 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
   };
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. โครงสร้างพื้นฐาน */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-slate-800 text-white p-4 border-b border-slate-700 flex items-center gap-2">
-          <Table className="text-cyan-400" />
-          <h3 className="font-bold text-cyan-400">Interactive: Table Anatomy (ตารางพนักงาน)</h3>
-        </div>
-        
-        <div className="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
-          {/* Table */}
-          <div className="w-full lg:w-2/3 overflow-x-auto pb-4">
-            <div className="grid grid-cols-[80px_1fr_1fr_1fr_1fr] rounded-lg overflow-hidden border-2 border-slate-300">
-              {/* Headers */}
-              <div onClick={() => handleCellClick('column', 0)} className={getCellClasses('header', 0, 0)}>PK</div>
-              <div onClick={() => handleCellClick('column', 1)} className={getCellClasses('header', 1, 0)}>emp_id</div>
-              <div onClick={() => handleCellClick('column', 2)} className={getCellClasses('header', 2, 0)}>first_name</div>
-              <div onClick={() => handleCellClick('column', 3)} className={getCellClasses('header', 3, 0)}>department</div>
-              <div onClick={() => handleCellClick('column', 4)} className={getCellClasses('header', 4, 0)}>salary</div>
-
-              {/* Row 1 */}
-              <div onClick={() => handleCellClick('row', 1)} className={getCellClasses('id', 0, 1)}>1</div>
-              <div onClick={() => handleCellClick('cell', '1-1')} className={getCellClasses('cell', 1, 1)}>101</div>
-              <div onClick={() => handleCellClick('cell', '2-1')} className={getCellClasses('cell', 2, 1)}>Somchai</div>
-              <div onClick={() => handleCellClick('cell', '3-1')} className={getCellClasses('cell', 3, 1)}>IT</div>
-              <div onClick={() => handleCellClick('cell', '4-1')} className={getCellClasses('cell', 4, 1)}>35000</div>
-
-              {/* Row 2 */}
-              <div onClick={() => handleCellClick('row', 2)} className={getCellClasses('id', 0, 2)}>2</div>
-              <div onClick={() => handleCellClick('cell', '1-2')} className={getCellClasses('cell', 1, 2)}>102</div>
-              <div onClick={() => handleCellClick('cell', '2-2')} className={getCellClasses('cell', 2, 2)}>Suda</div>
-              <div onClick={() => handleCellClick('cell', '3-2')} className={getCellClasses('cell', 3, 2)}>HR</div>
-              <div onClick={() => handleCellClick('cell', '4-2')} className={getCellClasses('cell', 4, 2)}>28000</div>
-
-              {/* Row 3 */}
-              <div onClick={() => handleCellClick('row', 3)} className={getCellClasses('id', 0, 3)}>3</div>
-              <div onClick={() => handleCellClick('cell', '1-3')} className={getCellClasses('cell', 1, 3)}>103</div>
-              <div onClick={() => handleCellClick('cell', '2-3')} className={getCellClasses('cell', 2, 3)}>Mana</div>
-              <div onClick={() => handleCellClick('cell', '3-3')} className={getCellClasses('cell', 3, 3)}>Sales</div>
-              <div onClick={() => handleCellClick('cell', '4-3')} className={getCellClasses('cell', 4, 3)}>42000</div>
-            </div>
-            <div className="text-center text-xs text-slate-400 mt-4 animate-bounce">
-               👆 ลองคลิกที่หัวคอลัมน์, ตัวเลขแถว หรือข้อมูลข้างในดูสิครับ
-            </div>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-cyan-100 text-cyan-600 rounded-lg">
+            <Table size={20} className="stroke-2" />
           </div>
-
-          {/* Info Panel */}
-          <div className="w-full lg:w-1/3 bg-slate-50 rounded-xl border border-slate-200 p-6 flex flex-col justify-center min-h-[250px]">
-            {!highlight.type ? (
-              <div className="text-center text-slate-400">
-                <ArrowRight className="mx-auto mb-2 opacity-50" size={32} />
-                <p>คลิกที่ส่วนต่างๆ ของตารางทางซ้าย<br/>เพื่อดูคำศัพท์และคำอธิบาย</p>
-              </div>
-            ) : (
-              <div className="animate-in zoom-in duration-300">
-                <div className="flex items-center gap-3 mb-4 border-b border-slate-200 pb-4">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-sm ${infoData[highlight.type].bg}`}>
-                    {infoData[highlight.type].icon}
-                  </div>
-                  <h4 className="font-bold text-lg text-slate-800">{infoData[highlight.type].title}</h4>
-                </div>
-                <p className="text-sm text-slate-600 leading-relaxed">{infoData[highlight.type].desc}</p>
-              </div>
-            )}
-          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">Table Structure (โครงสร้างตาราง)</h3>
         </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          ทำความรู้จักส่วนประกอบพื้นฐานของตารางข้อมูล: คอลัมน์, แถว, และข้อมูล
+        </p>
       </div>
 
-      {/* 2. Drag & Drop Quiz */}
-      <div className="bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl text-white">
-        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-          <Database className="text-orange-400" /> กิจกรรมตรวจสอบความเข้าใจ
-        </h2>
-        <p className="text-slate-300 text-sm mb-8">ลากป้ายคำศัพท์ด้านล่าง ไปวางในช่องว่างให้ตรงกับความหมายที่ถูกต้อง</p>
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          
+          {/* Left: Table Visualizer */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50 overflow-hidden">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+              Interactive Table Anatomy
+            </h4>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          {/* Questions */}
-          <div className="space-y-4">
-            <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex items-center gap-4">
-              <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold shrink-0">1</div>
-              <div className="flex-grow text-sm leading-relaxed">
-                ข้อมูลใน <strong className="text-sky-400">แนวตั้ง</strong> ที่ระบุหัวข้อ เช่น 'ราคาสินค้า' เรียกว่า <br/>
+            <div className="w-full overflow-x-auto pb-4">
+              <div className="grid grid-cols-[50px_1fr_1fr_1fr_1fr] rounded-lg overflow-hidden border border-slate-300 shadow-sm min-w-[500px]">
+                {/* Headers */}
+                <div onClick={() => handleCellClick('column', 0)} className={getCellClasses('header', 0, 0)}>PK</div>
+                <div onClick={() => handleCellClick('column', 1)} className={getCellClasses('header', 1, 0)}>emp_id</div>
+                <div onClick={() => handleCellClick('column', 2)} className={getCellClasses('header', 2, 0)}>first_name</div>
+                <div onClick={() => handleCellClick('column', 3)} className={getCellClasses('header', 3, 0)}>department</div>
+                <div onClick={() => handleCellClick('column', 4)} className={getCellClasses('header', 4, 0)}>salary</div>
+
+                {/* Row 1 */}
+                <div onClick={() => handleCellClick('row', 1)} className={getCellClasses('id', 0, 1)}>1</div>
+                <div onClick={() => handleCellClick('cell', '1-1')} className={getCellClasses('cell', 1, 1)}>101</div>
+                <div onClick={() => handleCellClick('cell', '2-1')} className={getCellClasses('cell', 2, 1)}>Somchai</div>
+                <div onClick={() => handleCellClick('cell', '3-1')} className={getCellClasses('cell', 3, 1)}>IT</div>
+                <div onClick={() => handleCellClick('cell', '4-1')} className={getCellClasses('cell', 4, 1)}>35000</div>
+
+                {/* Row 2 */}
+                <div onClick={() => handleCellClick('row', 2)} className={getCellClasses('id', 0, 2)}>2</div>
+                <div onClick={() => handleCellClick('cell', '1-2')} className={getCellClasses('cell', 1, 2)}>102</div>
+                <div onClick={() => handleCellClick('cell', '2-2')} className={getCellClasses('cell', 2, 2)}>Suda</div>
+                <div onClick={() => handleCellClick('cell', '3-2')} className={getCellClasses('cell', 3, 2)}>HR</div>
+                <div onClick={() => handleCellClick('cell', '4-2')} className={getCellClasses('cell', 4, 2)}>28000</div>
+
+                {/* Row 3 */}
+                <div onClick={() => handleCellClick('row', 3)} className={getCellClasses('id', 0, 3)}>3</div>
+                <div onClick={() => handleCellClick('cell', '1-3')} className={getCellClasses('cell', 1, 3)}>103</div>
+                <div onClick={() => handleCellClick('cell', '2-3')} className={getCellClasses('cell', 2, 3)}>Mana</div>
+                <div onClick={() => handleCellClick('cell', '3-3')} className={getCellClasses('cell', 3, 3)}>Sales</div>
+                <div onClick={() => handleCellClick('cell', '4-3')} className={getCellClasses('cell', 4, 3)}>42000</div>
+              </div>
+            </div>
+            <div className="text-center text-xs text-slate-500 font-medium animate-pulse mt-2">
+              👆 ลองคลิกที่หัวคอลัมน์ ตัวเลขแถว หรือข้อมูลข้างในดูสิครับ
+            </div>
+
+            {/* Info Panel under table */}
+            <div className="mt-6 bg-white rounded-xl border border-slate-200 p-5 min-h-[140px] flex items-center shadow-sm">
+              {!highlight.type ? (
+                <div className="text-center text-slate-400 w-full flex flex-col items-center">
+                  <ArrowRight className="mb-2 opacity-50 transform rotate-90 md:rotate-0" size={24} />
+                  <p className="text-sm">คำอธิบายจะปรากฏที่นี่</p>
+                </div>
+              ) : (
+                <div className="animate-in fade-in duration-300 w-full">
+                  <div className="flex items-center gap-3 mb-3 border-b border-slate-100 pb-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${infoData[highlight.type].bg}`}>
+                      {infoData[highlight.type].icon}
+                    </div>
+                    <h4 className="font-bold text-slate-800">{infoData[highlight.type].title}</h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">{infoData[highlight.type].desc}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Drag & Drop Quiz */}
+          <div className="w-full lg:w-[450px] bg-white p-6 flex flex-col border-t lg:border-t-0 border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+              <span className="text-yellow-500">?</span> Knowledge Check
+            </h4>
+            
+            <p className="text-xs text-slate-500 mb-4">ลากป้ายคำศัพท์ด้านล่าง ไปวางในช่องว่างให้ตรงกับความหมายที่ถูกต้อง</p>
+
+            <div className="space-y-4 flex-1">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
+                <span className="font-bold text-slate-400 mr-2">1.</span> ข้อมูลใน <strong className="text-sky-500">แนวตั้ง</strong> เช่น 'ราคาสินค้า' เรียกว่า
                 <div 
                   onDragOver={(e) => e.preventDefault()} 
                   onDrop={(e) => handleDrop(e, 'column')}
-                  className={`mt-2 inline-flex items-center justify-center w-32 h-10 border-2 rounded-lg transition-all ${dropZones.column ? 'border-emerald-500 bg-emerald-900/30 text-emerald-400 font-bold' : 'border-dashed border-slate-600 bg-slate-800'}`}
+                  className={`mt-2 flex items-center justify-center w-full h-10 border-2 rounded-lg transition-all text-xs font-bold ${dropZones.column ? 'border-emerald-500 bg-emerald-50 text-emerald-700' : 'border-dashed border-slate-300 bg-white text-slate-400'}`}
                 >
-                  {dropZones.column ? dropZones.column : ''}
+                  {dropZones.column || 'Drop here'}
                 </div>
               </div>
-            </div>
 
-            <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex items-center gap-4">
-              <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold shrink-0">2</div>
-              <div className="flex-grow text-sm leading-relaxed">
-                ข้อมูลลูกค้า 1 คนแบบครบถ้วน ที่เรียงใน <strong className="text-rose-400">แนวนอน</strong> เรียกว่า <br/>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
+                <span className="font-bold text-slate-400 mr-2">2.</span> ข้อมูล 1 รายการ ใน <strong className="text-rose-500">แนวนอน</strong> เรียกว่า
                 <div 
                   onDragOver={(e) => e.preventDefault()} 
                   onDrop={(e) => handleDrop(e, 'row')}
-                  className={`mt-2 inline-flex items-center justify-center w-32 h-10 border-2 rounded-lg transition-all ${dropZones.row ? 'border-emerald-500 bg-emerald-900/30 text-emerald-400 font-bold' : 'border-dashed border-slate-600 bg-slate-800'}`}
+                  className={`mt-2 flex items-center justify-center w-full h-10 border-2 rounded-lg transition-all text-xs font-bold ${dropZones.row ? 'border-emerald-500 bg-emerald-50 text-emerald-700' : 'border-dashed border-slate-300 bg-white text-slate-400'}`}
                 >
-                  {dropZones.row ? dropZones.row : ''}
+                  {dropZones.row || 'Drop here'}
                 </div>
               </div>
-            </div>
 
-            <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700 flex items-center gap-4">
-              <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold shrink-0">3</div>
-              <div className="flex-grow text-sm leading-relaxed">
-                คำศัพท์ที่โปรแกรมเมอร์มักใช้เรียกแทนคำว่า 'Column' คือคำว่า <br/>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
+                <span className="font-bold text-slate-400 mr-2">3.</span> คำศัพท์ที่โปรแกรมเมอร์มักใช้เรียกแทนคำว่า 'Column'
                 <div 
                   onDragOver={(e) => e.preventDefault()} 
                   onDrop={(e) => handleDrop(e, 'field')}
-                  className={`mt-2 inline-flex items-center justify-center w-32 h-10 border-2 rounded-lg transition-all ${dropZones.field ? 'border-emerald-500 bg-emerald-900/30 text-emerald-400 font-bold' : 'border-dashed border-slate-600 bg-slate-800'}`}
+                  className={`mt-2 flex items-center justify-center w-full h-10 border-2 rounded-lg transition-all text-xs font-bold ${dropZones.field ? 'border-emerald-500 bg-emerald-50 text-emerald-700' : 'border-dashed border-slate-300 bg-white text-slate-400'}`}
                 >
-                  {dropZones.field ? dropZones.field : ''}
+                  {dropZones.field || 'Drop here'}
                 </div>
               </div>
+            </div>
+
+            {/* Draggables Box */}
+            <div className="mt-6 bg-slate-800 p-4 rounded-xl shadow-inner border border-slate-700">
+              <h5 className="text-xs font-semibold text-slate-400 mb-3 text-center uppercase tracking-wider">คลังคำศัพท์ (Drag Words)</h5>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {!Object.values(dropZones).includes('Column') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'Column')} className="cursor-grab active:cursor-grabbing bg-sky-500 hover:bg-sky-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-xs flex items-center gap-1">
+                    <Columns size={14} /> Column
+                  </div>
+                )}
+                {!Object.values(dropZones).includes('Record') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'Record')} className="cursor-grab active:cursor-grabbing bg-rose-500 hover:bg-rose-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-xs flex items-center gap-1">
+                    <Rows size={14} /> Record
+                  </div>
+                )}
+                {!Object.values(dropZones).includes('Field') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'Field')} className="cursor-grab active:cursor-grabbing bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-xs flex items-center gap-1">
+                    <Database size={14} /> Field
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-4 flex justify-between items-center border-t border-slate-700 pt-3">
+                <button onClick={resetQuiz} className="text-slate-400 hover:text-white transition-colors text-xs flex items-center gap-1 font-medium bg-slate-700/50 px-2 py-1 rounded">
+                  <RotateCcw size={12} /> Reset
+                </button>
+                {isQuizComplete && (
+                  <div className="text-emerald-400 font-bold text-xs flex items-center gap-1 animate-pulse">
+                    <CheckCircle2 size={14} /> All Correct!
+                  </div>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <TerminalSquare size={14} className="text-slate-400" />
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Event Logger</span>
             </div>
           </div>
-
-          {/* Draggables */}
-          <div className="bg-slate-700/30 p-6 rounded-xl border border-slate-600/50">
-            <h4 className="text-sm font-semibold text-slate-300 mb-4 text-center border-b border-slate-600 pb-2">คลังคำศัพท์ (ลากไปวาง)</h4>
-            <div className="flex flex-wrap gap-3 justify-center min-h-[150px] content-start">
-              {!Object.values(dropZones).includes('Column') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'Column')} className="cursor-grab active:cursor-grabbing bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded shadow-lg border border-sky-400 font-semibold text-sm">
-                  <Columns size={16} className="inline mr-1" /> Column
-                </div>
-              )}
-              {!Object.values(dropZones).includes('Record') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'Record')} className="cursor-grab active:cursor-grabbing bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded shadow-lg border border-rose-400 font-semibold text-sm">
-                  <Rows size={16} className="inline mr-1" /> Record
-                </div>
-              )}
-              {!Object.values(dropZones).includes('Field') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'Field')} className="cursor-grab active:cursor-grabbing bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded shadow-lg border border-emerald-400 font-semibold text-sm">
-                  <Database size={16} className="inline mr-1" /> Field
-                </div>
-              )}
-              <div draggable onDragStart={(e) => handleDragStart(e, 'Database')} className="cursor-grab active:cursor-grabbing bg-slate-600 hover:bg-slate-500 text-white px-4 py-2 rounded shadow-lg border border-slate-400 font-semibold text-sm opacity-50 hover:opacity-100">
-                <Database size={16} className="inline mr-1" /> Database
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed flex gap-2">
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text.substring(2)}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'error'   && <><span className="text-rose-400 font-bold shrink-0">[Err]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
+                {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Ok]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>
-            </div>
-
-            <div className="mt-6 flex justify-between items-center h-8">
-              <button onClick={resetQuiz} className="text-slate-400 hover:text-white transition-colors text-xs flex items-center gap-1">
-                <RotateCcw size={14} /> รีเซ็ต
-              </button>
-              {isQuizComplete && (
-                <div className="text-emerald-400 font-bold text-sm animate-pulse flex items-center gap-1">
-                  <CheckCircle2 size={16} /> เก่งมาก! ตอบถูกทั้งหมด
-                </div>
-              )}
-            </div>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Toast Notification */}
-      {toast && (
-        <div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${
-          toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : 'bg-slate-800 border-rose-500'
-        }`}>
-          {toast.type === 'success' ? <CheckCircle2 className="text-emerald-500" /> : <ShieldAlert className="text-rose-500" />}
-          <div className="font-medium text-lg">{toast.msg}</div>
-        </div>
-      )}
     </div>
   );
 }

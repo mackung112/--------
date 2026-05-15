@@ -1,107 +1,177 @@
-import React, { useState } from 'react';
-import { AppWindow, Play, CheckCircle2, XCircle, AlertCircle, RotateCcw, MousePointerClick } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { AppWindow, Play, RotateCcw } from 'lucide-react';
 
 export default function OOP21910_U3_L2_TkinterWindowDemo() {
   const [showWindow, setShowWindow] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  const [activeTooltip, setActiveTooltip] = useState(null);
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Ready. Click "Run" to execute Tkinter window creation.' }
+  ]);
+  const consoleRef = useRef(null);
 
-  const explanations = {
-    'import': { title: 'import tkinter as tk', desc: 'นำเข้าไลบรารี Tkinter แล้วตั้งชื่อย่อว่า tk เพื่อให้เขียนสั้นลง (จาก tkinter.Button เหลือ tk.Button)', color: 'text-pink-500' },
-    'root': { title: 'root = tk.Tk()', desc: 'สร้างหน้าต่างหลัก (Main Window) ซึ่งเป็นฐานรากของทุก Widget ทั้งหมด ตัวแปร root เป็นชื่อนิยมที่ใช้กัน', color: 'text-yellow-500' },
-    'mainloop': { title: 'root.mainloop()', desc: 'เริ่มลูปการทำงานของ GUI ทำให้หน้าต่างแสดงผลค้างไว้และรอรับ Event จากผู้ใช้ (เช่น คลิกปุ่ม) ถ้าไม่มีบรรทัดนี้ หน้าต่างจะเปิดแล้วปิดทันที!', color: 'text-emerald-500' },
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
+
+  const handleRun = () => {
+    setShowWindow(true);
+    setConsoleHistory([
+      { type: 'command', text: '$ python main.py' },
+      { type: 'system', text: '> import tkinter as tk' },
+      { type: 'system', text: '> root = tk.Tk()' },
+      { type: 'system', text: '> root.title("My First App")' },
+      { type: 'system', text: '> root.geometry("300x200")' },
+      { type: 'output', text: '[INFO] Main window created.' },
+      { type: 'system', text: '> root.mainloop()' },
+      { type: 'output', text: '[INFO] Entering main event loop. Waiting for user actions...' }
+    ]);
   };
 
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
-  const showToast = (msg, type) => { setToast({ show: true, message: msg, type }); setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000); };
+  const closeWindow = () => {
+    setShowWindow(false);
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'system', text: '[EVENT] User closed the window.' },
+      { type: 'system', text: '[INFO] root.mainloop() exited.' },
+      { type: 'system', text: 'Program terminated.' }
+    ]);
+  };
+
+  const clear = () => {
+    setShowWindow(false);
+    setConsoleHistory([
+      { type: 'system', text: 'Ready. Click "Run" to execute Tkinter window creation.' }
+    ]);
+  };
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. Live Window Demo */}
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-sky-600 to-blue-700 text-white p-5 flex items-center gap-3">
-          <AppWindow size={24} />
-          <h3 className="font-bold text-lg">จำลองการสร้างหน้าต่าง Tkinter</h3>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-          {/* Code */}
-          <div className="p-6 bg-slate-50 border-r border-slate-200">
-            <div className="bg-slate-900 p-5 rounded-xl font-mono text-sm shadow-lg leading-loose">
-              <span onMouseEnter={() => setActiveTooltip('import')} className={`cursor-pointer border-b-2 border-dashed transition-all ${activeTooltip === 'import' ? 'bg-yellow-400/20 border-yellow-400 rounded' : 'border-transparent'}`}>
-                <span className="text-pink-400">import</span> <span className="text-sky-300">tkinter</span> <span className="text-pink-400">as</span> <span className="text-sky-300">tk</span>
-              </span><br /><br />
-              <span onMouseEnter={() => setActiveTooltip('root')} className={`cursor-pointer border-b-2 border-dashed transition-all ${activeTooltip === 'root' ? 'bg-yellow-400/20 border-yellow-400 rounded' : 'border-transparent'}`}>
-                <span className="text-yellow-300">root</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Tk</span>()
-              </span><br />
-              <span className="text-yellow-300">root</span>.<span className="text-blue-300">title</span>(<span className="text-green-300">"My First App"</span>)<br />
-              <span className="text-yellow-300">root</span>.<span className="text-blue-300">geometry</span>(<span className="text-green-300">"300x200"</span>)<br /><br />
-              <span onMouseEnter={() => setActiveTooltip('mainloop')} className={`cursor-pointer border-b-2 border-dashed transition-all ${activeTooltip === 'mainloop' ? 'bg-yellow-400/20 border-yellow-400 rounded' : 'border-transparent'}`}>
-                <span className="text-yellow-300">root</span>.<span className="text-blue-300">mainloop</span>()
-              </span>
-            </div>
-
-            <button onClick={() => setShowWindow(true)} className="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2 active:scale-95">
-              <Play size={18} /> รันโปรแกรม
-            </button>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-sky-100 text-sky-600 rounded-lg">
+            <AppWindow size={20} className="stroke-2" />
           </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">สร้างหน้าต่างหลัก (Main Window)</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้ขั้นตอนพื้นฐานที่สุดในการสร้างโปรแกรม GUI ด้วยการเรียกใช้ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">tk.Tk()</code> และ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">mainloop()</code>
+        </p>
+      </div>
 
-          {/* Preview / Explanation */}
-          <div className="p-6 flex items-center justify-center min-h-[300px]">
-            {showWindow ? (
-              <div className="animate-in zoom-in-95 fade-in duration-500">
-                <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl w-72">
-                  <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
-                    <button onClick={() => setShowWindow(false)} className="w-3 h-3 rounded-full bg-red-400 hover:bg-red-500 transition-colors" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" /><div className="w-3 h-3 rounded-full bg-emerald-400" />
-                    <span className="text-slate-400 text-xs ml-2 font-mono">My First App</span>
-                  </div>
-                  <div className="bg-slate-100 h-44 flex items-center justify-center text-slate-400 text-sm">
-                    (หน้าต่างว่าง — พร้อมใส่ Widget)
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Interactive Build */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            
+            <div className="flex flex-col h-full gap-6 items-center justify-center relative">
+              
+              {!showWindow && (
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-100 border-2 border-dashed border-slate-300 rounded-2xl">
+                  <div className="text-center">
+                    <AppWindow size={48} className="text-slate-300 mx-auto mb-4" />
+                    <button onClick={handleRun} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2">
+                      <Play size={18} fill="currentColor" /> Run Program
+                    </button>
                   </div>
                 </div>
-                <p className="text-center text-sm text-emerald-600 font-semibold mt-3">✅ หน้าต่างแสดงผลแล้ว!</p>
+              )}
+
+              {showWindow && (
+                <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl animate-in zoom-in-95 fade-in duration-300 border border-slate-400 w-[300px] h-[200px] flex flex-col">
+                  {/* Window Title Bar */}
+                  <div className="bg-slate-700 px-3 py-1.5 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-blue-500 rounded-sm flex items-center justify-center opacity-80">
+                        <AppWindow size={10} className="text-white" />
+                      </div>
+                      <span className="text-slate-300 text-xs font-mono">My First App</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-slate-500" />
+                      <div className="w-3 h-3 rounded-full bg-slate-500" />
+                      <button onClick={closeWindow} className="w-3 h-3 rounded-full bg-red-400 hover:bg-red-500 flex items-center justify-center group">
+                        <span className="opacity-0 group-hover:opacity-100 text-[8px] font-bold text-white leading-none -mt-px">x</span>
+                      </button>
+                    </div>
+                  </div>
+                  {/* Window Content */}
+                  <div className="bg-slate-100 flex-1 flex flex-col items-center justify-center text-slate-400 text-xs font-mono p-4 text-center border-t border-slate-400/20">
+                    <div className="border-2 border-dashed border-slate-300 w-full h-full rounded flex items-center justify-center opacity-50">
+                      Ready for Widgets
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            </div>
+
+          </div>
+
+          {/* Right: Info */}
+          <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            
+            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              <span className="text-pink-400">import</span> <span className="text-sky-300">tkinter</span> <span className="text-pink-400">as</span> <span className="text-sky-300">tk</span><br />
+              <br />
+              <span className="text-slate-500"># 1. สร้างหน้าต่างหลัก</span><br />
+              <span className="text-yellow-300">root</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Tk</span>()<br />
+              <span className="text-yellow-300">root</span>.<span className="text-blue-300">title</span>(<span className="text-green-300">"My First App"</span>)<br />
+              <span className="text-yellow-300">root</span>.<span className="text-blue-300">geometry</span>(<span className="text-green-300">"300x200"</span>)<br />
+              <br />
+              <span className="text-slate-500"># 2. เริ่มลูป Event</span><br />
+              <span className="text-yellow-300">root</span>.<span className="text-blue-300">mainloop</span>()
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4 overflow-y-auto">
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-bold text-sky-600 text-sm font-mono mb-1">import tkinter as tk</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    นำเข้าไลบรารี Tkinter และตั้งชื่อย่อว่า <code>tk</code> เพื่อความสะดวกในการพิมพ์
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <h5 className="font-bold text-yellow-600 text-sm font-mono mb-1">tk.Tk()</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    สร้าง Object ของหน้าต่างหลัก ซึ่งมักจะตั้งชื่อตัวแปรว่า <code>root</code> หรือ <code>window</code>
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <h5 className="font-bold text-emerald-600 text-sm font-mono mb-1">root.mainloop()</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    คำสั่งสำคัญที่สุด! ใช้เริ่มวงลูปการทำงาน ทำให้หน้าต่างเปิดค้างไว้และรอรับคำสั่งจากผู้ใช้ (หากไม่มีคำสั่งนี้ หน้าต่างจะเปิดแล้วปิดทันที)
+                  </p>
+                </div>
               </div>
-            ) : activeTooltip && explanations[activeTooltip] ? (
-              <div className="w-full animate-in fade-in">
-                <h4 className={`text-lg font-bold font-mono ${explanations[activeTooltip].color} mb-2 border-b pb-2`}>{explanations[activeTooltip].title}</h4>
-                <p className="text-slate-600 leading-relaxed">{explanations[activeTooltip].desc}</p>
-              </div>
-            ) : (
-              <div className="text-center text-slate-500">
-                <MousePointerClick className="text-slate-300 mx-auto mb-3" size={32} />
-                ชี้ที่โค้ดเพื่อดูคำอธิบาย<br />หรือกด "รันโปรแกรม" เพื่อดูผลลัพธ์
-              </div>
-            )}
+            </div>
+
+            <button onClick={clear}
+              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl px-4 py-3 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm">
+              <RotateCcw size={16} /> รีเซ็ต
+            </button>
           </div>
         </div>
-      </section>
 
-      {/* 2. Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">ถ้าไม่เขียน <code className="text-yellow-300 bg-slate-700 px-2 py-0.5 rounded">root.mainloop()</code> จะเกิดอะไรขึ้น?</p>
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'close', label: 'หน้าต่างจะเปิดขึ้นมาแล้วปิดทันที (แวบเดียว)', correct: true },
-            { val: 'error', label: 'โปรแกรมจะ Error ทันที' },
-            { val: 'nothing', label: 'ไม่เกิดอะไร หน้าต่างแสดงผลปกติ' },
-            { val: 'slow', label: 'หน้าต่างจะทำงานช้าลง' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' : quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' : quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'}`}>
-              {opt.label}
-            </button>
-          ))}
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Event Log</span>
+            </div>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => { if (!quizAnswer) { showToast('กรุณาเลือกคำตอบ', 'warning'); return; } setQuizChecked(true); showToast(quizAnswer === 'close' ? 'ถูกต้อง! mainloop() ทำให้หน้าต่างค้างรอ Event' : 'ไม่ถูกต้อง', quizAnswer === 'close' ? 'success' : 'error'); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
-
-      {toast.show && (<div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>{toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}{toast.type === 'error' && <XCircle className="text-red-500" />}{toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}<div className="font-medium">{toast.message}</div></div>)}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ShoppingCart, Plus, Trash2, Receipt, Calculator, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ShoppingCart, Plus, Trash2, Receipt, Calculator, RotateCcw, MonitorPlay } from 'lucide-react';
 
 const catalog = [
   { id: 1, name: "หนังสือ Python 101", price: 350, emoji: "📘" },
@@ -14,177 +14,232 @@ const VAT_RATE = 0.07;
 
 export default function PY21910_U8_L2_MiniPOS() {
   const [cart, setCart] = useState([]);
-  const [showReceipt, setShowReceipt] = useState(false);
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Mini POS System Initialized.' },
+    { type: 'system', text: '--- ยินดีต้อนรับสู่ระบบแคชเชียร์ ---' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const addToCart = (item) => {
     const existing = cart.find(c => c.id === item.id);
     if (existing) {
       setCart(cart.map(c => c.id === item.id ? { ...c, qty: c.qty + 1 } : c));
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'command', text: `add_item("${item.name}")` },
+        { type: 'output', text: `เพิ่มจำนวน ${item.name} เป็น ${existing.qty + 1} ชิ้น` }
+      ]);
     } else {
       setCart([...cart, { ...item, qty: 1 }]);
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'command', text: `add_item("${item.name}")` },
+        { type: 'output', text: `เพิ่ม ${item.name} ลงในตะกร้า` }
+      ]);
     }
-    setShowReceipt(false);
   };
 
   const removeFromCart = (id) => {
+    const item = cart.find(c => c.id === id);
     setCart(cart.filter(c => c.id !== id));
-    setShowReceipt(false);
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `remove_item("${item.name}")` },
+      { type: 'output', text: `ลบ ${item.name} ออกจากตะกร้าแล้ว` }
+    ]);
   };
 
-  const clearCart = () => { setCart([]); setShowReceipt(false); };
+  const clearCart = () => {
+    setCart([]);
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: 'clear_cart()' },
+      { type: 'output', text: 'ล้างตะกร้าสินค้าเรียบร้อย' }
+    ]);
+  };
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const vat = subtotal * VAT_RATE;
   const total = subtotal + vat;
 
-  // Generate Python code equivalent
-  const pythonCode = `# ระบบแคชเชียร์ (Mini POS)
+  const checkout = () => {
+    if (cart.length === 0) {
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'command', text: 'checkout()' },
+        { type: 'error', text: 'Error: ตะกร้าว่างเปล่า ไม่สามารถชำระเงินได้' }
+      ]);
+      return;
+    }
 
-def calculate_vat(subtotal, vat_rate=0.07):
-    """ฟังก์ชันคำนวณภาษีมูลค่าเพิ่ม"""
-    return subtotal * vat_rate
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: 'checkout()' },
+      { type: 'system', text: '\n' + '='.repeat(35) },
+      { type: 'output', text: '        ใบเสร็จรับเงิน (RECEIPT)' },
+      { type: 'system', text: '='.repeat(35) },
+      ...cart.map(c => ({
+        type: 'output',
+        text: `${c.name} x${c.qty}  ${(c.price * c.qty).toFixed(2).padStart(10)} ฿`
+      })),
+      { type: 'system', text: '-'.repeat(35) },
+      { type: 'output', text: `รวม:          ${subtotal.toFixed(2).padStart(12)} ฿` },
+      { type: 'output', text: `VAT 7%:       ${vat.toFixed(2).padStart(12)} ฿` },
+      { type: 'output', text: `ยอดสุทธิ:     ${total.toFixed(2).padStart(12)} ฿` },
+      { type: 'system', text: '='.repeat(35) + '\n' }
+    ]);
+  };
 
-def print_receipt(items, total_price):
-    """ฟังก์ชันพิมพ์ใบเสร็จ"""
-    print("\\n" + "=" * 35)
-    print("   ใบเสร็จรับเงิน (RECEIPT)")
-    print("=" * 35)
-    for name, price, qty in items:
-        line_total = price * qty
-        print(f"{name} x{qty}  {line_total:>10.2f} ฿")
-    
-    vat = calculate_vat(total_price)
-    grand_total = total_price + vat
-    
-    print("-" * 35)
-    print(f"รวม:          {total_price:>12.2f} ฿")
-    print(f"VAT 7%:       {vat:>12.2f} ฿")
-    print(f"ยอดสุทธิ:     {grand_total:>12.2f} ฿")
-    print("=" * 35)
-
-# ตะกร้าสินค้า
-cart = [
-${cart.map(c => `    ("${c.name}", ${c.price}, ${c.qty}),`).join('\n') || '    # (ยังไม่มีสินค้าในตะกร้า)'}
-]
-
-total = sum(price * qty for _, price, qty in cart)
-print_receipt(cart, total)`;
+  const clearLog = () => setConsoleHistory([
+    { type: 'system', text: 'Mini POS System Initialized.' },
+    { type: 'system', text: '--- ยินดีต้อนรับสู่ระบบแคชเชียร์ ---' }
+  ]);
 
   return (
-    <div className="w-full my-12">
-      <p className="text-gray-600 text-lg mb-6">ลองเพิ่มสินค้าลงตะกร้า แล้วดูโค้ด Python ที่เทียบเท่ากับการทำงานของระบบนี้:</p>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+            <MonitorPlay size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">โปรเจกต์: ระบบแคชเชียร์ (Mini POS)</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          นำความรู้ทั้งหมดมาสร้างระบบจำลองการขายสินค้า กดเพิ่มสินค้าแล้วดูการทำงานและการออกใบเสร็จใน Terminal
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left: Shop + Cart */}
-        <div>
-          {/* Catalog */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-4">
-            <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5 text-indigo-600" /> รายการสินค้า
-            </h4>
-            <div className="grid grid-cols-2 gap-2">
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Store Interface */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50/50">
+            
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="font-bold text-slate-800 flex items-center gap-2">
+                <ShoppingCart className="text-emerald-600" size={18} /> รายการสินค้า (Catalog)
+              </h4>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
               {catalog.map(item => (
                 <button key={item.id} onClick={() => addToCart(item)}
-                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-indigo-50 hover:border-indigo-300 border border-gray-200 transition-all text-left">
-                  <span className="text-2xl">{item.emoji}</span>
+                  className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-sm transition-all text-left group">
+                  <span className="text-2xl bg-slate-50 p-2 rounded-lg">{item.emoji}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-gray-800 text-sm truncate">{item.name}</div>
-                    <div className="text-indigo-600 font-bold text-sm">{item.price} ฿</div>
+                    <div className="font-bold text-slate-700 text-sm truncate">{item.name}</div>
+                    <div className="text-emerald-600 font-bold text-sm">{item.price} ฿</div>
                   </div>
-                  <Plus className="w-4 h-4 text-gray-400 shrink-0" />
+                  <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
+                    <Plus size={16} />
+                  </div>
                 </button>
               ))}
             </div>
+
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">โค้ดที่อยู่เบื้องหลัง (Behind the Scenes)</h4>
+            <div className="bg-slate-900 rounded-xl p-4 font-mono text-xs leading-relaxed text-slate-100 flex-1 shadow-inner overflow-x-auto min-h-[150px] border border-slate-700">
+              <div className="text-pink-400">def <span className="text-blue-400 font-bold">add_item</span>(<span className="text-orange-300">name</span>):</div>
+              <div className="ml-4 text-slate-500"># จำลองการเพิ่มสินค้าลงตะกร้า (List)</div>
+              <div className="ml-4 text-emerald-300">cart.append(name)</div>
+              <div className="text-pink-400 mt-2">def <span className="text-blue-400 font-bold">checkout</span>():</div>
+              <div className="ml-4 text-emerald-300">subtotal = sum_prices(cart)</div>
+              <div className="ml-4 text-emerald-300">vat = subtotal * 0.07</div>
+              <div className="ml-4 text-emerald-300">total = subtotal + vat</div>
+              <div className="ml-4 text-cyan-400">print_receipt(cart, subtotal, vat, total)</div>
+            </div>
           </div>
 
-          {/* Cart */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="font-bold text-gray-900 flex items-center gap-2">
-                🛒 ตะกร้า ({cart.length} รายการ)
+          {/* Right: Cart & Checkout */}
+          <div className="w-full lg:w-[320px] bg-white p-6 flex flex-col border-l border-slate-200 shadow-[-4px_0_15px_-3px_rgba(0,0,0,0.02)] relative z-10">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-200">
+              <h4 className="font-bold text-slate-800 flex items-center gap-2">
+                ตะกร้าสินค้า
+                <span className="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold">{cart.length}</span>
               </h4>
               {cart.length > 0 && (
-                <button onClick={clearCart} className="text-red-500 text-xs font-bold flex items-center gap-1 hover:text-red-700">
-                  <RotateCcw className="w-3 h-3" /> ล้างตะกร้า
+                <button onClick={clearCart} className="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1 transition-colors">
+                  <RotateCcw size={12} /> ล้าง
                 </button>
               )}
             </div>
 
-            {cart.length === 0 ? (
-              <p className="text-gray-400 text-center py-4">ยังไม่มีสินค้า</p>
-            ) : (
-              <div className="space-y-2 mb-4">
-                {cart.map(item => (
-                  <div key={item.id} className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-xl">
-                    <div className="flex items-center gap-2">
-                      <span>{item.emoji}</span>
-                      <span className="font-medium text-sm text-gray-800">{item.name}</span>
-                      <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-xs font-bold">x{item.qty}</span>
+            <div className="flex-1 overflow-y-auto mb-4 space-y-2 pr-1 custom-scrollbar">
+              {cart.length === 0 ? (
+                <div className="text-center py-10 flex flex-col items-center justify-center">
+                  <ShoppingCart size={32} className="text-slate-200 mb-2" />
+                  <p className="text-slate-400 text-sm">ยังไม่มีสินค้าในตะกร้า</p>
+                </div>
+              ) : (
+                cart.map(item => (
+                  <div key={item.id} className="flex items-center justify-between bg-slate-50 border border-slate-100 px-3 py-2.5 rounded-xl">
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="font-bold text-xs text-slate-800 truncate">{item.name}</span>
+                      <div className="flex items-center gap-2 text-[11px] mt-0.5">
+                        <span className="text-slate-500">{item.price} ฿</span>
+                        <span className="text-slate-300">x</span>
+                        <span className="font-bold text-emerald-600">{item.qty}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-sm text-gray-900">{(item.price * item.qty).toFixed(2)} ฿</span>
-                      <button onClick={() => removeFromCart(item.id)} className="text-red-400 hover:text-red-600">
-                        <Trash2 className="w-4 h-4" />
+                    <div className="flex items-center gap-3 pl-2">
+                      <span className="font-bold text-xs text-slate-900">{(item.price * item.qty).toLocaleString()} ฿</span>
+                      <button onClick={() => removeFromCart(item.id)} className="text-rose-400 hover:text-rose-600 p-1 bg-rose-50 rounded-md transition-colors">
+                        <Trash2 size={12} />
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
+                ))
+              )}
+            </div>
 
-            {cart.length > 0 && (
-              <div className="border-t border-gray-200 pt-4 space-y-2">
-                <div className="flex justify-between text-sm"><span className="text-gray-600">รวม:</span><span className="font-bold">{subtotal.toFixed(2)} ฿</span></div>
-                <div className="flex justify-between text-sm"><span className="text-gray-600">VAT 7%:</span><span className="font-bold">{vat.toFixed(2)} ฿</span></div>
-                <div className="flex justify-between text-lg font-extrabold text-indigo-700 pt-2 border-t border-gray-200">
-                  <span>ยอดสุทธิ:</span><span>{total.toFixed(2)} ฿</span>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-auto">
+              <div className="space-y-2 mb-3">
+                <div className="flex justify-between text-xs"><span className="text-slate-500">รวมเป็นเงิน:</span><span className="font-mono font-bold text-slate-700">{subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-500">ภาษี (VAT 7%):</span><span className="font-mono font-bold text-slate-700">{vat.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span></div>
+                <div className="flex justify-between text-sm pt-2 border-t border-slate-200">
+                  <span className="font-bold text-slate-800">ยอดชำระสุทธิ:</span>
+                  <span className="font-mono font-bold text-emerald-600">{total.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span>
                 </div>
-                <button onClick={() => setShowReceipt(true)}
-                  className="w-full flex items-center justify-center gap-2 mt-3 px-6 py-3 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 transition-colors shadow-md">
-                  <Receipt className="w-5 h-5" /> พิมพ์ใบเสร็จ
-                </button>
               </div>
-            )}
+              <button onClick={checkout} disabled={cart.length === 0}
+                className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold transition-all ${
+                  cart.length > 0 
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md active:scale-95' 
+                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                }`}>
+                <Receipt size={16} /> พิมพ์ใบเสร็จ (Checkout)
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Right: Python Code */}
-        <div>
-          
+        {/* Bottom VS Code Terminal */}
+        <div className="h-[250px] bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">python mini_pos.py</span>
+            </div>
+            <button onClick={clearLog} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+              <RotateCcw size={14} /> Clear Log
+            </button>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'output'  && <div className="text-slate-200 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'error'   && <div className="text-rose-400 font-bold whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Receipt Modal */}
-      {showReceipt && (
-        <div className="mt-6 bg-white rounded-2xl p-8 border-2 border-green-200 shadow-lg max-w-md mx-auto font-mono text-sm">
-          <div className="text-center mb-4">
-            <div className="text-lg font-bold">{"=".repeat(30)}</div>
-            <div className="font-bold text-lg mt-1">ใบเสร็จรับเงิน</div>
-            <div className="text-lg font-bold">{"=".repeat(30)}</div>
-          </div>
-          {cart.map(item => (
-            <div key={item.id} className="flex justify-between">
-              <span>{item.emoji} {item.name} x{item.qty}</span>
-              <span>{(item.price * item.qty).toFixed(2)} ฿</span>
-            </div>
-          ))}
-          <div className="my-2">{"-".repeat(30)}</div>
-          <div className="flex justify-between"><span>รวม:</span><span>{subtotal.toFixed(2)} ฿</span></div>
-          <div className="flex justify-between"><span>VAT 7%:</span><span>{vat.toFixed(2)} ฿</span></div>
-          <div className="flex justify-between font-bold text-lg mt-2"><span>ยอดสุทธิ:</span><span>{total.toFixed(2)} ฿</span></div>
-          <div className="text-center mt-4 text-lg font-bold">{"=".repeat(30)}</div>
-          <div className="text-center mt-2 text-xs text-gray-400">ขอบคุณที่ใช้บริการ 🙏</div>
-        </div>
-      )}
-    
-      {/* Bottom Full-Width Console Output (VS Code Style) */}
-      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-            <div className="flex items-center gap-2 mb-4">
-              <Calculator className="w-4 h-4 text-green-400" />
-              <span className="text-green-400 text-xs font-bold">🐍 โค้ด Python ที่เทียบเท่า</span>
-            </div>
-            <pre className="font-mono text-xs text-slate-100 whitespace-pre-wrap overflow-x-auto max-h-[500px] overflow-y-auto">{pythonCode}</pre>
-          </div>
     </div>
   );
 }

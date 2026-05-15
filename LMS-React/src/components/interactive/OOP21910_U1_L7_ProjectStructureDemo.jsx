@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
-import { FolderOpen, File, FolderPlus, FilePlus, CheckCircle2, XCircle, AlertCircle, RotateCcw, ChevronRight, ChevronDown, Lightbulb } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { FolderOpen, File, ChevronRight, ChevronDown, Terminal, RotateCcw, MousePointerClick } from 'lucide-react';
 
 export default function OOP21910_U1_L7_ProjectStructureDemo() {
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
   const [expandedFolders, setExpandedFolders] = useState({ root: true, src: true, assets: false, tests: false });
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Project Structure Explorer Initialized.' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const correctStructure = {
-    name: 'my_oop_project', type: 'folder', children: [
-      { name: 'src', type: 'folder', desc: 'เก็บไฟล์โค้ดหลักทั้งหมด', children: [
-        { name: 'main.py', type: 'file', desc: 'ไฟล์หลักที่ใช้รันโปรแกรม', icon: '🐍' },
-        { name: 'student.py', type: 'file', desc: 'ไฟล์คลาส Student', icon: '🐍' },
-        { name: 'product.py', type: 'file', desc: 'ไฟล์คลาส Product', icon: '🐍' },
+    name: 'my_oop_project', type: 'folder', desc: 'โฟลเดอร์หลักของโปรเจกต์', children: [
+      { name: 'src', type: 'folder', desc: 'ย่อมาจาก source ใช้เก็บไฟล์โค้ดหลักทั้งหมด', children: [
+        { name: 'main.py', type: 'file', desc: 'ไฟล์หลักที่ใช้สั่งรันโปรแกรม', icon: '🐍', code: 'from student import Student\n\ns = Student("Mac")\nprint(f"Hello {s.name}")' },
+        { name: 'student.py', type: 'file', desc: 'ไฟล์เก็บคลาส Student แยกเป็นสัดส่วน', icon: '🐍', code: 'class Student:\n    def __init__(self, name):\n        self.name = name' },
       ]},
-      { name: 'assets', type: 'folder', desc: 'เก็บไฟล์รูปภาพ, ไอคอน, ฟอนต์', children: [
-        { name: 'logo.png', type: 'file', desc: 'รูปโลโก้โปรเจกต์', icon: '🖼️' },
+      { name: 'assets', type: 'folder', desc: 'เก็บไฟล์สื่อ เช่น รูปภาพ, ไอคอน, เสียง, หรือข้อมูล', children: [
+        { name: 'logo.png', type: 'file', desc: 'ไฟล์รูปโลโก้', icon: '🖼️' },
       ]},
-      { name: 'tests', type: 'folder', desc: 'เก็บไฟล์ทดสอบ (Unit Test)', children: [
-        { name: 'test_student.py', type: 'file', desc: 'ไฟล์ทดสอบคลาส Student', icon: '🧪' },
+      { name: 'tests', type: 'folder', desc: 'เก็บไฟล์สำหรับรันระบบทดสอบอัตโนมัติ (Unit Test)', children: [
+        { name: 'test_student.py', type: 'file', desc: 'โค้ดทดสอบคลาส Student', icon: '🧪' },
       ]},
-      { name: 'README.md', type: 'file', desc: 'เอกสารอธิบายโปรเจกต์', icon: '📄' },
-      { name: 'requirements.txt', type: 'file', desc: 'รายชื่อไลบรารีที่ใช้ (pip install -r)', icon: '📋' },
+      { name: 'README.md', type: 'file', desc: 'คู่มือหรือคำอธิบายโปรเจกต์ (Markdown)', icon: '📄', code: '# My OOP Project\nThis is a sample project.' },
+      { name: 'requirements.txt', type: 'file', desc: 'รายชื่อไลบรารีที่จำเป็น (เพื่อใช้กับคำสั่ง pip install -r)', icon: '📋', code: 'requests==2.31.0\nnumpy==1.26.4' },
     ]
   };
 
-  const [selectedItem, setSelectedItem] = useState(null);
-
   const toggleFolder = (key) => {
     setExpandedFolders(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleSelect = (node) => {
+    setSelectedItem(node);
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'system', text: `Selected: ${node.name} (${node.type})` }
+    ]);
   };
 
   const renderTree = (node, depth = 0, parentKey = '') => {
@@ -37,137 +50,144 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
     return (
       <div key={key}>
         <button
-          onClick={() => { if (isFolder) toggleFolder(node.name); setSelectedItem(node); }}
-          className={`w-full text-left flex items-center gap-2 py-1.5 px-2 rounded-lg transition-all text-sm hover:bg-indigo-50 ${selectedItem?.name === node.name ? 'bg-indigo-100 text-indigo-700' : 'text-slate-700'}`}
-          style={{ paddingLeft: `${depth * 20 + 8}px` }}
+          onClick={() => { if (isFolder) toggleFolder(node.name); handleSelect(node); }}
+          className={`w-full text-left flex items-center gap-2 py-1.5 px-2 transition-all text-sm hover:bg-[#2a2d2e] ${selectedItem?.name === node.name ? 'bg-[#37373d] text-white' : 'text-slate-300'}`}
+          style={{ paddingLeft: `${depth * 15 + 10}px` }}
         >
           {isFolder ? (
             isExpanded ? <ChevronDown size={14} className="text-slate-400" /> : <ChevronRight size={14} className="text-slate-400" />
           ) : <span className="w-3.5" />}
-          {isFolder ? <FolderOpen size={16} className="text-amber-500" /> : <span className="text-xs">{node.icon || '📄'}</span>}
-          <span className={`font-mono text-sm ${isFolder ? 'font-bold' : ''}`}>{node.name}</span>
+          {isFolder ? <FolderOpen size={14} className="text-amber-400" /> : <span className="text-xs">{node.icon || '📄'}</span>}
+          <span className={`font-mono text-xs ${isFolder ? 'font-bold text-slate-200' : 'text-slate-300'}`}>{node.name}</span>
         </button>
         {isFolder && isExpanded && node.children?.map(child => renderTree(child, depth + 1, key))}
       </div>
     );
   };
 
-  const showToast = (msg, type) => {
-    setToast({ show: true, message: msg, type });
-    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
+  const simulateRun = () => {
+    if (selectedItem?.name === 'main.py') {
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'command', text: '$ python src/main.py' },
+        { type: 'output', text: 'Hello Mac' }
+      ]);
+    } else {
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'system', text: 'Please select main.py and click Run' }
+      ]);
+    }
   };
 
-  // Quiz
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
+  const clear = () => {
+    setSelectedItem(null);
+    setExpandedFolders({ root: true, src: true, assets: false, tests: false });
+    setConsoleHistory([{ type: 'system', text: 'Project Structure Explorer Initialized.' }]);
+  };
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. File Tree Explorer */}
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-amber-500 to-yellow-600 text-white p-5 flex items-center gap-3">
-          <FolderOpen size={24} />
-          <h3 className="font-bold text-lg">โครงสร้างโฟลเดอร์โปรเจกต์ OOP</h3>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-rose-100 text-rose-600 rounded-lg">
+            <FolderOpen size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การจัดโครงสร้างโปรเจกต์</h3>
         </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้มาตรฐานการจัดเก็บไฟล์ โฟลเดอร์ที่จำเป็นต้องมีในโปรเจกต์ Python ขนาดกลาง-ใหญ่
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-          {/* File Tree */}
-          <div className="p-6 bg-slate-50 border-r border-slate-200">
-            <p className="text-sm text-slate-500 mb-4">คลิกที่โฟลเดอร์/ไฟล์เพื่อดูคำอธิบาย</p>
-            <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: VS Code File Explorer */}
+          <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-[#252526] select-none">
+            <div className="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700/50">
+              Explorer
+            </div>
+            <div className="flex-1 overflow-y-auto py-2">
               {renderTree(correctStructure)}
             </div>
           </div>
 
-          {/* Detail Panel */}
-          <div className="p-6 flex items-center justify-center min-h-[250px]">
+          {/* Right: Info / Code Preview */}
+          <div className="flex-1 bg-white p-6 flex flex-col">
             {selectedItem ? (
-              <div className="w-full space-y-4">
-                <div className="flex items-center gap-3">
-                  {selectedItem.type === 'folder' ? <FolderOpen size={28} className="text-amber-500" /> : <File size={28} className="text-slate-500" />}
+              <div className="animate-in fade-in h-full flex flex-col">
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-100">
+                  <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-2xl shadow-inner">
+                    {selectedItem.type === 'folder' ? '📂' : selectedItem.icon || '📄'}
+                  </div>
                   <div>
-                    <h4 className="text-xl font-bold text-slate-800 font-mono">{selectedItem.name}</h4>
-                    <span className={`text-xs px-2 py-0.5 rounded ${selectedItem.type === 'folder' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'}`}>
-                      {selectedItem.type === 'folder' ? 'โฟลเดอร์' : 'ไฟล์'}
+                    <h4 className="font-bold text-lg text-slate-800 font-mono">{selectedItem.name}</h4>
+                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded tracking-wide ${selectedItem.type === 'folder' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
+                      {selectedItem.type}
                     </span>
                   </div>
                 </div>
-                <p className="text-slate-600 leading-relaxed">{selectedItem.desc || 'ไม่มีคำอธิบาย'}</p>
-                {selectedItem.type === 'folder' && selectedItem.children && (
-                  <div className="bg-slate-50 rounded-lg p-3 border border-slate-200">
-                    <div className="text-xs text-slate-500 font-bold mb-1">มีไฟล์ {selectedItem.children.length} รายการ:</div>
-                    <div className="text-sm text-slate-600 font-mono">
-                      {selectedItem.children.map(c => c.name).join(', ')}
+
+                <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg mb-6 shadow-sm">
+                  <h5 className="font-bold text-slate-700 text-sm mb-1">หน้าที่/ความสำคัญ</h5>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {selectedItem.desc}
+                  </p>
+                </div>
+
+                {selectedItem.type === 'file' && selectedItem.code && (
+                  <div className="flex-1 flex flex-col">
+                    <div className="flex justify-between items-center mb-2">
+                      <h5 className="font-bold text-slate-700 text-sm">ตัวอย่างภายในไฟล์</h5>
+                      {selectedItem.name === 'main.py' && (
+                        <button onClick={simulateRun} className="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 px-3 py-1 rounded text-xs font-bold transition-colors flex items-center gap-1">
+                          <Play size={12} /> ลองรันไฟล์นี้
+                        </button>
+                      )}
+                    </div>
+                    <div className="bg-[#1e1e1e] p-4 rounded-lg font-mono text-xs text-slate-300 flex-1 whitespace-pre-wrap leading-loose shadow-inner border border-slate-700">
+                      {selectedItem.code.split('\n').map((line, i) => {
+                        let formattedLine = line;
+                        if (line.includes('class ') || line.includes('def ')) formattedLine = <span className="text-pink-400">{line}</span>;
+                        else if (line.includes('import ')) formattedLine = <span className="text-pink-400">{line}</span>;
+                        else if (line.includes('print(')) formattedLine = <><span className="text-sky-300">print</span>(<span className="text-orange-300">{line.substring(line.indexOf('(')+1, line.lastIndexOf(')'))}</span>)</>;
+                        return <div key={i}>{formattedLine}</div>;
+                      })}
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="text-center text-slate-500">
-                <FolderOpen className="text-slate-300 mx-auto mb-3" size={32} />
-                คลิกที่โฟลเดอร์หรือไฟล์<br />เพื่อดูคำอธิบาย
+              <div className="h-full flex flex-col items-center justify-center text-slate-400">
+                <MousePointerClick size={32} className="mb-2 opacity-50" />
+                <p className="text-sm">คลิกที่โฟลเดอร์หรือไฟล์ใน Explorer ด้านซ้าย</p>
               </div>
             )}
           </div>
         </div>
-      </section>
 
-      {/* 2. Tips */}
-      <section className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6">
-        <div className="flex items-start gap-3">
-          <Lightbulb className="text-indigo-600 mt-1 flex-shrink-0" size={24} />
-          <div>
-            <h3 className="font-bold text-indigo-800 mb-2">💡 เคล็ดลับการจัดโฟลเดอร์</h3>
-            <ul className="text-indigo-700 text-sm space-y-1 list-disc list-inside">
-              <li>แยกไฟล์โค้ดออกจากไฟล์สื่อ (รูปภาพ, เสียง) เสมอ</li>
-              <li>ตั้งชื่อไฟล์เป็นภาษาอังกฤษ ใช้ตัวพิมพ์เล็ก คั่นด้วย _ (เช่น my_class.py)</li>
-              <li>สร้าง <code className="bg-indigo-200/50 px-1 rounded">requirements.txt</code> ไว้เสมอ เพื่อให้คนอื่นติดตั้งไลบรารีได้ง่าย</li>
-              <li>ไฟล์ <code className="bg-indigo-200/50 px-1 rounded">README.md</code> ช่วยอธิบายวิธีใช้งานโปรเจกต์</li>
-            </ul>
+        {/* Bottom Terminal */}
+        <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+            </div>
+            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+              <RotateCcw size={14} /> Reset Explorer
+            </button>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">$</span>{line.text}</div>}
+                {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
           </div>
         </div>
-      </section>
-
-      {/* 3. Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">โฟลเดอร์ <code className="text-yellow-300 bg-slate-700 px-2 py-0.5 rounded">src/</code> ควรใช้เก็บอะไร?</p>
-
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'code', label: 'ไฟล์โค้ด Python (.py) ที่เป็นส่วนหลักของโปรเจกต์', correct: true },
-            { val: 'images', label: 'รูปภาพและสื่อต่างๆ' },
-            { val: 'tests', label: 'ไฟล์ทดสอบ (Unit Test)' },
-            { val: 'docs', label: 'เอกสารคู่มือการใช้งาน' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${
-                quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' :
-                quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' :
-                quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' :
-                'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'
-              }`}>{opt.label}</button>
-          ))}
-        </div>
-
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => {
-            if (!quizAnswer) { showToast('กรุณาเลือกคำตอบ', 'warning'); return; }
-            setQuizChecked(true);
-            showToast(quizAnswer === 'code' ? 'ถูกต้อง! src/ ใช้เก็บซอร์สโค้ดหลักของโปรเจกต์' : 'ไม่ถูกต้อง: src/ ย่อมาจาก source ใช้เก็บไฟล์โค้ดหลัก', quizAnswer === 'code' ? 'success' : 'error');
-          }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
-
-      {toast.show && (
-        <div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>
-          {toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}
-          {toast.type === 'error' && <XCircle className="text-red-500" />}
-          {toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}
-          <div className="font-medium">{toast.message}</div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

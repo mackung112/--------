@@ -1,131 +1,198 @@
-import React, { useState } from 'react';
-import { Monitor, Terminal, MousePointerClick, CheckCircle2, XCircle, AlertCircle, RotateCcw, ArrowRight, Lightbulb } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Monitor, Terminal, MousePointerClick, RotateCcw, Play } from 'lucide-react';
 
 export default function OOP21910_U3_L1_TkinterIntroDemo() {
   const [mode, setMode] = useState('cli');
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Terminal initialized. Ready for simulation.' }
+  ]);
+  const consoleRef = useRef(null);
 
-  const [activeTooltip, setActiveTooltip] = useState(null);
-  const explanations = {
-    'tkinter': { title: 'Tkinter คืออะไร?', desc: 'ไลบรารีมาตรฐานของ Python สำหรับสร้าง GUI (Graphical User Interface) ติดตั้งมาพร้อมกับ Python เลย ไม่ต้อง pip install เพิ่ม', color: 'text-blue-600' },
-    'widget': { title: 'Widget คืออะไร?', desc: 'ส่วนประกอบต่างๆ บนหน้าจอ เช่น ปุ่มกด (Button), ช่องกรอก (Entry), ข้อความ (Label), กล่องเลือก (Combobox) ทุกอย่างที่ผู้ใช้มองเห็นและโต้ตอบได้คือ Widget', color: 'text-emerald-600' },
-    'event': { title: 'Event-Driven คืออะไร?', desc: 'โปรแกรม GUI จะ "รอ" ให้ผู้ใช้กดปุ่มหรือพิมพ์ข้อความก่อน แล้วค่อยทำงานตอบสนอง ต่างจากโปรแกรม CLI ที่รันจากบนลงล่างทีเดียว', color: 'text-purple-600' },
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
+
+  const switchMode = (newMode) => {
+    setMode(newMode);
+    if (newMode === 'cli') {
+      setConsoleHistory([
+        { type: 'system', text: 'Switched to CLI Mode.' },
+        { type: 'command', text: '$ python app.py' },
+        { type: 'output', text: 'ชื่อ: Somchai' },
+        { type: 'output', text: 'อายุ: 25' },
+        { type: 'output', text: 'สวัสดี Somchai อายุ 25 ปี' },
+        { type: 'system', text: 'Program exited.' }
+      ]);
+    } else {
+      setConsoleHistory([
+        { type: 'system', text: 'Switched to GUI Mode (Tkinter).' },
+        { type: 'command', text: '$ python app_gui.py' },
+        { type: 'system', text: 'Initializing GUI window...' },
+        { type: 'output', text: '[INFO] Main window displayed.' },
+        { type: 'system', text: 'Waiting for Event-Driven actions...' }
+      ]);
+    }
   };
 
-  const showToast = (msg, type) => { setToast({ show: true, message: msg, type }); setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000); };
+  const submitGUI = () => {
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'system', text: '[EVENT] Button "ยืนยัน" clicked.' },
+      { type: 'output', text: 'สวัสดี ผู้ใช้งาน!' }
+    ]);
+  };
+
+  const clear = () => {
+    setMode('cli');
+    setConsoleHistory([
+      { type: 'system', text: 'Terminal initialized. Ready for simulation.' }
+    ]);
+  };
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. CLI vs GUI Comparison */}
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white p-5 flex items-center gap-3">
-          <Monitor size={24} />
-          <h3 className="font-bold text-lg">เปรียบเทียบ CLI vs GUI</h3>
-        </div>
-        <div className="p-6">
-          <div className="flex gap-3 mb-6 justify-center">
-            <button onClick={() => setMode('cli')} className={`px-6 py-2 rounded-xl font-bold transition-all ${mode === 'cli' ? 'bg-slate-800 text-white shadow-lg' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-              <Terminal size={16} className="inline mr-2" />CLI (Command Line)
-            </button>
-            <button onClick={() => setMode('gui')} className={`px-6 py-2 rounded-xl font-bold transition-all ${mode === 'gui' ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
-              <Monitor size={16} className="inline mr-2" />GUI (Tkinter)
-            </button>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+            <Monitor size={20} className="stroke-2" />
           </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">เปรียบเทียบ CLI vs GUI</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้ความแตกต่างระหว่างโปรแกรมแบบ Command Line Interface (CLI) และ Graphical User Interface (GUI)
+        </p>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Code */}
-            <div className="bg-slate-900 p-5 rounded-xl font-mono text-sm shadow-lg">
-              {mode === 'cli' ? (<>
-                <div className="text-slate-400 mb-2"># โปรแกรม CLI</div>
-                <div><span className="text-yellow-300">name</span> = <span className="text-pink-400">input</span>(<span className="text-green-300">"ชื่อ: "</span>)</div>
-                <div><span className="text-yellow-300">age</span> = <span className="text-pink-400">input</span>(<span className="text-green-300">"อายุ: "</span>)</div>
-                <div><span className="text-pink-400">print</span>(<span className="text-green-300">f"สวัสดี {'{'}<span className="text-yellow-300">name</span>{'}'} อายุ {'{'}<span className="text-yellow-300">age</span>{'}'} ปี"</span>)</div>
-              </>) : (<>
-                <div className="text-slate-400 mb-2"># โปรแกรม GUI ด้วย Tkinter</div>
-                <div><span className="text-pink-400">import</span> <span className="text-sky-300">tkinter</span> <span className="text-pink-400">as</span> <span className="text-sky-300">tk</span></div>
-                <div className="mt-2"><span className="text-yellow-300">root</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Tk</span>()</div>
-                <div><span className="text-sky-300">tk</span>.<span className="text-blue-300">Label</span>(<span className="text-yellow-300">root</span>, <span className="text-orange-300">text</span>=<span className="text-green-300">"ชื่อ:"</span>).<span className="text-blue-300">pack</span>()</div>
-                <div><span className="text-sky-300">tk</span>.<span className="text-blue-300">Entry</span>(<span className="text-yellow-300">root</span>).<span className="text-blue-300">pack</span>()</div>
-                <div><span className="text-sky-300">tk</span>.<span className="text-blue-300">Button</span>(<span className="text-yellow-300">root</span>, <span className="text-orange-300">text</span>=<span className="text-green-300">"ยืนยัน"</span>).<span className="text-blue-300">pack</span>()</div>
-                <div><span className="text-yellow-300">root</span>.<span className="text-blue-300">mainloop</span>()</div>
-              </>)}
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Interactive Simulation */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            
+            <div className="flex gap-3 mb-6 justify-center">
+              <button onClick={() => switchMode('cli')} className={`px-5 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-2 ${mode === 'cli' ? 'bg-slate-800 text-white shadow-md' : 'bg-white border border-slate-300 text-slate-600 hover:bg-slate-100'}`}>
+                <Terminal size={16} /> CLI Mode
+              </button>
+              <button onClick={() => switchMode('gui')} className={`px-5 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-2 ${mode === 'gui' ? 'bg-indigo-600 text-white shadow-md' : 'bg-white border border-slate-300 text-slate-600 hover:bg-slate-100'}`}>
+                <Monitor size={16} /> GUI Mode
+              </button>
             </div>
 
-            {/* Preview */}
-            <div className="flex items-center justify-center">
+            <div className="flex-1 flex items-center justify-center bg-[#2d2d2d] rounded-2xl p-6 shadow-inner border border-black relative overflow-hidden">
               {mode === 'cli' ? (
-                <div className="bg-slate-900 rounded-xl p-5 w-full max-w-sm shadow-lg font-mono text-sm">
-                  <div className="text-emerald-400">ชื่อ: <span className="text-white animate-pulse">|</span></div>
-                  <div className="text-slate-500 mt-1">อายุ: _</div>
-                  <div className="text-slate-600 mt-1">สวัสดี ... อายุ ... ปี</div>
+                <div className="w-full h-full text-emerald-400 font-mono text-sm leading-loose">
+                  <div className="text-slate-500 mb-2 border-b border-slate-700 pb-2">Terminal Simulation</div>
+                  <div>$ python app.py</div>
+                  <div>ชื่อ: Somchai</div>
+                  <div>อายุ: 25</div>
+                  <div className="text-white font-bold mt-2">สวัสดี Somchai อายุ 25 ปี</div>
+                  <div className="mt-4 text-emerald-400/50 animate-pulse">_</div>
                 </div>
               ) : (
-                <div className="bg-slate-200 rounded-xl overflow-hidden shadow-lg w-full max-w-xs">
-                  <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
+                <div className="w-full max-w-sm bg-slate-200 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 border border-slate-400">
+                  <div className="bg-slate-700 px-3 py-2 flex items-center gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-400" /><div className="w-3 h-3 rounded-full bg-yellow-400" /><div className="w-3 h-3 rounded-full bg-emerald-400" />
-                    <span className="text-slate-400 text-xs ml-2">tk</span>
+                    <span className="text-slate-300 text-xs ml-2 font-mono">tk</span>
                   </div>
-                  <div className="bg-slate-100 p-6 space-y-3">
-                    <div className="text-slate-700 text-sm font-semibold">ชื่อ:</div>
-                    <input type="text" className="w-full border border-slate-300 rounded px-3 py-1.5 text-sm bg-white" placeholder="กรอกชื่อ..." readOnly />
-                    <div className="text-slate-700 text-sm font-semibold">อายุ:</div>
-                    <input type="text" className="w-full border border-slate-300 rounded px-3 py-1.5 text-sm bg-white" placeholder="กรอกอายุ..." readOnly />
-                    <button className="w-full bg-slate-600 text-white py-2 rounded text-sm font-semibold hover:bg-slate-700 transition-colors">ยืนยัน</button>
+                  <div className="bg-slate-100 p-6 space-y-4">
+                    <div>
+                      <div className="text-slate-700 text-xs font-bold mb-1">ชื่อ:</div>
+                      <input type="text" className="w-full border border-slate-300 rounded px-3 py-1.5 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="กรอกชื่อ..." defaultValue="ผู้ใช้งาน" />
+                    </div>
+                    <div>
+                      <div className="text-slate-700 text-xs font-bold mb-1">อายุ:</div>
+                      <input type="text" className="w-full border border-slate-300 rounded px-3 py-1.5 text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="กรอกอายุ..." defaultValue="20" />
+                    </div>
+                    <button onClick={submitGUI} className="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors shadow-sm active:scale-95">
+                      ยืนยัน (Trigger Event)
+                    </button>
                   </div>
                 </div>
               )}
             </div>
+
+          </div>
+
+          {/* Right: Info */}
+          <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์และแนวคิด</h4>
+            
+            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              {mode === 'cli' ? (
+                <>
+                  <span className="text-slate-500"># CLI - ทำงานจากบนลงล่างทันที</span><br />
+                  <span className="text-yellow-300">name</span> = <span className="text-pink-400">input</span>(<span className="text-green-300">"ชื่อ: "</span>)<br />
+                  <span className="text-yellow-300">age</span> = <span className="text-pink-400">input</span>(<span className="text-green-300">"อายุ: "</span>)<br />
+                  <span className="text-yellow-300">print</span>(<span className="text-green-300">f"สวัสดี {'{'}<span className="text-yellow-300">name</span>{'}'}"</span>)
+                </>
+              ) : (
+                <>
+                  <span className="text-slate-500"># GUI - นำเข้า Tkinter</span><br />
+                  <span className="text-pink-400">import</span> <span className="text-sky-300">tkinter</span> <span className="text-pink-400">as</span> <span className="text-sky-300">tk</span><br />
+                  <span className="text-slate-500"># สร้างหน้าต่างหลัก</span><br />
+                  <span className="text-yellow-300">root</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Tk</span>()<br />
+                  <span className="text-slate-500"># สร้างปุ่ม (Widget)</span><br />
+                  <span className="text-sky-300">tk</span>.<span className="text-blue-300">Button</span>(<span className="text-yellow-300">root</span>, <span className="text-orange-300">text</span>=<span className="text-green-300">"ยืนยัน"</span>).<span className="text-blue-300">pack</span>()<br />
+                  <span className="text-slate-500"># รอรับคำสั่ง (Event-Driven)</span><br />
+                  <span className="text-yellow-300">root</span>.<span className="text-blue-300">mainloop</span>()
+                </>
+              )}
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4 overflow-y-auto">
+              <div className="space-y-4">
+                {mode === 'cli' ? (
+                  <div>
+                    <h5 className="font-bold text-slate-800 text-sm mb-1">CLI (Command Line)</h5>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      โปรแกรมทำงานแบบบรรทัดต่อบรรทัด แสดงผลเป็นข้อความ (Text) เท่านั้น ผู้ใช้ต้องโต้ตอบผ่านการพิมพ์คำสั่งผ่านคีย์บอร์ด
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <h5 className="font-bold text-indigo-600 text-sm mb-1">GUI (Graphical User Interface)</h5>
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        แสดงผลด้วยภาพกราฟิก หน้าต่าง ปุ่มกด (Widget) สามารถใช้เมาส์คลิกได้ มีความสวยงามและใช้งานง่ายกว่า
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-slate-200">
+                      <h5 className="font-bold text-emerald-600 text-sm mb-1">Event-Driven</h5>
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        GUI ทำงานโดยรอ <strong className="text-slate-800">เหตุการณ์ (Event)</strong> เช่น รอให้ผู้ใช้คลิกปุ่ม พิมพ์ข้อความ โปรแกรมถึงจะทำงานตอบสนอง
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <button onClick={clear}
+              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl px-4 py-3 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm">
+              <RotateCcw size={16} /> รีเซ็ต
+            </button>
           </div>
         </div>
-      </section>
 
-      {/* 2. Vocabulary */}
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-slate-800 border-l-4 border-indigo-600 pl-4">คำศัพท์สำคัญ</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {Object.entries(explanations).map(([key, info]) => (
-            <div key={key} onClick={() => setActiveTooltip(activeTooltip === key ? null : key)}
-              className={`p-5 rounded-xl border-2 cursor-pointer transition-all ${activeTooltip === key ? 'border-indigo-500 bg-indigo-50 shadow-md' : 'border-slate-200 bg-white hover:border-indigo-300'}`}>
-              <h4 className={`font-bold ${info.color} mb-2`}>{info.title}</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">{info.desc}</p>
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Event Log</span>
             </div>
-          ))}
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
+          </div>
         </div>
-      </section>
-
-      {/* 3. Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">Tkinter เป็นไลบรารีประเภทใด?</p>
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'gui', label: 'ไลบรารีสร้าง GUI ที่ติดมากับ Python (ไม่ต้อง pip install)', correct: true },
-            { val: 'web', label: 'ไลบรารีสร้างเว็บไซต์' },
-            { val: 'db', label: 'ไลบรารีเชื่อมต่อฐานข้อมูล' },
-            { val: 'ml', label: 'ไลบรารี Machine Learning' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' : quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' : quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'}`}>
-              {opt.label}
-            </button>
-          ))}
-        </div>
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => { if (!quizAnswer) { showToast('กรุณาเลือกคำตอบ', 'warning'); return; } setQuizChecked(true); showToast(quizAnswer === 'gui' ? 'ถูกต้อง!' : 'ไม่ถูกต้อง', quizAnswer === 'gui' ? 'success' : 'error'); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
-
-      {toast.show && (
-        <div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>
-          {toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}
-          {toast.type === 'error' && <XCircle className="text-red-500" />}
-          {toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}
-          <div className="font-medium">{toast.message}</div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

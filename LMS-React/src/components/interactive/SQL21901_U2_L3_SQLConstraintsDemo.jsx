@@ -1,41 +1,48 @@
-import React, { useState } from 'react';
-import { Shield, ShieldAlert, Key, Zap, Ban, ArrowRight, Play, Terminal, Database, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Shield, ShieldAlert, Key, Zap, Ban, Play, TerminalSquare, Database, CheckCircle2 } from 'lucide-react';
 
 export default function SQL21901_U2_L3_SQLConstraintsDemo() {
-  // Simulator State
-  const [logs, setLogs] = useState([
-    { type: 'info', text: 'MySQL Engine v8.0.32' },
-    { type: 'info', text: 'Connected to database "company_db"' },
-    { type: 'info', text: 'Table "employees" has been created with constraints.' }
+  // Console State
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'MySQL Engine v8.0.32' },
+    { type: 'system', text: 'Connected to database "company_db"' },
+    { type: 'system', text: 'Table "employees" has been created with constraints.' }
   ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
+
+  const addLog = (text, type = 'info') => {
+    setConsoleHistory(prev => [...prev, { text, type }]);
+  };
+
+  // Simulator State
   const [tableData, setTableData] = useState([
     { id: 1, name: 'Somchai', email: 'somchai@x.com', role: 'Staff' }
   ]);
   const [insertVals, setInsertVals] = useState({ id: '2', name: 'Suda', email: '', role: '' });
   
-  const addLog = (text, type = 'info') => {
-    setLogs(prev => [...prev, { text, type }]);
-  };
-
   const handleInsert = () => {
     const { id, name, email, role } = insertVals;
-    addLog(`> INSERT INTO employees VALUES (${id}, '${name}', '${email}', '${role || 'DEFAULT'}');`, 'command');
+    addLog(`$ INSERT INTO employees VALUES (${id || 'NULL'}, ${name ? `'${name}'` : 'NULL'}, ${email ? `'${email}'` : 'NULL'}, ${role ? `'${role}'` : 'DEFAULT'});`, 'command');
     
     // Validation
     if (!id) {
-      addLog('Error: Column \'id\' cannot be null (PRIMARY KEY)', 'error');
+      addLog('> Error 1048: Column \'id\' cannot be null (PRIMARY KEY constraint violation)', 'error');
       return;
     }
     if (tableData.some(r => r.id == id)) {
-      addLog(`Error: Duplicate entry '${id}' for key 'PRIMARY'`, 'error');
+      addLog(`> Error 1062: Duplicate entry '${id}' for key 'PRIMARY'`, 'error');
       return;
     }
     if (!name) {
-      addLog('Error: Column \'name\' cannot be null (NOT NULL)', 'error');
+      addLog('> Error 1048: Column \'name\' cannot be null (NOT NULL constraint violation)', 'error');
       return;
     }
     if (email && tableData.some(r => r.email === email)) {
-      addLog(`Error: Duplicate entry '${email}' for key 'UNIQUE'`, 'error');
+      addLog(`> Error 1062: Duplicate entry '${email}' for key 'email' (UNIQUE constraint violation)`, 'error');
       return;
     }
 
@@ -47,7 +54,7 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
       role: role || 'Staff'
     };
     setTableData([...tableData, newRow]);
-    addLog('Query OK, 1 row affected', 'success');
+    addLog('> Query OK, 1 row affected', 'success');
     
     // Clear inputs
     setInsertVals({ id: '', name: '', email: '', role: '' });
@@ -81,195 +88,218 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
     if (correctMap[col] === draggedBadge) {
       setSchemaZones({ ...schemaZones, [col]: draggedBadge });
       setDraggedBadge(null);
+      addLog(`$ ALTER TABLE users MODIFY ${col} ... ${draggedBadge};`, 'command');
+      addLog(`> Success: Constraint applied to ${col}.`, 'success');
     } else {
-      addLog(`Schema Error: ${draggedBadge} ไม่เหมาะกับคอลัมน์ ${col}`, 'error');
+      addLog(`$ ALTER TABLE users MODIFY ${col} ... ${draggedBadge};`, 'command');
+      addLog(`> Error 1064: Schema logic error - ${draggedBadge} is not suitable for ${col}.`, 'error');
     }
   };
 
   const isSchemaComplete = Object.values(schemaZones).every(v => v !== null);
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 2. กฎ 4 ข้อ */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex gap-4 hover:-translate-y-1 transition-transform">
-          <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center shrink-0">
-            <Ban />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+            <Shield size={20} className="stroke-2" />
           </div>
-          <div>
-            <h3 className="font-bold text-slate-800 text-lg mb-1">NOT NULL</h3>
-            <p className="text-sm text-slate-600">ห้ามเป็นค่าว่างเปล่า (ห้ามเป็น NULL) ต้องใส่ข้อมูลเสมอ เช่น "ชื่อพนักงาน" จะเว้นว่างไม่ได้</p>
-          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">SQL Constraints (ข้อจำกัดข้อมูล)</h3>
         </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex gap-4 hover:-translate-y-1 transition-transform">
-          <div className="w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center shrink-0">
-            <ShieldAlert />
-          </div>
-          <div>
-            <h3 className="font-bold text-slate-800 text-lg mb-1">UNIQUE</h3>
-            <p className="text-sm text-slate-600">ข้อมูลห้ามซ้ำกันในคอลัมน์นั้น (แต่เป็น NULL ได้) เช่น "อีเมล" หรือ "เบอร์โทร" ต้องไม่ซ้ำกับคนอื่น</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex gap-4 hover:-translate-y-1 transition-transform">
-          <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center shrink-0">
-            <Key />
-          </div>
-          <div>
-            <h3 className="font-bold text-slate-800 text-lg mb-1">PRIMARY KEY</h3>
-            <p className="text-sm text-slate-600">คีย์หลัก! คือการรวมร่างของ <strong>NOT NULL + UNIQUE</strong> ใช้เป็นรหัสอ้างอิงประจำแถว เช่น "รหัสพนักงาน"</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex gap-4 hover:-translate-y-1 transition-transform">
-          <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center shrink-0">
-            <Zap />
-          </div>
-          <div>
-            <h3 className="font-bold text-slate-800 text-lg mb-1">DEFAULT</h3>
-            <p className="text-sm text-slate-600">กำหนดค่าเริ่มต้นอัตโนมัติ ถ้าตอนเพิ่มข้อมูลไม่ได้ระบุค่ามาให้ เช่น "สัญชาติ" ให้เป็น "Thai" อัตโนมัติ</p>
-          </div>
-        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้การใช้กฎเหล็กเพื่อป้องกันไม่ให้มีข้อมูลขยะหรือข้อมูลผิดพลาดเข้ามาในตารางของเรา
+        </p>
       </div>
 
-      {/* 3. Simulator */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden flex flex-col md:flex-row">
-        {/* Left: Interactive */}
-        <div className="w-full md:w-3/5 border-r border-slate-200">
-          <div className="bg-slate-50 border-b border-slate-200 p-4">
-            <h2 className="font-bold text-slate-800 flex items-center gap-2">
-              <Play className="text-indigo-500" /> Simulator: ทดสอบฝ่าด่าน Constraints
-            </h2>
-            <p className="text-sm text-slate-500 mt-1">ลองเพิ่มข้อมูลลงตาราง โดยจงใจทำผิดกฎดูสิครับ</p>
+      <div className="flex flex-col min-h-[500px]">
+        
+        {/* Top: Explanations Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200 border-b border-slate-200 bg-white">
+          <div className="p-5 flex flex-col gap-3 hover:bg-slate-50 transition-colors">
+            <div className="flex items-center gap-2 text-rose-600 font-bold">
+              <Ban size={18} /> NOT NULL
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">ห้ามเป็นค่าว่างเปล่า ต้องมีข้อมูลเสมอ เช่น ชื่อพนักงาน จะปล่อยให้โล่งไม่ได้</p>
+          </div>
+          <div className="p-5 flex flex-col gap-3 hover:bg-slate-50 transition-colors">
+            <div className="flex items-center gap-2 text-sky-600 font-bold">
+              <ShieldAlert size={18} /> UNIQUE
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">ข้อมูลห้ามซ้ำกัน (แต่เป็น NULL ได้) เช่น อีเมล หรือ เบอร์โทร ต้องไม่ซ้ำกับคนอื่น</p>
+          </div>
+          <div className="p-5 flex flex-col gap-3 hover:bg-slate-50 transition-colors">
+            <div className="flex items-center gap-2 text-yellow-600 font-bold">
+              <Key size={18} /> PRIMARY KEY
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">คีย์หลัก! รวม <strong>NOT NULL + UNIQUE</strong> เข้าด้วยกัน เป็นรหัสอ้างอิงประจำแถว</p>
+          </div>
+          <div className="p-5 flex flex-col gap-3 hover:bg-slate-50 transition-colors">
+            <div className="flex items-center gap-2 text-emerald-600 font-bold">
+              <Zap size={18} /> DEFAULT
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">ถ้าไม่ใส่ข้อมูล ระบบจะเติมค่าเริ่มต้นให้อัตโนมัติ เช่น ให้บทบาทเป็น Staff ทันที</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row flex-1 bg-slate-50">
+          
+          {/* Left: Interactive Schema Builder */}
+          <div className="w-full lg:w-[40%] p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+              <Database size={16} className="text-indigo-500"/> Schema Constraint Builder
+            </h4>
+            <p className="text-xs text-slate-500 mb-6">ลากป้าย Constraint ด้านล่าง ไปวางให้ตรงกับคอลัมน์ที่เหมาะสมที่สุด (ลองดูคอนโซลด้านล่างประกอบ หากวางผิด)</p>
+
+            <div className="space-y-3 mb-8">
+              {Object.keys(schemaZones).map((col) => (
+                <div key={col} className="bg-white border border-slate-200 p-3 rounded-lg flex items-center justify-between shadow-sm">
+                  <div className="font-mono text-sm font-bold text-slate-700">{col}</div>
+                  <div 
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => handleDrop(e, col)}
+                    className={`w-[120px] h-8 border-2 border-dashed rounded flex items-center justify-center text-[10px] font-bold transition-colors ${schemaZones[col] ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-slate-300 bg-slate-50 text-slate-400'}`}
+                  >
+                    {schemaZones[col] ? schemaZones[col] : 'Drop Constraint'}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 mt-auto">
+              <h5 className="text-xs font-semibold text-slate-400 mb-3 text-center uppercase tracking-wider">คลัง Constraints</h5>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {!Object.values(schemaZones).includes('PRIMARY KEY') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'PRIMARY KEY')} className="cursor-grab active:cursor-grabbing bg-yellow-500 hover:bg-yellow-400 text-slate-900 px-3 py-1.5 rounded-lg shadow-md font-bold text-[10px]">
+                    PRIMARY KEY
+                  </div>
+                )}
+                {!Object.values(schemaZones).includes('NOT NULL') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'NOT NULL')} className="cursor-grab active:cursor-grabbing bg-rose-500 hover:bg-rose-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-[10px]">
+                    NOT NULL
+                  </div>
+                )}
+                {!Object.values(schemaZones).includes('UNIQUE') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'UNIQUE')} className="cursor-grab active:cursor-grabbing bg-sky-500 hover:bg-sky-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-[10px]">
+                    UNIQUE
+                  </div>
+                )}
+                {!Object.values(schemaZones).includes('DEFAULT') && (
+                  <div draggable onDragStart={(e) => handleDragStart(e, 'DEFAULT')} className="cursor-grab active:cursor-grabbing bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-[10px]">
+                    DEFAULT
+                  </div>
+                )}
+              </div>
+
+              {isSchemaComplete && (
+                <div className="mt-4 text-emerald-400 font-bold flex items-center justify-center gap-1 text-xs animate-pulse">
+                  <CheckCircle2 size={14} /> สุดยอด! คุณออกแบบ Schema ได้ถูกต้อง
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="p-6">
-            <table className="w-full text-sm text-left mb-6">
-              <thead className="text-xs text-slate-600 uppercase bg-slate-100 border-y border-slate-200">
-                <tr>
-                  <th className="px-4 py-3 border-r border-slate-200">id <br/><span className="text-[10px] text-yellow-600 bg-yellow-100 px-1 rounded font-mono">PRIMARY KEY</span></th>
-                  <th className="px-4 py-3 border-r border-slate-200">name <br/><span className="text-[10px] text-rose-600 bg-rose-100 px-1 rounded font-mono">NOT NULL</span></th>
-                  <th className="px-4 py-3 border-r border-slate-200">email <br/><span className="text-[10px] text-sky-600 bg-sky-100 px-1 rounded font-mono">UNIQUE</span></th>
-                  <th className="px-4 py-3">role <br/><span className="text-[10px] text-emerald-600 bg-emerald-100 px-1 rounded font-mono">DEFAULT 'Staff'</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableData.map((row, i) => (
-                  <tr key={i} className="border-b border-slate-100">
-                    <td className="px-4 py-2 border-r border-slate-100">{row.id}</td>
-                    <td className="px-4 py-2 border-r border-slate-100">{row.name}</td>
-                    <td className="px-4 py-2 border-r border-slate-100">{row.email}</td>
-                    <td className="px-4 py-2">{row.role}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Right: Simulator */}
+          <div className="w-full lg:w-[60%] bg-white p-6 flex flex-col relative">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+              <Play size={16} className="text-emerald-500"/> Data Insertion Simulator
+            </h4>
+            <p className="text-xs text-slate-500 mb-4">ลองเพิ่มข้อมูลลงตาราง โดยจงใจทำผิดกฎของ Constraint ดูสิครับ</p>
+
+            <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm mb-6">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-slate-50 border-b border-slate-200">
+                    <tr>
+                      <th className="px-4 py-3 border-r border-slate-200 whitespace-nowrap">
+                        <span className="block text-slate-700">id</span>
+                        <span className="text-[9px] text-yellow-700 bg-yellow-100 px-1 rounded font-mono">PRIMARY KEY</span>
+                      </th>
+                      <th className="px-4 py-3 border-r border-slate-200 whitespace-nowrap">
+                        <span className="block text-slate-700">name</span>
+                        <span className="text-[9px] text-rose-700 bg-rose-100 px-1 rounded font-mono">NOT NULL</span>
+                      </th>
+                      <th className="px-4 py-3 border-r border-slate-200 whitespace-nowrap">
+                        <span className="block text-slate-700">email</span>
+                        <span className="text-[9px] text-sky-700 bg-sky-100 px-1 rounded font-mono">UNIQUE</span>
+                      </th>
+                      <th className="px-4 py-3 whitespace-nowrap">
+                        <span className="block text-slate-700">role</span>
+                        <span className="text-[9px] text-emerald-700 bg-emerald-100 px-1 rounded font-mono">DEFAULT 'Staff'</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableData.map((row, i) => (
+                      <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+                        <td className="px-4 py-2 border-r border-slate-100 font-mono text-slate-600">{row.id}</td>
+                        <td className="px-4 py-2 border-r border-slate-100 text-slate-600">{row.name}</td>
+                        <td className={`px-4 py-2 border-r border-slate-100 ${row.email === 'NULL' ? 'text-slate-400 italic' : 'text-slate-600'}`}>{row.email}</td>
+                        <td className="px-4 py-2 text-slate-600">{row.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
             {/* Input Form */}
-            <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-              <h4 className="text-xs font-bold text-indigo-800 mb-3 uppercase tracking-wider">ทดลอง INSERT ข้อมูลใหม่</h4>
-              <div className="grid grid-cols-4 gap-2 mb-3">
-                <input type="text" value={insertVals.id} onChange={e => setInsertVals({...insertVals, id: e.target.value})} placeholder="id" className="w-full px-2 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500" />
-                <input type="text" value={insertVals.name} onChange={e => setInsertVals({...insertVals, name: e.target.value})} placeholder="name" className="w-full px-2 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500" />
-                <input type="text" value={insertVals.email} onChange={e => setInsertVals({...insertVals, email: e.target.value})} placeholder="email" className="w-full px-2 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500" />
-                <input type="text" value={insertVals.role} onChange={e => setInsertVals({...insertVals, role: e.target.value})} placeholder="role" className="w-full px-2 py-1.5 border border-slate-300 rounded text-sm focus:ring-2 focus:ring-indigo-500" />
+            <div className="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 mt-auto">
+              <h4 className="text-[11px] font-bold text-indigo-600 mb-3 uppercase tracking-wider">Test INSERT Query</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                <div>
+                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">id (PK)</label>
+                  <input type="text" value={insertVals.id} onChange={e => setInsertVals({...insertVals, id: e.target.value})} placeholder="e.g. 2" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">name (NOT NULL)</label>
+                  <input type="text" value={insertVals.name} onChange={e => setInsertVals({...insertVals, name: e.target.value})} placeholder="e.g. Suda" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">email (UNIQUE)</label>
+                  <input type="text" value={insertVals.email} onChange={e => setInsertVals({...insertVals, email: e.target.value})} placeholder="Leave blank for NULL" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">role (DEFAULT)</label>
+                  <input type="text" value={insertVals.role} onChange={e => setInsertVals({...insertVals, role: e.target.value})} placeholder="Leave blank" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
+                </div>
               </div>
-              <div className="flex gap-2">
-                <button onClick={handleInsert} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all active:scale-95 flex items-center gap-1">
-                  <Play size={14} /> INSERT
+              <div className="flex gap-2 justify-end">
+                <button onClick={() => setInsertVals({id: '1', name: '', email: 'somchai@x.com', role: ''})} className="bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded-lg text-xs hover:bg-slate-50 transition-colors shadow-sm font-medium">
+                  Fill Invalid Data 😈
                 </button>
-                <button onClick={() => setInsertVals({id: '1', name: '', email: 'somchai@x.com', role: ''})} className="bg-white border border-slate-300 text-slate-600 px-3 py-2 rounded-lg text-xs hover:bg-slate-50 transition-colors">
-                  โหลดค่ากวนๆ 😈
+                <button onClick={handleInsert} className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-1.5 rounded-lg text-xs font-bold shadow-md transition-all active:scale-95 flex items-center gap-1.5">
+                  <Play size={12} /> Execute INSERT
                 </button>
               </div>
             </div>
+
           </div>
         </div>
 
-        {/* Right: Console */}
-        
-      </div>
-
-      {/* 4. Interactive Schema Builder */}
-      <div className="bg-slate-800 rounded-2xl shadow-xl overflow-hidden p-6 md:p-8 text-white relative">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-bl-full blur-2xl"></div>
-        
-        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
-          <Database className="text-indigo-400" /> Interactive: Schema Builder
-        </h2>
-        <p className="text-slate-300 text-sm mb-8">ลากป้าย Constraint ด้านล่าง ไปวางให้ตรงกับคอลัมน์ที่เหมาะสมที่สุด (ลองดูคอนโซลด้านบนประกอบ หากวางผิด)</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Columns */}
-          <div className="space-y-3">
-            {Object.keys(schemaZones).map((col) => (
-              <div key={col} className="bg-slate-900 border border-slate-700 p-3 rounded-lg flex items-center justify-between">
-                <div className="font-mono text-cyan-300">{col}</div>
-                <div 
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => handleDrop(e, col)}
-                  className={`w-32 h-8 border-2 border-dashed rounded flex items-center justify-center text-xs font-bold transition-colors ${schemaZones[col] ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400' : 'border-slate-600 bg-slate-800 text-slate-500'}`}
-                >
-                  {schemaZones[col] ? schemaZones[col] : 'Drop here'}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Badges */}
-          <div className="bg-slate-900/50 p-6 rounded-xl border border-slate-700 flex flex-col justify-center items-center">
-            <h4 className="text-slate-400 text-sm mb-4 font-bold">คลัง Constraints</h4>
-            <div className="flex flex-wrap gap-3 justify-center min-h-[100px] content-start">
-              {!Object.values(schemaZones).includes('PRIMARY KEY') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'PRIMARY KEY')} className="cursor-grab active:cursor-grabbing bg-yellow-500 hover:bg-yellow-400 text-slate-900 px-3 py-1.5 rounded shadow-lg font-bold text-xs">
-                  PRIMARY KEY
-                </div>
-              )}
-              {!Object.values(schemaZones).includes('NOT NULL') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'NOT NULL')} className="cursor-grab active:cursor-grabbing bg-rose-500 hover:bg-rose-400 text-white px-3 py-1.5 rounded shadow-lg font-bold text-xs">
-                  NOT NULL
-                </div>
-              )}
-              {!Object.values(schemaZones).includes('UNIQUE') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'UNIQUE')} className="cursor-grab active:cursor-grabbing bg-sky-500 hover:bg-sky-400 text-white px-3 py-1.5 rounded shadow-lg font-bold text-xs">
-                  UNIQUE
-                </div>
-              )}
-              {!Object.values(schemaZones).includes('DEFAULT') && (
-                <div draggable onDragStart={(e) => handleDragStart(e, 'DEFAULT')} className="cursor-grab active:cursor-grabbing bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1.5 rounded shadow-lg font-bold text-xs">
-                  DEFAULT
-                </div>
-              )}
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <TerminalSquare size={14} className="text-slate-400" />
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Constraint Engine</span>
             </div>
-
-            {isSchemaComplete && (
-              <div className="mt-4 text-emerald-400 font-bold flex items-center gap-2 animate-pulse">
-                <CheckCircle2 /> สุดยอด! คุณออกแบบ Schema ได้ถูกต้อง
-              </div>
-            )}
           </div>
-        </div>
-      </div>
-    
-      {/* Bottom Full-Width Console Output (VS Code Style) */}
-      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-          <div className="bg-slate-800 text-slate-400 px-4 py-2 border-b border-slate-700 flex items-center gap-2 text-sm font-sans">
-            <Terminal size={14}/> Console Log
-          </div>
-          <div className="p-4 flex-grow overflow-y-auto space-y-1" id="console-logs">
-            {logs.map((log, i) => (
-              <div key={i} className={`
-                ${log.type === 'error' ? 'text-rose-400' : ''}
-                ${log.type === 'success' ? 'text-emerald-400' : ''}
-                ${log.type === 'command' ? 'text-cyan-300 mt-2 font-bold' : ''}
-                ${log.type === 'info' ? 'text-slate-500' : ''}
-              `}>
-                {log.text}
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed flex gap-2">
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300">{line.text}</div></>}
+                {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
+                {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>
             ))}
           </div>
         </div>
+      </div>
     </div>
   );
 }

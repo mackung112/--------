@@ -1,108 +1,189 @@
-import React, { useState } from 'react';
-import { Type, CheckCircle2, XCircle, AlertCircle, RotateCcw, MousePointerClick } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Type, Play, RotateCcw } from 'lucide-react';
 
 export default function OOP21910_U3_L4_TkinterLabelDemo() {
-  const [labelText, setLabelText] = useState('สวัสดีครับ!');
-  const [fontSize, setFontSize] = useState(16);
-  const [fontColor, setFontColor] = useState('#1e293b');
-  const [bgColor, setBgColor] = useState('#f1f5f9');
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
+  const [draftText, setDraftText] = useState('สวัสดีครับ!');
+  const [draftSize, setDraftSize] = useState(16);
+  const [draftColors, setDraftColors] = useState({ fg: '#1e293b', bg: '#f1f5f9', label: 'เข้ม' });
 
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
-  const showToast = (msg, type) => { setToast({ show: true, message: msg, type }); setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000); };
+  const [appliedConfig, setAppliedConfig] = useState({ 
+    text: 'สวัสดีครับ!', 
+    size: 16, 
+    fg: '#1e293b', 
+    bg: '#f1f5f9' 
+  });
+
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Tkinter Label widget initialized.' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const colorPresets = [
     { label: 'เข้ม', fg: '#1e293b', bg: '#f1f5f9' },
-    { label: 'สีน้ำเงิน', fg: '#1d4ed8', bg: '#dbeafe' },
-    { label: 'สีแดง', fg: '#dc2626', bg: '#fee2e2' },
-    { label: 'สีเขียว', fg: '#16a34a', bg: '#dcfce7' },
+    { label: 'น้ำเงิน', fg: '#1d4ed8', bg: '#dbeafe' },
+    { label: 'แดง', fg: '#dc2626', bg: '#fee2e2' },
+    { label: 'เขียว', fg: '#16a34a', bg: '#dcfce7' },
   ];
 
+  const applyConfig = () => {
+    setAppliedConfig({ text: draftText, size: draftSize, fg: draftColors.fg, bg: draftColors.bg });
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `$ lbl = tk.Label(root, text="${draftText}", font=("Arial", ${draftSize}), fg="${draftColors.fg}", bg="${draftColors.bg}")` },
+      { type: 'command', text: `$ lbl.pack()` },
+      { type: 'system', text: `  -> Label packed and rendered on screen.` }
+    ]);
+  };
+
+  const clear = () => {
+    setDraftText('สวัสดีครับ!');
+    setDraftSize(16);
+    setDraftColors(colorPresets[0]);
+    setAppliedConfig({ text: 'สวัสดีครับ!', size: 16, fg: colorPresets[0].fg, bg: colorPresets[0].bg });
+    setConsoleHistory([
+      { type: 'system', text: 'Label widget reset to defaults.' }
+    ]);
+  };
+
   return (
-    <div className="space-y-12 my-8">
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-rose-600 to-pink-700 text-white p-5 flex items-center gap-3">
-          <Type size={24} />
-          <h3 className="font-bold text-lg">ทดลองสร้าง Label แบบ Real-time</h3>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-rose-100 text-rose-600 rounded-lg">
+            <Type size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การสร้างข้อความด้วย Label</h3>
         </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้วิธีการใช้ Widget <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">tk.Label</code> เพื่อแสดงข้อความบนหน้าจอ รวมถึงการกำหนดฟอนต์และสี
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-          {/* Controls */}
-          <div className="p-6 bg-slate-50 border-r border-slate-200 space-y-4">
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1">ข้อความ (text)</label>
-              <input type="text" value={labelText} onChange={e => setLabelText(e.target.value)} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-slate-700 outline-none focus:border-indigo-500" />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1">ขนาดฟอนต์: <span className="text-indigo-600">{fontSize}px</span></label>
-              <input type="range" min="10" max="40" value={fontSize} onChange={e => setFontSize(Number(e.target.value))} className="w-full accent-indigo-600" />
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">ชุดสี:</label>
-              <div className="flex gap-2">
-                {colorPresets.map(p => (
-                  <button key={p.label} onClick={() => { setFontColor(p.fg); setBgColor(p.bg); }}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold border-2 transition-all ${fontColor === p.fg ? 'border-indigo-500 shadow-md' : 'border-slate-200'}`}
-                    style={{ color: p.fg, backgroundColor: p.bg }}>
-                    {p.label}
-                  </button>
-                ))}
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Interactive Build */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            
+            <div className="flex flex-col h-full gap-6">
+              
+              {/* Form */}
+              <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col space-y-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ข้อความ (text)</label>
+                  <input type="text" value={draftText} onChange={e => setDraftText(e.target.value)} className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-rose-500" />
+                </div>
+                
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ขนาดฟอนต์: <span className="text-rose-600">{draftSize}px</span></label>
+                    <input type="range" min="10" max="40" value={draftSize} onChange={e => setDraftSize(Number(e.target.value))} className="w-full accent-rose-600" />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ชุดสี</label>
+                    <div className="flex gap-2">
+                      {colorPresets.map(p => (
+                        <button key={p.label} onClick={() => setDraftColors(p)}
+                          className={`flex-1 py-1 rounded-md text-[10px] font-bold border-2 transition-all ${draftColors.label === p.label ? 'border-rose-500 scale-105 shadow-md' : 'border-slate-200 opacity-80'}`}
+                          style={{ color: p.fg, backgroundColor: p.bg }}>
+                          {p.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <button onClick={applyConfig} className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 text-sm mt-2">
+                  <Play size={16} fill="currentColor" /> Apply Configuration
+                </button>
               </div>
+
+              {/* Preview */}
+              <div className="flex-1 bg-slate-800 rounded-2xl p-5 shadow-inner border border-slate-700 flex flex-col items-center justify-center relative min-h-[200px]" style={{ backgroundImage: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}>
+                <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl w-full max-w-sm border border-slate-400">
+                  <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400" /><div className="w-2.5 h-2.5 rounded-full bg-yellow-400" /><div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                    <span className="text-slate-300 text-xs ml-2 font-mono">App Window</span>
+                  </div>
+                  <div className="bg-slate-100 p-8 flex items-center justify-center min-h-[160px]">
+                    <div className="px-4 py-3 rounded shadow-sm transition-all" style={{ fontSize: `${appliedConfig.size}px`, color: appliedConfig.fg, backgroundColor: appliedConfig.bg }}>
+                      {appliedConfig.text || '(ว่าง)'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            {/* Code */}
-            <div className="bg-slate-900 p-4 rounded-xl font-mono text-sm shadow-inner mt-4">
-              <span className="text-sky-300">tk</span>.<span className="text-blue-300">Label</span>(<br />
-              &nbsp;&nbsp;<span className="text-yellow-300">root</span>,<br />
-              &nbsp;&nbsp;<span className="text-orange-300">text</span>=<span className="text-green-300">"{labelText}"</span>,<br />
-              &nbsp;&nbsp;<span className="text-orange-300">font</span>=(<span className="text-green-300">"Arial"</span>, <span className="text-purple-300">{fontSize}</span>),<br />
-              &nbsp;&nbsp;<span className="text-orange-300">fg</span>=<span className="text-green-300">"{fontColor}"</span>,<br />
-              &nbsp;&nbsp;<span className="text-orange-300">bg</span>=<span className="text-green-300">"{bgColor}"</span><br />
-              ).<span className="text-blue-300">pack</span>()
-            </div>
           </div>
 
-          {/* Preview */}
-          <div className="p-6 flex items-center justify-center min-h-[300px]">
-            <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl w-72">
-              <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-400" /><div className="w-3 h-3 rounded-full bg-yellow-400" /><div className="w-3 h-3 rounded-full bg-emerald-400" />
-                <span className="text-slate-400 text-xs ml-2">Label Demo</span>
-              </div>
-              <div className="bg-slate-100 p-8 flex items-center justify-center min-h-[160px]">
-                <div className="px-4 py-3 rounded transition-all" style={{ fontSize: `${fontSize}px`, color: fontColor, backgroundColor: bgColor }}>
-                  {labelText || '(ว่าง)'}
+          {/* Right: Info */}
+          <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            
+            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              <span className="text-sky-300">tk</span>.<span className="text-blue-300">Label</span>(<br />
+              &nbsp;&nbsp;<span className="text-yellow-300">root</span>,<br />
+              &nbsp;&nbsp;<span className="text-orange-300">text</span>=<span className="text-green-300">"{appliedConfig.text}"</span>,<br />
+              &nbsp;&nbsp;<span className="text-orange-300">font</span>=(<span className="text-green-300">"Arial"</span>, <span className="text-purple-300">{appliedConfig.size}</span>),<br />
+              &nbsp;&nbsp;<span className="text-orange-300">fg</span>=<span className="text-green-300">"{appliedConfig.fg}"</span>,<br />
+              &nbsp;&nbsp;<span className="text-orange-300">bg</span>=<span className="text-green-300">"{appliedConfig.bg}"</span><br />
+              ).<span className="text-blue-300">pack</span>()
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4 overflow-y-auto">
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-bold text-rose-600 text-sm font-mono mb-1">text="..."</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    ข้อความที่ต้องการให้แสดงบนหน้าจอ เป็นข้อความที่ผู้ใช้เห็นแต่แก้ไขไม่ได้
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <h5 className="font-bold text-rose-600 text-sm font-mono mb-1">font=("...", size)</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    กำหนดรูปแบบฟอนต์โดยใช้ Tuple ระบุชื่อฟอนต์และขนาดตัวอักษร
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-200">
+                  <h5 className="font-bold text-rose-600 text-sm font-mono mb-1">fg และ bg</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    <code>fg</code> (foreground) คือสีตัวอักษร ส่วน <code>bg</code> (background) คือสีพื้นหลัง สามารถใช้ชื่อสีภาษาอังกฤษ หรือรหัสสี Hex ก็ได้
+                  </p>
                 </div>
               </div>
             </div>
+
+            <button onClick={clear}
+              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl px-4 py-3 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm">
+              <RotateCcw size={16} /> รีเซ็ต
+            </button>
           </div>
         </div>
-      </section>
 
-      {/* Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">Widget <code className="text-yellow-300 bg-slate-700 px-2 py-0.5 rounded">Label</code> ใช้ทำอะไร?</p>
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'text', label: 'แสดงข้อความบนหน้าจอ (ผู้ใช้อ่านได้อย่างเดียว แก้ไขไม่ได้)', correct: true },
-            { val: 'input', label: 'รับข้อมูลจากผู้ใช้ (พิมพ์ได้)' },
-            { val: 'button', label: 'สร้างปุ่มกด' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' : quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' : quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'}`}>
-              {opt.label}
-            </button>
-          ))}
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Event Log</span>
+            </div>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => { if (!quizAnswer) { showToast('กรุณาเลือกคำตอบ', 'warning'); return; } setQuizChecked(true); showToast(quizAnswer === 'text' ? 'ถูกต้อง! Label ใช้แสดงข้อความแบบ read-only' : 'ไม่ถูกต้อง', quizAnswer === 'text' ? 'success' : 'error'); }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
-
-      {toast.show && (<div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>{toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}{toast.type === 'error' && <XCircle className="text-red-500" />}{toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}<div className="font-medium">{toast.message}</div></div>)}
+      </div>
     </div>
   );
 }

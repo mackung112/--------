@@ -1,177 +1,215 @@
-import React, { useState } from 'react';
-import { Settings, Check, ChevronRight, CheckCircle2, XCircle, AlertCircle, RotateCcw, MousePointerClick, Lightbulb } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Settings, ChevronRight, CheckCircle2, RotateCcw, MonitorPlay, MousePointerClick, CheckSquare } from 'lucide-react';
+
+const interpreters = [
+  { id: 'py312', label: "Python 3.12.4 64-bit", path: "C:\\Python312\\python.exe", recommended: true },
+  { id: 'py311', label: "Python 3.11.9 64-bit", path: "C:\\Python311\\python.exe", recommended: false },
+  { id: 'venv', label: "Python 3.12.4 ('venv')", path: ".\\venv\\Scripts\\python.exe", recommended: false },
+];
 
 export default function OOP21910_U1_L4_InterpreterSetupDemo() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(0); // 0: Start, 1: Palette, 2: Select, 3: Done
   const [selectedInterpreter, setSelectedInterpreter] = useState(null);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Interpreter Setup Simulator Initialized.' }
+  ]);
+  const consoleRef = useRef(null);
 
-  const interpreters = [
-    { id: 'py312', label: "Python 3.12.4 64-bit", path: "C:\\Python312\\python.exe", recommended: true },
-    { id: 'py311', label: "Python 3.11.9 64-bit", path: "C:\\Python311\\python.exe", recommended: false },
-    { id: 'venv', label: "Python 3.12.4 ('venv')", path: ".\\venv\\Scripts\\python.exe", recommended: false },
-  ];
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
-  const [activeTooltip, setActiveTooltip] = useState(null);
-  const explanations = {
-    'interpreter': { title: 'Interpreter คืออะไร?', desc: 'ตัวแปลภาษา Python ที่จะใช้รันโค้ดของเรา เครื่องหนึ่งอาจมีหลายเวอร์ชัน เราต้องบอก VS Code ว่าจะใช้ตัวไหน', color: 'text-blue-600' },
-    'command-palette': { title: 'Command Palette', desc: 'เมนูลัดที่สำคัญที่สุดใน VS Code กด Ctrl+Shift+P เพื่อเปิด แล้วพิมพ์ "Python: Select Interpreter" เพื่อเลือก Interpreter', color: 'text-purple-600' },
-    'venv': { title: 'Virtual Environment (venv)', desc: 'สภาพแวดล้อมจำลองที่แยกไลบรารีของแต่ละโปรเจกต์ออกจากกัน ป้องกันไลบรารีชนกันระหว่างโปรเจกต์', color: 'text-emerald-600' },
+  const handleStep = (nextStep) => {
+    setStep(nextStep);
+    if (nextStep === 1) {
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'system', text: 'Shortcut triggered: Ctrl + Shift + P' },
+        { type: 'command', text: '> Python: Select Interpreter' }
+      ]);
+    }
   };
 
-  const showToast = (msg, type) => {
-    setToast({ show: true, message: msg, type });
-    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000);
+  const selectInterpreter = (interp) => {
+    setSelectedInterpreter(interp.id);
+    setStep(3);
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'output', text: `Selected Python Interpreter: ${interp.label}` },
+      { type: 'system', text: `Path: ${interp.path}` },
+      { type: 'system', text: 'VS Code is now configured to use this Python version.' }
+    ]);
   };
 
-  // Quiz
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [quizChecked, setQuizChecked] = useState(false);
+  const clear = () => {
+    setStep(0);
+    setSelectedInterpreter(null);
+    setConsoleHistory([{ type: 'system', text: 'Interpreter Setup Simulator Initialized.' }]);
+  };
 
   return (
-    <div className="space-y-12 my-8">
-      {/* 1. Interpreter Setup Simulator */}
-      <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-5 flex items-center gap-3">
-          <Settings size={24} />
-          <h3 className="font-bold text-lg">จำลองการตั้งค่า Python Interpreter</h3>
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      {/* Header */}
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-amber-100 text-amber-600 rounded-lg">
+            <Settings size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การตั้งค่า Python Interpreter</h3>
         </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          เรียนรู้วิธีบอก VS Code ว่าเราต้องการใช้ Python เวอร์ชันไหนในการรันโค้ด ผ่านเมนู Command Palette
+        </p>
+      </div>
 
-        <div className="p-6">
-          {/* Step 1: Command Palette */}
-          {step === 0 && (
-            <div className="text-center space-y-6">
-              <div className="bg-slate-800 rounded-xl p-6 inline-block shadow-lg mx-auto">
-                <div className="text-slate-400 text-sm mb-3">กดปุ่มลัดเพื่อเปิด Command Palette</div>
-                <div className="flex items-center justify-center gap-2">
-                  {['Ctrl', 'Shift', 'P'].map((key, i) => (
-                    <React.Fragment key={key}>
-                      <div className="bg-slate-700 text-white px-4 py-2 rounded-lg font-mono font-bold shadow border border-slate-600">{key}</div>
-                      {i < 2 && <span className="text-slate-500">+</span>}
-                    </React.Fragment>
-                  ))}
-                </div>
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* Left: Interactive Section */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col justify-center items-center bg-slate-100">
+            
+            <div className="w-full max-w-lg bg-[#1e1e1e] rounded-xl overflow-hidden shadow-2xl border border-slate-700 flex flex-col h-[350px] relative">
+              <div className="bg-[#2d2d2d] px-3 py-1.5 flex items-center gap-2 border-b border-black">
+                <div className="flex gap-1.5"><div className="w-3 h-3 rounded-full bg-rose-500"/><div className="w-3 h-3 rounded-full bg-amber-500"/><div className="w-3 h-3 rounded-full bg-emerald-500"/></div>
+                <span className="text-slate-400 text-xs font-mono ml-2 flex-1 text-center">VS Code</span>
               </div>
-              <button onClick={() => setStep(1)}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-md flex items-center gap-2 mx-auto">
-                เปิด Command Palette <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
 
-          {/* Step 2: Search */}
-          {step === 1 && (
-            <div className="max-w-lg mx-auto space-y-4">
-              <div className="bg-slate-800 rounded-xl overflow-hidden shadow-lg">
-                <div className="p-3 border-b border-slate-700">
-                  <div className="bg-slate-700 rounded-lg px-4 py-2 text-sm font-mono text-yellow-300 flex items-center gap-2">
-                    <span className="text-slate-500">{">"}</span>
-                    Python: Select Interpreter
-                  </div>
-                </div>
-                <button onClick={() => setStep(2)} className="w-full p-3 text-left text-slate-300 text-sm hover:bg-slate-700 transition-colors flex items-center gap-2">
-                  <Settings size={14} className="text-amber-400" />
-                  Python: Select Interpreter — เลือกตัวแปลภาษา Python
-                </button>
-              </div>
-              <p className="text-center text-slate-500 text-sm">คลิกที่รายการด้านบนเพื่อดำเนินการต่อ</p>
-            </div>
-          )}
-
-          {/* Step 3: Select Interpreter */}
-          {step === 2 && (
-            <div className="max-w-lg mx-auto space-y-4">
-              <h4 className="text-lg font-bold text-slate-700 text-center mb-2">เลือก Python Interpreter</h4>
-              <div className="bg-slate-800 rounded-xl overflow-hidden shadow-lg divide-y divide-slate-700">
-                {interpreters.map(interp => (
-                  <button key={interp.id} onClick={() => { setSelectedInterpreter(interp.id); setStep(3); showToast(`ตั้งค่า Interpreter เป็น ${interp.label} เรียบร้อยแล้ว`, 'success'); }}
-                    className="w-full p-4 text-left hover:bg-slate-700 transition-colors flex items-center gap-3 group">
-                    <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center text-yellow-400 font-bold text-sm">🐍</div>
-                    <div className="flex-1">
-                      <div className="text-white font-semibold text-sm flex items-center gap-2">
-                        {interp.label}
-                        {interp.recommended && <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">แนะนำ</span>}
+              <div className="flex-1 flex flex-col items-center justify-center p-6 relative">
+                
+                {step === 0 && (
+                  <div className="text-center space-y-6">
+                    <div className="bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-600">
+                      <div className="text-slate-400 text-xs mb-3 font-mono">1. กดปุ่มลัดเพื่อเปิด Command Palette</div>
+                      <div className="flex items-center justify-center gap-2">
+                        {['Ctrl', 'Shift', 'P'].map((key, i) => (
+                          <React.Fragment key={key}>
+                            <div className="bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg font-mono font-bold shadow text-sm border border-slate-600">{key}</div>
+                            {i < 2 && <span className="text-slate-500 text-sm">+</span>}
+                          </React.Fragment>
+                        ))}
                       </div>
-                      <div className="text-slate-500 text-xs font-mono">{interp.path}</div>
                     </div>
-                    <ChevronRight size={16} className="text-slate-600 group-hover:text-slate-400" />
-                  </button>
-                ))}
+                    <button onClick={() => handleStep(1)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md flex items-center gap-2 mx-auto">
+                      เปิด Command Palette <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
+
+                {(step === 1 || step === 2) && (
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-80 bg-[#252526] border border-slate-600 rounded-lg shadow-2xl z-20 flex flex-col animate-in slide-in-from-top-4">
+                    <div className="p-2 border-b border-slate-600 flex items-center gap-2 bg-[#333333] rounded-t-lg">
+                      <span className="text-emerald-400 font-mono text-sm">&gt;</span>
+                      <input type="text" value={step === 1 ? "Python: Select Interpreter" : ""} placeholder={step === 2 ? "Select Interpreter" : ""} readOnly 
+                             className="bg-transparent text-slate-200 text-sm outline-none flex-1 font-mono" />
+                    </div>
+                    
+                    {step === 1 && (
+                      <button onClick={() => handleStep(2)} className="p-2 bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 text-xs font-mono text-left transition-colors">
+                        Python: Select Interpreter
+                      </button>
+                    )}
+
+                    {step === 2 && (
+                      <div className="flex flex-col py-1">
+                        {interpreters.map(interp => (
+                          <button key={interp.id} onClick={() => selectInterpreter(interp)}
+                            className="p-3 hover:bg-[#2a2d2e] text-left transition-colors flex items-start gap-3 border-b border-slate-700/50 last:border-0 group">
+                            <div className="mt-0.5 text-yellow-500">🐍</div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-slate-200 font-semibold text-xs flex items-center justify-between">
+                                <span className="truncate">{interp.label}</span>
+                                {interp.recommended && <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/30">Recommended</span>}
+                              </div>
+                              <div className="text-slate-500 text-[10px] font-mono mt-1 truncate">{interp.path}</div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div className="text-center space-y-4 animate-in zoom-in-95">
+                    <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto border border-emerald-500/30">
+                      <CheckCircle2 size={32} className="text-emerald-400" />
+                    </div>
+                    <h4 className="text-lg font-bold text-emerald-400">Setup Complete!</h4>
+                    <p className="text-slate-400 text-sm max-w-xs mx-auto">
+                      VS Code จะใช้ <span className="text-yellow-400">{interpreters.find(i => i.id === selectedInterpreter)?.label}</span> ในการรันไฟล์ Python
+                    </p>
+                    <div className="mt-4 p-2 bg-[#2d2d2d] rounded-lg border border-slate-600 inline-flex items-center gap-2 text-xs text-slate-300 font-mono">
+                      <span>🐍 3.12.4</span>
+                      <span className="text-slate-600">|</span>
+                      <span>UTF-8</span>
+                    </div>
+                  </div>
+                )}
+                
               </div>
             </div>
-          )}
 
-          {/* Step 4: Done */}
-          {step === 3 && (
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle2 size={32} className="text-emerald-600" />
+          </div>
+
+          {/* Right: Info */}
+          <div className="w-full lg:w-[320px] bg-slate-50 p-6 flex flex-col border-l border-slate-200">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">คำอธิบาย</h4>
+            
+            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4 flex-1">
+              <div className="space-y-4">
+                <div>
+                  <h5 className="font-bold text-slate-800 text-sm mb-1">Interpreter คืออะไร?</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    คือตัวแปลภาษาที่อ่านโค้ด Python แล้วสั่งให้คอมพิวเตอร์ทำงาน ในเครื่องเราอาจมี Python หลายเวอร์ชัน 
+                    เราจึงต้องบอก VS Code เสมอว่าจะให้ใช้ตัวไหน
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-100">
+                  <h5 className="font-bold text-slate-800 text-sm mb-1">Command Palette</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    กด <b>Ctrl+Shift+P</b> (หรือ Cmd+Shift+P บน Mac) เป็นช่องทางลัดสำหรับเข้าถึงคำสั่งทุกอย่างของ VS Code 
+                    พิมพ์ค้นหาคำว่า "Select Interpreter" ได้เลย
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-slate-100">
+                  <h5 className="font-bold text-slate-800 text-sm mb-1">สถานะมุมขวาล่าง</h5>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    หลังจากเลือกเสร็จ ที่มุมขวาล่างสุดของหน้าจอ VS Code จะแสดงเวอร์ชันของ Python ที่เลือกไว้ 
+                    ถ้ามันขึ้นเป็นสีเหลืองหรือฟ้อง Error แสดงว่ายังไม่ได้เลือก
+                  </p>
+                </div>
               </div>
-              <h4 className="text-xl font-bold text-emerald-700">ตั้งค่า Interpreter สำเร็จ!</h4>
-              <p className="text-slate-600">VS Code จะใช้ <code className="bg-slate-100 px-2 py-0.5 rounded text-indigo-600 font-mono text-sm">{interpreters.find(i => i.id === selectedInterpreter)?.label}</code> ในการรัน Python</p>
-              <button onClick={() => { setStep(0); setSelectedInterpreter(null); }}
-                className="text-indigo-600 hover:text-indigo-800 underline text-sm flex items-center gap-1 mx-auto">
-                <RotateCcw size={14} /> ลองใหม่อีกครั้ง
-              </button>
             </div>
-          )}
-        </div>
-      </section>
 
-      {/* 2. Syntax Explainer */}
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-slate-800 border-l-4 border-indigo-600 pl-4">คำศัพท์สำคัญ</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {Object.entries(explanations).map(([key, info]) => (
-            <div key={key} onClick={() => setActiveTooltip(activeTooltip === key ? null : key)}
-              className={`p-5 rounded-xl border-2 cursor-pointer transition-all ${activeTooltip === key ? 'border-indigo-500 bg-indigo-50 shadow-md' : 'border-slate-200 bg-white hover:border-indigo-300'}`}>
-              <h4 className={`font-bold ${info.color} mb-2`}>{info.title}</h4>
-              <p className="text-slate-600 text-sm leading-relaxed">{info.desc}</p>
+            <button onClick={clear}
+              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-xl px-4 py-3 active:scale-95 transition-all flex items-center justify-center gap-2">
+              <RotateCcw size={16} /> รีเซ็ต
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom VS Code Terminal */}
+        <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Event Log</span>
             </div>
-          ))}
+            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+              <RotateCcw size={14} /> Clear Log
+            </button>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">⚙️</span>{line.text}</div>}
+                {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap ml-6">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+              </div>
+            ))}
+          </div>
         </div>
-      </section>
-
-      {/* 3. Quiz */}
-      <section className="space-y-6 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
-        <h2 className="text-2xl font-bold text-white !mt-0 flex items-center gap-2"><span className="text-yellow-300">#</span> ทดสอบความเข้าใจ</h2>
-        <p className="text-slate-200">ทำไมเราถึงต้องเลือก Python Interpreter ใน VS Code?</p>
-
-        <div className="space-y-3 my-6">
-          {[
-            { val: 'multi', label: 'เพราะเครื่องอาจมี Python หลายเวอร์ชัน ต้องบอก VS Code ว่าจะใช้ตัวไหน', correct: true },
-            { val: 'speed', label: 'เพื่อทำให้โปรแกรมรันเร็วขึ้น' },
-            { val: 'color', label: 'เพื่อเปลี่ยนสี Theme ของ VS Code' },
-            { val: 'font', label: 'เพื่อเปลี่ยนฟอนต์ในการเขียนโค้ด' },
-          ].map(opt => (
-            <button key={opt.val} onClick={() => { if (!quizChecked) setQuizAnswer(opt.val); }}
-              className={`w-full text-left p-4 rounded-xl border-2 font-semibold transition-all ${
-                quizChecked && opt.correct ? 'border-emerald-500 bg-emerald-900/30 text-emerald-300' :
-                quizChecked && quizAnswer === opt.val && !opt.correct ? 'border-red-500 bg-red-900/20 text-red-300' :
-                quizAnswer === opt.val ? 'border-indigo-500 bg-slate-700 text-white' :
-                'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'
-              }`}>{opt.label}</button>
-          ))}
-        </div>
-
-        <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-700">
-          <button onClick={() => { setQuizAnswer(null); setQuizChecked(false); }} className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-sm"><RotateCcw size={16} /> เริ่มใหม่</button>
-          <button onClick={() => {
-            if (!quizAnswer) { showToast('กรุณาเลือกคำตอบ', 'warning'); return; }
-            setQuizChecked(true);
-            showToast(quizAnswer === 'multi' ? 'ถูกต้อง!' : 'ไม่ถูกต้อง: เหตุผลหลักคือเครื่องอาจมี Python หลายเวอร์ชัน', quizAnswer === 'multi' ? 'success' : 'error');
-          }} className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors shadow-lg">ตรวจคำตอบ</button>
-        </div>
-      </section>
-
-      {toast.show && (
-        <div className={`fixed bottom-5 right-5 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border-l-4 animate-in slide-in-from-bottom-5 ${toast.type === 'success' ? 'bg-slate-800 border-emerald-500' : toast.type === 'error' ? 'bg-slate-800 border-red-500' : 'bg-slate-800 border-yellow-500'}`}>
-          {toast.type === 'success' && <CheckCircle2 className="text-emerald-500" />}
-          {toast.type === 'error' && <XCircle className="text-red-500" />}
-          {toast.type === 'warning' && <AlertCircle className="text-yellow-500" />}
-          <div className="font-medium">{toast.message}</div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

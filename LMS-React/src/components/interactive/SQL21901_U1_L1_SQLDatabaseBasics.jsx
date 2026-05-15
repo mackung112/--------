@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FastForward, Search, Zap, CheckCircle2, RotateCcw, AlertTriangle, Play } from 'lucide-react';
 
 export default function SQL21901_U1_L1_SQLDatabaseBasics() {
@@ -6,6 +6,16 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
   const [raceStatus, setRaceStatus] = useState('idle'); // idle, racing, finished
   const [tableProgress, setTableProgress] = useState(-1);
   const [indexProgress, setIndexProgress] = useState(-1);
+  
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Database Storage Engine Initialized.' },
+    { type: 'system', text: 'Ready for Indexing Performance Test.' }
+  ]);
+  const consoleRef = useRef(null);
+
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
   const totalBlocks = 10;
   
@@ -13,6 +23,12 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
     setRaceStatus('racing');
     setTableProgress(0);
     setIndexProgress(0);
+
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'command', text: `$ EXECUTE QUERY: SELECT * FROM users WHERE id = ${targetId}` },
+      { type: 'system', text: `> Running execution plan [Full Table Scan vs Index Scan]...` }
+    ]);
 
     // Full Table Scan logic (1 block per 300ms)
     let currentTable = 0;
@@ -25,163 +41,211 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
       setTableProgress(currentTable);
     }, 300);
 
-    // Index Scan logic (instant jump via B-Tree simulation)
-    // Actually, let's just make it jump immediately after 400ms to show O(1) or O(log n)
+    // Index Scan logic
     setTimeout(() => {
       setIndexProgress(targetId);
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'output', text: `[Index Scan] B-Tree Traversal found ID=${targetId} instantly.` },
+        { type: 'success', text: `[Index Scan] Finished in 400ms.` }
+      ]);
     }, 400);
 
     // Check when finished
     setTimeout(() => {
       setRaceStatus('finished');
+      setConsoleHistory(prev => [
+        ...prev,
+        { type: 'output', text: `[Full Table Scan] Sequentially read up to ID=${targetId}.` },
+        { type: 'error', text: `[Full Table Scan] Finished in ${(targetId * 300)}ms.` },
+        { type: 'system', text: `> Race completed.` }
+      ]);
     }, targetId * 300 + 100);
   };
 
   const reset = () => {
+    const newTarget = Math.floor(Math.random() * 5) + 5; // random 5-9
     setRaceStatus('idle');
     setTableProgress(-1);
     setIndexProgress(-1);
-    setTargetId(Math.floor(Math.random() * 5) + 5); // random 5-9
+    setTargetId(newTarget);
+    
+    setConsoleHistory(prev => [
+      ...prev,
+      { type: 'system', text: `> Environment reset. New Target ID = ${newTarget}` }
+    ]);
   };
 
   return (
-    <div className="space-y-12 my-8">
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
       {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex gap-4 items-start">
-        <div className="p-4 bg-yellow-100 text-yellow-600 rounded-xl shrink-0">
-          <FastForward size={32} />
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-yellow-100 text-yellow-600 rounded-lg">
+            <FastForward size={20} className="stroke-2" />
+          </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">Index Racing Simulator (แข่งความเร็วค้นหาข้อมูล)</h3>
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Index Racing Simulator (แข่งความเร็วค้นหาข้อมูล)</h2>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            ทำไมฐานข้อมูลถึงค้นหาข้อมูลนับล้านเรคคอร์ดได้ในเสี้ยววินาที? คำตอบคือการทำ <strong>Index (ดัชนี)</strong> ลองกดปุ่มค้นหาเพื่อดูแอนิเมชันเปรียบเทียบระหว่างการหาแบบปกติกับการใช้ Index ดูครับ!
-          </p>
-        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-500">
+          ทำไมฐานข้อมูลถึงค้นหาข้อมูลนับล้านเรคคอร์ดได้ในเสี้ยววินาที? คำตอบคือการทำ <strong>Index (ดัชนี)</strong> ลองกดปุ่มค้นหาเพื่อดูแอนิเมชันเปรียบเทียบระหว่างการหาแบบปกติกับการใช้ Index ดูครับ!
+        </p>
       </div>
 
-      
-    
-      {/* Bottom Full-Width Console Output (VS Code Style) */}
-      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-        
-        {/* Objective */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 bg-slate-800 p-4 rounded-xl border border-slate-700 text-white">
-          <div className="flex items-center gap-3">
-            <Search className="text-sky-400"/> 
-            <span>เป้าหมายที่ต้องการค้นหา: <strong className="text-yellow-400 text-2xl ml-2">ID = {targetId}</strong></span>
-          </div>
-          {raceStatus === 'idle' && (
-            <button 
-              onClick={startRace}
-              className="mt-4 md:mt-0 px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-black rounded-full shadow-[0_0_15px_rgba(234,179,8,0.5)] transition-all hover:scale-105 flex items-center gap-2"
-            >
-              <Play size={20}/> START QUERY!
-            </button>
-          )}
-          {raceStatus === 'finished' && (
-            <button 
-              onClick={reset}
-              className="mt-4 md:mt-0 px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-full transition-all flex items-center gap-2"
-            >
-              <RotateCcw size={18}/> ลองอีกครั้ง
-            </button>
-          )}
-        </div>
-
-        {/* Race Tracks */}
-        <div className="space-y-8">
+      <div className="flex flex-col min-h-[500px]">
+        <div className="flex flex-col lg:flex-row flex-1">
           
-          {/* Track 1: Full Table Scan */}
-          <div className="relative">
-            <div className="flex justify-between items-end mb-2">
-              <h3 className="text-rose-400 font-bold flex items-center gap-2">
-                <AlertTriangle size={18}/> 1. Full Table Scan (ไม่มี Index)
-              </h3>
-              {raceStatus === 'finished' && <span className="text-rose-400 text-sm font-mono bg-rose-900/30 px-2 py-1 rounded">Time: {(targetId * 300)}ms</span>}
+          {/* Left: Race Track */}
+          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
+            <div className="flex justify-between items-center mb-6">
+               <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                <Search size={16} /> เป้าหมายการค้นหา
+              </h4>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold text-slate-600">ID = <span className="text-yellow-600 text-xl">{targetId}</span></span>
+                {raceStatus === 'idle' ? (
+                  <button onClick={startRace} className="bg-yellow-500 hover:bg-yellow-400 text-slate-900 px-4 py-2 rounded-lg font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+                    <Play size={16}/> Start Query
+                  </button>
+                ) : raceStatus === 'finished' ? (
+                  <button onClick={reset} className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-bold transition-all shadow-sm flex items-center gap-2 text-sm">
+                    <RotateCcw size={16}/> Reset
+                  </button>
+                ) : (
+                  <button disabled className="bg-slate-300 text-slate-500 px-4 py-2 rounded-lg font-bold text-sm cursor-not-allowed">
+                    Running...
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex gap-2 overflow-x-auto relative min-h-[100px]">
-              {Array.from({length: totalBlocks}).map((_, i) => (
-                <div 
-                  key={i} 
-                  className={`w-14 h-16 shrink-0 rounded-lg flex flex-col items-center justify-center font-mono font-bold transition-all duration-300 ${
-                    i === targetId && tableProgress >= i ? 'bg-emerald-500 text-white scale-110 shadow-[0_0_15px_rgba(16,185,129,0.5)] z-10' :
-                    tableProgress === i ? 'bg-rose-500 text-white scale-110 shadow-lg z-10' :
-                    tableProgress > i ? 'bg-slate-700 text-slate-500 opacity-50' :
-                    'bg-slate-700 border-2 border-slate-600 text-slate-400'
-                  }`}
-                >
-                  <span className="text-[10px] opacity-50">ID</span>
-                  <span>{i}</span>
+
+            <div className="space-y-6 flex-1">
+              {/* Track 1: Full Table Scan */}
+              <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative">
+                <div className="flex justify-between items-end mb-3 border-b border-slate-100 pb-2">
+                  <h3 className="text-rose-600 font-bold flex items-center gap-2 text-sm">
+                    <AlertTriangle size={16}/> 1. Full Table Scan (ไม่มี Index)
+                  </h3>
+                  {raceStatus === 'finished' && <span className="text-rose-600 text-xs font-mono bg-rose-50 px-2 py-0.5 rounded font-bold border border-rose-200">{(targetId * 300)}ms</span>}
                 </div>
-              ))}
-              
-              {/* Turtle / Car representation */}
-              {tableProgress >= 0 && (
-                <div 
-                  className="absolute bottom-1 w-14 h-1 bg-rose-500 rounded-full transition-all duration-300"
-                  style={{ left: `calc(${(tableProgress / totalBlocks) * 100}% + 16px)`, transform: 'translateX(-50%)' }}
-                ></div>
-              )}
+                
+                <div className="flex gap-2 overflow-x-auto relative min-h-[70px] custom-scrollbar pb-2">
+                  {Array.from({length: totalBlocks}).map((_, i) => (
+                    <div 
+                      key={i} 
+                      className={`w-12 h-14 shrink-0 rounded-lg flex flex-col items-center justify-center font-mono font-bold transition-all duration-300 ${
+                        i === targetId && tableProgress >= i ? 'bg-emerald-500 text-white shadow-md z-10' :
+                        tableProgress === i ? 'bg-rose-500 text-white shadow-md z-10' :
+                        tableProgress > i ? 'bg-slate-100 text-slate-400' :
+                        'bg-white border border-slate-300 text-slate-400'
+                      }`}
+                    >
+                      <span className="text-[10px] opacity-70">ID</span>
+                      <span>{i}</span>
+                    </div>
+                  ))}
+                  
+                  {/* Progress Line */}
+                  {tableProgress >= 0 && (
+                    <div 
+                      className="absolute bottom-0 w-12 h-1 bg-rose-500 rounded-full transition-all duration-300"
+                      style={{ left: `calc(${(tableProgress / totalBlocks) * 100}% + 8px)` }}
+                    ></div>
+                  )}
+                </div>
+              </div>
+
+              {/* Track 2: Index Scan */}
+              <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative">
+                <div className="flex justify-between items-end mb-3 border-b border-slate-100 pb-2">
+                  <h3 className="text-emerald-600 font-bold flex items-center gap-2 text-sm">
+                    <Zap size={16}/> 2. Index Scan (มี Index)
+                  </h3>
+                  {raceStatus === 'finished' && <span className="text-emerald-600 text-xs font-mono bg-emerald-50 px-2 py-0.5 rounded font-bold border border-emerald-200">400ms</span>}
+                </div>
+                
+                <div className="flex gap-2 overflow-x-auto relative min-h-[70px] custom-scrollbar pb-2">
+                  {Array.from({length: totalBlocks}).map((_, i) => (
+                    <div 
+                      key={i} 
+                      className={`w-12 h-14 shrink-0 rounded-lg flex flex-col items-center justify-center font-mono font-bold transition-all duration-500 ${
+                        i === targetId && indexProgress === targetId ? 'bg-emerald-500 text-white shadow-md z-10' :
+                        'bg-white border border-slate-300 text-slate-400'
+                      }`}
+                    >
+                      <span className="text-[10px] opacity-70">ID</span>
+                      <span>{i}</span>
+                    </div>
+                  ))}
+
+                  {/* Jump Line Animation */}
+                  {indexProgress === targetId && (
+                    <svg className="absolute top-2 left-0 w-full h-16 pointer-events-none animate-in fade-in z-20">
+                      <path 
+                        d={`M 25 10 Q ${(targetId * 56) / 2 + 16} -20, ${targetId * 56 + 28} 10`} 
+                        fill="none" 
+                        stroke="#10B981" 
+                        strokeWidth="2" 
+                        strokeDasharray="4,4" 
+                      />
+                      <circle cx={targetId * 56 + 28} cy="10" r="3" fill="#10B981" />
+                    </svg>
+                  )}
+                </div>
+              </div>
             </div>
-            <p className="text-slate-400 text-sm mt-2 font-mono">
-              เหมือนการเปิดหนังสือทีละหน้าเพื่อหาคำที่ต้องการ (ช้ามากๆ ถ้าข้อมูลเยอะ)
-            </p>
           </div>
 
-          {/* Track 2: Index Scan */}
-          <div className="relative">
-            <div className="flex justify-between items-end mb-2">
-              <h3 className="text-emerald-400 font-bold flex items-center gap-2">
-                <Zap size={18}/> 2. Index Scan (มี Index)
-              </h3>
-              {raceStatus === 'finished' && <span className="text-emerald-400 text-sm font-mono bg-emerald-900/30 px-2 py-1 rounded">Time: 400ms</span>}
-            </div>
-            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex gap-2 overflow-x-auto relative min-h-[100px]">
-              {Array.from({length: totalBlocks}).map((_, i) => (
-                <div 
-                  key={i} 
-                  className={`w-14 h-16 shrink-0 rounded-lg flex flex-col items-center justify-center font-mono font-bold transition-all duration-500 ${
-                    i === targetId && indexProgress === targetId ? 'bg-emerald-500 text-white scale-110 shadow-[0_0_15px_rgba(16,185,129,0.5)] z-10' :
-                    'bg-slate-700 border-2 border-slate-600 text-slate-400'
-                  }`}
-                >
-                  <span className="text-[10px] opacity-50">ID</span>
-                  <span>{i}</span>
-                </div>
-              ))}
+          {/* Right: Explanations */}
+          <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">
+              อธิบายการทำงาน
+            </h4>
+            
+            <div className="space-y-4 flex-1">
+              <div className="bg-rose-50 border border-rose-100 rounded-xl p-4 text-sm text-rose-900 shadow-sm">
+                <strong className="block mb-1">Full Table Scan</strong>
+                เหมือนการเปิดหนังสือทีละหน้าเพื่อหาคำที่ต้องการ ต้องไล่ค้นหาตั้งแต่ข้อมูลตัวแรกสุดไปเรื่อยๆ จนกว่าจะเจอ (ช้ามากๆ ถ้าข้อมูลมีเป็นล้านแถว)
+              </div>
 
-              {/* Jump Line Animation */}
-              {indexProgress === targetId && (
-                <svg className="absolute top-4 left-0 w-full h-20 pointer-events-none animate-in fade-in z-20">
-                  <path 
-                    d={`M 35 10 Q ${(targetId * 64) / 2 + 16} -20, ${targetId * 64 + 40} 10`} 
-                    fill="none" 
-                    stroke="#10B981" 
-                    strokeWidth="3" 
-                    strokeDasharray="5,5" 
-                  />
-                  <circle cx={targetId * 64 + 40} cy="10" r="4" fill="#10B981" />
-                </svg>
+              <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-sm text-emerald-900 shadow-sm">
+                <strong className="block mb-1">Index Scan</strong>
+                เหมือนการเปิดหน้า "สารบัญ" (B-Tree) ดูว่าคำที่ต้องการอยู่หน้าไหน แล้วกระโดดข้ามไปยังหน้านั้นได้ทันทีโดยไม่ต้องไล่ทีละหน้า (เร็วฟ้าผ่า!)
+              </div>
+
+              {raceStatus === 'finished' && (
+                <div className="mt-4 bg-slate-800 text-white p-4 rounded-xl shadow-lg animate-in fade-in slide-in-from-bottom-4 border border-slate-700">
+                  <h5 className="font-bold flex items-center gap-2 mb-2 text-yellow-400">
+                    <CheckCircle2 size={18}/> สรุปผล
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    นี่คือเหตุผลที่การกำหนด <code>Primary Key</code> หรือการใส่ <code>INDEX</code> ให้กับคอลัมน์ที่มีการค้นหาบ่อยๆ ถึงทำให้ระบบทำงานเร็วขึ้นแบบก้าวกระโดด!
+                  </p>
+                </div>
               )}
             </div>
-            <p className="text-slate-400 text-sm mt-2 font-mono">
-              เหมือนการเปิดหน้า "สารบัญ" (B-Tree) แล้วกระโดดข้ามไปยังหน้าที่ต้องการได้ทันที (เร็วฟ้าผ่า!)
-            </p>
           </div>
-
         </div>
 
-        {/* Conclusion */}
-        {raceStatus === 'finished' && (
-          <div className="mt-8 bg-emerald-900/30 border border-emerald-500/30 p-6 rounded-xl animate-in slide-in-from-bottom-4">
-            <h4 className="text-emerald-400 font-bold text-xl flex items-center gap-2 mb-2">
-              <CheckCircle2 /> Index Scan ชนะขาดลอย!
-            </h4>
-            <p className="text-emerald-100/80 leading-relaxed">
-              นี่คือเหตุผลที่การทำ <code>Primary Key</code> หรือการใส่ <code>INDEX</code> ลงในคอลัมน์ที่มีการค้นหาบ่อยๆ (เช่น รหัสพนักงาน, อีเมล) ถึงทำให้ระบบทำงานเร็วขึ้นแบบก้าวกระโดด! แต่ข้อควรระวังคือ ถ้าใส่ Index เยอะเกินไป จะทำให้การ `INSERT` / `UPDATE` ข้อมูลช้าลงแทนนะ เพราะระบบต้องอัปเดตสารบัญใหม่ตลอดเวลา
-            </p>
+        {/* Bottom Full-Width Terminal */}
+        <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-500 text-xs">Query Performance Log</span>
+            </div>
           </div>
-        )}
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed flex gap-2">
+                {line.type === 'command' && <><span className="text-yellow-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'error'   && <><span className="text-rose-400 font-bold shrink-0">[Slow]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
+                {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Fast]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
