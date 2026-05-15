@@ -6,6 +6,10 @@
 **ชื่อโปรเจกต์**: ห้องเรียนครูแม็ค | Mack's Classroom (LMS Platform)
 **เป้าหมายหลัก**: แพลตฟอร์ม E-Learning สำหรับการเขียนโปรแกรม ที่ **"เน้นการมีส่วนร่วม (Highly Interactive)"** ทุกบทเรียนต้องมีสื่อที่กดเล่นได้ จำลองการทำงาน (Simulator) และรวม Game-Based Learning
 **Tech Stack**: React 19, Vite 8, Tailwind CSS 4, React Router 7, Lucide React
+**รายวิชาที่เปิดสอน (Active Courses)**:
+1. 🐍 **การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น** (21910-1003) — 8 หน่วย, Python
+2. 🧩 **การเขียนโปรแกรมเชิงวัตถุ** (OOP) — 7 หน่วย, Python OOP
+3. 🗄️ **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น** (21901-2001) — 6 หน่วย, SQL/MySQL
 
 ## 🎨 2. Design System & UI/UX (ระบบการออกแบบที่ AI ต้องจดจำ)
 เพื่อให้หน้าตาโปรเจกต์ไปในทิศทางเดียวกัน แม้จะเปลี่ยน AI กี่ตัวก็ตาม ทุกตัวต้องใช้กฎเหล่านี้:
@@ -23,17 +27,24 @@
 LMS-React/
 ├── index.html               
 ├── vite.config.js           # ตั้งค่า Vite + Tailwind v4 (ไม่มี tailwind.config.js)
+├── CONTEXT.md               # ⭐ ภาพรวมโปรเจกต์ (ต้องอัปเดตทุกครั้ง)
+├── task.md                  # ⭐ สถานะงานปัจจุบัน (ต้องอัปเดตทุกครั้ง)
 ├── src/
 │   ├── main.jsx             
 │   ├── App.jsx              # ระบบ Routing (HomeView, CourseView)
-│   ├── index.css            # Global CSS (@import "tailwindcss")
-│   ├── data.js              # ⭐ [Database] เก็บเนื้อหา HTML + [MARKER]
+│   ├── index.css            # Global CSS + Custom Animations
+│   ├── data.js              # ⭐ [Database] วิชา Python (HTML + [MARKER])
+│   ├── data/
+│   │   ├── oopCourse.js     # ⭐ [Database] วิชา OOP
+│   │   └── sqlCourse.js     # ⭐ [Database] วิชา SQL
 │   └── components/
-│       ├── interactive/         # ⭐ สื่อ Interactive ทั้งหมด (Auto-loaded โหลดอัตโนมัติ)
+│       ├── interactive/         # ⭐ สื่อ Interactive ทั้งหมด (Auto-loaded)
+│       │   └── utils/           # Shared utilities (SQLSyntaxEngine ฯลฯ)
 │       ├── LessonViewer.jsx     # ⭐ Engine เรนเดอร์เนื้อหา + Auto-Registry
 │       └── ...[UI Components]...
 ├── docs/
-│   └── curriculum/          # 📄 [Curriculum] เอกสารสรุปเนื้อหารายวิชา (OOP, Intro Programming)
+│   ├── curriculum/          # 📄 เอกสารสรุปเนื้อหารายวิชา
+│   └── html/                # 📄 ต้นฉบับ HTML ก่อน Migration
 ```
 
 ## ⏳ 4. ประวัติการทำงาน (History & Completed Milestones)
@@ -46,6 +57,8 @@ LMS-React/
 - [2026-05-12] บันทึกโครงสร้างหลักสูตร (OOP และ การเขียนโปรแกรมเบื้องต้น) ลงใน `docs/curriculum/` เพื่อใช้เป็นฐานข้อมูลอ้างอิงถาวร
 - [2026-05-12] ปรับปรุงระบบ **Auto-Registry** ให้ `LessonViewer.jsx` โหลดสื่อ Interactive อัตโนมัติจากโฟลเดอร์ `interactive/` ทำให้ผู้สร้างเนื้อหาไม่ต้องเขียน Import เองอีกต่อไป
 - [2026-05-14] สร้างรายวิชา **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น (SQL / 21901-2001)** เสร็จสมบูรณ์ (6 หน่วย, 66 บทเรียน, 66 Interactive Components) พร้อมปรับให้ `skill-web-lms.md` รองรับการเขียน MySQL
+- [2026-05-15] **Migration Unit 2 (DDL) เสร็จสมบูรณ์**: สร้าง Interactive Components 8 ตัว (2.5-2.12) + สร้าง `utils/SQLSyntaxEngine.js` + เพิ่ม CSS Animations 6 ชุดใน `index.css`
+- [2026-05-15] **ลบวิชาที่ยังไม่มีบทเรียน** ออก 10 วิชาจาก `data.js` เหลือ 3 วิชาที่มีเนื้อหาจริง (Python, OOP, SQL)
 
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
 - **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)

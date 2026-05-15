@@ -58,9 +58,6 @@ function HomeView() {
               เริ่มเรียนเลย
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="#features" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-700 rounded-2xl font-bold text-lg border-2 border-gray-200 hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-1 transition-all duration-300 shadow-sm">
-              ดูจุดเด่น
-            </a>
           </div>
         </div>
       </section>
@@ -87,28 +84,7 @@ function HomeView() {
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-20 max-w-6xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">ทำไมต้องเรียนที่นี่?</h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">ออกแบบมาเพื่อให้การเรียนรู้เป็นเรื่องสนุก ทุกบทเรียนคือประสบการณ์ที่ลงมือทำได้จริง</p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { icon: '🎮', title: 'Interactive ทุกบทเรียน', desc: 'ทุกหน้ามีสื่อที่กดเล่นได้ ไม่ใช่แค่อ่าน แต่ลงมือปฏิบัติจริง', gradient: 'from-blue-500 to-indigo-600' },
-            { icon: '🧠', title: 'เข้าใจง่าย', desc: 'เนื้อหาภาษาไทย อธิบายทีละขั้นตอน มีตัวอย่างและภาพประกอบชัดเจน', gradient: 'from-purple-500 to-pink-600' },
-            { icon: '🏆', title: 'แบบฝึกหัดและ Quiz', desc: 'วัดผลความเข้าใจด้วยแบบทดสอบท้ายบท พร้อมข้อสอบภาคปฏิบัติ', gradient: 'from-amber-500 to-orange-600' },
-          ].map((feat, i) => (
-            <div key={i} className="relative group p-8 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500">
-              <div className={`w-16 h-16 bg-gradient-to-br ${feat.gradient} rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                {feat.icon}
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{feat.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feat.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* Courses Grid */}
       <section id="courses" className="py-20 bg-gradient-to-b from-white to-indigo-50/30">

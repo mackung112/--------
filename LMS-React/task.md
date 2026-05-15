@@ -4,7 +4,9 @@
 
 ## 📌 1. เป้าหมายระยะสั้น (Current Objective)
 - [x] ปรับปรุงระบบเพิ่มเนื้อหา (Auto-Registry) ให้ง่ายขึ้น ไม่ต้องยุ่งกับ `LessonViewer.jsx` อีกต่อไป
-- [ ] เพิ่ม Component สื่อ Interactive สำหรับ Unit ถัดไป (Unit 3: การออกแบบ GUI) หรือตามที่ผู้ใช้ร้องขอ
+- [x] Migration Unit 2 DDL (SQL) เสร็จสมบูรณ์ (2.5-2.12)
+- [x] ลบวิชาที่ยังไม่มีบทเรียนออกจาก `data.js` (10 วิชา → เหลือ 3 วิชา)
+- [ ] เพิ่ม Component สื่อ Interactive สำหรับ Unit ถัดไป หรือตามที่ผู้ใช้ร้องขอ
 
 ## 🔄 2. แผนการทำงาน (Execution Steps)
 *(⚠️ AI: ให้คุณวิเคราะห์งานที่ได้รับ และซอยย่อยลงมาเป็นเฟส แล้วจัดการไล่ทำไปเรื่อยๆ อย่างต่อเนื่อง ห้ามหยุดทำกลางคัน)*
@@ -16,15 +18,25 @@
 - [x] **Phase 3: ปรับปรุง Data**
   - [x] ลบ `_COMPONENT` ออกจากชื่อ Marker ใน `data.js` และ `oopCourse.js` ทั้งหมด
   - [x] อัปเดต Marker ให้เป็นชื่อไฟล์ตรงๆ เช่น `[ClassDefinitionDemo]`
-- [x] **Phase 4: ทดสอบและเอกสาร**
-  - [x] ตรวจสอบ `npm run build`
-  - [x] อัปเดต `CONTEXT.md` และ `skill-web-lms.md` เพื่อป้องกัน AI รุ่นหลังทำระบบพัง
+- [x] **Phase 4: SQL DDL Migration (2.5-2.12)**
+  - [x] SQLCreateTableDemo, SQLDefaultDemo, SQLAddColumnDemo, SQLModifyColumnDemo
+  - [x] SQLRenameColumnDemo, SQLDropColumnDemo, SQLCascadeDemo, SQLDropTableDemo
+  - [x] สร้าง `utils/SQLSyntaxEngine.js` (shared utility)
+  - [x] เพิ่ม CSS Animations 6 ชุดใน `index.css`
+  - [x] แก้ icon imports (PaperPlane→Send, Dumpster→Flame)
+- [x] **Phase 5: Cleanup**
+  - [x] ลบวิชาที่ chapters ว่างเปล่า 10 วิชาออกจาก `data.js`
+  - [x] อัปเดต `CONTEXT.md`, `task.md`, `skill-web-lms.md`
+- [x] **Phase 6: ทดสอบ**
+  - [x] `npm run build` ผ่าน ✅
 
 ## 📝 3. โน้ตส่งมอบงาน (AI Handoff Notes)
 *(⚠️ AI: หากเซสชันถูกตัด, โควต้า Token ใกล้หมด, หรืองานติดขัดยังไม่เสร็จ ให้ทิ้งข้อความอธิบายปัญหาและแนวทางไว้ให้ AI ตัวต่อไปมาอ่านที่นี่)*
 
-**อัปเดตระบบ [2026-05-12]**:
-ระบบ Auto-Registry สมบูรณ์แล้ว! จากนี้ไปการสร้างบทเรียน Interactive จะง่ายมาก
-1. สร้าง Component เช่น `MyCoolDemo.jsx` เก็บไว้ที่ `src/components/interactive/`
-2. ใส่ `[MyCoolDemo]` ในโค้ดเนื้อหาของไฟล์ `data.js` หรือ `oopCourse.js` ตรงไหนก็ได้
-3. หน้าเว็บจะโหลดให้อัตโนมัติเลย! **ห้ามไปแตะไฟล์ LessonViewer.jsx อีกเด็ดขาด**
+**อัปเดตระบบ [2026-05-15]**:
+- Build ผ่านแล้ว ✅ ไม่มี error
+- วิชาที่เปิดสอนตอนนี้มี 3 วิชา: Python (8 หน่วย), OOP (7 หน่วย), SQL (6 หน่วย)
+- ระบบ Auto-Registry สมบูรณ์แล้ว! จากนี้ไปการสร้างบทเรียน Interactive จะง่ายมาก:
+  1. สร้าง Component เช่น `MyCoolDemo.jsx` เก็บไว้ที่ `src/components/interactive/`
+  2. ใส่ `[MyCoolDemo]` ในโค้ดเนื้อหาของไฟล์ `data.js`, `oopCourse.js`, หรือ `sqlCourse.js` ตรงไหนก็ได้
+  3. หน้าเว็บจะโหลดให้อัตโนมัติเลย! **ห้ามไปแตะไฟล์ LessonViewer.jsx อีกเด็ดขาด**

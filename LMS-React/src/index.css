@@ -109,3 +109,90 @@
     padding: 0;
   }
 }
+
+/* ============================================= */
+/* SQL Interactive Component Animations          */
+/* ============================================= */
+
+/* Pop-in entrance animation */
+@keyframes popIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pop-in {
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Shake error animation */
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px) rotate(-1deg); }
+  40%, 80% { transform: translateX(6px) rotate(1deg); }
+}
+.animate-shake-error {
+  animation: shakeError 0.5s ease-in-out;
+}
+
+/* Shrink and fade for DROP COLUMN animation */
+@keyframes shrinkAndFade {
+  0% { background-color: rgba(244, 63, 94, 0.3); transform: scale(1); opacity: 1; }
+  50% { background-color: rgba(244, 63, 94, 0.8); color: transparent; transform: scale(0.95); opacity: 0.8; }
+  100% { width: 0; padding: 0; opacity: 0; transform: scale(0); border: none; font-size: 0; }
+}
+.animate-shrinkAndFade {
+  animation: shrinkAndFade 0.8s forwards ease-in;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Dissolve animation for CASCADE rows */
+@keyframes dissolve {
+  0% { transform: scale(1); opacity: 1; filter: blur(0px); }
+  50% { transform: scale(0.95); opacity: 0.8; filter: blur(2px); background-color: rgba(168, 85, 247, 0.8); color: white; }
+  100% { transform: scale(0.8) translateY(10px); opacity: 0; filter: blur(5px); }
+}
+.animate-dissolve {
+  animation: dissolve 0.8s forwards ease-in;
+  pointer-events: none;
+}
+.animate-dissolve-fast {
+  animation: dissolve 0.6s forwards ease-in;
+  pointer-events: none;
+}
+
+/* Flash warning for RESTRICT rows */
+@keyframes flashWarning {
+  0%, 100% { background-color: white; }
+  50% { background-color: #fee2e2; }
+}
+.animate-flash-warning {
+  animation: flashWarning 0.5s ease-in-out 2;
+}
+
+/* Explode animation for DROP TABLE */
+@keyframes explodeTable {
+  0% { transform: scale(1); opacity: 1; filter: brightness(1); }
+  20% { transform: scale(1.1); filter: brightness(1.5) sepia(1) hue-rotate(-50deg) saturate(5); }
+  50% { transform: scale(0.9) rotate(5deg); opacity: 0.8; filter: blur(2px) brightness(2); background-color: #ef4444; }
+  100% { transform: scale(0) translateY(50px); opacity: 0; filter: blur(10px); }
+}
+.animate-explode-anim {
+  animation: explodeTable 0.8s forwards cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  pointer-events: none;
+}
+
+/* Custom scrollbar for code panels */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.3);
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.5);
+}

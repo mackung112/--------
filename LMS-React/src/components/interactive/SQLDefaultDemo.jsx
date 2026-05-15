@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Database, Wand2, ArrowDown10, Plus, Keyboard, PaperPlane, Table, Clock, Bot, Asterisk, Terminal, FolderOpen } from 'lucide-react';
+import { Database, Wand2, ArrowDown10, Plus, Keyboard, Send, Table, Clock, Bot, Asterisk, Terminal, FolderOpen } from 'lucide-react';
 import { SQLSyntaxEngine } from './utils/SQLSyntaxEngine';
 
 const SQLDefaultDemo = () => {
@@ -198,7 +198,7 @@ ALTER TABLE orders AUTO_INCREMENT = 1001;`) }} />
                   onClick={handleInsert}
                   className="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-indigo-500/30 active:scale-95 flex items-center justify-center gap-2 mt-4"
                 >
-                  <PaperPlane className="w-4 h-4" /> เพิ่มข้อมูล (INSERT)
+                  <Send className="w-4 h-4" /> เพิ่มข้อมูล (INSERT)
                 </button>
               </div>
             </div>
