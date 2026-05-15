@@ -99,18 +99,18 @@ export default function SelfKeywordDemo() {
           </div>
         </div>
 
-        {/* Console Output */}
-        <div className="mt-4">
-          <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
-            <ArrowRight className="w-4 h-4" /> Terminal Output
-          </h3>
-          <div className={`p-4 rounded-xl font-mono text-sm transition-colors duration-300 border
-            ${activeObject ? 'bg-slate-900 text-emerald-400 border-slate-800' : 'bg-slate-100 text-slate-400 border-slate-200'}`}
-          >
-            {output}
-          </div>
+      </div>
+      
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className={`h-48 p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800 shadow-inner transition-colors duration-300
+        ${activeObject ? 'bg-[#1e1e1e] text-emerald-400' : 'bg-slate-900 text-slate-500'}`}
+      >
+        <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+          <ArrowRight className="w-3 h-3" /> Terminal Output
         </div>
-
+        <div>
+          {output}
+        </div>
       </div>
     </div>
   );

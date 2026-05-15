@@ -35,7 +35,8 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
           <h3 className="font-bold text-lg">จำลองการเชื่อม GUI ↔ Logic</h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+        <div className="flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* GUI Layer */}
           <div className="p-5 border-r border-slate-200">
             <h4 className="font-bold text-violet-700 text-sm mb-3 flex items-center gap-2"><MousePointer2 size={14} /> GUI Layer</h4>
@@ -80,17 +81,17 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
             </div>
           </div>
 
-          {/* Log */}
-          <div className="p-5">
-            <h4 className="font-bold text-slate-700 text-sm mb-3">📋 Event Log</h4>
-            <div className="bg-slate-900 rounded-xl p-4 font-mono text-xs min-h-[250px] max-h-[300px] overflow-y-auto shadow-inner">
-              {log.length === 0 ? (
-                <div className="text-slate-600">ลองกดปุ่ม "เพิ่มสินค้า" เพื่อดู Event Flow</div>
-              ) : log.map((l, i) => (
-                <div key={i} className={`py-0.5 ${l.startsWith('[GUI→') ? 'text-sky-400' : l.startsWith('[Logic→') ? 'text-amber-400' : l.startsWith('[Logic]') ? 'text-emerald-400' : 'text-violet-400'}`}>{l}</div>
-              ))}
-            </div>
           </div>
+        </div>
+
+        {/* Bottom Full-Width Console Output (VS Code Style) */}
+        <div className="h-48 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800 shadow-inner">
+          <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Event Log</div>
+          {log.length === 0 ? (
+            <div className="text-slate-600">ลองกดปุ่ม "เพิ่มสินค้า" เพื่อดู Event Flow</div>
+          ) : log.map((l, i) => (
+            <div key={i} className={`py-0.5 ${l.startsWith('[GUI→') ? 'text-sky-400' : l.startsWith('[Logic→') ? 'text-amber-400' : l.startsWith('[Logic]') ? 'text-emerald-400' : 'text-violet-400'}`}>{l}</div>
+          ))}
         </div>
       </section>
 

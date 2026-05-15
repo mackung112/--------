@@ -24,7 +24,8 @@ export default function OOP21910_U3_L6_TkinterButtonDemo() {
           <h3 className="font-bold text-lg">ทดลอง Button + command function</h3>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+        <div className="flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-6">
           {/* Code */}
           <div className="p-6 bg-slate-50 border-r border-slate-200">
             <div className="bg-slate-900 p-5 rounded-xl font-mono text-sm shadow-lg space-y-0.5">
@@ -61,14 +62,18 @@ export default function OOP21910_U3_L6_TkinterButtonDemo() {
                 <div className="text-sm text-slate-500">กดแล้ว: <span className="font-bold text-indigo-600">{clickCount}</span> ครั้ง</div>
               </div>
             </div>
-
-            {output.length > 0 && (
-              <div className="bg-slate-900 rounded-xl p-4 w-72 font-mono text-sm shadow-lg max-h-[120px] overflow-y-auto">
-                <div className="text-slate-500 text-xs mb-1">Terminal Output:</div>
-                {output.map((o, i) => <div key={i} className="text-emerald-400">{o}</div>)}
-              </div>
-            )}
           </div>
+        </div>
+
+        {/* Bottom Full-Width Console Output (VS Code Style) */}
+        <div className="h-48 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800 shadow-inner">
+          <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Terminal Output</div>
+          {output.length > 0 ? (
+            output.map((o, i) => <div key={i} className="text-emerald-400">{o}</div>)
+          ) : (
+            <span className="text-slate-600">กดปุ่มคลิกเลย! เพื่อดูผลลัพธ์</span>
+          )}
+        </div>
         </div>
       </section>
 
