@@ -238,31 +238,7 @@ Unit 3.1 การเพิ่มข้อมูลแถวเดียว
             {/* Right: Live Console & Table Result */}
             <div className="w-full lg:w-7/12 flex flex-col">
               {/* Live Console */}
-              <div className="bg-slate-900 p-6 text-slate-300 border-b border-slate-800">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-mono text-sm text-indigo-400 flex items-center gap-2">
-                    <Code2 size={16} /> SQL Preview
-                  </h3>
-                  <span className="flex gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                    <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                    <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                  </span>
-                </div>
-                <pre className="font-mono text-sm leading-relaxed whitespace-pre-wrap break-words">
-                  <span className="text-pink-400">INSERT INTO</span> <span className="text-yellow-300">employees</span> <span className="text-slate-400">(emp_id, name, department, salary)</span>{'\n'}
-                  <span className="text-pink-400">VALUES</span> <span className="text-slate-400">(</span>
-                  <span className="text-green-300">{formData.emp_id ? `'${formData.emp_id}'` : '___'}</span>,
-                  <span className="text-green-300"> {formData.name ? `'${formData.name}'` : '___'}</span>,
-                  <span className="text-green-300"> {formData.department ? `'${formData.department}'` : '___'}</span>,
-                  <span className="text-orange-300"> {formData.salary || '___'}</span>
-                  <span className="text-slate-400">);</span>
-                </pre>
-                <div className="mt-3 text-xs text-slate-500 bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-start gap-2">
-                  <ShieldAlert size={14} className="mt-0.5 flex-shrink-0" />
-                  <p>สังเกตว่าข้อมูลประเภท Text (รหัส, ชื่อ, แผนก) จะต้องมีเครื่องหมาย <code className="text-green-300">''</code> (Single Quote) ครอบไว้เสมอ แต่ข้อมูลตัวเลข (เงินเดือน) ไม่ต้องมี</p>
-                </div>
-              </div>
+              
 
               {/* Table Result */}
               <div className="p-6 bg-white flex-grow">
@@ -384,7 +360,34 @@ Unit 3.1 การเพิ่มข้อมูลแถวเดียว
                 >
                   <CheckCircle2 size={20} /> ตรวจคำตอบ
                 </button>
+              
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-mono text-sm text-indigo-400 flex items-center gap-2">
+                    <Code2 size={16} /> SQL Preview
+                  </h3>
+                  <span className="flex gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                  </span>
+                </div>
+                <pre className="font-mono text-sm leading-relaxed whitespace-pre-wrap break-words">
+                  <span className="text-pink-400">INSERT INTO</span> <span className="text-yellow-300">employees</span> <span className="text-slate-400">(emp_id, name, department, salary)</span>{'\n'}
+                  <span className="text-pink-400">VALUES</span> <span className="text-slate-400">(</span>
+                  <span className="text-green-300">{formData.emp_id ? `'${formData.emp_id}'` : '___'}</span>,
+                  <span className="text-green-300"> {formData.name ? `'${formData.name}'` : '___'}</span>,
+                  <span className="text-green-300"> {formData.department ? `'${formData.department}'` : '___'}</span>,
+                  <span className="text-orange-300"> {formData.salary || '___'}</span>
+                  <span className="text-slate-400">);</span>
+                </pre>
+                <div className="mt-3 text-xs text-slate-500 bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-start gap-2">
+                  <ShieldAlert size={14} className="mt-0.5 flex-shrink-0" />
+                  <p>สังเกตว่าข้อมูลประเภท Text (รหัส, ชื่อ, แผนก) จะต้องมีเครื่องหมาย <code className="text-green-300">''</code> (Single Quote) ครอบไว้เสมอ แต่ข้อมูลตัวเลข (เงินเดือน) ไม่ต้องมี</p>
+                </div>
               </div>
+    </div>
             </div>
           </div>
         </section>

@@ -163,15 +163,7 @@ export default function PY21910_U2_L6_IterationFlowchart() {
           )}
 
           {/* Console */}
-          <div className="bg-slate-900 rounded-2xl p-5 font-mono text-xs flex-1 max-h-[220px] overflow-y-auto">
-            <div className="text-slate-500 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
-            {logs.length === 0 && <div className="text-slate-600">กดปุ่มเพื่อเริ่มจำลอง...</div>}
-            {logs.map((l, idx) => (
-              <div key={idx} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('📤') ? 'text-yellow-300 font-bold' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : 'text-slate-300'}`}>
-                {l}
-              </div>
-            ))}
-          </div>
+          
 
           {step === 5 && (
             <div className="bg-green-50 rounded-2xl p-5 border border-green-200 flex items-center gap-3">
@@ -184,6 +176,17 @@ export default function PY21910_U2_L6_IterationFlowchart() {
           )}
         </div>
       </div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+            <div className="text-slate-500 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
+            {logs.length === 0 && <div className="text-slate-600">กดปุ่มเพื่อเริ่มจำลอง...</div>}
+            {logs.map((l, idx) => (
+              <div key={idx} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('📤') ? 'text-yellow-300 font-bold' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : 'text-slate-300'}`}>
+                {l}
+              </div>
+            ))}
+          </div>
     </div>
   );
 }

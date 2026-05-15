@@ -166,7 +166,12 @@ export default function PY21910_U4_L1_ControlFlow() {
                   </div>
                   <span className={`font-bold text-lg ${isMatch ? 'text-green-700' : 'text-gray-400'}`}>{cond.desc}</span>
                   {isMatch && <ChevronRight className="w-5 h-5 text-green-600" />}
-                </div>
+                
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+            <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">{loopExamples[activeLoop].code}</pre>
+          </div>
+    </div>
               );
             })}
           </div>
@@ -187,9 +192,7 @@ export default function PY21910_U4_L1_ControlFlow() {
             ))}
           </div>
 
-          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-700 mb-6">
-            <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">{loopExamples[activeLoop].code}</pre>
-          </div>
+          
 
           <div className="flex justify-center gap-3 mb-6">
             <button onClick={playLoop} disabled={isLoopPlaying}

@@ -389,7 +389,25 @@ Unit 3.4 การเพิ่มข้อมูลด้วย Subquery
             <h2 className="text-2xl font-bold text-slate-800">3. Syntax Challenge</h2>
           </div>
 
-          <div className="bg-slate-900 rounded-3xl p-6 md:p-8 shadow-2xl border border-indigo-500/20 relative overflow-hidden">
+          
+        </section>
+
+      </main>
+
+      {/* Global Toast */}
+      <div className={`fixed bottom-6 right-6 transition-all duration-500 z-50 max-w-sm w-full md:w-auto ${toast.show ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}>
+        <div className={`flex items-start gap-3 px-5 py-4 rounded-2xl shadow-2xl border ${
+          toast.type === 'success'
+            ? 'bg-emerald-50 border-emerald-200 text-emerald-800 shadow-emerald-500/20'
+            : 'bg-rose-50 border-rose-200 text-rose-800 shadow-rose-500/20'
+        }`}>
+          {toast.type === 'success' ? <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" /> : <AlertCircle className="text-rose-500 shrink-0 mt-0.5" />}
+          <span className="font-medium text-sm md:text-base leading-snug pr-2">{toast.msg}</span>
+        </div>
+      </div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -475,21 +493,6 @@ Unit 3.4 การเพิ่มข้อมูลด้วย Subquery
               </div>
             </div>
           </div>
-        </section>
-
-      </main>
-
-      {/* Global Toast */}
-      <div className={`fixed bottom-6 right-6 transition-all duration-500 z-50 max-w-sm w-full md:w-auto ${toast.show ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}>
-        <div className={`flex items-start gap-3 px-5 py-4 rounded-2xl shadow-2xl border ${
-          toast.type === 'success'
-            ? 'bg-emerald-50 border-emerald-200 text-emerald-800 shadow-emerald-500/20'
-            : 'bg-rose-50 border-rose-200 text-rose-800 shadow-rose-500/20'
-        }`}>
-          {toast.type === 'success' ? <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" /> : <AlertCircle className="text-rose-500 shrink-0 mt-0.5" />}
-          <span className="font-medium text-sm md:text-base leading-snug pr-2">{toast.msg}</span>
-        </div>
-      </div>
     </div>
 
 );

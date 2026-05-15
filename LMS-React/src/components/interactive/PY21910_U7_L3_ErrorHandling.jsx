@@ -68,13 +68,7 @@ export default function PY21910_U7_L3_ErrorHandling() {
       </div>
 
       {/* Code Display */}
-      <div className="bg-slate-900 rounded-2xl p-6 border border-slate-700 mb-6">
-        <div className="flex items-center gap-2 mb-3">
-          {useTryExcept ? <ShieldCheck className="w-4 h-4 text-green-400" /> : <Bug className="w-4 h-4 text-red-400" />}
-          <span className="text-slate-400 text-xs font-bold">{useTryExcept ? '✅ มี Error Handling' : '⚠️ ไม่มี Error Handling'}</span>
-        </div>
-        <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">{useTryExcept ? scenario.codeWith : scenario.codeWithout}</pre>
-      </div>
+      
 
       {/* Input Buttons */}
       <div className="flex flex-wrap gap-3 mb-6">
@@ -110,6 +104,15 @@ export default function PY21910_U7_L3_ErrorHandling() {
           </div>
         </div>
       )}
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+        <div className="flex items-center gap-2 mb-3">
+          {useTryExcept ? <ShieldCheck className="w-4 h-4 text-green-400" /> : <Bug className="w-4 h-4 text-red-400" />}
+          <span className="text-slate-400 text-xs font-bold">{useTryExcept ? '✅ มี Error Handling' : '⚠️ ไม่มี Error Handling'}</span>
+        </div>
+        <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">{useTryExcept ? scenario.codeWith : scenario.codeWithout}</pre>
+      </div>
     </div>
   );
 }

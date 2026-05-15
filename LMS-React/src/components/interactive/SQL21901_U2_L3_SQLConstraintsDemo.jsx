@@ -188,23 +188,7 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
         </div>
 
         {/* Right: Console */}
-        <div className="w-full md:w-2/5 bg-slate-900 text-slate-300 font-mono text-xs flex flex-col h-64 md:h-auto">
-          <div className="bg-slate-800 text-slate-400 px-4 py-2 border-b border-slate-700 flex items-center gap-2 text-sm font-sans">
-            <Terminal size={14}/> Console Log
-          </div>
-          <div className="p-4 flex-grow overflow-y-auto space-y-1" id="console-logs">
-            {logs.map((log, i) => (
-              <div key={i} className={`
-                ${log.type === 'error' ? 'text-rose-400' : ''}
-                ${log.type === 'success' ? 'text-emerald-400' : ''}
-                ${log.type === 'command' ? 'text-cyan-300 mt-2 font-bold' : ''}
-                ${log.type === 'info' ? 'text-slate-500' : ''}
-              `}>
-                {log.text}
-              </div>
-            ))}
-          </div>
-        </div>
+        
       </div>
 
       {/* 4. Interactive Schema Builder */}
@@ -267,6 +251,25 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
           </div>
         </div>
       </div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+          <div className="bg-slate-800 text-slate-400 px-4 py-2 border-b border-slate-700 flex items-center gap-2 text-sm font-sans">
+            <Terminal size={14}/> Console Log
+          </div>
+          <div className="p-4 flex-grow overflow-y-auto space-y-1" id="console-logs">
+            {logs.map((log, i) => (
+              <div key={i} className={`
+                ${log.type === 'error' ? 'text-rose-400' : ''}
+                ${log.type === 'success' ? 'text-emerald-400' : ''}
+                ${log.type === 'command' ? 'text-cyan-300 mt-2 font-bold' : ''}
+                ${log.type === 'info' ? 'text-slate-500' : ''}
+              `}>
+                {log.text}
+              </div>
+            ))}
+          </div>
+        </div>
     </div>
   );
 }

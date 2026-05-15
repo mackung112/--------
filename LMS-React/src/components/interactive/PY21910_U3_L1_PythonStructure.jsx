@@ -102,23 +102,9 @@ export default function PY21910_U3_L1_PythonStructure() {
                 <div className="text-cyan-300">{dataTypes[activeType].tryValue.replace(/['"]/g, '')}</div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {tab === "experiments" && (
-        <div>
-          <p className="text-gray-600 mb-6">เลือกตัวอย่าง แล้วกด "รัน" เพื่อดูผลลัพธ์:</p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {codeExperiments.map((exp, idx) => (
-              <button key={exp.id} onClick={() => { setActiveExperiment(idx); setShowOutput(false); }}
-                className={`px-4 py-2 rounded-xl font-medium text-sm transition-all ${activeExperiment === idx ? 'bg-purple-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>
-                {exp.title}
-              </button>
-            ))}
-          </div>
-
-          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-700 mb-4">
+          
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
             <div className="flex items-center justify-between mb-3">
               <span className="text-slate-400 text-xs font-bold">📄 {codeExperiments[activeExperiment].title}</span>
               <div className="flex gap-2">
@@ -141,6 +127,23 @@ export default function PY21910_U3_L1_PythonStructure() {
               </div>
             )}
           </div>
+    </div>
+        </div>
+      )}
+
+      {tab === "experiments" && (
+        <div>
+          <p className="text-gray-600 mb-6">เลือกตัวอย่าง แล้วกด "รัน" เพื่อดูผลลัพธ์:</p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {codeExperiments.map((exp, idx) => (
+              <button key={exp.id} onClick={() => { setActiveExperiment(idx); setShowOutput(false); }}
+                className={`px-4 py-2 rounded-xl font-medium text-sm transition-all ${activeExperiment === idx ? 'bg-purple-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}`}>
+                {exp.title}
+              </button>
+            ))}
+          </div>
+
+          
 
           {showOutput && (
             <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-200 flex items-start gap-3">

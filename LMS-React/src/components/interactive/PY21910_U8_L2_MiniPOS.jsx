@@ -150,13 +150,7 @@ print_receipt(cart, total)`;
 
         {/* Right: Python Code */}
         <div>
-          <div className="bg-slate-900 rounded-2xl p-6 border border-slate-700 sticky top-20">
-            <div className="flex items-center gap-2 mb-4">
-              <Calculator className="w-4 h-4 text-green-400" />
-              <span className="text-green-400 text-xs font-bold">🐍 โค้ด Python ที่เทียบเท่า</span>
-            </div>
-            <pre className="font-mono text-xs text-slate-100 whitespace-pre-wrap overflow-x-auto max-h-[500px] overflow-y-auto">{pythonCode}</pre>
-          </div>
+          
         </div>
       </div>
 
@@ -182,6 +176,15 @@ print_receipt(cart, total)`;
           <div className="text-center mt-2 text-xs text-gray-400">ขอบคุณที่ใช้บริการ 🙏</div>
         </div>
       )}
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+            <div className="flex items-center gap-2 mb-4">
+              <Calculator className="w-4 h-4 text-green-400" />
+              <span className="text-green-400 text-xs font-bold">🐍 โค้ด Python ที่เทียบเท่า</span>
+            </div>
+            <pre className="font-mono text-xs text-slate-100 whitespace-pre-wrap overflow-x-auto max-h-[500px] overflow-y-auto">{pythonCode}</pre>
+          </div>
     </div>
   );
 }

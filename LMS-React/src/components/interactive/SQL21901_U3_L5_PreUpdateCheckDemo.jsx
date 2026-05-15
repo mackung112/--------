@@ -408,35 +408,9 @@ return (
                                    </span>
                                 )}
                                 <span>{row.price.toLocaleString()}</span>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-               </div>
-               {isDisaster && (
-                 <div className="mt-4 p-4 bg-rose-100 border border-rose-300 text-rose-800 rounded-xl flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2">
-                    <ShieldAlert className="shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-bold">จำลองความเสียหายสำเร็จ!</h4>
-                      <p className="text-sm mt-1">นี่คือเหตุผลที่ต้องรัน SELECT ก่อนเสมอ สินค้าที่ไม่ใช่ IT เช่น เก้าอี้ โต๊ะ ถูกบวกราคาเพิ่มไปหมดแล้วในระบบจริง! กรุณากดปุ่มรีเซ็ตด้านบนเพื่อแก้ไขให้ถูกต้อง</p>
-                    </div>
-                 </div>
-               )}
-            </div>
-          </div>
-        </section>
-
-        {/* Section 3: Minigame */}
-        <section className="space-y-6 pb-12 pt-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-amber-100 p-2 rounded-lg"><HelpCircle className="text-amber-600" /></div>
-            <h2 className="text-2xl font-bold text-slate-800">3. Syntax Challenge</h2>
-          </div>
-
-          <div className="bg-slate-900 rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-800 relative overflow-hidden">
+                              
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -523,6 +497,35 @@ return (
               </div>
             </div>
           </div>
+    </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+               </div>
+               {isDisaster && (
+                 <div className="mt-4 p-4 bg-rose-100 border border-rose-300 text-rose-800 rounded-xl flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2">
+                    <ShieldAlert className="shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-bold">จำลองความเสียหายสำเร็จ!</h4>
+                      <p className="text-sm mt-1">นี่คือเหตุผลที่ต้องรัน SELECT ก่อนเสมอ สินค้าที่ไม่ใช่ IT เช่น เก้าอี้ โต๊ะ ถูกบวกราคาเพิ่มไปหมดแล้วในระบบจริง! กรุณากดปุ่มรีเซ็ตด้านบนเพื่อแก้ไขให้ถูกต้อง</p>
+                    </div>
+                 </div>
+               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Minigame */}
+        <section className="space-y-6 pb-12 pt-6">
+          <div className="flex items-center gap-3">
+            <div className="bg-amber-100 p-2 rounded-lg"><HelpCircle className="text-amber-600" /></div>
+            <h2 className="text-2xl font-bold text-slate-800">3. Syntax Challenge</h2>
+          </div>
+
+          
         </section>
 
       </main>

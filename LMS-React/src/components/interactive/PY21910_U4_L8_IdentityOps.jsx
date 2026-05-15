@@ -16,11 +16,14 @@ export default function PY21910_U4_L8_IdentityOps() {
           <button key={i} onClick={() => setMode(i)} className={`px-4 py-2 rounded-xl text-xs font-bold ${mode === i ? 'bg-indigo-500 text-white shadow-lg' : 'bg-gray-100 text-gray-600'}`}>{d.title}</button>
         ))}
       </div>
-      <div className="bg-slate-900 rounded-2xl p-5 font-mono text-sm max-w-md mx-auto">
+      
+      <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700 text-center max-w-md mx-auto">💡 {demos[mode].note}</div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
         <pre className="text-green-400 whitespace-pre-wrap">{demos[mode].code}</pre>
         <div className="border-t border-slate-700 mt-3 pt-3 text-yellow-300 whitespace-pre-wrap">{demos[mode].result}</div>
       </div>
-      <div className="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700 text-center max-w-md mx-auto">💡 {demos[mode].note}</div>
     </div>
   );
 }

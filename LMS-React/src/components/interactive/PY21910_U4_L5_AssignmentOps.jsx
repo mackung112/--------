@@ -25,7 +25,10 @@ export default function PY21910_U4_L5_AssignmentOps() {
           <button key={i} onClick={() => setActive(i)} className={`px-3 py-2 rounded-xl font-mono font-bold text-sm transition-all ${active === i ? 'bg-indigo-500 text-white shadow-lg' : 'bg-gray-100 text-gray-600'}`}>{op.sym}</button>
         ))}
       </div>
-      <div className="bg-slate-900 rounded-2xl p-5 font-mono text-sm max-w-md mx-auto">
+      
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
         <div className="text-purple-400">x = {x}</div>
         <div className="text-green-400 mt-1">{ops[active].code}</div>
         <div className="text-yellow-300 mt-2">x → {ops[active].result}</div>

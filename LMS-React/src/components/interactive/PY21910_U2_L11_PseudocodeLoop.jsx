@@ -144,13 +144,7 @@ export default function PY21910_U2_L11_PseudocodeLoop() {
       )}
 
       {/* Console log */}
-      <div className="bg-slate-900 rounded-2xl p-5 font-mono text-xs max-h-[200px] overflow-y-auto mb-6">
-        <div className="text-slate-500 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
-        {logs.length === 0 && <div className="text-slate-600">กดปุ่มเพื่อเริ่มจำลอง...</div>}
-        {logs.map((l, i) => (
-          <div key={i} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : l.includes('PRINT') ? 'text-yellow-300' : 'text-slate-300'}`}>{l}</div>
-        ))}
-      </div>
+      
 
       {phase === 'done' && !isPlaying && (
         <div className="bg-green-50 rounded-2xl p-5 border border-green-200 flex items-center gap-3 mb-6">
@@ -168,6 +162,15 @@ export default function PY21910_U2_L11_PseudocodeLoop() {
           <p className="text-sm text-purple-800 font-medium">WHILE...DO ในรหัสเทียม ต้องปิดด้วย <code className="bg-purple-200/50 px-1 rounded font-mono">ENDWHILE</code> เสมอ</p>
           <p className="text-xs text-purple-600 mt-1">Loop ที่ดีต้องมี 3 อย่าง: ค่าเริ่มต้น (SET i = 1), เงื่อนไขหยุด (i {'<='} N), และการเปลี่ยนค่า (i = i + 1)</p>
         </div>
+      </div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+        <div className="text-slate-500 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
+        {logs.length === 0 && <div className="text-slate-600">กดปุ่มเพื่อเริ่มจำลอง...</div>}
+        {logs.map((l, i) => (
+          <div key={i} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : l.includes('PRINT') ? 'text-yellow-300' : 'text-slate-300'}`}>{l}</div>
+        ))}
       </div>
     </div>
   );

@@ -59,7 +59,10 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
         </div>
       </div>
 
-      <div className="bg-slate-900 rounded-2xl shadow-xl border border-slate-700 p-6 md:p-8 overflow-hidden">
+      
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
         
         {/* Objective */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 bg-slate-800 p-4 rounded-xl border border-slate-700 text-white">

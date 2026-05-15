@@ -281,36 +281,7 @@ Unit 3.2 การจัดการค่า NULL
             {/* Right: Live Console & Table Result */}
             <div className="w-full lg:w-8/12 flex flex-col">
               {/* Live Console */}
-              <div className="bg-slate-900 p-6 text-slate-300 border-b border-slate-800">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-mono text-sm text-teal-400 flex items-center gap-2">
-                    <Code2 size={16} /> SQL Code
-                  </h3>
-                </div>
-                <pre className="font-mono text-[15px] leading-relaxed whitespace-pre-wrap break-words">
-                  <span className="text-pink-400">SELECT</span> <span className="text-white">*</span>{'\n'}
-                  <span className="text-pink-400">FROM</span> <span className="text-yellow-300">employees</span>{'\n'}
-                  {queryCondition !== 'ALL' && (
-                    <>
-                      <span className="text-pink-400">WHERE</span> <span className="text-slate-300">bonus </span>
-                      {queryCondition === 'IS_NULL' && <span className="text-emerald-400 font-bold">IS NULL</span>}
-                      {queryCondition === 'IS_NOT_NULL' && <span className="text-emerald-400 font-bold">IS NOT NULL</span>}
-                      {queryCondition === 'EQUAL_ZERO' && <span className="text-orange-300">= 0</span>}
-                      {queryCondition === 'EQUAL_NULL' && <span className="text-rose-400 border-b border-rose-400/50">= NULL</span>}
-                      <span className="text-slate-400">;</span>
-                    </>
-                  )}
-                  {queryCondition === 'ALL' && <span className="text-slate-400">;</span>}
-                </pre>
-
-                {/* Educational Hint Box */}
-                {queryCondition === 'EQUAL_NULL' && (
-                   <div className="mt-4 text-sm text-rose-200 bg-rose-950/50 p-3 rounded-lg border border-rose-800/50 flex items-start gap-2 animate-in fade-in">
-                     <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-rose-400" />
-                     <p>ข้อควรจำ: เราใช้ <code>= NULL</code> หรือ <code>!= NULL</code> <strong>ไม่ได้</strong> เพราะ NULL หมายถึงไม่ทราบค่า การเอาไปเทียบด้วย = จึงได้ผลเป็นไม่ทราบค่า (ไม่แสดงผล) เสมอ</p>
-                   </div>
-                )}
-              </div>
+              
 
               {/* Table Result */}
               <div className="p-6 bg-slate-50 flex-grow">
@@ -457,7 +428,39 @@ Unit 3.2 การจัดการค่า NULL
                 >
                   <CheckCircle2 size={20} /> ตรวจคำตอบ
                 </button>
+              
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-mono text-sm text-teal-400 flex items-center gap-2">
+                    <Code2 size={16} /> SQL Code
+                  </h3>
+                </div>
+                <pre className="font-mono text-[15px] leading-relaxed whitespace-pre-wrap break-words">
+                  <span className="text-pink-400">SELECT</span> <span className="text-white">*</span>{'\n'}
+                  <span className="text-pink-400">FROM</span> <span className="text-yellow-300">employees</span>{'\n'}
+                  {queryCondition !== 'ALL' && (
+                    <>
+                      <span className="text-pink-400">WHERE</span> <span className="text-slate-300">bonus </span>
+                      {queryCondition === 'IS_NULL' && <span className="text-emerald-400 font-bold">IS NULL</span>}
+                      {queryCondition === 'IS_NOT_NULL' && <span className="text-emerald-400 font-bold">IS NOT NULL</span>}
+                      {queryCondition === 'EQUAL_ZERO' && <span className="text-orange-300">= 0</span>}
+                      {queryCondition === 'EQUAL_NULL' && <span className="text-rose-400 border-b border-rose-400/50">= NULL</span>}
+                      <span className="text-slate-400">;</span>
+                    </>
+                  )}
+                  {queryCondition === 'ALL' && <span className="text-slate-400">;</span>}
+                </pre>
+
+                {/* Educational Hint Box */}
+                {queryCondition === 'EQUAL_NULL' && (
+                   <div className="mt-4 text-sm text-rose-200 bg-rose-950/50 p-3 rounded-lg border border-rose-800/50 flex items-start gap-2 animate-in fade-in">
+                     <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-rose-400" />
+                     <p>ข้อควรจำ: เราใช้ <code>= NULL</code> หรือ <code>!= NULL</code> <strong>ไม่ได้</strong> เพราะ NULL หมายถึงไม่ทราบค่า การเอาไปเทียบด้วย = จึงได้ผลเป็นไม่ทราบค่า (ไม่แสดงผล) เสมอ</p>
+                   </div>
+                )}
               </div>
+    </div>
             </div>
           </div>
         </section>

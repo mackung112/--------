@@ -152,40 +152,7 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
             </div>
 
             {/* Built Objects */}
-            <div className="flex-1 w-full bg-slate-900 rounded-xl border border-slate-700 p-6 flex flex-col min-h-[350px]">
-                <h4 className="text-sm font-semibold text-slate-400 mb-4 uppercase tracking-wider text-center">Houses (Objects in Memory)</h4>
-                
-                <div className="flex-1 grid grid-cols-2 gap-4 auto-rows-max">
-                    {houses.length === 0 ? (
-                      <div className="col-span-2 h-full flex flex-col items-center justify-center text-slate-600">
-                        <Home size={48} className="mb-3 opacity-20" />
-                        <p>รอการสร้าง Object จากคลาส House</p>
-                      </div>
-                    ) : (
-                      houses.map(h => (
-                        <div key={h.id} className="bg-slate-800 border border-slate-600 p-4 rounded-xl flex items-center gap-4 animate-in zoom-in duration-300">
-                          <div className={`p-3 rounded-lg ${h.color.class} bg-opacity-20`}>
-                            <Home size={32} className={h.color.text} />
-                          </div>
-                          <div className="overflow-hidden">
-                            <div className="text-xs text-emerald-400 font-mono mb-1">Instance of House</div>
-                            <div className="font-bold text-white truncate">{h.name}</div>
-                            <div className="text-sm text-slate-400">Color: {h.color.id}</div>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                </div>
-                
-                {houses.length > 0 && (
-                  <button 
-                    onClick={() => setHouses([])} 
-                    className="mt-4 self-center text-sm text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors"
-                  >
-                    <XCircle size={14} /> เคลียร์พื้นที่
-                  </button>
-                )}
-            </div>
+            
         </div>
       </section>
 
@@ -309,6 +276,42 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
           <div className="font-medium">{toast.message}</div>
         </div>
       )}
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+                <h4 className="text-sm font-semibold text-slate-400 mb-4 uppercase tracking-wider text-center">Houses (Objects in Memory)</h4>
+                
+                <div className="flex-1 grid grid-cols-2 gap-4 auto-rows-max">
+                    {houses.length === 0 ? (
+                      <div className="col-span-2 h-full flex flex-col items-center justify-center text-slate-600">
+                        <Home size={48} className="mb-3 opacity-20" />
+                        <p>รอการสร้าง Object จากคลาส House</p>
+                      </div>
+                    ) : (
+                      houses.map(h => (
+                        <div key={h.id} className="bg-slate-800 border border-slate-600 p-4 rounded-xl flex items-center gap-4 animate-in zoom-in duration-300">
+                          <div className={`p-3 rounded-lg ${h.color.class} bg-opacity-20`}>
+                            <Home size={32} className={h.color.text} />
+                          </div>
+                          <div className="overflow-hidden">
+                            <div className="text-xs text-emerald-400 font-mono mb-1">Instance of House</div>
+                            <div className="font-bold text-white truncate">{h.name}</div>
+                            <div className="text-sm text-slate-400">Color: {h.color.id}</div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                </div>
+                
+                {houses.length > 0 && (
+                  <button 
+                    onClick={() => setHouses([])} 
+                    className="mt-4 self-center text-sm text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors"
+                  >
+                    <XCircle size={14} /> เคลียร์พื้นที่
+                  </button>
+                )}
+            </div>
     </div>
   );
 }

@@ -139,16 +139,19 @@ export default function OOP21910_U2_L6_EncapsulationDemo() {
             </div>
           </div>
 
-          <div className="bg-slate-900 rounded-2xl p-5 border border-slate-800 h-32 flex flex-col">
+          
+
+        </div>
+
+      </div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Terminal Output</h4>
             <div className={`flex-1 font-mono text-sm overflow-y-auto ${isError ? 'text-rose-400' : 'text-emerald-400'}`}>
               {output || <span className="text-slate-600 italic">รอคำสั่ง...</span>}
             </div>
           </div>
-
-        </div>
-
-      </div>
     </div>
   );
 }

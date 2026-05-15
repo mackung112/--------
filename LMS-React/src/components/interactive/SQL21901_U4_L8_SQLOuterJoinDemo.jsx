@@ -57,7 +57,10 @@ export default function SQLInnerJoinDemo() {
         </div>
       </div>
 
-      <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-700">
+      
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
         
         {/* Controls */}
         <div className="bg-slate-800 p-6 border-b border-slate-700 flex flex-wrap justify-center gap-4">

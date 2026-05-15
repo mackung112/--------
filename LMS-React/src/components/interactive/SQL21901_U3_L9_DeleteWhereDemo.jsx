@@ -406,9 +406,9 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
                <h2 className="text-2xl font-bold text-slate-800">Logic Challenge: สร้างเงื่อนไขสุดหิน</h2>
                <p className="text-slate-500 text-sm mt-1">ทดสอบการประกอบคำสั่ง DELETE ที่มีหลายเงื่อนไข (AND)</p>
             </div>
-          </div>
-
-          <div className="bg-slate-900 rounded-[2rem] p-6 md:p-10 shadow-2xl border border-slate-800 relative overflow-hidden">
+          
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
             {/* Decorations */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[80px] pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-rose-600/10 rounded-full blur-[80px] pointer-events-none"></div>
@@ -493,6 +493,9 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
               </div>
             </div>
           </div>
+    </div>
+
+          
         </section>
 
       </main>

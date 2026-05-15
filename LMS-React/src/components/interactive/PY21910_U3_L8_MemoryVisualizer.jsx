@@ -55,9 +55,7 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
       </div>
 
       {/* Code Display */}
-      <div className="bg-slate-900 rounded-2xl p-5 mb-6 border border-slate-700">
-        <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">{scenario.code}</pre>
-      </div>
+      
 
       {/* Memory Visualization */}
       <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 mb-6">
@@ -100,6 +98,11 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
           className="px-6 py-3 bg-white text-gray-700 rounded-full font-semibold border border-gray-200 hover:bg-gray-100 transition-all">
           <RefreshCw className="w-5 h-5" />
         </button>
+      </div>
+    
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+        <pre className="font-mono text-sm text-slate-100 whitespace-pre-wrap">{scenario.code}</pre>
       </div>
     </div>
   );
