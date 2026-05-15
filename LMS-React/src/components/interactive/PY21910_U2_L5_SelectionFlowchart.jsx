@@ -46,9 +46,12 @@ export default function PY21910_U2_L5_SelectionFlowchart() {
         </button>
       </div>
 
-      <div className="grid md:grid-cols-[1fr_1fr] gap-8">
-        {/* SVG Flowchart */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-4 flex justify-center">
+      {/* Interactive Explorer Container */}
+      <div className="flex flex-col">
+        {/* Top 2-Column Split */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left: Visual Area (Flowchart) */}
+          <div className="w-full lg:w-1/2 bg-white rounded-3xl border border-gray-100 shadow-sm p-4 flex justify-center">
           <svg viewBox="0 0 400 480" className="w-full max-w-sm">
             <defs>
               <marker id="sel-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/></marker>
@@ -107,11 +110,11 @@ export default function PY21910_U2_L5_SelectionFlowchart() {
             <rect x={cx-nodeW/2} y={413} width={nodeW} height={nodeH} rx={21} fill={isActive(5)?'#fef2f2':'#f8fafc'} stroke={isActive(5)?'#ef4444':'#cbd5e1'} strokeWidth={isActive(5)?3:2}/>
             <text x={cx} y={438} textAnchor="middle" fontSize="14" fontWeight="bold" fill={isActive(5)?'#dc2626':'#64748b'}>STOP</text>
           </svg>
-        </div>
+          </div>
 
-        {/* Control Panel */}
-        <div className="flex flex-col gap-4">
-          <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+          {/* Right: Controls and Explanation */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-4">
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
             <label className="text-sm font-bold text-gray-700 mb-3 block">🎛️ ปรับคะแนน score</label>
             <div className="flex items-center gap-4 mb-3">
               <input type="range" min="0" max="100" value={score} onChange={e => { setScore(+e.target.value); reset(); }} className="flex-1 accent-indigo-500 h-2" />
@@ -122,14 +125,9 @@ export default function PY21910_U2_L5_SelectionFlowchart() {
             </div>
           </div>
 
-          <div className="bg-slate-900 rounded-2xl p-6 font-mono text-sm flex-1 min-h-[160px]">
-            <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Python Code Trace</div>
-            <div className={step>=1 ? 'text-purple-400' : 'text-slate-700'}>score = {score}</div>
-            <div className={step>=2 ? 'text-pink-400' : 'text-slate-700'}>if score {'>'}= 50:</div>
-            <div className={`ml-4 ${step===3 && passed ? 'text-yellow-300 font-bold' : 'text-slate-700'}`}>print("สอบผ่าน ✅")</div>
-            <div className={step>=2 ? 'text-pink-400' : 'text-slate-700'}>else:</div>
-            <div className={`ml-4 ${step===4 && !passed ? 'text-yellow-300 font-bold' : 'text-slate-700'}`}>print("สอบตก ❌")</div>
-          </div>
+            <div className="bg-slate-900 rounded-2xl p-6 font-mono text-sm flex-1 min-h-[160px] hidden">
+              {/* Moved to bottom console */}
+            </div>
 
           {/* Explanation */}
           <div className="bg-amber-50 rounded-2xl p-5 border border-amber-100">
@@ -148,6 +146,17 @@ export default function PY21910_U2_L5_SelectionFlowchart() {
             </p>
           </div>
         </div>
+      </div>
+      </div>
+
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+        <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Python Code Trace</div>
+        <div className={step>=1 ? 'text-purple-400' : 'text-slate-700'}>score = {score}</div>
+        <div className={step>=2 ? 'text-pink-400' : 'text-slate-700'}>if score {'>'}= 50:</div>
+        <div className={`ml-4 ${step===3 && passed ? 'text-yellow-300 font-bold' : 'text-slate-700'}`}>print("สอบผ่าน ✅")</div>
+        <div className={step>=2 ? 'text-pink-400' : 'text-slate-700'}>else:</div>
+        <div className={`ml-4 ${step===4 && !passed ? 'text-yellow-300 font-bold' : 'text-slate-700'}`}>print("สอบตก ❌")</div>
       </div>
     </div>
   );

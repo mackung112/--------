@@ -60,6 +60,8 @@ LMS-React/
 - [2026-05-15] **ลบวิชาที่ยังไม่มีบทเรียน** ออก 10 วิชาจาก `data.js` เหลือ 3 วิชาที่มีเนื้อหาจริง (Python, OOP, SQL)
 - [2026-05-15] **จัดระเบียบใหม่ (Refactor Guidelines)**: สร้าง `DESIGN.md` เป็น Source of Truth และเปลี่ยนชื่อ skill-web-lms.md เป็น `SKILL.md`
 - [2026-05-15] **Component Storybook**: สร้างระบบ Component Library (`/library`) เพื่อใช้ดูและทดสอบสื่อ Interactive ทั้งหมด 174 ตัวในโปรเจกต์
+- [2026-05-16] **Grand Refactoring (Python Unit 1)**: อัปเกรดไฟล์สื่อ Interactive 7 ไฟล์ของวิชาเขียนโปรแกรมเบื้องต้น ให้เป็น Explorer Pattern แบบเต็มรูปแบบตาม `DESIGN.md`
+- [2026-05-16] **UI/UX Enhancement (VS Code Style)**: ปรับปรุงโครงสร้าง Component เป็น VS Code Layout โดยจัดให้ Terminal/Console เป็นแถบยาวเต็มความกว้างอยู่ด้านล่างสุด พร้อมระบบ Auto-Scroll เฉพาะในกล่อง
 
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
 - **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)

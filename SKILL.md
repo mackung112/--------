@@ -34,8 +34,8 @@
 ## 🎮 4. รูปแบบการออกแบบ Component หลัก (Explorer Pattern)
 ทุก Interactive Component ควรใช้รูปแบบ **"Explorer Pattern"**:
 1. **Header Section**: Badge แสดงประเภทเนื้อหา + ชื่อหัวข้อ + คำอธิบายที่ละเอียด
-2. **Interactive Explorer**: ส่วนหลักที่ผู้เรียนกดเล่นได้ (2-column layout: ซ้าย=Visual, ขวา=Control/Output)
-3. **Live Output/Console**: แสดงผลลัพธ์แบบ real-time (ใช้ `bg-slate-900` ตามมาตรฐาน)
+2. **Interactive Explorer**: ส่วนหลักที่ผู้เรียนกดเล่นได้ (Top 2-Column Split: ซ้าย=Visual, ขวา=Control/Explanation)
+3. **Live Output/Console (VS Code Style)**: แสดงผลลัพธ์แบบ real-time วางเป็นแถบแนวนอนยาวเต็มความกว้างด้านล่างสุด (Full-width bottom panel) สีพื้นหลัง `bg-[#1e1e1e]` พร้อมระบบ Auto-scroll ภายในกล่อง
 4. **Step Explanation**: อธิบายขั้นตอนการทำงานที่เปลี่ยนตามสถานะ
 5. **Gamification Elements**: แทรกอย่างน้อย 1 อย่าง (Mini Quiz, Matching Game, Spot-the-Error ฯลฯ)
 

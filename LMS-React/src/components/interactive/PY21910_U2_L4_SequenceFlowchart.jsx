@@ -91,30 +91,33 @@ export default function PY21910_U2_L4_SequenceFlowchart() {
         </button>
       </div>
 
-      <div className="grid md:grid-cols-[1fr_1fr] gap-8">
-        {/* SVG Flowchart */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-4 flex justify-center">
-          <svg viewBox="0 0 400 380" className="w-full max-w-sm">
-            <defs>
-              <marker id="seq-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
-              </marker>
-            </defs>
-            {steps.map((step, i) => {
-              const y = i * (nodeH + gap) + 15;
-              return (
-                <g key={step.id}>
-                  {i > 0 && <line x1={200} y1={y - gap + 2} x2={200} y2={y - 2} stroke="#94a3b8" strokeWidth={2} markerEnd="url(#seq-arrow)"/>}
-                  <FlowNode step={step} isActive={current === i} y={y} />
-                </g>
-              );
-            })}
-          </svg>
-        </div>
+      {/* Interactive Explorer Container */}
+      <div className="flex flex-col">
+        {/* Top 2-Column Split */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left: Visual Area (Flowchart) */}
+          <div className="w-full lg:w-1/2 bg-white rounded-3xl border border-gray-100 shadow-sm p-4 flex justify-center">
+            <svg viewBox="0 0 400 380" className="w-full max-w-sm">
+              <defs>
+                <marker id="seq-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
+                </marker>
+              </defs>
+              {steps.map((step, i) => {
+                const y = i * (nodeH + gap) + 15;
+                return (
+                  <g key={step.id}>
+                    {i > 0 && <line x1={200} y1={y - gap + 2} x2={200} y2={y - 2} stroke="#94a3b8" strokeWidth={2} markerEnd="url(#seq-arrow)"/>}
+                    <FlowNode step={step} isActive={current === i} y={y} />
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
 
-        {/* Live Output Panel */}
-        <div className="flex flex-col gap-4">
-          <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+          {/* Right: Controls and Explanation */}
+          <div className="w-full lg:w-1/2 flex flex-col gap-4">
+            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
             <label className="text-sm font-bold text-gray-700 mb-3 block">🎛️ ลองเปลี่ยนค่า radius</label>
             <div className="flex items-center gap-4">
               <input type="range" min="1" max="20" value={radius} onChange={e => { setRadius(+e.target.value); reset(); }} className="flex-1 accent-indigo-500 h-2" />
@@ -122,18 +125,8 @@ export default function PY21910_U2_L4_SequenceFlowchart() {
             </div>
           </div>
 
-          <div className="bg-slate-900 rounded-2xl p-6 font-mono text-sm flex-1 min-h-[180px]">
-            <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Console Output</div>
-            {current >= 0 && <div className="text-green-400 mb-1">{'>'} โปรแกรมเริ่มทำงาน...</div>}
-            {current >= 1 && <div className="text-purple-400 mb-1">{'>'} radius = <span className="text-yellow-300">{radius}</span></div>}
-            {current >= 2 && <div className="text-blue-400 mb-1">{'>'} area = π × {radius}² = <span className="text-yellow-300">{area}</span></div>}
-            {current >= 3 && <div className="text-yellow-300 mb-1 text-lg font-bold">📤 Output: {area}</div>}
-            {current >= 4 && <div className="text-rose-400 mt-2">--- โปรแกรมจบการทำงาน ---</div>}
-            {current === -1 && <div className="text-slate-600">กดปุ่มเล่นเพื่อดูการทำงาน...</div>}
-          </div>
-
           {/* Step Explanation */}
-          <div className="bg-indigo-50 rounded-2xl p-5 border border-indigo-100">
+          <div className="bg-indigo-50 rounded-2xl p-5 border border-indigo-100 flex-1">
             <span className="text-sm font-bold text-indigo-800 block mb-1">
               {current === -1 && '📋 พร้อมเริ่ม'}
               {current === 0 && '🟢 ขั้นตอนที่ 1: เริ่มต้นโปรแกรม'}
@@ -152,6 +145,18 @@ export default function PY21910_U2_L4_SequenceFlowchart() {
             </p>
           </div>
         </div>
+      </div>
+      </div>
+
+      {/* Bottom Full-Width Console Output (VS Code Style) */}
+      <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
+        <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Live Console</div>
+        {current >= 0 && <div className="text-emerald-400 mb-1">{'>'} โปรแกรมเริ่มทำงาน...</div>}
+        {current >= 1 && <div className="text-purple-400 mb-1">{'>'} radius = <span className="text-yellow-300">{radius}</span></div>}
+        {current >= 2 && <div className="text-blue-400 mb-1">{'>'} area = π × {radius}² = <span className="text-yellow-300">{area}</span></div>}
+        {current >= 3 && <div className="text-yellow-300 mb-1 text-lg font-bold">📤 Output: {area}</div>}
+        {current >= 4 && <div className="text-rose-400 mt-2">--- โปรแกรมจบการทำงาน ---</div>}
+        {current === -1 && <div className="text-slate-600">กดปุ่มเล่นเพื่อดูการทำงาน...</div>}
       </div>
     </div>
   );
