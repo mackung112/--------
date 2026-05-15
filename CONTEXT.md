@@ -11,15 +11,12 @@
 2. 🧩 **การเขียนโปรแกรมเชิงวัตถุ** (OOP) — 7 หน่วย, Python OOP
 3. 🗄️ **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น** (21901-2001) — 6 หน่วย, SQL/MySQL
 
-## 🎨 2. Design System & UI/UX (ระบบการออกแบบที่ AI ต้องจดจำ)
-เพื่อให้หน้าตาโปรเจกต์ไปในทิศทางเดียวกัน แม้จะเปลี่ยน AI กี่ตัวก็ตาม ทุกตัวต้องใช้กฎเหล่านี้:
-- **โทนสีหลัก**: Indigo (สีหลัก `indigo-600`), Purple (สีรอง `purple-600`), Slate (พื้นหลังตัวอย่างโค้ด `slate-900`)
-- **Gradients (การไล่สี)**: นิยมใช้ `bg-gradient-to-r from-indigo-600 to-purple-600`
-- **ความโค้ง (Border Radius)**: ใช้ `rounded-2xl` หรือ `rounded-3xl` สำหรับกล่อง การ์ด หรือ Wrapper หลัก
-- **เอฟเฟกต์ (Interactive Animations)**: ทุกปุ่ม/การ์ดที่โต้ตอบหรือคลิกได้ ต้องมี `hover:-translate-y-1` หรือ `hover:scale-105` พร้อม `transition-all duration-300` เสมอ
-- **ความกลมกลืน (Seamless)**: สื่อ Interactive ต้องไม่มีขอบ (border) หรือเงา (shadow) ของตัวเองที่ดูแยกส่วนกับหน้าเว็บหลัก (`LessonViewer`)
+## 🎨 2. Design System & UI/UX (อ้างอิง DESIGN.md)
+ทุกการออกแบบ UI, โทนสี, Typography และ Interaction **ต้อง** ปฏิบัติตามข้อกำหนดใน [DESIGN.md](file:///d:/STD/---------1/DESIGN.md) อย่างเคร่งครัด 100% ห้ามคิดเองหรือใช้สีอื่นนอกเหนือจากที่กำหนดไว้
+
+- **Source of Truth**: [DESIGN.md](file:///d:/STD/---------1/DESIGN.md) คือมาตรฐานสูงสุดของโปรเจกต์
 - **Ultimate Gamification & Simulators**: การสร้างเนื้อหาต้องไม่ใช้แค่ Card Click ธรรมดา แต่ต้องสร้าง **Mini-games** หรือ **Deep Simulators** ขั้นสูง (เช่น เกมยิงเลเซอร์, เกมแข่งรถจำลอง Index, Drag & Drop State Machine) เพื่อให้ความ Interactive สูงเทียบเท่าวิชา OOP หรือมากกว่า
-- **Explorer Pattern**: ทุก Component ควรใช้แนว Explorer Pattern (ดูรายละเอียดใน `skill-web-lms.md` ข้อ 4-5): Header + 2-column Interactive + Live Console + Step Explanation + Gamification
+- **Explorer Pattern**: ทุก Component ควรใช้แนว Explorer Pattern (ดูรายละเอียดใน `SKILL.md` ข้อ 4-5): Header + 2-column Interactive + Live Console + Step Explanation + Gamification
 - **SVG Flowcharts**: ใช้ SVG แทน Unicode/CSS สำหรับผังงาน คุณภาพเทียบ draw.io
 
 ## 📂 3. โครงสร้างไฟล์ปัจจุบัน (Directory Tree)
@@ -27,7 +24,9 @@
 LMS-React/
 ├── index.html               
 ├── vite.config.js           # ตั้งค่า Vite + Tailwind v4 (ไม่มี tailwind.config.js)
-├── CONTEXT.md               # ⭐ ภาพรวมโปรเจกต์ (ต้องอัปเดตทุกครั้ง)
+├── DESIGN.md               # 💎 มาตรฐานการออกแบบ (Strict Guidelines - Source of Truth)
+├── SKILL.md                # 🤖 คู่มือปฏิบัติการ AI (Master Prompt - อ่านก่อนเสมอ)
+├── CONTEXT.md               # ⭐ ภาพรวมโปรเจกต์ (สมองส่วนความจำ)
 ├── task.md                  # ⭐ สถานะงานปัจจุบัน (ต้องอัปเดตทุกครั้ง)
 ├── src/
 │   ├── main.jsx             
@@ -48,17 +47,18 @@ LMS-React/
 ```
 
 ## ⏳ 4. ประวัติการทำงาน (History & Completed Milestones)
-- [2026-05-XX] เซ็ตอัประบบ AI Handoff (skill.md, CONTEXT.md, task.md) สมบูรณ์
+- [2026-05-XX] เซ็ตอัประบบ AI Handoff (SKILL.md, CONTEXT.md, task.md) สมบูรณ์
 - [2026-05-XX] สร้างระบบ Component Marker สำหรับเชื่อมสื่อ Interactive สำเร็จ (`LessonViewer.jsx`)
 - [2026-05-11] Rebrand เป็น "ห้องเรียนครูแม็ค" + ออกแบบหน้าแรกใหม่ (Hero, Stats, Features) + Sidebar แยก scroll
 - [2026-05-11] เพิ่มปุ่ม Previous/Next lesson + เปลี่ยนชื่อวิชาเป็น "เขียนโปรแกรมด้วยภาษา Python"
 - [2026-05-11] **Overhaul บทที่ 2 ทั้งหมด**: เขียนใหม่ 10 components (FlowchartSymbols, SequenceFlowchart, SelectionFlowchart, IterationFlowchart, FlowchartBestPractice, PseudocodeIntro, PseudocodeKeywords, PseudocodeCondition, PseudocodeLoop, PseudocodeFormat) ใช้ Explorer Pattern + SVG Flowcharts + Game-Based Learning
-- [2026-05-11] เพิ่ม Explorer Pattern และ Game-Based Learning ใน skill-web-lms.md
+- [2026-05-11] เพิ่ม Explorer Pattern และ Game-Based Learning ใน `SKILL.md`
 - [2026-05-12] บันทึกโครงสร้างหลักสูตร (OOP และ การเขียนโปรแกรมเบื้องต้น) ลงใน `docs/curriculum/` เพื่อใช้เป็นฐานข้อมูลอ้างอิงถาวร
 - [2026-05-12] ปรับปรุงระบบ **Auto-Registry** ให้ `LessonViewer.jsx` โหลดสื่อ Interactive อัตโนมัติจากโฟลเดอร์ `interactive/` ทำให้ผู้สร้างเนื้อหาไม่ต้องเขียน Import เองอีกต่อไป
-- [2026-05-14] สร้างรายวิชา **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น (SQL / 21901-2001)** เสร็จสมบูรณ์ (6 หน่วย, 66 บทเรียน, 66 Interactive Components) พร้อมปรับให้ `skill-web-lms.md` รองรับการเขียน MySQL
+- [2026-05-14] สร้างรายวิชา **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น (SQL / 21901-2001)** เสร็จสมบูรณ์ (6 หน่วย, 66 บทเรียน, 66 Interactive Components) พร้อมปรับให้ `SKILL.md` รองรับการเขียน MySQL
 - [2026-05-15] **Migration Unit 2 (DDL) เสร็จสมบูรณ์**: สร้าง Interactive Components 8 ตัว (2.5-2.12) + สร้าง `utils/SQLSyntaxEngine.js` + เพิ่ม CSS Animations 6 ชุดใน `index.css`
 - [2026-05-15] **ลบวิชาที่ยังไม่มีบทเรียน** ออก 10 วิชาจาก `data.js` เหลือ 3 วิชาที่มีเนื้อหาจริง (Python, OOP, SQL)
+- [2026-05-15] **จัดระเบียบใหม่ (Refactor Guidelines)**: สร้าง `DESIGN.md` เป็น Source of Truth และเปลี่ยนชื่อ skill-web-lms.md เป็น `SKILL.md`
 
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
 - **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)
