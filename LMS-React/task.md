@@ -29,6 +29,9 @@
   - [x] อัปเดต `CONTEXT.md`, `task.md`, `skill-web-lms.md`
 - [x] **Phase 6: ทดสอบ**
   - [x] `npm run build` ผ่าน ✅
+- [x] **Phase 7: Component Management**
+  - [x] สร้าง `src/components/Storybook.jsx` สำหรับดูคลังสื่อทั้งหมด
+  - [x] เพิ่ม Route `/library` และปุ่มเข้าชมที่หน้าแรก
 
 ## 📝 3. โน้ตส่งมอบงาน (AI Handoff Notes)
 *(⚠️ AI: หากเซสชันถูกตัด, โควต้า Token ใกล้หมด, หรืองานติดขัดยังไม่เสร็จ ให้ทิ้งข้อความอธิบายปัญหาและแนวทางไว้ให้ AI ตัวต่อไปมาอ่านที่นี่)*
@@ -36,7 +39,5 @@
 **อัปเดตระบบ [2026-05-15]**:
 - Build ผ่านแล้ว ✅ ไม่มี error
 - วิชาที่เปิดสอนตอนนี้มี 3 วิชา: Python (8 หน่วย), OOP (7 หน่วย), SQL (6 หน่วย)
-- ระบบ Auto-Registry สมบูรณ์แล้ว! จากนี้ไปการสร้างบทเรียน Interactive จะง่ายมาก:
-  1. สร้าง Component เช่น `MyCoolDemo.jsx` เก็บไว้ที่ `src/components/interactive/`
-  2. ใส่ `[MyCoolDemo]` ในโค้ดเนื้อหาของไฟล์ `data.js`, `oopCourse.js`, หรือ `sqlCourse.js` ตรงไหนก็ได้
-  3. หน้าเว็บจะโหลดให้อัตโนมัติเลย! **ห้ามไปแตะไฟล์ LessonViewer.jsx อีกเด็ดขาด**
+- ระบบ Auto-Registry สมบูรณ์แล้ว! 
+- **ใหม่**: เพิ่ม **Component Storybook** สามารถเข้าดูคลังสื่อ Interactive ทั้งหมดได้ที่ปุ่ม "คลังคอมโพเนนต์" ในหน้าแรก หรือ URL `/library` เพื่อใช้สำหรับตรวจสอบหน้าตาและ Marker ก่อนนำไปใช้งานในเนื้อหา

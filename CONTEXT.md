@@ -59,6 +59,7 @@ LMS-React/
 - [2026-05-15] **Migration Unit 2 (DDL) เสร็จสมบูรณ์**: สร้าง Interactive Components 8 ตัว (2.5-2.12) + สร้าง `utils/SQLSyntaxEngine.js` + เพิ่ม CSS Animations 6 ชุดใน `index.css`
 - [2026-05-15] **ลบวิชาที่ยังไม่มีบทเรียน** ออก 10 วิชาจาก `data.js` เหลือ 3 วิชาที่มีเนื้อหาจริง (Python, OOP, SQL)
 - [2026-05-15] **จัดระเบียบใหม่ (Refactor Guidelines)**: สร้าง `DESIGN.md` เป็น Source of Truth และเปลี่ยนชื่อ skill-web-lms.md เป็น `SKILL.md`
+- [2026-05-15] **Component Storybook**: สร้างระบบ Component Library (`/library`) เพื่อใช้ดูและทดสอบสื่อ Interactive ทั้งหมด 174 ตัวในโปรเจกต์
 
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
 - **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)

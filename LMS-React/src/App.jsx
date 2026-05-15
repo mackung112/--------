@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Menu, CheckCircle, BookOpen, Sparkles, GraduationCap, Code2, Users, Zap, ArrowRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Menu, CheckCircle, BookOpen, Sparkles, GraduationCap, Code2, Users, Zap, ArrowRight, X, Package } from 'lucide-react';
 import coursesData from './data';
 import LessonViewer from './components/LessonViewer';
+import Storybook from './components/Storybook';
 
 
 function HomeView() {
@@ -58,6 +59,13 @@ function HomeView() {
               เริ่มเรียนเลย
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
+            <button 
+              onClick={() => navigate('/library')}
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-600 border border-slate-200 rounded-2xl font-bold text-lg hover:bg-slate-50 hover:border-indigo-200 hover:text-indigo-600 transition-all duration-300"
+            >
+              <Package className="w-5 h-5" />
+              คลังคอมโพเนนต์
+            </button>
           </div>
         </div>
       </section>
@@ -309,6 +317,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeView />} />
+        <Route path="/library" element={<Storybook />} />
         <Route path="/course/:courseId" element={<CourseView />} />
         <Route path="/course/:courseId/lesson/:lessonId" element={<CourseView />} />
       </Routes>
