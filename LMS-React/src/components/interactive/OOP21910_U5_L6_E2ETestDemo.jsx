@@ -94,7 +94,7 @@ export default function OOP21910_U5_L6_E2ETestDemo() {
             </div>
           )}
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           จำลองการทดสอบแบบ End-to-End (E2E) คือการทดสอบโดยจำลองพฤติกรรมผู้ใช้งานจริงตั้งแต่เปิดแอป คลิกปุ่ม จนถึงผลลัพธ์สุดท้าย
         </p>
       </div>
@@ -103,7 +103,7 @@ export default function OOP21910_U5_L6_E2ETestDemo() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Test Cases */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex justify-between items-center">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex justify-between items-center">
               <span>Test Scenarios (test_e2e.py)</span>
               <div className="flex gap-2">
                 <button onClick={runAll} disabled={isRunning} className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
@@ -135,7 +135,7 @@ export default function OOP21910_U5_L6_E2ETestDemo() {
                     <div className="space-y-1">
                       {t.steps.map((step, idx) => (
                         <div key={idx} className="flex gap-2 text-xs text-slate-600">
-                          <span className="font-mono text-slate-400">{idx + 1}.</span> {step}
+                          <span className="font-mono text-slate-600">{idx + 1}.</span> {step}
                         </div>
                       ))}
                     </div>
@@ -152,7 +152,7 @@ export default function OOP21910_U5_L6_E2ETestDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">E2E Testing คืออะไร?</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">E2E Testing คืออะไร?</h4>
             
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6 text-sm text-blue-900 leading-relaxed shadow-sm">
               <p><strong>End-to-End (E2E) Testing</strong> คือการทดสอบระบบเสมือนมีผู้ใช้งานจริงมากดใช้งาน</p>
@@ -192,17 +192,17 @@ export default function OOP21910_U5_L6_E2ETestDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">pytest console</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">pytest console</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-600 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

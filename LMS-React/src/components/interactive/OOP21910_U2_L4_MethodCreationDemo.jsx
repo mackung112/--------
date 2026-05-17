@@ -94,7 +94,7 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การสร้างพฤติกรรมให้ Object (Methods)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การสร้าง Method ซึ่งเปรียบเสมือนกริยา (Verb) เพื่อให้ Object สามารถกระทำสิ่งต่างๆ หรือเปลี่ยนแปลงสถานะตัวเองได้
         </p>
       </div>
@@ -116,12 +116,12 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
                       <Shield size={24} className="text-yellow-400" />
                     </div>
                     <div>
-                      <div className="text-xs text-slate-400 font-mono mb-0.5">Hero Object</div>
+                      <div className="text-xs text-slate-600 font-mono mb-0.5">Hero Object</div>
                       <h4 className="font-bold text-xl text-white">{hero.name}</h4>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-slate-400 uppercase tracking-wider mb-0.5">Level</div>
+                    <div className="text-xs text-slate-600 uppercase tracking-wider mb-0.5">Level</div>
                     <div className="text-2xl font-bold text-blue-400 font-mono">{hero.level}</div>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
                 <div className="relative z-10 space-y-5">
                   <div>
                     <div className="flex justify-between text-xs font-bold mb-1.5">
-                      <span className="text-slate-400">HP (Health Points)</span>
+                      <span className="text-slate-600">HP (Health Points)</span>
                       <span className={hero.hp < 30 ? 'text-red-400' : 'text-emerald-400'}>{hero.hp} / 100</span>
                     </div>
                     <div className="w-full bg-slate-900 rounded-full h-3 shadow-inner overflow-hidden border border-slate-700">
@@ -139,7 +139,7 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
 
                   <div>
                     <div className="flex justify-between text-xs font-bold mb-1.5">
-                      <span className="text-slate-400">EXP (Experience)</span>
+                      <span className="text-slate-600">EXP (Experience)</span>
                       <span className="text-yellow-400">{hero.exp} / 100</span>
                     </div>
                     <div className="w-full bg-slate-900 rounded-full h-3 shadow-inner overflow-hidden border border-slate-700">
@@ -171,7 +171,7 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
 
                 {/* Secret method for demo */}
                 <div className="mt-4 pt-4 border-t border-slate-100 flex justify-end">
-                  <button onClick={takeDamage} disabled={hero.hp <= 0} className="text-xs text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1">
+                  <button onClick={takeDamage} disabled={hero.hp <= 0} className="text-xs text-slate-600 hover:text-red-500 transition-colors flex items-center gap-1">
                     <Info size={12} /> Test Damage Method
                   </button>
                 </div>
@@ -182,9 +182,9 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[340px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose overflow-x-auto">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose overflow-x-auto">
               <span className="text-pink-400">class</span> <span className="text-yellow-300">Hero</span>:<br />
               &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">attack</span>(<span className="text-orange-300">self</span>):<br />
               &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.exp += 20<br />
@@ -222,16 +222,16 @@ export default function OOP21910_U2_L4_MethodCreationDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Method Call Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Method Call Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

@@ -88,7 +88,7 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การดักจับข้อผิดพลาด (Try-Except)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           จำลองการเกิดโปรแกรมพัง (Crash) เมื่อผู้ใช้กรอกข้อมูลผิดประเภท และการป้องกันด้วยการใช้โครงสร้าง <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">try...except</code>
         </p>
       </div>
@@ -114,7 +114,7 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
                 <div className="w-full max-w-sm space-y-4">
                   <div className="text-center">
                     <h4 className="font-bold text-slate-800">โปรแกรมคำนวณอายุ</h4>
-                    <p className="text-xs text-slate-500 mt-1">ลองพิมพ์ตัวอักษร เช่น "สิบห้า" หรือ "abc" แทนตัวเลขเพื่อจำลอง Error</p>
+                    <p className="text-xs text-slate-700 mt-1">ลองพิมพ์ตัวอักษร เช่น "สิบห้า" หรือ "abc" แทนตัวเลขเพื่อจำลอง Error</p>
                   </div>
                   
                   <div>
@@ -134,15 +134,15 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[420px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax) - main.py</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax) - main.py</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
               {!useTryExcept ? (
                 <>
-                  <span className="text-slate-500"># แบบไม่ดักจับ Error (อาจทำให้โปรแกรมพัง)</span><br />
+                  <span className="text-slate-700"># แบบไม่ดักจับ Error (อาจทำให้โปรแกรมพัง)</span><br />
                   <span className="text-yellow-300">text_input</span> = <span className="text-blue-300">input</span>(<span className="text-green-300">"ป้อนปีเกิด: "</span>)<br />
                   <br />
-                  <span className="text-slate-500"># ❌ จุดที่อาจเกิด ValueError หากกรอกตัวอักษร</span><br />
+                  <span className="text-slate-700"># ❌ จุดที่อาจเกิด ValueError หากกรอกตัวอักษร</span><br />
                   <div className="border-l-2 border-red-500 pl-2 -ml-2.5 bg-red-500/10 py-1">
                     <span className="text-yellow-300">birth_year</span> = <span className="text-purple-300">int</span>(<span className="text-yellow-300">text_input</span>)<br />
                     <span className="text-yellow-300">age</span> = <span className="text-orange-300">2024</span> - <span className="text-yellow-300">birth_year</span><br />
@@ -151,16 +151,16 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
                 </>
               ) : (
                 <>
-                  <span className="text-slate-500"># แบบใช้ Try-Except (โปรแกรมทำงานต่อได้)</span><br />
+                  <span className="text-slate-700"># แบบใช้ Try-Except (โปรแกรมทำงานต่อได้)</span><br />
                   <span className="text-yellow-300">text_input</span> = <span className="text-blue-300">input</span>(<span className="text-green-300">"ป้อนปีเกิด: "</span>)<br />
                   <br />
                   <span className="text-purple-400 font-bold">try</span>:<br />
-                  &nbsp;&nbsp;<span className="text-slate-500"># โค้ดที่เสี่ยงต่อการ Error ให้อยู่ใน try</span><br />
+                  &nbsp;&nbsp;<span className="text-slate-700"># โค้ดที่เสี่ยงต่อการ Error ให้อยู่ใน try</span><br />
                   &nbsp;&nbsp;<span className="text-yellow-300">birth_year</span> = <span className="text-purple-300">int</span>(<span className="text-yellow-300">text_input</span>)<br />
                   &nbsp;&nbsp;<span className="text-yellow-300">age</span> = <span className="text-orange-300">2024</span> - <span className="text-yellow-300">birth_year</span><br />
                   &nbsp;&nbsp;<span className="text-pink-400">print</span>(<span className="text-green-300">f"คุณอายุ {'{'}<span className="text-yellow-300">age</span>{'}'} ปี"</span>)<br />
                   <span className="text-purple-400 font-bold">except</span> <span className="text-red-400">ValueError</span>:<br />
-                  &nbsp;&nbsp;<span className="text-slate-500"># ทำงานเมื่อเกิด ValueError</span><br />
+                  &nbsp;&nbsp;<span className="text-slate-700"># ทำงานเมื่อเกิด ValueError</span><br />
                   &nbsp;&nbsp;<span className="text-pink-400">print</span>(<span className="text-green-300">"กรุณากรอกเฉพาะตัวเลขเท่านั้น!"</span>)
                 </>
               )}
@@ -194,14 +194,14 @@ export default function OOP21910_U4_L1_TryExceptDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className={line.text.includes('Traceback') || line.text.includes('Error') || line.text.includes('ข้อผิดพลาด') ? 'text-red-400 whitespace-pre-wrap' : 'text-cyan-300 whitespace-pre-wrap'}>{line.text}</div>}
                 {line.type === 'system'  && <div className={line.text.includes('FATAL') || line.text.includes('❌') ? 'text-red-500 font-bold bg-red-950/30 inline-block px-1 rounded' : 'text-slate-500 whitespace-pre-wrap'}>{line.text}</div>}
               </div>

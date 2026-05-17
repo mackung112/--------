@@ -144,7 +144,7 @@ export default function PY21910_U1_L6_PythonicWay() {
             <div className="bg-[#2d2d2d] px-4 py-2 flex items-center justify-between border-b border-black">
               <div className="flex items-center gap-2">
                 <FileIcon />
-                <span className="text-slate-300 text-xs font-mono">main.py</span>
+                <span className="text-slate-600 text-xs font-mono">main.py</span>
               </div>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider
                 ${refactored ? 'bg-emerald-900/50 text-emerald-400' : 'bg-red-900/50 text-red-400'}
@@ -199,7 +199,7 @@ export default function PY21910_U1_L6_PythonicWay() {
                 <p className="text-sm text-slate-600 leading-relaxed mb-4 bg-red-50 p-4 rounded-lg border border-red-100">
                   การเขียนโค้ดลักษณะนี้ เป็นการนำนิสัยการเขียนจากภาษาอื่น (เช่น C หรือ Java) มาใช้ใน Python ทำให้โค้ดยาวเกินความจำเป็น อ่านยาก และบางครั้งก็ทำงานช้ากว่าที่ควรจะเป็น
                 </p>
-                <div className="flex items-center gap-2 text-slate-500 text-sm mt-8 justify-center">
+                <div className="flex items-center gap-2 text-slate-700 text-sm mt-8 justify-center">
                   <ArrowRight className="w-5 h-5 animate-pulse text-emerald-500" />
                   <span>ลองกดปุ่มด้านซ้ายเพื่อดูการเปลี่ยนแปลง</span>
                 </div>
@@ -244,13 +244,13 @@ export default function PY21910_U1_L6_PythonicWay() {
                 {!refactored && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${refactored ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">Linter Console</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">Linter Console</span>
             </div>
 
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed flex-1">
               {logs.map((log, idx) => (
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
-                  <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                  <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                   <span className={`shrink-0 w-10 font-bold ${
                     log.type === 'error' ? 'text-red-400' :
                     log.type === 'warn' ? 'text-amber-400' :

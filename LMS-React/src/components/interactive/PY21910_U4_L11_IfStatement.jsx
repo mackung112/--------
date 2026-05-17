@@ -41,7 +41,7 @@ export default function PY21910_U4_L11_IfStatement() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">if Statement (เงื่อนไข if)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทดลองเปลี่ยนอุณหภูมิเพื่อดูว่าเงื่อนไข <code className="bg-slate-200 px-1 rounded text-pink-600">if</code> จะทำงานหรือไม่
         </p>
       </div>
@@ -50,7 +50,7 @@ export default function PY21910_U4_L11_IfStatement() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Simulator */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-6">ปรับอุณหภูมิ</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-6">ปรับอุณหภูมิ</h4>
             <div className="flex flex-col items-center gap-6">
               {/* Thermometer Visual */}
               <div className={`text-7xl font-black font-mono transition-colors ${hasFever ? 'text-rose-500' : 'text-emerald-500'}`}>
@@ -61,7 +61,7 @@ export default function PY21910_U4_L11_IfStatement() {
                 onChange={e => handleChange(+e.target.value)}
                 className="w-64 accent-rose-500"
               />
-              <div className="flex justify-between w-64 text-xs text-slate-400 font-mono">
+              <div className="flex justify-between w-64 text-xs text-slate-600 font-mono">
                 <span>35°C</span><span>37.5°C (เกณฑ์ไข้)</span><span>42°C</span>
               </div>
 
@@ -87,7 +87,7 @@ export default function PY21910_U4_L11_IfStatement() {
 
           {/* Right: Explanation */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โครงสร้าง if</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โครงสร้าง if</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <p className="text-sm text-slate-700 font-bold mb-2">รูปแบบ Syntax</p>
               <div className="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-100 leading-relaxed">
@@ -95,7 +95,7 @@ export default function PY21910_U4_L11_IfStatement() {
                 <span className="ml-4 text-cyan-300">{'# โค้ดที่รัน'}</span><br/>
                 <span className="ml-4 text-cyan-300">{'# เมื่อเงื่อนไขเป็น True'}</span>
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed mt-3">
+              <p className="text-xs text-slate-700 leading-relaxed mt-3">
                 Python จะทำงานในบล็อก <code className="bg-slate-100 px-1 rounded">if</code> ก็ต่อเมื่อเงื่อนไขประเมินค่าเป็น <strong>True</strong> เท่านั้น ถ้า False จะข้ามไปเลย
               </p>
             </div>
@@ -110,19 +110,19 @@ export default function PY21910_U4_L11_IfStatement() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

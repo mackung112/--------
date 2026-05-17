@@ -104,7 +104,7 @@ export default function PY21910_U7_L3_ErrorHandling() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">จัดการข้อผิดพลาด (Error Handling)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้ <code className="bg-slate-200 px-1 rounded text-pink-600">try-except</code> เพื่อดักจับ Error ป้องกันไม่ให้โปรแกรมล่มเมื่อเกิดข้อผิดพลาด
         </p>
       </div>
@@ -160,7 +160,7 @@ export default function PY21910_U7_L3_ErrorHandling() {
             </div>
 
             <div>
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">จำลองการป้อนข้อมูล</h4>
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">จำลองการป้อนข้อมูล</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {s.inputs.map((inp, idx) => (
                   <button key={idx} onClick={() => runTest(inp)}
@@ -183,7 +183,7 @@ export default function PY21910_U7_L3_ErrorHandling() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โครงสร้าง Try-Except</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โครงสร้าง Try-Except</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <ul className="space-y-4 text-sm text-slate-600">
                 <li className="flex gap-2 items-start">
@@ -215,19 +215,19 @@ export default function PY21910_U7_L3_ErrorHandling() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python main.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python main.py</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-rose-400 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}

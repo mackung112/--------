@@ -94,7 +94,7 @@ export default function PY21910_U3_L1_PythonStructure() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Python Structure & Data Types</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้โครงสร้างภาษา Python เบื้องต้นและชนิดข้อมูลพื้นฐาน พร้อมทดลองรันคำสั่งจริงใน Terminal แบบจำลอง
         </p>
       </div>
@@ -107,7 +107,7 @@ export default function PY21910_U3_L1_PythonStructure() {
           
           {/* Left: Visual Explorer (Data Types) */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">1. ชนิดข้อมูลพื้นฐาน (Data Types)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">1. ชนิดข้อมูลพื้นฐาน (Data Types)</h4>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
               {dataTypes.map((dt, idx) => {
@@ -128,7 +128,7 @@ export default function PY21910_U3_L1_PythonStructure() {
                     </div>
                     <div>
                       <div className="font-bold text-slate-900 text-sm">{dt.name}</div>
-                      <div className="text-slate-500 text-xs mt-0.5 leading-relaxed">{dt.desc}</div>
+                      <div className="text-slate-700 text-xs mt-0.5 leading-relaxed">{dt.desc}</div>
                     </div>
                   </button>
                 );
@@ -151,7 +151,7 @@ export default function PY21910_U3_L1_PythonStructure() {
 
           {/* Right: Control / Gamification (Code Experiments) */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">2. ทดลองรันโค้ด (Experiments)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">2. ทดลองรันโค้ด (Experiments)</h4>
             <div className="flex flex-col gap-3 flex-1">
               {codeExperiments.map((exp, idx) => {
                 const isActive = mode === 'experiment' && activeExperiment === idx;
@@ -190,12 +190,12 @@ export default function PY21910_U3_L1_PythonStructure() {
           {/* Console Header */}
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python</span>
             </div>
             <button 
               onClick={clearConsole}
-              className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-xs"
+              className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-xs"
             >
               <RotateCcw size={14} /> Clear
             </button>
@@ -204,12 +204,12 @@ export default function PY21910_U3_L1_PythonStructure() {
           {/* Console Output Area */}
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.length === 0 ? (
-              <div className="text-slate-500 italic">กดเลือกหัวข้อด้านบนเพื่อรันคำสั่ง...</div>
+              <div className="text-slate-700 italic">กดเลือกหัวข้อด้านบนเพื่อรันคำสั่ง...</div>
             ) : (
               consoleHistory.map((line, idx) => (
                 <div key={idx} className="leading-relaxed">
                   {line.type === 'command' && (
-                    <div className="text-slate-300">
+                    <div className="text-slate-600">
                       <span className="text-green-400 mr-2">{">>>"}</span>{line.text}
                     </div>
                   )}
@@ -217,10 +217,10 @@ export default function PY21910_U3_L1_PythonStructure() {
                     <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>
                   )}
                   {line.type === 'system' && (
-                    <div className="text-slate-500 mt-2 mb-1">{line.text}</div>
+                    <div className="text-slate-700 mt-2 mb-1">{line.text}</div>
                   )}
                   {line.type === 'code' && (
-                    <div className="text-slate-300 whitespace-pre-wrap pl-4 border-l-2 border-slate-600 my-2">{line.text}</div>
+                    <div className="text-slate-600 whitespace-pre-wrap pl-4 border-l-2 border-slate-600 my-2">{line.text}</div>
                   )}
                   {line.type === 'success' && (
                     <div className="text-emerald-400 mt-2">{line.text}</div>

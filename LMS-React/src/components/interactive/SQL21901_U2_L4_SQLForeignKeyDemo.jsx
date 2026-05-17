@@ -166,7 +166,7 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Foreign Key (คีย์นอก)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การเชื่อมตาราง 2 ตารางเข้าด้วยกันเพื่อลดความซ้ำซ้อนของข้อมูล (ความสัมพันธ์แบบ 1-to-Many)
         </p>
       </div>
@@ -176,10 +176,10 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
           
           {/* Left: Interactive Data View */}
           <div className="w-full lg:w-[55%] p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <MousePointerClick size={16} className="text-pink-500"/> Interactive Tables
             </h4>
-            <p className="text-xs text-slate-500 mb-6">ลองนำเมาส์ไปชี้ (Hover) ที่ตารางแผนก เพื่อดูพนักงานที่เชื่อมโยงอยู่ด้วย Foreign Key</p>
+            <p className="text-xs text-slate-700 mb-6">ลองนำเมาส์ไปชี้ (Hover) ที่ตารางแผนก เพื่อดูพนักงานที่เชื่อมโยงอยู่ด้วย Foreign Key</p>
 
             <div className="flex flex-col gap-6">
               {/* Departments Table */}
@@ -188,7 +188,7 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
                   <Building2 size={16} /> departments (แผนก)
                 </div>
                 <table className="w-full text-xs">
-                  <thead className="bg-slate-50 text-slate-500 border-b border-slate-200">
+                  <thead className="bg-slate-50 text-slate-700 border-b border-slate-200">
                     <tr>
                       <th className="p-2 text-left w-24">id <Key size={10} className="inline text-yellow-600"/> (PK)</th>
                       <th className="p-2 text-left">name</th>
@@ -211,7 +211,7 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
               </div>
 
               {/* Arrow Indicator */}
-              <div className="flex justify-center text-slate-400">
+              <div className="flex justify-center text-slate-600">
                 <ArrowRight size={24} className={`transition-transform duration-300 rotate-90 ${hoveredDept ? 'text-indigo-500 translate-y-1' : ''}`} />
               </div>
 
@@ -222,7 +222,7 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
-                    <thead className="bg-slate-50 text-slate-500 border-b border-slate-200">
+                    <thead className="bg-slate-50 text-slate-700 border-b border-slate-200">
                       <tr>
                         <th className="p-2 text-left w-16">id (PK)</th>
                         <th className="p-2 text-left">name</th>
@@ -253,10 +253,10 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
 
           {/* Right: Schema Connect Game */}
           <div className="w-full lg:w-[45%] bg-white p-6 flex flex-col relative">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <Database size={16} className="text-sky-500"/> Schema Connection
             </h4>
-            <p className="text-xs text-slate-500 mb-6">ลากเส้นจาก <span className="text-sky-500 font-bold">FK (dept_id)</span> ไปหา <span className="text-yellow-500 font-bold">PK (id)</span> เพื่อสร้างความสัมพันธ์</p>
+            <p className="text-xs text-slate-700 mb-6">ลากเส้นจาก <span className="text-sky-500 font-bold">FK (dept_id)</span> ไปหา <span className="text-yellow-500 font-bold">PK (id)</span> เพื่อสร้างความสัมพันธ์</p>
 
             <div className="flex-1 bg-slate-50 rounded-xl border border-slate-200 relative overflow-hidden flex items-center justify-center p-8">
               <div ref={containerRef} className="relative w-full h-[300px] flex justify-between items-center z-10">
@@ -268,11 +268,11 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
                     employees
                   </div>
                   <div className="p-2 space-y-1 text-[10px]">
-                    <div className="flex justify-between items-center text-slate-500 px-2 py-1">
+                    <div className="flex justify-between items-center text-slate-700 px-2 py-1">
                       <span>id</span>
                       <Key size={10} className="text-yellow-500"/>
                     </div>
-                    <div className="flex justify-between items-center text-slate-500 px-2 py-1">
+                    <div className="flex justify-between items-center text-slate-700 px-2 py-1">
                       <span>name</span>
                     </div>
                     <div className="flex justify-between items-center bg-slate-50 border border-slate-200 p-1.5 rounded relative">
@@ -306,7 +306,7 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
                       ></div>
                       <span className="text-yellow-600 font-bold pl-2">id</span>
                     </div>
-                    <div className="flex justify-between items-center text-slate-500 px-2 py-1">
+                    <div className="flex justify-between items-center text-slate-700 px-2 py-1">
                       <span>name</span>
                     </div>
                   </div>
@@ -321,7 +321,7 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
                       <Link size={32} />
                     </div>
                     <h3 className="text-lg font-bold text-slate-800 mb-1">เชื่อมต่อสำเร็จ!</h3>
-                    <p className="text-xs text-slate-500 mb-4">Foreign Key ผูกกับ Primary Key เรียบร้อยแล้ว</p>
+                    <p className="text-xs text-slate-700 mb-4">Foreign Key ผูกกับ Primary Key เรียบร้อยแล้ว</p>
                     <button 
                       onClick={() => {
                         setIsConnected(false);
@@ -347,17 +347,17 @@ export default function SQL21901_U2_L4_SQLForeignKeyDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Foreign Key Log</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Foreign Key Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300 font-bold">{line.text}</div></>}
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-600 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0">[Sys]</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0">[Err]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0">[Ok]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

@@ -72,7 +72,7 @@ export default function OOP21910_U3_L9_TkinterStyleDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การปรับแต่งสีและฟอนต์ (Styling)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการกำหนดค่า <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">bg, fg, font</code> ให้กับ Widget ต่างๆ เพื่อให้โปรแกรมดูสวยงามและน่าใช้งาน
         </p>
       </div>
@@ -87,7 +87,7 @@ export default function OOP21910_U3_L9_TkinterStyleDemo() {
               {/* Form Config */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col space-y-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">ธีมสำเร็จรูป:</label>
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-2">ธีมสำเร็จรูป:</label>
                   <div className="flex flex-wrap gap-2">
                     {presets.map(p => (
                       <button key={p.name} onClick={() => applyPreset(p)}
@@ -100,32 +100,32 @@ export default function OOP21910_U3_L9_TkinterStyleDemo() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">สีพื้นหลัง (bg)</label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">สีพื้นหลัง (bg)</label>
                     <input type="color" value={bgColor} onChange={e => setBgColor(e.target.value)} className="w-full h-8 rounded cursor-pointer border border-slate-200" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">สีตัวอักษร (fg)</label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">สีตัวอักษร (fg)</label>
                     <input type="color" value={fgColor} onChange={e => setFgColor(e.target.value)} className="w-full h-8 rounded cursor-pointer border border-slate-200" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">สีปุ่ม (btn bg)</label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">สีปุ่ม (btn bg)</label>
                     <input type="color" value={btnBg} onChange={e => setBtnBg(e.target.value)} className="w-full h-8 rounded cursor-pointer border border-slate-200" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">สีตัวอักษรปุ่ม</label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">สีตัวอักษรปุ่ม</label>
                     <input type="color" value={btnFg} onChange={e => setBtnFg(e.target.value)} className="w-full h-8 rounded cursor-pointer border border-slate-200" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ฟอนต์ (Font)</label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">ฟอนต์ (Font)</label>
                     <select value={fontFamily} onChange={e => setFontFamily(e.target.value)} className="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-xs outline-none focus:border-pink-500">
                       {fonts.map(f => <option key={f} value={f}>{f}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ขนาด: <span className="text-pink-600">{fontSize}px</span></label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">ขนาด: <span className="text-pink-600">{fontSize}px</span></label>
                     <input type="range" min="10" max="28" value={fontSize} onChange={e => setFontSize(Number(e.target.value))} className="w-full accent-pink-600" />
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function OOP21910_U3_L9_TkinterStyleDemo() {
                 <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl w-full max-w-sm border border-slate-400">
                   <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400" /><div className="w-2.5 h-2.5 rounded-full bg-yellow-400" /><div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                    <span className="text-slate-300 text-xs ml-2 font-mono">Style Demo</span>
+                    <span className="text-slate-600 text-xs ml-2 font-mono">Style Demo</span>
                   </div>
                   
                   <div className="p-6 space-y-4 transition-all duration-500" style={{ backgroundColor: appliedConfig.bgColor }}>
@@ -165,20 +165,20 @@ export default function OOP21910_U3_L9_TkinterStyleDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
-              <span className="text-slate-500"># ตั้งสีหน้าต่างหลัก</span><br />
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              <span className="text-slate-700"># ตั้งสีหน้าต่างหลัก</span><br />
               <span className="text-yellow-300">root</span>.<span className="text-blue-300">configure</span>(<span className="text-orange-300">bg</span>=<span className="text-green-300">"{appliedConfig.bgColor}"</span>)<br />
               <br />
-              <span className="text-slate-500"># ตั้งสีและฟอนต์ให้ Label</span><br />
+              <span className="text-slate-700"># ตั้งสีและฟอนต์ให้ Label</span><br />
               <span className="text-yellow-300">lbl</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Label</span>(<br />
               &nbsp;&nbsp;<span className="text-orange-300">text</span>=<span className="text-green-300">"ระบบลงทะเบียน"</span>,<br />
               &nbsp;&nbsp;<span className="text-orange-300">fg</span>=<span className="text-green-300">"{appliedConfig.fgColor}"</span>, <span className="text-orange-300">bg</span>=<span className="text-green-300">"{appliedConfig.bgColor}"</span>,<br />
               &nbsp;&nbsp;<span className="text-orange-300">font</span>=(<span className="text-green-300">"{appliedConfig.fontFamily}"</span>, <span className="text-purple-300">{appliedConfig.fontSize}</span>)<br />
               )<br />
               <br />
-              <span className="text-slate-500"># ตั้งสีปุ่ม</span><br />
+              <span className="text-slate-700"># ตั้งสีปุ่ม</span><br />
               <span className="text-yellow-300">btn</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Button</span>(<br />
               &nbsp;&nbsp;<span className="text-orange-300">text</span>=<span className="text-green-300">"ลงทะเบียน"</span>,<br />
               &nbsp;&nbsp;<span className="text-orange-300">bg</span>=<span className="text-green-300">"{appliedConfig.btnBg}"</span>, <span className="text-orange-300">fg</span>=<span className="text-green-300">"{appliedConfig.btnFg}"</span><br />
@@ -213,16 +213,16 @@ export default function OOP21910_U3_L9_TkinterStyleDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

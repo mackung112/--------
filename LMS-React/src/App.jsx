@@ -47,10 +47,10 @@ function HomeView() {
               ห้องเรียนครูแม็ค
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-4 leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-4 leading-relaxed">
             เรียนรู้เทคโนโลยีและการเขียนโปรแกรมอย่างสนุกสนาน
           </p>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
             ทุกบทเรียนเต็มไปด้วยสื่อ Interactive ที่กดเล่นได้ จำลองการทำงานจริง เข้าใจง่าย และทันสมัย
           </p>
 
@@ -85,7 +85,7 @@ function HomeView() {
                   <stat.icon className="w-6 h-6" />
                 </div>
                 <div className="text-3xl font-extrabold text-gray-900">{stat.value}</div>
-                <div className="text-sm text-gray-500 font-medium mt-1">{stat.label}</div>
+                <div className="text-sm text-gray-600 font-medium mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -99,7 +99,7 @@ function HomeView() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">รายวิชาทั้งหมด</h2>
-            <p className="text-gray-500 text-lg">เลือกวิชาที่สนใจ แล้วเริ่มเรียนได้ทันที</p>
+            <p className="text-gray-600 text-lg">เลือกวิชาที่สนใจ แล้วเริ่มเรียนได้ทันที</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {coursesData.map(course => {
@@ -117,10 +117,10 @@ function HomeView() {
                     {course.icon}
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-indigo-950 group-hover:text-indigo-700 transition-colors">{course.title}</h3>
-                  <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-6">{course.description}</p>
+                  <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mb-6">{course.description}</p>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-xs text-gray-400">
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
                       <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5" /> {course.chapters.length} หน่วย</span>
                       <span className="flex items-center gap-1"><Code2 className="w-3.5 h-3.5" /> {lessonCount} บท</span>
                     </div>
@@ -275,17 +275,17 @@ function CourseView() {
       <div className="flex-1 flex flex-col min-w-0 h-screen">
         <nav className="h-14 bg-white border-b border-gray-200/80 flex items-center justify-between px-4 md:px-6 shrink-0 z-30">
           <div className="flex items-center gap-3">
-            <button className="md:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setSidebarOpen(true)}>
+            <button className="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setSidebarOpen(true)}>
               <Menu className="w-5 h-5" />
             </button>
-            <button onClick={() => navigate('/')} className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-500 hover:bg-gray-100 text-sm font-medium transition-colors">
+            <button onClick={() => navigate('/')} className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm font-medium transition-colors">
               <ChevronLeft className="w-4 h-4" /> กลับ
             </button>
           </div>
           <div className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
             ห้องเรียนครูแม็ค
           </div>
-          <div className="text-xs text-gray-400 font-medium hidden sm:block">
+          <div className="text-xs text-gray-500 font-medium hidden sm:block">
             {currentIndex + 1} / {allLessons.length}
           </div>
         </nav>
@@ -303,7 +303,7 @@ function CourseView() {
                 hasNext={hasNext}
               />
             ) : (
-              <div className="text-center py-20 text-gray-500 text-xl">โปรดเลือกบทเรียนจากเมนูด้านซ้าย</div>
+              <div className="text-center py-20 text-gray-600 text-xl">โปรดเลือกบทเรียนจากเมนูด้านซ้าย</div>
             )}
           </div>
         </main>

@@ -191,7 +191,7 @@ const SQLCascadeDemo = () => {
                     />
                     <div>
                       <div className="font-bold text-slate-700 font-mono text-sm">ON DELETE RESTRICT</div>
-                      <div className="text-xs text-slate-500 mt-0.5">ห้ามลบถ้ามีลูกอ้างอิงอยู่ (ปลอดภัย)</div>
+                      <div className="text-xs text-slate-700 mt-0.5">ห้ามลบถ้ามีลูกอ้างอิงอยู่ (ปลอดภัย)</div>
                     </div>
                   </label>
 
@@ -206,7 +206,7 @@ const SQLCascadeDemo = () => {
                     />
                     <div>
                       <div className="font-bold text-slate-700 font-mono text-sm">ON DELETE CASCADE</div>
-                      <div className="text-xs text-slate-500 mt-0.5">ลบแผนกปุ๊บ พนักงานหายปั๊บ! (โดมิโน)</div>
+                      <div className="text-xs text-slate-700 mt-0.5">ลบแผนกปุ๊บ พนักงานหายปั๊บ! (โดมิโน)</div>
                     </div>
                   </label>
                 </div>
@@ -231,7 +231,7 @@ const SQLCascadeDemo = () => {
 
             {/* Mini Console */}
             <div className="bg-[#1e1e1e] rounded-xl p-4 shadow-xl border border-slate-800">
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1 flex justify-between">
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1 flex justify-between">
                 <span>MySQL Response:</span>
               </div>
               <div className="text-xs font-mono break-words min-h-[60px] max-h-[120px] overflow-y-auto custom-scrollbar flex flex-col gap-1">
@@ -271,7 +271,7 @@ const SQLCascadeDemo = () => {
                   </thead>
                   <tbody>
                     {parents.length === 0 ? (
-                      <tr><td colSpan={2} className="text-center italic text-slate-400 p-4">Empty set</td></tr>
+                      <tr><td colSpan={2} className="text-center italic text-slate-600 p-4">Empty set</td></tr>
                     ) : (
                       parents.map(p => (
                         <tr 
@@ -297,7 +297,7 @@ const SQLCascadeDemo = () => {
             {/* Connection Line visualizer */}
             <div className="flex justify-center -my-3 z-20 relative h-6">
               <div className="w-0.5 bg-slate-300 h-full absolute"></div>
-              <div className="absolute bg-white border-2 border-slate-300 rounded-full px-2 py-0.5 text-[10px] font-bold text-slate-500 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+              <div className="absolute bg-white border-2 border-slate-300 rounded-full px-2 py-0.5 text-[10px] font-bold text-slate-700 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
                 <LinkIcon className="w-3 h-3 text-sky-500" /> FOREIGN KEY
               </div>
             </div>
@@ -322,7 +322,7 @@ const SQLCascadeDemo = () => {
                   </thead>
                   <tbody>
                     {children.length === 0 ? (
-                      <tr><td colSpan={3} className="text-center italic text-slate-400 p-4">Empty set</td></tr>
+                      <tr><td colSpan={3} className="text-center italic text-slate-600 p-4">Empty set</td></tr>
                     ) : (
                       children.map(c => (
                         <tr 
@@ -332,7 +332,7 @@ const SQLCascadeDemo = () => {
                             ${dissolveRows.children.includes(c.id) ? 'animate-dissolve opacity-0 scale-95 blur-sm bg-purple-500 text-white' : ''}
                           `}
                         >
-                          <td className="px-4 py-2 font-mono text-slate-500 border-r border-slate-200">{c.id}</td>
+                          <td className="px-4 py-2 font-mono text-slate-700 border-r border-slate-200">{c.id}</td>
                           <td className="px-4 py-2 text-slate-600 border-r border-slate-200">{c.name}</td>
                           <td className={`px-4 py-2 font-mono font-bold ${c.dept_id === 1 ? 'text-rose-500 bg-rose-50/50' : 'text-sky-600'}`}>
                             {c.dept_id}

@@ -54,7 +54,7 @@ export default function PY21910_U6_L2_DefFunction() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">def Function (สร้างฟังก์ชันเอง)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           คำสั่ง <code className="bg-slate-200 px-1 rounded text-pink-600">def</code> ใช้สำหรับสร้างฟังก์ชันใหม่เพื่อรวมกลุ่มโค้ดที่ต้องเรียกใช้ซ้ำ ๆ 
         </p>
       </div>
@@ -63,31 +63,31 @@ export default function PY21910_U6_L2_DefFunction() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Interactive Section */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">กำหนด Parameters</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">กำหนด Parameters</h4>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="flex-1">
-                <label className="text-xs text-slate-500 block mb-1 font-medium">name (ชื่อ)</label>
+                <label className="text-xs text-slate-700 block mb-1 font-medium">name (ชื่อ)</label>
                 <input type="text" value={name} onChange={e => setName(e.target.value)}
                   className="w-full text-center font-bold border-2 border-indigo-300 focus:border-indigo-500 focus:outline-none rounded-xl p-2 text-sm transition-colors" />
               </div>
               <div className="w-full sm:w-24">
-                <label className="text-xs text-slate-500 block mb-1 font-medium">times (จำนวนรอบ)</label>
+                <label className="text-xs text-slate-700 block mb-1 font-medium">times (จำนวนรอบ)</label>
                 <input type="number" min="1" max="10" value={times} onChange={e => setTimes(Math.min(10, Math.max(1, +e.target.value)))}
                   className="w-full text-center font-bold border-2 border-indigo-300 focus:border-indigo-500 focus:outline-none rounded-xl p-2 text-sm transition-colors" />
               </div>
             </div>
 
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">โค้ดฟังก์ชัน Greet</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">โค้ดฟังก์ชัน Greet</h4>
             <div className="bg-slate-900 rounded-xl p-5 font-mono text-sm shadow-inner flex-1 mb-4 flex flex-col justify-center">
-              <div className="text-slate-500 mb-1"># 1. นิยามฟังก์ชัน (Definition)</div>
+              <div className="text-slate-700 mb-1"># 1. นิยามฟังก์ชัน (Definition)</div>
               <div>
                 <span className="text-pink-400">def</span> <span className="text-blue-400 font-bold">greet</span>(<span className="text-orange-300">name</span>, <span className="text-orange-300">times</span>=1):
               </div>
-              <div className="ml-4 text-pink-400 mt-1">for <span className="text-slate-300">i</span> in <span className="text-sky-300">range</span>(<span className="text-slate-300">times</span>):</div>
+              <div className="ml-4 text-pink-400 mt-1">for <span className="text-slate-600">i</span> in <span className="text-sky-300">range</span>(<span className="text-slate-600">times</span>):</div>
               <div className="ml-8 text-sky-300">print(<span className="text-emerald-300">f"สวัสดี {'{'}name{'}'}"</span>)</div>
               
-              <div className="mt-6 text-slate-500 mb-1"># 2. เรียกใช้งานฟังก์ชัน (Calling)</div>
+              <div className="mt-6 text-slate-700 mb-1"># 2. เรียกใช้งานฟังก์ชัน (Calling)</div>
               <div className="flex items-center gap-2">
                 <div className="bg-slate-800/80 rounded px-2 py-1 border border-slate-700">
                   <span className="text-blue-400 font-bold">greet</span>(<span className="text-emerald-300">"{name}"</span>, <span className="text-purple-300">{times}</span>)
@@ -103,7 +103,7 @@ export default function PY21910_U6_L2_DefFunction() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ส่วนประกอบของฟังก์ชัน</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ส่วนประกอบของฟังก์ชัน</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <ul className="space-y-4 text-sm text-slate-600">
                 <li>
@@ -129,7 +129,7 @@ export default function PY21910_U6_L2_DefFunction() {
                 </li>
                 <li>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-slate-400 font-bold ml-1">...</span>
+                    <span className="text-slate-600 font-bold ml-1">...</span>
                     <strong className="text-slate-700">Function Body</strong>
                   </div>
                   <p className="text-xs leading-relaxed">โค้ดที่จะทำงานเมื่อถูกเรียกใช้ <span className="text-rose-500 font-bold">ต้องมีย่อหน้า (Indent) เสมอ</span></p>
@@ -147,22 +147,22 @@ export default function PY21910_U6_L2_DefFunction() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
             <button onClick={() => setConsoleHistory([
               { type: 'system', text: 'Function Definition Simulator Ready.' },
               { type: 'system', text: '# ฟังก์ชันนี้พร้อมใช้งานแล้ว' }
-            ])} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            ])} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

@@ -125,11 +125,11 @@ export default function PY21910_U1_L7_IndentationDemo() {
             <div className="bg-[#2d2d2d] px-4 py-2 flex items-center justify-between border-b border-black">
               <div className="flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-emerald-400" />
-                <span className="text-slate-300 text-xs font-mono">login.py</span>
+                <span className="text-slate-600 text-xs font-mono">login.py</span>
               </div>
               <button 
                 onClick={showSolution}
-                className="text-[10px] text-slate-400 hover:text-white underline transition-colors"
+                className="text-[10px] text-slate-600 hover:text-white underline transition-colors"
               >
                 ดูเฉลย
               </button>
@@ -261,7 +261,7 @@ export default function PY21910_U1_L7_IndentationDemo() {
                 {simState === 'running' && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${simState === 'running' ? 'bg-green-500' : simState === 'success' ? 'bg-emerald-500' : simState === 'error' ? 'bg-red-500' : 'bg-slate-600'}`}></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">Terminal Output</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">Terminal Output</span>
             </div>
 
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed flex-1">
@@ -269,7 +269,7 @@ export default function PY21910_U1_L7_IndentationDemo() {
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
                   {log.type === 'error' || log.type === 'sys' || log.type === 'warn' ? (
                     <>
-                      <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                      <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                       <span className={`shrink-0 w-10 font-bold ${
                         log.type === 'error' ? 'text-red-400' :
                         log.type === 'warn' ? 'text-amber-400' :
@@ -279,7 +279,7 @@ export default function PY21910_U1_L7_IndentationDemo() {
                       </span>
                     </>
                   ) : (
-                    <span className="text-slate-400 mr-3 shrink-0 w-10 text-right pr-2">&gt;</span>
+                    <span className="text-slate-600 mr-3 shrink-0 w-10 text-right pr-2">&gt;</span>
                   )}
                   <span className={`flex-1 ${
                     log.type === 'error' ? 'text-red-300' :

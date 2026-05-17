@@ -106,7 +106,7 @@ export default function OOP21910_U1_L6_PipInstallDemo() {
             </div>
             <div>
               <h3 className="font-display text-xl font-semibold text-slate-900">การติดตั้งไลบรารีด้วย pip</h3>
-              <p className="font-base text-sm leading-relaxed text-slate-500 mt-1">
+              <p className="font-base text-sm leading-relaxed text-slate-700 mt-1">
                 จำลองการใช้งานคำสั่ง pip เพื่อดาวน์โหลด จัดการ และลบ Python Packages
               </p>
             </div>
@@ -151,7 +151,7 @@ export default function OOP21910_U1_L6_PipInstallDemo() {
 
           {/* Right: Info */}
           <div className="flex-1 bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">คำสั่งที่ควรรู้</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">คำสั่งที่ควรรู้</h4>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
               <div className="p-4 rounded-xl border border-slate-200 bg-slate-50">

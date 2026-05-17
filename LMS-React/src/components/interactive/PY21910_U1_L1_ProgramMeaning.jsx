@@ -209,10 +209,10 @@ export default function PY21910_U1_L1_ProgramMeaning() {
               </div>
               <CheckCircle2 className="w-5 h-5 text-amber-400" />
             </div>
-            <p className="text-xs text-slate-400 font-medium">ชิ้นส่วนอุปกรณ์ (CPU, RAM, Hard Disk)</p>
+            <p className="text-xs text-slate-600 font-medium">ชิ้นส่วนอุปกรณ์ (CPU, RAM, Hard Disk)</p>
             <div className="flex justify-around mt-3">
-              <Cpu className="w-6 h-6 text-slate-500" />
-              <HardDrive className="w-6 h-6 text-slate-500" />
+              <Cpu className="w-6 h-6 text-slate-700" />
+              <HardDrive className="w-6 h-6 text-slate-700" />
             </div>
           </div>
         </div>
@@ -351,13 +351,13 @@ export default function PY21910_U1_L1_ProgramMeaning() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">System Log</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">System Log</span>
             </div>
             
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed">
               {logs.map((log, idx) => (
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
-                  <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                  <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                   <span className={`shrink-0 w-10 font-bold ${
                     log.type === 'error' ? 'text-red-400' :
                     log.type === 'warn' ? 'text-amber-400' :

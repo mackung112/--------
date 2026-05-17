@@ -68,7 +68,7 @@ export default function PY21910_U5_L3_SetStringExplorer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Set & String Slicing</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การดำเนินการของ <code className="bg-slate-200 px-1 rounded text-pink-600">Set</code> และการตัดข้อความ (Slicing) ของ <code className="bg-slate-200 px-1 rounded text-pink-600">String</code>
         </p>
       </div>
@@ -114,7 +114,7 @@ export default function PY21910_U5_L3_SetStringExplorer() {
                         <span className="font-mono font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">{op.cmd}</span>
                       </div>
                       <h5 className="font-bold text-slate-700 text-sm">{op.name}</h5>
-                      <p className="text-xs text-slate-500 mt-1">{op.output}</p>
+                      <p className="text-xs text-slate-700 mt-1">{op.output}</p>
                     </button>
                   ))}
                 </div>
@@ -122,7 +122,7 @@ export default function PY21910_U5_L3_SetStringExplorer() {
             ) : (
               <div className="space-y-6">
                 <div>
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 block">ข้อความ (String)</label>
+                  <label className="text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 block">ข้อความ (String)</label>
                   <input type="text" value={text} onChange={handleTextChange}
                     className="w-full text-center font-mono text-xl font-bold border-2 border-violet-300 focus:border-violet-500 focus:outline-none rounded-xl p-3 shadow-sm transition-colors" />
                 </div>
@@ -147,7 +147,7 @@ export default function PY21910_U5_L3_SetStringExplorer() {
                       className="bg-white border border-slate-200 hover:border-violet-400 hover:bg-violet-50 p-4 rounded-xl text-left transition-all active:scale-95">
                       <div className="font-mono font-bold text-violet-600 mb-1">{op.cmd}</div>
                       <h5 className="font-bold text-slate-700 text-sm">{op.name}</h5>
-                      <p className="text-xs text-slate-500 mt-1">→ "{op.output}"</p>
+                      <p className="text-xs text-slate-700 mt-1">→ "{op.output}"</p>
                     </button>
                   ))}
                 </div>
@@ -157,7 +157,7 @@ export default function PY21910_U5_L3_SetStringExplorer() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">สรุปแนวคิด</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">สรุปแนวคิด</h4>
             {tab === 'set' ? (
               <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
                 <ul className="space-y-3 text-sm text-slate-600">
@@ -193,19 +193,19 @@ export default function PY21910_U5_L3_SetStringExplorer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

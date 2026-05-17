@@ -60,7 +60,7 @@ export default function PY21910_U7_L2_BusinessLogic() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">ตรรกะธุรกิจ (Business Logic)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           จำลองการคำนวณระบบขายสินค้า ซึ่งประกอบด้วยการคูณ (หาผลรวม), การสร้างเงื่อนไข <code>if-elif</code> (คิดส่วนลด) และการคิดภาษี
         </p>
       </div>
@@ -72,23 +72,23 @@ export default function PY21910_U7_L2_BusinessLogic() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <label className="text-xs font-bold text-slate-500 mb-2 flex items-center gap-1"><Tag size={14} /> ราคา/ชิ้น (Price)</label>
+                <label className="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1"><Tag size={14} /> ราคา/ชิ้น (Price)</label>
                 <input type="number" value={price} onChange={e => setPrice(+e.target.value)}
                   className="w-full px-3 py-2 text-lg font-bold text-slate-800 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500" />
               </div>
               <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <label className="text-xs font-bold text-slate-500 mb-2 flex items-center gap-1"><ShoppingCart size={14} /> จำนวน (Quantity)</label>
+                <label className="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1"><ShoppingCart size={14} /> จำนวน (Quantity)</label>
                 <input type="number" value={qty} onChange={e => setQty(+e.target.value)}
                   className="w-full px-3 py-2 text-lg font-bold text-slate-800 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500" />
               </div>
             </div>
 
             <div className="bg-slate-900 rounded-xl p-5 font-mono text-xs shadow-inner flex-1 mb-4">
-              <div className="text-slate-500 mb-2"># 1. หาราคารวม</div>
+              <div className="text-slate-700 mb-2"># 1. หาราคารวม</div>
               <div className="text-emerald-300">total = price * qty</div>
               <div className="text-cyan-400 mb-4 ml-4"># = {total.toLocaleString()}</div>
 
-              <div className="text-slate-500 mb-2"># 2. เงื่อนไขคิดส่วนลด</div>
+              <div className="text-slate-700 mb-2"># 2. เงื่อนไขคิดส่วนลด</div>
               <div className={`${total > 3000 ? 'text-yellow-300 font-bold' : 'text-slate-400'}`}>if total &gt; 3000:</div>
               <div className={`ml-4 ${total > 3000 ? 'text-emerald-300' : 'text-slate-500'}`}>discount = total * 0.10</div>
               
@@ -100,7 +100,7 @@ export default function PY21910_U7_L2_BusinessLogic() {
               
               <div className="text-cyan-400 mb-4 ml-4 mt-1"># ส่วนลด = {discount.toLocaleString()}</div>
 
-              <div className="text-slate-500 mb-2"># 3. คำนวณยอดหลังหักส่วนลด และภาษี</div>
+              <div className="text-slate-700 mb-2"># 3. คำนวณยอดหลังหักส่วนลด และภาษี</div>
               <div className="text-emerald-300">net = total - discount</div>
               <div className="text-emerald-300">vat = net * 0.07</div>
             </div>
@@ -113,7 +113,7 @@ export default function PY21910_U7_L2_BusinessLogic() {
 
           {/* Right: Info / Receipt */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ใบเสร็จจำลอง (Receipt)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ใบเสร็จจำลอง (Receipt)</h4>
             
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm mb-4 flex-1 flex flex-col p-4">
               <div className="text-center font-bold text-slate-800 mb-4 pb-4 border-b border-dashed border-slate-300">
@@ -164,19 +164,19 @@ export default function PY21910_U7_L2_BusinessLogic() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python pos_logic.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python pos_logic.py</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

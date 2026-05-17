@@ -63,7 +63,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การเชื่อมต่อ GUI กับ Logic</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วงจรการทำงานเมื่อผู้ใช้กดปุ่มบนหน้าจอ (GUI Layer) ไปจนถึงการประมวลผลข้อมูล (Logic Layer) และการอัปเดตหน้าจอกลับ
         </p>
       </div>
@@ -73,7 +73,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
           
           {/* Left: GUI Application */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <MousePointer2 size={16} /> GUI Layer (หน้าจอ)
             </h4>
 
@@ -85,7 +85,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
                   <div className="w-3 h-3 rounded-full bg-yellow-400" />
                   <div className="w-3 h-3 rounded-full bg-emerald-400" />
                 </div>
-                <span className="text-slate-300 text-xs font-semibold ml-2">POS App Window</span>
+                <span className="text-slate-600 text-xs font-semibold ml-2">POS App Window</span>
               </div>
 
               {/* Window Body */}
@@ -137,7 +137,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
 
           {/* Right: Data Flow Explanation */}
           <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <Server size={16} /> Logic Flow (การทำงานเบื้องหลัง)
             </h4>
             
@@ -152,7 +152,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
 
                 <div className="h-6 flex items-center justify-center -my-1 relative z-0">
                   <div className="w-1 h-full bg-slate-200"></div>
-                  <ArrowDown size={14} className="text-slate-400 absolute text-slate-300" />
+                  <ArrowDown size={14} className="text-slate-600 absolute text-slate-600" />
                 </div>
 
                 {/* Step 2 */}
@@ -163,7 +163,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
 
                 <div className="h-6 flex items-center justify-center -my-1 relative z-0">
                   <div className="w-1 h-full bg-slate-200"></div>
-                  <ArrowDown size={14} className="text-slate-400 absolute text-slate-300" />
+                  <ArrowDown size={14} className="text-slate-600 absolute text-slate-600" />
                 </div>
 
                 {/* Step 3 */}
@@ -177,7 +177,7 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
 
                 <div className="h-6 flex items-center justify-center -my-1 relative z-0">
                   <div className="w-1 h-full bg-slate-200"></div>
-                  <ArrowDown size={14} className="text-slate-400 absolute text-slate-300" />
+                  <ArrowDown size={14} className="text-slate-600 absolute text-slate-600" />
                 </div>
 
                 {/* Step 4 */}
@@ -195,15 +195,15 @@ export default function OOP21910_U5_L4_GUILogicConnectDemo() {
         <div className="h-56 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">EVENT LOG</span>
-              <span className="text-slate-500 text-xs">Watch real-time GUI & Logic interactions</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">EVENT LOG</span>
+              <span className="text-slate-700 text-xs">Watch real-time GUI & Logic interactions</span>
             </div>
           </div>
           <div className="p-4 space-y-1.5 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-violet-400 font-bold shrink-0">[User]</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'command' && <><span className="text-violet-400 font-bold shrink-0">[User]</span> <div className="text-slate-600">{line.text.substring(2)}</div></>}
                 {line.type === 'output'  && <><span className="text-emerald-400 font-bold shrink-0">[Logic]</span> <div className="text-emerald-300">{line.text}</div></>}
                 {line.type === 'system'  && <><span className="text-blue-400 font-bold shrink-0">[System]</span> <div className="text-blue-300">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-red-400 font-bold shrink-0">[Error]</span> <div className="text-red-400 font-bold">{line.text}</div></>}

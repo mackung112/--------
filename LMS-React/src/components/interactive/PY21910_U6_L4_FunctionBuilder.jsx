@@ -87,7 +87,7 @@ export default function PY21910_U6_L4_FunctionBuilder() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Function Builder (จำลองการทำงานของฟังก์ชัน)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทดลองปรับค่า Parameter แล้วดูการเปลี่ยนแปลงของโค้ดและผลลัพธ์การทำงานของฟังก์ชันแบบ Real-time
         </p>
       </div>
@@ -119,7 +119,7 @@ export default function PY21910_U6_L4_FunctionBuilder() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-3">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500">1. ปรับค่าตัวแปร (Arguments)</h4>
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700">1. ปรับค่าตัวแปร (Arguments)</h4>
                 {func.params.map((param, idx) => (
                   <div key={idx} className="bg-slate-50 rounded-lg p-3 border border-slate-200">
                     <label className="text-xs font-bold text-slate-600 mb-1 block">{param.name}</label>
@@ -138,7 +138,7 @@ export default function PY21910_U6_L4_FunctionBuilder() {
               </div>
 
               <div className="flex flex-col h-full">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">2. โค้ดที่ทำงานจริง (Process)</h4>
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">2. โค้ดที่ทำงานจริง (Process)</h4>
                 <div className="bg-slate-900 rounded-xl p-4 font-mono text-xs leading-relaxed text-slate-100 flex-1 overflow-x-auto">
                   <pre>{func.template(paramValues)}</pre>
                 </div>
@@ -148,7 +148,7 @@ export default function PY21910_U6_L4_FunctionBuilder() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">สรุปแนวคิดการออกแบบ</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">สรุปแนวคิดการออกแบบ</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <ul className="space-y-4 text-sm text-slate-600">
                 <li className="flex gap-2 items-start">
@@ -176,19 +176,19 @@ export default function PY21910_U6_L4_FunctionBuilder() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python program.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python program.py</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

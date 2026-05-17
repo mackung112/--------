@@ -74,7 +74,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Boolean Explorer (ตรรกศาสตร์)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           สำรวจชนิดข้อมูล Boolean (True/False) และตัวดำเนินการทางตรรกศาสตร์ (Logical Operators)
         </p>
       </div>
@@ -87,7 +87,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
           
           {/* Left: Visual Explorer */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">1. กำหนดค่าตัวแปร a และ b</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">1. กำหนดค่าตัวแปร a และ b</h4>
             
             <div className="flex justify-center gap-6 mb-8">
               <button 
@@ -111,7 +111,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
               </button>
             </div>
 
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">2. ตัวดำเนินการตรรกศาสตร์</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">2. ตัวดำเนินการตรรกศาสตร์</h4>
             <div className="grid grid-cols-2 gap-3">
               {ops.map((op, i) => (
                 <button 
@@ -143,7 +143,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
 
           {/* Right: Control / Gamification */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">Truth Table (ตารางความจริง)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">Truth Table (ตารางความจริง)</h4>
             
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4">
               <table className="w-full text-sm text-center">
@@ -182,7 +182,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
                   </tr>
                 </tbody>
               </table>
-              <div className="text-[10px] text-slate-400 mt-2 text-right">T = True, F = False</div>
+              <div className="text-[10px] text-slate-600 mt-2 text-right">T = True, F = False</div>
             </div>
 
             <button 
@@ -198,12 +198,12 @@ export default function PY21910_U3_L6_BooleanExplorer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
             <button 
               onClick={clearConsole}
-              className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-xs"
+              className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-xs"
             >
               <RotateCcw size={14} /> Clear
             </button>
@@ -213,7 +213,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
             {consoleHistory.map((line, idx) => (
               <div key={idx} className="leading-relaxed">
                 {line.type === 'command' && (
-                  <div className="text-slate-300">
+                  <div className="text-slate-600">
                     <span className="text-green-400 mr-2">{">>>"}</span>{line.text}
                   </div>
                 )}
@@ -221,7 +221,7 @@ export default function PY21910_U3_L6_BooleanExplorer() {
                   <div className={line.text === 'True' ? "text-emerald-400" : "text-rose-400"}>{line.text}</div>
                 )}
                 {line.type === 'system' && (
-                  <div className="text-slate-500">{line.text}</div>
+                  <div className="text-slate-700">{line.text}</div>
                 )}
               </div>
             ))}

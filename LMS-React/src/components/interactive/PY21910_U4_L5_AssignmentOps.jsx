@@ -32,7 +32,7 @@ export default function PY21910_U4_L5_AssignmentOps() {
         <div className="text-purple-400">x = {x}</div>
         <div className="text-green-400 mt-1">{ops[active].code}</div>
         <div className="text-yellow-300 mt-2">x → {ops[active].result}</div>
-        <div className="text-slate-400 text-xs mt-2"># {ops[active].desc}</div>
+        <div className="text-slate-600 text-xs mt-2"># {ops[active].desc}</div>
       </div>
     </div>
   );

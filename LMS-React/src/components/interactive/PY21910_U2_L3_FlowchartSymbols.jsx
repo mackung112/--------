@@ -123,7 +123,7 @@ export default function PY21910_U2_L3_FlowchartSymbols() {
           <Sparkles className="w-4 h-4" /> สำรวจสัญลักษณ์แบบ Interactive
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">📐 สัญลักษณ์มาตรฐานของผังงาน (ISO 5807)</h3>
-        <p className="text-gray-500 max-w-xl mx-auto">กดที่สัญลักษณ์แต่ละตัวเพื่อดูรูปร่าง คำอธิบาย และตัวอย่างการใช้งาน</p>
+        <p className="text-gray-700 max-w-xl mx-auto">กดที่สัญลักษณ์แต่ละตัวเพื่อดูรูปร่าง คำอธิบาย และตัวอย่างการใช้งาน</p>
       </div>
 
       <div className="grid md:grid-cols-[1fr_1.5fr] gap-6">

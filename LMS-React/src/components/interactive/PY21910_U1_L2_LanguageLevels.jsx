@@ -168,7 +168,7 @@ export default function PY21910_U1_L2_LanguageLevels() {
           
           <div className="p-6 flex-1 overflow-y-auto">
             {pipelineState === 0 && (
-              <div className="text-center text-slate-500 mt-10">
+              <div className="text-center text-slate-700 mt-10">
                 <Terminal className="w-12 h-12 mx-auto mb-3 opacity-20" />
                 <p>กดปุ่ม <b>"เริ่มจำลองการแปลภาษา"</b> ทางด้านซ้าย<br/>เพื่อดูกระบวนการทำงาน</p>
               </div>
@@ -182,11 +182,11 @@ export default function PY21910_U1_L2_LanguageLevels() {
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="bg-slate-50 p-3 rounded border border-slate-200">
-                    <span className="text-xs text-slate-500 block">ความง่ายในการเขียน</span>
+                    <span className="text-xs text-slate-700 block">ความง่ายในการเขียน</span>
                     <span className="font-bold text-emerald-600">ง่ายมาก</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded border border-slate-200">
-                    <span className="text-xs text-slate-500 block">ความเร็วในการทำงาน</span>
+                    <span className="text-xs text-slate-700 block">ความเร็วในการทำงาน</span>
                     <span className="font-bold text-amber-600">ช้า (ต้องผ่านตัวแปล)</span>
                   </div>
                 </div>
@@ -205,11 +205,11 @@ export default function PY21910_U1_L2_LanguageLevels() {
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="bg-slate-50 p-3 rounded border border-slate-200">
-                    <span className="text-xs text-slate-500 block">ความง่ายในการเขียน</span>
+                    <span className="text-xs text-slate-700 block">ความง่ายในการเขียน</span>
                     <span className="font-bold text-red-500">ยาก</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded border border-slate-200">
-                    <span className="text-xs text-slate-500 block">ความเร็วในการทำงาน</span>
+                    <span className="text-xs text-slate-700 block">ความเร็วในการทำงาน</span>
                     <span className="font-bold text-emerald-600">เร็วมาก</span>
                   </div>
                 </div>
@@ -228,11 +228,11 @@ export default function PY21910_U1_L2_LanguageLevels() {
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="bg-slate-50 p-3 rounded border border-slate-200">
-                    <span className="text-xs text-slate-500 block">ความง่ายในการเขียน</span>
+                    <span className="text-xs text-slate-700 block">ความง่ายในการเขียน</span>
                     <span className="font-bold text-red-700">ยากที่สุด</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded border border-slate-200">
-                    <span className="text-xs text-slate-500 block">ความเร็วในการทำงาน</span>
+                    <span className="text-xs text-slate-700 block">ความเร็วในการทำงาน</span>
                     <span className="font-bold text-emerald-600">เร็วที่สุด</span>
                   </div>
                 </div>
@@ -314,13 +314,13 @@ export default function PY21910_U1_L2_LanguageLevels() {
                 {pipelineState > 0 && pipelineState < 4 && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${pipelineState > 0 && pipelineState < 4 ? 'bg-green-500' : 'bg-slate-600'}`}></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">Compilation Log</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">Compilation Log</span>
             </div>
 
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed">
               {logs.map((log, idx) => (
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
-                  <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                  <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                   <span className={`shrink-0 w-10 font-bold ${
                     log.type === 'error' ? 'text-red-400' :
                     log.type === 'warn' ? 'text-amber-400' :

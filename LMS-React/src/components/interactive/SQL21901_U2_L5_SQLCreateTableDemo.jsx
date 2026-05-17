@@ -145,15 +145,15 @@ const SQLCreateTableDemo = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 relative z-10">
           <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
             <span className="text-[#c678dd] font-mono font-bold text-sm">CREATE TABLE</span>
-            <p className="text-sm text-slate-300 mt-1">คำสั่งหลักสำหรับสร้างตารางใหม่ ตามด้วยชื่อตารางที่เราต้องการตั้ง</p>
+            <p className="text-sm text-slate-600 mt-1">คำสั่งหลักสำหรับสร้างตารางใหม่ ตามด้วยชื่อตารางที่เราต้องการตั้ง</p>
           </div>
           <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
             <span className="text-[#e06c75] font-mono font-bold text-sm">column_name</span> + <span className="text-[#e5c07b] font-mono font-bold text-sm">data_type</span>
-            <p className="text-sm text-slate-300 mt-1">กำหนดชื่อคอลัมน์ และประเภทข้อมูล (เช่น INT, VARCHAR)</p>
+            <p className="text-sm text-slate-600 mt-1">กำหนดชื่อคอลัมน์ และประเภทข้อมูล (เช่น INT, VARCHAR)</p>
           </div>
           <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
             <span className="text-[#c678dd] font-mono font-bold text-sm">constraints</span>
-            <p className="text-sm text-slate-300 mt-1">กฎเกณฑ์เพิ่มเติม (เช่น NOT NULL, UNIQUE, AUTO_INCREMENT)</p>
+            <p className="text-sm text-slate-600 mt-1">กฎเกณฑ์เพิ่มเติม (เช่น NOT NULL, UNIQUE, AUTO_INCREMENT)</p>
           </div>
         </div>
       </section>
@@ -176,7 +176,7 @@ const SQLCreateTableDemo = () => {
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 transition-all hover:shadow-md focus-within:ring-2 focus-within:ring-indigo-200 focus-within:border-indigo-400">
               <label className="block text-sm font-bold text-slate-700 mb-2">ชื่อตาราง (Table Name) <span className="text-red-500">*</span></label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600">
                   <Table className="w-5 h-5" />
                 </div>
                 <input 
@@ -202,7 +202,7 @@ const SQLCreateTableDemo = () => {
 
               <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 pb-2 custom-scrollbar flex-grow">
                 {columns.length === 0 ? (
-                  <div className="text-center text-sm text-slate-400 py-8 italic border-2 border-dashed rounded-lg border-slate-300 bg-slate-50/50">
+                  <div className="text-center text-sm text-slate-600 py-8 italic border-2 border-dashed rounded-lg border-slate-300 bg-slate-50/50">
                     ยังไม่มีคอลัมน์ กรุณากดปุ่ม "เพิ่มคอลัมน์"
                   </div>
                 ) : (
@@ -251,7 +251,7 @@ const SQLCreateTableDemo = () => {
                       </div>
                       <button 
                         onClick={() => handleDeleteColumn(col.id)}
-                        className="ml-auto text-slate-400 hover:text-red-500 transition-colors px-2 py-1 rounded-md hover:bg-red-50" 
+                        className="ml-auto text-slate-600 hover:text-red-500 transition-colors px-2 py-1 rounded-md hover:bg-red-50" 
                         title="ลบคอลัมน์"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -272,10 +272,10 @@ const SQLCreateTableDemo = () => {
                   <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
                 </div>
-                <span className="ml-2 text-xs font-mono text-slate-400">Generated_SQL.sql</span>
+                <span className="ml-2 text-xs font-mono text-slate-600">Generated_SQL.sql</span>
                 <button 
                   onClick={copyToClipboard}
-                  className="ml-auto text-slate-400 hover:text-white transition-colors p-1 rounded hover:bg-white/10" 
+                  className="ml-auto text-slate-600 hover:text-white transition-colors p-1 rounded hover:bg-white/10" 
                   title="Copy Code"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -307,7 +307,7 @@ const SQLCreateTableDemo = () => {
       {showResult && (
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in slide-in-from-bottom-8 duration-500 fade-in">
           <div className="bg-[#1e1e1e] text-green-400 p-5 rounded-2xl font-mono text-sm shadow-xl border border-slate-800 relative">
-            <div className="absolute top-2 right-4 text-slate-500 text-xs flex items-center gap-1">
+            <div className="absolute top-2 right-4 text-slate-700 text-xs flex items-center gap-1">
               <Terminal className="w-3 h-3" /> Terminal
             </div>
             <div dangerouslySetInnerHTML={{ __html: consoleLog }} className="mt-2 leading-relaxed" />
@@ -331,7 +331,7 @@ const SQLCreateTableDemo = () => {
                         </div>
                         <div className="text-xs text-indigo-600 font-normal mt-0.5">{col.type}</div>
                         {(col.nn || col.uq) && (
-                          <div className="text-[10px] text-slate-400 font-normal mt-0.5">
+                          <div className="text-[10px] text-slate-600 font-normal mt-0.5">
                             ({[col.nn && 'NN', col.uq && 'UQ'].filter(Boolean).join(',')})
                           </div>
                         )}
@@ -341,7 +341,7 @@ const SQLCreateTableDemo = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td colSpan={columns.length || 1} className="py-8 text-center text-slate-400 italic bg-slate-50/30">
+                    <td colSpan={columns.length || 1} className="py-8 text-center text-slate-600 italic bg-slate-50/30">
                       Empty set (ยังไม่มีข้อมูล)
                     </td>
                   </tr>

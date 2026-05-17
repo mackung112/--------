@@ -61,7 +61,7 @@ export default function PY21910_U7_L4_FileHandler() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การทำงานกับไฟล์ (File Handling)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การอ่าน (Read) การเขียน (Write) และการจัดการข้อมูลแบบตารางด้วยไฟล์ CSV
         </p>
       </div>
@@ -96,7 +96,7 @@ export default function PY21910_U7_L4_FileHandler() {
             {tab === 'read' && (
               <div className="space-y-4 max-w-xl mx-auto w-full">
                 <div className="bg-slate-900 rounded-xl p-5 font-mono text-sm leading-relaxed shadow-inner">
-                  <div className="text-slate-500 mb-2"># ใช้ with open() เพื่อความปลอดภัย (ปิดไฟล์ให้อัตโนมัติ)</div>
+                  <div className="text-slate-700 mb-2"># ใช้ with open() เพื่อความปลอดภัย (ปิดไฟล์ให้อัตโนมัติ)</div>
                   <div><span className="text-pink-400">with</span> <span className="text-sky-300">open</span>(<span className="text-emerald-300">"data.txt"</span>, <span className="text-emerald-300">"r"</span>, encoding=<span className="text-emerald-300">"utf-8"</span>) <span className="text-pink-400">as</span> f:</div>
                   <div className="ml-4 text-cyan-300">content = f.read()</div>
                   <div className="ml-4 text-cyan-300">print(content)</div>
@@ -111,7 +111,7 @@ export default function PY21910_U7_L4_FileHandler() {
             {tab === 'write' && (
               <div className="space-y-4 max-w-xl mx-auto w-full">
                 <div className="bg-slate-900 rounded-xl p-5 font-mono text-sm leading-relaxed shadow-inner">
-                  <div className="text-slate-500 mb-2"># โหมด "w" (Write) จะสร้างไฟล์ใหม่หรือเขียนทับไฟล์เดิม</div>
+                  <div className="text-slate-700 mb-2"># โหมด "w" (Write) จะสร้างไฟล์ใหม่หรือเขียนทับไฟล์เดิม</div>
                   <div><span className="text-pink-400">with</span> <span className="text-sky-300">open</span>(<span className="text-emerald-300">"output.txt"</span>, <span className="text-emerald-300">"w"</span>, encoding=<span className="text-emerald-300">"utf-8"</span>) <span className="text-pink-400">as</span> f:</div>
                   <div className="ml-4 text-cyan-300">f.write(<span className="text-emerald-300">"สวัสดี Python!\n"</span>)</div>
                   <div className="ml-4 text-cyan-300">f.write(<span className="text-emerald-300">"บรรทัดที่ 2"</span>)</div>
@@ -140,7 +140,7 @@ export default function PY21910_U7_L4_FileHandler() {
                 </div>
                 
                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                  <div className="bg-slate-100 text-xs font-bold text-slate-500 px-4 py-2 border-b border-slate-200 flex items-center justify-between">
+                  <div className="bg-slate-100 text-xs font-bold text-slate-700 px-4 py-2 border-b border-slate-200 flex items-center justify-between">
                     <span>👀 มุมมองแบบตาราง (products.csv)</span>
                   </div>
                   <div className="overflow-x-auto">
@@ -166,7 +166,7 @@ export default function PY21910_U7_L4_FileHandler() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โครงสร้าง `with open()`</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โครงสร้าง `with open()`</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <div className="font-mono text-xs font-bold bg-slate-100 p-2 rounded mb-3 text-slate-700 text-center">
                 with open("file", "mode") as f:
@@ -199,19 +199,19 @@ export default function PY21910_U7_L4_FileHandler() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

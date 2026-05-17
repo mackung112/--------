@@ -76,17 +76,17 @@ export default function OOPClassSimulator() {
           <div className="bg-slate-800 rounded-xl p-4 text-sm font-mono text-blue-300 overflow-hidden mb-6 shadow-inner">
             <div className="text-purple-400">class <span className="text-yellow-300">Student</span>:</div>
             <div className="ml-4 mt-2 text-purple-400">def <span className="text-blue-400">__init__</span>(self, name, age):</div>
-            <div className="ml-8 text-slate-300">self.name = name</div>
-            <div className="ml-8 text-slate-300">self.age = age</div>
-            <div className="ml-8 text-slate-300">self.energy = 100</div>
-            <div className="ml-8 text-slate-300">self.knowledge = 0</div>
+            <div className="ml-8 text-slate-600">self.name = name</div>
+            <div className="ml-8 text-slate-600">self.age = age</div>
+            <div className="ml-8 text-slate-600">self.energy = 100</div>
+            <div className="ml-8 text-slate-600">self.knowledge = 0</div>
             
             <div className="ml-4 mt-3 text-purple-400">def <span className="text-blue-400">study</span>(self):</div>
-            <div className="ml-8 text-slate-300">self.energy -= 20</div>
-            <div className="ml-8 text-slate-300">self.knowledge += 10</div>
+            <div className="ml-8 text-slate-600">self.energy -= 20</div>
+            <div className="ml-8 text-slate-600">self.knowledge += 10</div>
             
             <div className="ml-4 mt-3 text-purple-400">def <span className="text-blue-400">sleep</span>(self):</div>
-            <div className="ml-8 text-slate-300">self.energy += 40</div>
+            <div className="ml-8 text-slate-600">self.energy += 40</div>
           </div>
 
           <div className="mt-auto bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
@@ -127,7 +127,7 @@ export default function OOPClassSimulator() {
           </div>
 
           {objects.length === 0 ? (
-            <div className="h-64 border-2 border-dashed border-indigo-200 rounded-xl flex flex-col items-center justify-center text-indigo-400 p-6 text-center bg-white/50">
+            <div className="h-64 border-2 border-dashed border-indigo-200 rounded-xl flex flex-col items-center justify-center text-indigo-600 p-6 text-center bg-white/50">
               <User className="w-12 h-12 mb-3 opacity-50" />
               <p>ยังไม่มี Object ในระบบ<br/>ลองกรอกชื่อแล้วกดสร้างออบเจ็กต์ดูสิ!</p>
             </div>
@@ -137,7 +137,7 @@ export default function OOPClassSimulator() {
                 <div key={obj.id} className="bg-white rounded-xl shadow-sm border border-indigo-100 p-4 relative group hover:shadow-md transition-shadow">
                   <button 
                     onClick={() => handleRemove(obj.id)}
-                    className="absolute top-2 right-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 text-slate-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -148,7 +148,7 @@ export default function OOPClassSimulator() {
                     </div>
                     <div>
                       <div className="font-bold text-slate-800">{obj.name}</div>
-                      <div className="text-xs text-slate-500">Age: {obj.age} | Type: Student</div>
+                      <div className="text-xs text-slate-700">Age: {obj.age} | Type: Student</div>
                     </div>
                   </div>
 

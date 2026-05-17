@@ -59,7 +59,7 @@ export default function PY21910_U2_L8_PseudocodeIntro() {
           <Sparkles className="w-4 h-4" /> เปรียบเทียบ Pseudocode กับ Python
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">📝 รหัสเทียม (Pseudocode) คืออะไร?</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">รหัสเทียมคือการเขียนขั้นตอนวิธี (Algorithm) ด้วยภาษาที่คล้ายโค้ด แต่ไม่ผูกกับภาษาใดภาษาหนึ่ง ทำให้ทุกคนอ่านเข้าใจตรงกัน ก่อนจะนำไปแปลงเป็นโค้ดจริง</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">รหัสเทียมคือการเขียนขั้นตอนวิธี (Algorithm) ด้วยภาษาที่คล้ายโค้ด แต่ไม่ผูกกับภาษาใดภาษาหนึ่ง ทำให้ทุกคนอ่านเข้าใจตรงกัน ก่อนจะนำไปแปลงเป็นโค้ดจริง</p>
       </div>
 
       {/* What is Pseudocode */}
@@ -70,10 +70,10 @@ export default function PY21910_U2_L8_PseudocodeIntro() {
             <h4 className="font-bold text-indigo-900">Pseudocode (รหัสเทียม)</h4>
           </div>
           <ul className="space-y-2 text-sm text-indigo-700">
-            <li className="flex items-start gap-2"><span className="text-indigo-400 mt-1">•</span> เขียนด้วยภาษากึ่งธรรมชาติ (คล้ายภาษาอังกฤษ)</li>
-            <li className="flex items-start gap-2"><span className="text-indigo-400 mt-1">•</span> ไม่ต้องคำนึงถึง Syntax ที่เข้มงวด</li>
-            <li className="flex items-start gap-2"><span className="text-indigo-400 mt-1">•</span> ใช้คำหลัก เช่น START, READ, COMPUTE, PRINT, STOP</li>
-            <li className="flex items-start gap-2"><span className="text-indigo-400 mt-1">•</span> เหมาะสำหรับวางแผนก่อนเขียนโค้ดจริง</li>
+            <li className="flex items-start gap-2"><span className="text-indigo-600 mt-1">•</span> เขียนด้วยภาษากึ่งธรรมชาติ (คล้ายภาษาอังกฤษ)</li>
+            <li className="flex items-start gap-2"><span className="text-indigo-600 mt-1">•</span> ไม่ต้องคำนึงถึง Syntax ที่เข้มงวด</li>
+            <li className="flex items-start gap-2"><span className="text-indigo-600 mt-1">•</span> ใช้คำหลัก เช่น START, READ, COMPUTE, PRINT, STOP</li>
+            <li className="flex items-start gap-2"><span className="text-indigo-600 mt-1">•</span> เหมาะสำหรับวางแผนก่อนเขียนโค้ดจริง</li>
           </ul>
         </div>
         <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
@@ -100,7 +100,7 @@ export default function PY21910_U2_L8_PseudocodeIntro() {
         ))}
       </div>
 
-      <p className="text-center text-gray-500 text-sm mb-6">{ex.desc}</p>
+      <p className="text-center text-gray-700 text-sm mb-6">{ex.desc}</p>
 
       {/* Side by side comparison */}
       <div className="grid md:grid-cols-2 gap-4 mb-6">

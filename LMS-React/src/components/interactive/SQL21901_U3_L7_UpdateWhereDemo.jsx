@@ -305,7 +305,7 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
 
               {/* Sidebar: Scenarios */}
               <div className="flex flex-col bg-slate-900 md:w-72 shrink-0 border-r border-slate-700 z-10 shadow-xl">
-                <div className="px-5 py-4 border-b border-slate-800 text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <div className="px-5 py-4 border-b border-slate-800 text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
                   <Filter size={14} /> เลือกสถานการณ์
                 </div>
                 {Object.keys(scenarios).map((key) => {
@@ -394,7 +394,7 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
                         if (isChanged) {
                           return (
                             <div className="flex flex-col justify-center items-end md:items-center animate-in slide-in-from-top-2 fade-in duration-500">
-                              <span className="text-[10px] text-slate-400 line-through leading-none mb-1 opacity-70">{origVal.toLocaleString()}</span>
+                              <span className="text-[10px] text-slate-600 line-through leading-none mb-1 opacity-70">{origVal.toLocaleString()}</span>
                               <span className={highlightClass}>{currentVal.toLocaleString()}</span>
                             </div>
                           );
@@ -404,7 +404,7 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
 
                       return (
                         <tr key={row.id} className={rowClasses}>
-                          <td className="p-4 font-mono text-xs text-slate-400 text-center font-semibold">{row.id}</td>
+                          <td className="p-4 font-mono text-xs text-slate-600 text-center font-semibold">{row.id}</td>
                           <td className="p-4 font-medium text-slate-700">{row.name}</td>
                           <td className="p-4 text-center">
                             <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${row.dept === 'IT' ? 'bg-blue-100 text-blue-700' : row.dept === 'HR' ? 'bg-pink-100 text-pink-700' : 'bg-orange-100 text-orange-700'}`}>
@@ -436,7 +436,7 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
             <div className="bg-rose-100 p-2.5 rounded-xl shadow-sm border border-rose-200"><AlertTriangle className="text-rose-600" size={24} /></div>
             <div>
               <h2 className="text-2xl font-bold text-slate-800">Syntax Challenge: กับดักระหว่าง SET และ WHERE</h2>
-              <p className="text-slate-500 text-sm mt-1">ทดสอบความเข้าใจ จุดที่คนเขียน SQL ผิดบ่อยที่สุด</p>
+              <p className="text-slate-700 text-sm mt-1">ทดสอบความเข้าใจ จุดที่คนเขียน SQL ผิดบ่อยที่สุด</p>
             </div>
           </div>
 
@@ -451,8 +451,8 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
                   <Target className="text-white" size={28} />
                 </div>
                 <div>
-                  <h3 className="text-indigo-300 font-bold text-xl mb-2">ภารกิจ: เลื่อนขั้นระดับ VIP</h3>
-                  <p className="text-slate-300 leading-relaxed text-base">
+                  <h3 className="text-indigo-600 font-bold text-xl mb-2">ภารกิจ: เลื่อนขั้นระดับ VIP</h3>
+                  <p className="text-slate-600 leading-relaxed text-base">
                     จงประกอบคำสั่งเพื่อเปลี่ยนสถานะ (status) เป็น 'VIP' <br className="hidden md:block" />
                     ให้กับ user ที่มี <span className="text-white font-mono bg-slate-700 px-1 rounded">points &gt; 1000</span> <strong>และ</strong> <span className="text-white font-mono bg-slate-700 px-1 rounded">level = 5</span>
                   </p>
@@ -462,7 +462,7 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
               {/* Dropzones */}
               <div className="mb-10 overflow-x-auto pb-6">
                 <div className="flex items-center gap-2 mb-4 min-w-max px-2">
-                  <span className="text-sm text-slate-400 font-mono font-bold tracking-widest uppercase">Query Workspace</span>
+                  <span className="text-sm text-slate-600 font-mono font-bold tracking-widest uppercase">Query Workspace</span>
                 </div>
                 <div className="flex items-center gap-3 bg-black/40 p-5 rounded-2xl border border-slate-700/80 min-h-[100px] shadow-[inset_0_4px_20px_rgba(0,0,0,0.5)] min-w-max">
                   {dropzones.map((block, idx) => (
@@ -487,7 +487,7 @@ export default function SQL21901_U3_L7_UpdateWhereDemo() {
               {/* Blocks Bank */}
               <div className="bg-slate-800/40 p-6 rounded-3xl border border-slate-700/50">
                 <div className="flex justify-between items-center mb-4 px-2">
-                  <p className="text-sm text-slate-400 font-mono font-bold uppercase tracking-widest">Blocks Bank (คลิกเพื่อเลือก)</p>
+                  <p className="text-sm text-slate-600 font-mono font-bold uppercase tracking-widest">Blocks Bank (คลิกเพื่อเลือก)</p>
                   <button onClick={resetGame} className="text-slate-400 hover:text-white flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-full transition-all border border-slate-700">
                     <RefreshCcw size={14} /> เริ่มใหม่
                   </button>

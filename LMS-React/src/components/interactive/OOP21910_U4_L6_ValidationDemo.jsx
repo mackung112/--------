@@ -77,7 +77,7 @@ export default function OOP21910_U4_L6_ValidationDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การตรวจสอบความถูกต้องของข้อมูล (Validation)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ก่อนนำข้อมูลไปประมวลผล ควรสร้างเงื่อนไข (Rules) ตรวจสอบความถูกต้องเสมอ เพื่อป้องกัน Error ที่อาจทำให้โปรแกรมพัง
         </p>
       </div>
@@ -128,7 +128,7 @@ export default function OOP21910_U4_L6_ValidationDemo() {
 
           {/* Right: Validation Results */}
           <div className="w-full lg:w-[420px] bg-slate-800 p-6 flex flex-col" style={{ backgroundImage: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}>
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-400 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-600 mb-4 flex items-center gap-2">
               <ShieldCheck size={16} /> กฎการตรวจสอบ (Rules)
             </h4>
             
@@ -136,8 +136,8 @@ export default function OOP21910_U4_L6_ValidationDemo() {
               {validations.map((v, i) => (
                 <div key={i} className={`bg-slate-900/80 border rounded-xl p-4 transition-all ${submitted ? (v.rules.every(r => r.pass) ? 'border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : 'border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.1)]') : 'border-slate-700'}`}>
                   <div className="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
-                    <div className="font-bold text-slate-300 text-sm">{v.field}</div>
-                    <div className="font-mono text-xs text-indigo-400 max-w-[150px] truncate bg-indigo-950/50 px-2 py-0.5 rounded">
+                    <div className="font-bold text-slate-600 text-sm">{v.field}</div>
+                    <div className="font-mono text-xs text-indigo-600 max-w-[150px] truncate bg-indigo-950/50 px-2 py-0.5 rounded">
                       "{v.value}"
                     </div>
                   </div>
@@ -168,17 +168,17 @@ export default function OOP21910_U4_L6_ValidationDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Validation Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Validation Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-600 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

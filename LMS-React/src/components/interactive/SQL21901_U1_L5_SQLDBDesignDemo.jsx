@@ -86,7 +86,7 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Database Schema Builder (การออกแบบฐานข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ฝึกออกแบบฐานข้อมูลด้วยการสร้างความสัมพันธ์ (Relationship) ระหว่างตาราง 1 ต่อกลุ่ม (1:N)
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
           {/* Left: Interactive Schema Builder */}
           <div className="flex-1 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50 relative overflow-hidden">
             <div className="p-4 border-b border-slate-200 bg-white/50 backdrop-blur z-20">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex justify-between items-center">
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex justify-between items-center">
                 <span>ER Diagram Visualizer</span>
                 {linked && (
                   <button onClick={reset} className="text-xs bg-white border border-slate-300 text-slate-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-slate-50 flex items-center gap-1.5 transition-colors">
@@ -129,15 +129,15 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
                         <Key size={14} className="text-yellow-500" />
                         <span className="font-bold text-slate-700">id</span>
                       </div>
-                      <span className="text-[10px] text-slate-400 font-mono">INT (PK)</span>
+                      <span className="text-[10px] text-slate-600 font-mono">INT (PK)</span>
                     </div>
                     <div className="flex items-center justify-between p-2.5 border-b border-slate-100 opacity-70">
                       <span className="text-slate-600 pl-6">name</span>
-                      <span className="text-[10px] text-slate-400 font-mono">VARCHAR</span>
+                      <span className="text-[10px] text-slate-600 font-mono">VARCHAR</span>
                     </div>
                     <div className="flex items-center justify-between p-2.5 opacity-70">
                       <span className="text-slate-600 pl-6">email</span>
-                      <span className="text-[10px] text-slate-400 font-mono">VARCHAR</span>
+                      <span className="text-[10px] text-slate-600 font-mono">VARCHAR</span>
                     </div>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
                         <Key size={14} className="text-yellow-500" />
                         <span className="font-bold text-slate-700">order_id</span>
                       </div>
-                      <span className="text-[10px] text-slate-400 font-mono">INT (PK)</span>
+                      <span className="text-[10px] text-slate-600 font-mono">INT (PK)</span>
                     </div>
                     <div 
                       onClick={() => handleFieldClick('orders', 'customer_id', 'FK')}
@@ -181,11 +181,11 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
                         <LinkIcon size={14} className={linked ? "text-sky-500" : "text-slate-400"} />
                         <span className={`font-bold ${linked ? "text-sky-600" : "text-slate-700"}`}>customer_id</span>
                       </div>
-                      <span className="text-[10px] text-slate-400 font-mono">INT (FK)</span>
+                      <span className="text-[10px] text-slate-600 font-mono">INT (FK)</span>
                     </div>
                     <div className="flex items-center justify-between p-2.5 opacity-70">
                       <span className="text-slate-600 pl-6">total</span>
-                      <span className="text-[10px] text-slate-400 font-mono">DECIMAL</span>
+                      <span className="text-[10px] text-slate-600 font-mono">DECIMAL</span>
                     </div>
                   </div>
                 </div>
@@ -196,7 +196,7 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
 
           {/* Right: Explanation */}
           <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">
               คำอธิบายการออกแบบ
             </h4>
             
@@ -210,7 +210,7 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
 
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 shadow-sm">
                 <strong className="block mb-2 text-emerald-700 flex items-center gap-2">
-                  <LinkIcon size={16} className="text-slate-500"/> Foreign Key (FK)
+                  <LinkIcon size={16} className="text-slate-700"/> Foreign Key (FK)
                 </strong>
                 คีย์นอกที่ใช้อ้างอิงไปยังตารางอื่น เช่น <code>customer_id</code> ในตาราง Orders
               </div>
@@ -239,17 +239,17 @@ export default function SQL21901_U1_L5_SQLDBDesignDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Schema DDL Builder</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Schema DDL Builder</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300 font-bold">{line.text.substring(2)}</div></>}
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-600 font-bold">{line.text.substring(2)}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0">[Sys]</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-400 font-bold shrink-0">[Err]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Ok]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

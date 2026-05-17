@@ -46,7 +46,7 @@ export default function PY21910_U4_L12_ElifStatement() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">elif Statement (หลายเงื่อนไข)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ใช้ <code className="bg-slate-200 px-1 rounded text-pink-600">if-elif-else</code> เพื่อตรวจสอบหลายเงื่อนไขแบบต่อเนื่อง Python จะประเมินตั้งแต่บนลงล่าง
         </p>
       </div>
@@ -55,9 +55,9 @@ export default function PY21910_U4_L12_ElifStatement() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Simulator */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-6">ปรับคะแนนเพื่อดูเกรด</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-6">ปรับคะแนนเพื่อดูเกรด</h4>
             <div className="flex flex-col items-center gap-4 mb-6">
-              <div className="text-6xl font-black text-slate-800">{score}<span className="text-2xl font-medium text-slate-400">/100</span></div>
+              <div className="text-6xl font-black text-slate-800">{score}<span className="text-2xl font-medium text-slate-600">/100</span></div>
               <input type="range" min="0" max="100" step="1" value={score}
                 onChange={e => handleChange(+e.target.value)}
                 className="w-64 accent-indigo-500" />
@@ -86,14 +86,14 @@ export default function PY21910_U4_L12_ElifStatement() {
 
           {/* Right: Guide */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">เกณฑ์การตัดเกรด</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">เกณฑ์การตัดเกรด</h4>
             <div className="bg-white border border-slate-200 rounded-xl shadow-sm mb-4 overflow-hidden flex-1">
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
-                    <th className="py-2 px-4 text-left text-slate-500 font-medium">คะแนน</th>
-                    <th className="py-2 px-4 text-left text-slate-500 font-medium">เกรด</th>
-                    <th className="py-2 px-4 text-left text-slate-500 font-medium">ระดับ</th>
+                    <th className="py-2 px-4 text-left text-slate-700 font-medium">คะแนน</th>
+                    <th className="py-2 px-4 text-left text-slate-700 font-medium">เกรด</th>
+                    <th className="py-2 px-4 text-left text-slate-700 font-medium">ระดับ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,19 +124,19 @@ export default function PY21910_U4_L12_ElifStatement() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

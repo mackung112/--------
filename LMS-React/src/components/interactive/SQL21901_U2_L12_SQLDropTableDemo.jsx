@@ -127,13 +127,13 @@ DROP TABLE IF EXISTS table_name;`) }} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
           <div className="bg-slate-900/60 border border-slate-700 p-4 rounded-xl">
             <h4 className="font-bold text-sky-400 mb-2 flex items-center gap-2"><Eraser className="w-4 h-4" /> TRUNCATE vs DROP</h4>
-            <p className="text-sm text-slate-300">
+            <p className="text-sm text-slate-600">
               ถ้าอยากลบแค่ "ข้อมูลข้างใน" ให้เกลี้ยง แต่ยังคงโครงสร้างตาราง (คอลัมน์ต่างๆ) เอาไว้ให้ใช้คำสั่ง <code className="text-sky-300">TRUNCATE TABLE</code> แทนครับ
             </p>
           </div>
           <div className="bg-rose-900/30 border border-rose-800/50 p-4 rounded-xl">
             <h4 className="font-bold text-rose-400 mb-2 flex items-center gap-2"><ShieldHalf className="w-4 h-4" /> ข้อควรระวัง (Foreign Key)</h4>
-            <p className="text-sm text-slate-300">
+            <p className="text-sm text-slate-600">
               คุณ <strong>ไม่สามารถ</strong> สั่งลบตารางหลัก (Parent Table) ได้ หากยังมีตารางลูก (Child Table) อ้างอิง Foreign Key ถึงตารางนี้อยู่ (ต้องลบลูกก่อน ค่อยลบแม่)
             </p>
           </div>
@@ -157,7 +157,7 @@ DROP TABLE IF EXISTS table_name;`) }} />
           <div className="lg:col-span-5 space-y-6">
             <div className={`bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-inner transition-transform duration-300 ${isShaking ? 'animate-shake-error border-rose-500 shadow-[0_0_0_3px_rgba(244,63,94,0.2)]' : ''}`}>
               <h4 className="font-bold text-slate-700 mb-4 border-b pb-2 flex items-center gap-2">
-                <Terminal className="w-5 h-5 text-slate-500" /> คำสั่งดำเนินการ
+                <Terminal className="w-5 h-5 text-slate-700" /> คำสั่งดำเนินการ
               </h4>
 
               <div className="space-y-5">
@@ -181,7 +181,7 @@ DROP TABLE IF EXISTS table_name;`) }} />
                 >
                   <div>
                     <div className="text-sm font-bold font-mono text-slate-700">IF EXISTS</div>
-                    <div className="text-xs text-slate-500">ใส่เพื่อป้องกัน Error หากตารางไม่มีอยู่จริง</div>
+                    <div className="text-xs text-slate-700">ใส่เพื่อป้องกัน Error หากตารางไม่มีอยู่จริง</div>
                   </div>
                   <div className={`w-10 h-6 rounded-full transition-colors relative flex items-center ${ifExists ? 'bg-sky-500 border-sky-600' : 'bg-slate-200 border-slate-300'} border`}>
                     <div className={`w-4 h-4 bg-white rounded-full absolute shadow-sm transition-transform ${ifExists ? 'translate-x-5' : 'translate-x-1'}`}></div>
@@ -202,7 +202,7 @@ DROP TABLE IF EXISTS table_name;`) }} />
 
             {/* Live SQL Preview */}
             <div className="bg-[#1e1e1e] rounded-xl p-4 shadow-xl border border-slate-800 flex flex-col h-[200px]">
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1 flex justify-between shrink-0">
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1 flex justify-between shrink-0">
                 <span>MySQL Console:</span>
               </div>
               <div className="text-xs font-mono break-words overflow-y-auto custom-scrollbar flex-grow flex flex-col gap-2">
@@ -225,12 +225,12 @@ DROP TABLE IF EXISTS table_name;`) }} />
           {/* Right: Visual Database Schema */}
           <div className="lg:col-span-7 bg-slate-100 border border-slate-200 rounded-2xl p-6 shadow-inner relative flex flex-col items-center justify-center min-h-[400px]">
             
-            <div className="absolute top-4 left-4 font-bold text-slate-400 text-sm flex items-center gap-2">
+            <div className="absolute top-4 left-4 font-bold text-slate-600 text-sm flex items-center gap-2">
               <Database className="w-4 h-4" /> Database: company_db
             </div>
 
             {isDatabaseEmpty ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 animate-in zoom-in">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-600 animate-in zoom-in">
                 <Database className="w-16 h-16 mb-4 opacity-50" />
                 <h3 className="text-xl font-bold">Database is Empty</h3>
                 <p className="text-sm">คุณลบตารางทิ้งไปหมดแล้ว!</p>
@@ -255,15 +255,15 @@ DROP TABLE IF EXISTS table_name;`) }} />
                     ${explodeTable === 'temp_logs' ? 'animate-explode-anim' : ''}
                   `}>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 border border-slate-200">
+                      <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-700 border border-slate-200">
                         <tablesState.temp_logs.icon className="w-5 h-5" />
                       </div>
                       <div>
                         <h4 className="font-bold text-slate-800 font-mono">temp_logs</h4>
-                        <p className="text-xs text-slate-500">{tablesState.temp_logs.rows} rows | <span className="text-emerald-500">Safe to drop</span></p>
+                        <p className="text-xs text-slate-700">{tablesState.temp_logs.rows} rows | <span className="text-emerald-500">Safe to drop</span></p>
                       </div>
                     </div>
-                    <span className="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold">Independent</span>
+                    <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Independent</span>
                   </div>
                 )}
 
@@ -282,13 +282,13 @@ DROP TABLE IF EXISTS table_name;`) }} />
                         <h4 className="font-bold text-slate-800 font-mono flex items-center gap-1">
                           departments <Key className="w-3 h-3 text-orange-400" />
                         </h4>
-                        <p className="text-xs text-slate-500">{tablesState.departments.rows} rows | Parent Table</p>
+                        <p className="text-xs text-slate-700">{tablesState.departments.rows} rows | Parent Table</p>
                       </div>
                     </div>
                     {tablesState.employees.exists ? (
                       <span className="text-xs bg-rose-100 text-rose-600 px-2 py-1 rounded font-bold">Referenced</span>
                     ) : (
-                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold">Safe to drop</span>
+                      <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Safe to drop</span>
                     )}
                   </div>
                 )}
@@ -315,13 +315,13 @@ DROP TABLE IF EXISTS table_name;`) }} />
                       </div>
                       <div>
                         <h4 className="font-bold text-slate-800 font-mono">employees</h4>
-                        <p className="text-xs text-slate-500">{tablesState.employees.rows} rows | Child Table</p>
+                        <p className="text-xs text-slate-700">{tablesState.employees.rows} rows | Child Table</p>
                       </div>
                     </div>
                     {tablesState.departments.exists ? (
                       <span className="text-xs bg-sky-100 text-sky-600 px-2 py-1 rounded font-bold">Has FK</span>
                     ) : (
-                      <span className="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold">Independent</span>
+                      <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Independent</span>
                     )}
                   </div>
                 )}

@@ -76,13 +76,13 @@ export default function SQL21901_U6_L11_SQLReportBuilder() {
                   onClick={() => setXAxis('dept')}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${xAxis === 'dept' ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold shadow-md' : 'border-slate-200 hover:border-indigo-300 text-slate-600'}`}
                 >
-                  <GripHorizontal className="text-slate-400" size={16}/> แผนก (Department)
+                  <GripHorizontal className="text-slate-600" size={16}/> แผนก (Department)
                 </button>
                 <button 
                   onClick={() => setXAxis('role')}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${xAxis === 'role' ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold shadow-md' : 'border-slate-200 hover:border-indigo-300 text-slate-600'}`}
                 >
-                  <GripHorizontal className="text-slate-400" size={16}/> ตำแหน่ง (Role)
+                  <GripHorizontal className="text-slate-600" size={16}/> ตำแหน่ง (Role)
                 </button>
               </div>
             </div>
@@ -97,19 +97,19 @@ export default function SQL21901_U6_L11_SQLReportBuilder() {
                   onClick={() => setYAxis('sum')}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${yAxis === 'sum' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-md' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}
                 >
-                  <GripHorizontal className="text-slate-400" size={16}/> ยอดเงินเดือนรวม (SUM)
+                  <GripHorizontal className="text-slate-600" size={16}/> ยอดเงินเดือนรวม (SUM)
                 </button>
                 <button 
                   onClick={() => setYAxis('avg')}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${yAxis === 'avg' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-md' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}
                 >
-                  <GripHorizontal className="text-slate-400" size={16}/> เงินเดือนเฉลี่ย (AVG)
+                  <GripHorizontal className="text-slate-600" size={16}/> เงินเดือนเฉลี่ย (AVG)
                 </button>
                 <button 
                   onClick={() => setYAxis('count')}
                   className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${yAxis === 'count' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-md' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}
                 >
-                  <GripHorizontal className="text-slate-400" size={16}/> จำนวนพนักงาน (COUNT)
+                  <GripHorizontal className="text-slate-600" size={16}/> จำนวนพนักงาน (COUNT)
                 </button>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function SQL21901_U6_L11_SQLReportBuilder() {
           <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-700">
             <div className="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center text-white font-bold">
               <div className="flex items-center gap-2"><BarChart3 className="text-sky-400"/> Live Dashboard Preview</div>
-              <button className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-sm"><Download size={16}/> Export</button>
+              <button className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-sm"><Download size={16}/> Export</button>
             </div>
             
             <div className="p-8 h-[300px] flex items-end justify-around gap-4 pb-12 relative">
@@ -162,7 +162,7 @@ export default function SQL21901_U6_L11_SQLReportBuilder() {
           {/* SQL Generated */}
           <div className="bg-[#1E1E1E] rounded-2xl shadow-xl overflow-hidden border border-slate-700 flex flex-col">
              <div className="bg-[#323233] p-3 flex justify-between items-center">
-              <div className="text-slate-400 text-xs font-semibold tracking-wider">Generated SQL Query</div>
+              <div className="text-slate-600 text-xs font-semibold tracking-wider">Generated SQL Query</div>
             </div>
             <div className="p-6 font-mono text-sm sm:text-base leading-relaxed overflow-x-auto text-white">
               <span className="text-purple-400">SELECT</span> <span className="text-sky-300">{xAxis}</span>, <span className="text-emerald-400">{yAxis.toUpperCase()}</span>(<span className="text-sky-300">{yAxis === 'count' ? 'id' : 'salary'}</span>) <span className="text-purple-400">AS</span> <span className="text-yellow-300">result</span><br/>

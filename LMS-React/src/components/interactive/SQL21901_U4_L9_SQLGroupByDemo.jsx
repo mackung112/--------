@@ -55,7 +55,7 @@ export default function SQL21901_U4_L9_SQLGroupByDemo() {
         {/* Step 0: Mixed Data */}
         <div className="relative z-10 min-h-[400px] flex flex-col justify-between">
           
-          <div className="text-center font-bold text-slate-500 mb-4 bg-white/80 backdrop-blur-sm inline-block mx-auto px-4 py-2 rounded-full shadow-sm">
+          <div className="text-center font-bold text-slate-700 mb-4 bg-white/80 backdrop-blur-sm inline-block mx-auto px-4 py-2 rounded-full shadow-sm">
             ตาราง Employees (ยังไม่ได้จัดกลุ่ม)
           </div>
 
@@ -93,7 +93,7 @@ export default function SQL21901_U4_L9_SQLGroupByDemo() {
                     <div className="font-bold text-lg text-emerald-400">SUM() = ฿145k</div>
                   </div>
                 ) : (
-                  <Calculator className="mx-auto animate-spin text-slate-400" />
+                  <Calculator className="mx-auto animate-spin text-slate-600" />
                 )}
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function SQL21901_U4_L9_SQLGroupByDemo() {
                     <div className="font-bold text-lg text-emerald-400">SUM() = ฿65k</div>
                   </div>
                 ) : (
-                  <Calculator className="mx-auto animate-spin text-slate-400" />
+                  <Calculator className="mx-auto animate-spin text-slate-600" />
                 )}
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function SQL21901_U4_L9_SQLGroupByDemo() {
                     <div className="font-bold text-lg text-emerald-400">SUM() = ฿155k</div>
                   </div>
                 ) : (
-                  <Calculator className="mx-auto animate-spin text-slate-400" />
+                  <Calculator className="mx-auto animate-spin text-slate-600" />
                 )}
               </div>
             </div>

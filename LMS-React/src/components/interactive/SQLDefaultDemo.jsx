@@ -113,7 +113,7 @@ const SQLDefaultDemo = () => {
         <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-cyan-300">
           <Wand2 className="w-5 h-5" /> โครงสร้างการสร้างตารางคำสั่งซื้อ (Orders)
         </h3>
-        <p className="text-sm text-slate-300 mb-6">ตัวอย่างนี้มีการใช้ <code>CURRENT_TIMESTAMP</code> ซึ่งเป็นฟังก์ชันพิเศษของ SQL ที่ดึงวันและเวลาปัจจุบันของเซิร์ฟเวอร์มาใส่ให้โดยอัตโนมัติ</p>
+        <p className="text-sm text-slate-600 mb-6">ตัวอย่างนี้มีการใช้ <code>CURRENT_TIMESTAMP</code> ซึ่งเป็นฟังก์ชันพิเศษของ SQL ที่ดึงวันและเวลาปัจจุบันของเซิร์ฟเวอร์มาใส่ให้โดยอัตโนมัติ</p>
 
         <div className="bg-[#282c34] p-5 rounded-xl text-sm leading-relaxed shadow-inner border border-slate-700 overflow-x-auto font-mono">
           <div dangerouslySetInnerHTML={{ __html: SQLSyntaxEngine.highlight(`CREATE TABLE orders (
@@ -188,7 +188,7 @@ ALTER TABLE orders AUTO_INCREMENT = 1001;`) }} />
                       </select>
                     </div>
                   ) : (
-                    <div className="mt-2 text-xs text-slate-400 italic">
+                    <div className="mt-2 text-xs text-slate-600 italic">
                       * หากไม่ระบุ ฐานข้อมูลจะใช้ค่า DEFAULT ('pending')
                     </div>
                   )}
@@ -205,7 +205,7 @@ ALTER TABLE orders AUTO_INCREMENT = 1001;`) }} />
 
             {/* Mini Console */}
             <div className="bg-[#1e1e1e] rounded-xl p-4 shadow-xl border border-slate-800">
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1 flex items-center gap-1">
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1 flex items-center gap-1">
                 <Terminal className="w-3 h-3" /> SQL Executed:
               </div>
               <div className="text-sm font-mono text-emerald-400 break-words min-h-[40px] leading-relaxed">
@@ -221,7 +221,7 @@ ALTER TABLE orders AUTO_INCREMENT = 1001;`) }} />
                 <div className="font-bold text-slate-700 flex items-center gap-2">
                   <Table className="w-4 h-4 text-indigo-600" /> ตาราง orders
                 </div>
-                <div className="text-xs text-slate-500 font-mono flex items-center gap-1 bg-white px-2 py-1 rounded-md border border-slate-200">
+                <div className="text-xs text-slate-700 font-mono flex items-center gap-1 bg-white px-2 py-1 rounded-md border border-slate-200">
                   AUTO_INCREMENT = <span className="text-indigo-600 font-bold">{autoIncrementId}</span>
                 </div>
               </div>
@@ -250,10 +250,10 @@ ALTER TABLE orders AUTO_INCREMENT = 1001;`) }} />
                         <td colSpan="4" className="h-64 relative">
                           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
                             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                              <FolderOpen className="w-8 h-8 text-slate-400" />
+                              <FolderOpen className="w-8 h-8 text-slate-600" />
                             </div>
                             <p className="text-slate-600 font-medium text-lg">ตารางยังว่างเปล่า</p>
-                            <p className="text-sm text-slate-400 mt-1">ลองเพิ่มคำสั่งซื้อทางด้านซ้ายดูสิ!</p>
+                            <p className="text-sm text-slate-600 mt-1">ลองเพิ่มคำสั่งซื้อทางด้านซ้ายดูสิ!</p>
                           </div>
                         </td>
                       </tr>

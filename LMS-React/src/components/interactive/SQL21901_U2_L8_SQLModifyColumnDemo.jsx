@@ -190,12 +190,12 @@ ALTER TABLE products MODIFY COLUMN price DECIMAL(10,2) NOT NULL;`) }} />
                   </select>
                 </div>
 
-                <div className="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-500 flex justify-between items-center shadow-inner">
+                <div className="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 flex justify-between items-center shadow-inner">
                   <span>เดิม: <span className="text-slate-700 font-bold">{columns.find(c => c.name === selectedCol)?.type}</span></span>
                   {columns.find(c => c.name === selectedCol)?.notNull ? (
                     <span className="text-rose-500 font-bold">NOT NULL</span>
                   ) : (
-                    <span className="text-slate-400">NULL (อนุญาตค่าว่าง)</span>
+                    <span className="text-slate-600">NULL (อนุญาตค่าว่าง)</span>
                   )}
                 </div>
 
@@ -236,7 +236,7 @@ ALTER TABLE products MODIFY COLUMN price DECIMAL(10,2) NOT NULL;`) }} />
 
             {/* Live SQL Preview */}
             <div className={`bg-[#1e1e1e] rounded-xl p-4 shadow-xl border ${isShakeError ? 'border-rose-500 shadow-[0_0_0_2px_rgba(244,63,94,0.2)] animate-shake-error' : 'border-slate-800'}`}>
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1 flex justify-between">
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1 flex justify-between">
                 <span>SQL Preview:</span>
               </div>
               <div 
@@ -298,7 +298,7 @@ ALTER TABLE products MODIFY COLUMN price DECIMAL(10,2) NOT NULL;`) }} />
                               }`}
                             >
                               {val === null ? (
-                                <span className="text-slate-400 italic">NULL</span>
+                                <span className="text-slate-600 italic">NULL</span>
                               ) : (
                                 <span className={col.isPK ? 'font-bold text-slate-600' : 'text-indigo-600'}>
                                   {val}

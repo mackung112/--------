@@ -48,7 +48,7 @@ export default function OOP21910_U4_L3_ErrorReadingDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การอ่านและวิเคราะห์ Error (Traceback)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการอ่านข้อความแจ้งเตือน (Traceback) เมื่อโปรแกรมพัง เพื่อให้รู้ว่าเกิด Error ที่บรรทัดไหน และเกิดจากสาเหตุใด
         </p>
       </div>
@@ -57,17 +57,17 @@ export default function OOP21910_U4_L3_ErrorReadingDemo() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Error List */}
           <div className="w-full lg:w-[320px] bg-slate-50 border-b lg:border-b-0 lg:border-r border-slate-200 p-4 flex flex-col gap-3">
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 px-2">ประเภท Error ที่พบบ่อย</div>
+            <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 px-2">ประเภท Error ที่พบบ่อย</div>
             
             {errors.map(err => (
               <button key={err.id} onClick={() => handleSelectError(err.id)}
                 className={`w-full text-left p-3 rounded-xl border-l-[4px] transition-all ${err.color} ${selectedError === err.id ? 'bg-white shadow-md border-r border-y border-slate-300 scale-[1.02]' : 'bg-white border-r border-y border-slate-200 hover:shadow-sm hover:bg-slate-50'}`}>
                 <div className="font-bold text-slate-800 text-sm mb-1">{err.title}</div>
-                <div className="text-xs text-slate-500 font-mono truncate">{err.error}</div>
+                <div className="text-xs text-slate-700 font-mono truncate">{err.error}</div>
               </button>
             ))}
 
-            <button onClick={clear} className="mt-auto bg-transparent hover:bg-slate-200 text-slate-500 border border-slate-300 px-4 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-colors">
+            <button onClick={clear} className="mt-auto bg-transparent hover:bg-slate-200 text-slate-700 border border-slate-300 px-4 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-colors">
               <RotateCcw size={16} /> รีเซ็ต
             </button>
           </div>
@@ -78,19 +78,19 @@ export default function OOP21910_U4_L3_ErrorReadingDemo() {
               const err = errors.find(e => e.id === selectedError);
               return (
                 <div className="h-full flex flex-col animate-in fade-in duration-300">
-                  <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ตัวอย่างโค้ดที่ทำให้เกิดปัญหา</h4>
+                  <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ตัวอย่างโค้ดที่ทำให้เกิดปัญหา</h4>
                   
                   <div className="bg-[#1e1e1e] rounded-xl p-4 font-mono text-[13px] shadow-inner border border-slate-700 mb-6">
-                    <div className="text-slate-500 text-xs mb-3 border-b border-slate-700 pb-2">📄 main.py</div>
+                    <div className="text-slate-700 text-xs mb-3 border-b border-slate-700 pb-2">📄 main.py</div>
                     {err.code.split('\n').map((line, i) => (
                       <div key={i} className={`flex gap-3 px-2 py-0.5 rounded ${i + 1 === err.line ? 'bg-red-500/20 border-l-2 border-red-500 -ml-2' : ''}`}>
                         <span className="text-slate-600 w-5 text-right select-none">{i + 1}</span>
-                        <span className="text-slate-300">{line}</span>
+                        <span className="text-slate-600">{line}</span>
                       </div>
                     ))}
                   </div>
 
-                  <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">การวิเคราะห์และวิธีแก้ไข</h4>
+                  <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">การวิเคราะห์และวิธีแก้ไข</h4>
                   
                   <div className="bg-red-50 border border-red-200 rounded-xl p-5 shadow-sm flex-1">
                     <div className="text-red-700 font-mono text-sm font-bold mb-4 pb-3 border-b border-red-200/50">
@@ -119,10 +119,10 @@ export default function OOP21910_U4_L3_ErrorReadingDemo() {
                 </div>
               );
             })() : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-400 text-center p-8 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50">
-                <AlertTriangle size={48} className="text-slate-300 mb-4" />
+              <div className="h-full flex flex-col items-center justify-center text-slate-600 text-center p-8 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50">
+                <AlertTriangle size={48} className="text-slate-600 mb-4" />
                 <h3 className="text-lg font-bold text-slate-700 mb-2">เลือก Error ทางด้านซ้าย</h3>
-                <p className="text-sm text-slate-500 max-w-sm">คลิกเลือกรายการ Error ที่พบบ่อยเพื่อดูตัวอย่างโค้ด วิธีการอ่าน Traceback และแนวทางการแก้ไขที่ถูกต้อง</p>
+                <p className="text-sm text-slate-700 max-w-sm">คลิกเลือกรายการ Error ที่พบบ่อยเพื่อดูตัวอย่างโค้ด วิธีการอ่าน Traceback และแนวทางการแก้ไขที่ถูกต้อง</p>
               </div>
             )}
           </div>
@@ -132,14 +132,14 @@ export default function OOP21910_U4_L3_ErrorReadingDemo() {
         <div className="h-56 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Python Traceback Console</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Python Traceback Console</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'error'  && <div className="text-red-400 whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'system'  && <div className={line.text.includes('FATAL') ? 'text-red-500 font-bold bg-red-950/30 inline-block px-1 rounded' : 'text-slate-500 whitespace-pre-wrap'}>{line.text}</div>}
               </div>

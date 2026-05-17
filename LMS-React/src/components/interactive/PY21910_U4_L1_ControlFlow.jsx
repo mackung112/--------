@@ -53,7 +53,7 @@ export default function PY21910_U4_L1_ControlFlow() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Control Flow (if / elif / while)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทดลองเงื่อนไขและลูปโดยตรงใน Terminal จำลองของ Python
         </p>
       </div>
@@ -63,7 +63,7 @@ export default function PY21910_U4_L1_ControlFlow() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left Visual */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">เลือกตัวอย่าง</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">เลือกตัวอย่าง</h4>
             <div className="grid grid-cols-1 gap-3 mb-6">
               {Object.keys(demos).map(key => (
                 <button
@@ -78,7 +78,7 @@ export default function PY21910_U4_L1_ControlFlow() {
           </div>
           {/* Right Controls */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">คำอธิบาย</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">คำอธิบาย</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               {demos[selected] && (
                 <>
@@ -99,10 +99,10 @@ export default function PY21910_U4_L1_ControlFlow() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clearConsole} className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-xs">
+            <button onClick={clearConsole} className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
@@ -110,7 +110,7 @@ export default function PY21910_U4_L1_ControlFlow() {
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
                 {line.type === 'command' && (
-                  <div className="text-slate-300">
+                  <div className="text-slate-600">
                     <span className="text-green-400 mr-2">{">>>"}</span>{line.text}
                   </div>
                 )}
@@ -118,7 +118,7 @@ export default function PY21910_U4_L1_ControlFlow() {
                   <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>
                 )}
                 {line.type === 'system' && (
-                  <div className="text-slate-500">{line.text}</div>
+                  <div className="text-slate-700">{line.text}</div>
                 )}
               </div>
             ))}

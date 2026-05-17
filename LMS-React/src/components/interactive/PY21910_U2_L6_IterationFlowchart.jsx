@@ -53,7 +53,7 @@ export default function PY21910_U2_L6_IterationFlowchart() {
           <Sparkles className="w-4 h-4" /> จำลองการวนซ้ำ Step-by-Step
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">🔄 ผังงานแบบวนซ้ำ (Iteration)</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">ทำงานซ้ำๆ จนกว่าเงื่อนไขจะเป็นเท็จ — ตัวอย่าง: หาผลรวม 1 ถึง N</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">ทำงานซ้ำๆ จนกว่าเงื่อนไขจะเป็นเท็จ — ตัวอย่าง: หาผลรวม 1 ถึง N</p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -140,7 +140,7 @@ export default function PY21910_U2_L6_IterationFlowchart() {
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <span>คำตอบที่ถูกต้อง:</span>
               <span className="font-bold text-indigo-600">{(targetN * (targetN + 1)) / 2}</span>
-              <span className="text-gray-400">| วนลูป {targetN} รอบ</span>
+              <span className="text-gray-600">| วนลูป {targetN} รอบ</span>
             </div>
           </div>
 
@@ -179,7 +179,7 @@ export default function PY21910_U2_L6_IterationFlowchart() {
     
       {/* Bottom Full-Width Console Output (VS Code Style) */}
       <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-            <div className="text-slate-500 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
+            <div className="text-slate-700 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
             {logs.length === 0 && <div className="text-slate-600">กดปุ่มเพื่อเริ่มจำลอง...</div>}
             {logs.map((l, idx) => (
               <div key={idx} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('📤') ? 'text-yellow-300 font-bold' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : 'text-slate-300'}`}>

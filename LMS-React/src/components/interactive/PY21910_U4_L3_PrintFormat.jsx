@@ -13,7 +13,7 @@ export default function PY21910_U4_L3_PrintFormat() {
   return (
     <div className="w-full my-12">
       <h3 className="text-xl font-bold text-gray-800 mb-2 text-center">🖨️ การจัดรูปแบบ print()</h3>
-      <p className="text-gray-500 text-center mb-4 text-sm">กดดูรูปแบบต่างๆ ของคำสั่ง print</p>
+      <p className="text-gray-700 text-center mb-4 text-sm">กดดูรูปแบบต่างๆ ของคำสั่ง print</p>
       <div className="flex flex-wrap justify-center gap-2 mb-6">
         {examples.map((_, i) => (
           <button key={i} onClick={() => setActive(i)} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${active === i ? 'bg-indigo-500 text-white shadow-lg' : 'bg-gray-100 text-gray-600'}`}>รูปแบบ {i + 1}</button>
@@ -27,7 +27,7 @@ export default function PY21910_U4_L3_PrintFormat() {
       <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
         <div className="text-green-400 mb-3">{examples[active].code}</div>
         <div className="border-t border-slate-700 pt-3">
-          <span className="text-slate-500 text-xs">Output:</span>
+          <span className="text-slate-700 text-xs">Output:</span>
           <div className="text-yellow-300 text-lg mt-1">{examples[active].output}</div>
         </div>
       </div>

@@ -67,7 +67,7 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การนำคลาสไปสร้างเป็นออบเจ็กต์ (Instantiation)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการนำแม่พิมพ์ (Class) ไปสร้างเป็นชิ้นงานจริง (Object) และการนำไปเก็บในตัวแปรเพื่อใช้งาน
         </p>
       </div>
@@ -81,7 +81,7 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
               {/* Form Side */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
                 <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                  <Hammer size={18} className="text-slate-400" /> สร้างบ้าน (Instantiate)
+                  <Hammer size={18} className="text-slate-600" /> สร้างบ้าน (Instantiate)
                 </h4>
                 
                 <div className="space-y-5 flex-1">
@@ -116,13 +116,13 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
 
               {/* Objects Side */}
               <div className="bg-[#2d2d2d] rounded-2xl p-5 shadow-inner border border-black flex flex-col h-[350px]">
-                <h4 className="font-bold text-slate-300 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2 text-sm">
+                <h4 className="font-bold text-slate-600 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2 text-sm">
                   <Home size={16} /> Memory
                 </h4>
 
                 <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
                   {houses.length === 0 ? (
-                    <div className="h-full flex items-center justify-center text-slate-500 text-xs text-center">
+                    <div className="h-full flex items-center justify-center text-slate-700 text-xs text-center">
                       ยังไม่มี Object<br/>คลิกสร้าง Object จากคลาส House
                     </div>
                   ) : (
@@ -151,13 +151,13 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[320px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose">
-              <span className="text-slate-500"># 1. สร้างและเก็บลงตัวแปร</span><br />
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose">
+              <span className="text-slate-700"># 1. สร้างและเก็บลงตัวแปร</span><br />
               <span className="text-emerald-400">my_house</span> = <span className="text-yellow-300">House</span>(<span className="text-sky-300">"Villa"</span>, <span className="text-sky-300">"Blue"</span>)<br />
               <br />
-              <span className="text-slate-500"># 2. เรียกใช้เมธอดของ Object</span><br />
+              <span className="text-slate-700"># 2. เรียกใช้เมธอดของ Object</span><br />
               <span className="text-emerald-400">my_house</span>.open_door()
             </div>
 
@@ -195,16 +195,16 @@ export default function OOP21910_U2_L5_InstantiationDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

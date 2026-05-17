@@ -95,7 +95,7 @@ export default function OOP21910_U2_L9_InheritanceRPGDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Inheritance (การสืบทอดคุณสมบัติ)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การสร้างคลาสลูกให้สืบทอดคุณสมบัติจากคลาสแม่ (Parent) เพื่อลดการเขียนโค้ดซ้ำ และสามารถเพิ่มเติมความสามารถเฉพาะตัวได้
         </p>
       </div>
@@ -139,7 +139,7 @@ export default function OOP21910_U2_L9_InheritanceRPGDemo() {
               {/* Character Card */}
               <div className="flex-1 bg-slate-800 rounded-2xl p-5 shadow-inner border border-slate-700 flex flex-col items-center justify-center relative min-h-[220px]" style={{ backgroundImage: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}>
                 {!currentObj ? (
-                  <div className="text-slate-500 text-xs text-center flex flex-col items-center">
+                  <div className="text-slate-700 text-xs text-center flex flex-col items-center">
                     <Gamepad2 size={32} className="mb-2 opacity-30" />
                     คลิกเลือกคลาสลูกด้านบนเพื่อสร้างตัวละคร
                   </div>
@@ -151,7 +151,7 @@ export default function OOP21910_U2_L9_InheritanceRPGDemo() {
                         <p className={`text-[10px] px-1.5 py-0.5 rounded inline-block font-mono bg-black/30`}>{currentObj.type}</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-[9px] uppercase tracking-wider text-slate-300 font-bold mb-0.5">HP (from Hero)</div>
+                        <div className="text-[9px] uppercase tracking-wider text-slate-600 font-bold mb-0.5">HP (from Hero)</div>
                         <div className="bg-red-500 text-white font-mono font-bold px-2 py-0.5 rounded-full text-xs shadow-inner flex items-center gap-1">
                           <Heart size={10} fill="currentColor" /> <span>{currentObj.hp}</span>
                         </div>
@@ -193,20 +193,20 @@ export default function OOP21910_U2_L9_InheritanceRPGDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[360px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
-              <span className="text-slate-500"># 1. Parent Class</span><br />
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              <span className="text-slate-700"># 1. Parent Class</span><br />
               <span className="text-pink-400">class</span> <span className="text-yellow-300">Hero</span>:<br />
               &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">__init__</span>(<span className="text-orange-300">self</span>, name):<br />
               &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.name = name<br />
               &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.hp = 100<br />
               <br />
-              <span className="text-slate-500"># 2. Child Class สืบทอดโดยใส่วงเล็บ</span><br />
+              <span className="text-slate-700"># 2. Child Class สืบทอดโดยใส่วงเล็บ</span><br />
               <span className="text-pink-400">class</span> <span className="text-yellow-300">Warrior</span>(<span className="text-yellow-300">Hero</span>):<br />
               &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">__init__</span>(<span className="text-orange-300">self</span>, name, weapon):<br />
-              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-sky-300">super</span>().<span className="text-pink-400">__init__</span>(name) <span className="text-slate-500"># ให้แม่ตั้งชื่อและ HP ให้</span><br />
-              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.weapon = weapon <span className="text-slate-500"># เก็บอาวุธเอง</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-sky-300">super</span>().<span className="text-pink-400">__init__</span>(name) <span className="text-slate-700"># ให้แม่ตั้งชื่อและ HP ให้</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.weapon = weapon <span className="text-slate-700"># เก็บอาวุธเอง</span>
             </div>
 
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4 overflow-y-auto">
@@ -237,16 +237,16 @@ export default function OOP21910_U2_L9_InheritanceRPGDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

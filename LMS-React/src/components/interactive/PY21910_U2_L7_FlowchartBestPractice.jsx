@@ -129,7 +129,7 @@ export default function PY21910_U2_L7_FlowchartBestPractice() {
           <Sparkles className="w-4 h-4" /> เปรียบเทียบผังงานที่ถูก vs ผิด
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">📋 คุณลักษณะของผังงานที่ดี</h3>
-        <p className="text-gray-500 max-w-xl mx-auto">เรียนรู้หลักการสำคัญ 4 ข้อ พร้อมเปรียบเทียบตัวอย่างที่ถูกต้องกับตัวอย่างที่ผิดพลาด</p>
+        <p className="text-gray-700 max-w-xl mx-auto">เรียนรู้หลักการสำคัญ 4 ข้อ พร้อมเปรียบเทียบตัวอย่างที่ถูกต้องกับตัวอย่างที่ผิดพลาด</p>
       </div>
 
       {/* Rule Tabs */}

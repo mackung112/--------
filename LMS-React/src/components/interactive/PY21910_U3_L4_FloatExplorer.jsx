@@ -68,7 +68,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Float Explorer (ทศนิยม)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           สำรวจชนิดข้อมูล Float การปัดเศษ และข้อควรระวังเรื่องความแม่นยำของทศนิยม
         </p>
       </div>
@@ -81,7 +81,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
           
           {/* Left: Visual Explorer */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">1. กำหนดค่าตัวแปร x</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">1. กำหนดค่าตัวแปร x</h4>
             
             <div className="flex justify-center mb-8">
               <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-center">
@@ -96,7 +96,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
               </div>
             </div>
 
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">2. ฟังก์ชันจัดการทศนิยม</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">2. ฟังก์ชันจัดการทศนิยม</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {demos.map((d, i) => (
                 <button 
@@ -106,7 +106,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
                 >
                   <div>
                     <div className="font-mono text-sm font-bold text-teal-700 mb-1">{d.label}</div>
-                    <div className="text-xs text-slate-500 leading-relaxed mb-3">{d.desc}</div>
+                    <div className="text-xs text-slate-700 leading-relaxed mb-3">{d.desc}</div>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-teal-600 font-bold bg-teal-50 py-1.5 px-2 rounded-md w-max">
                     <Play size={12} className="fill-current" /> รันเพื่อดูผล
@@ -118,7 +118,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
 
           {/* Right: Control / Gamification */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">Floating Point Precision</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">Floating Point Precision</h4>
             
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 shadow-sm mb-4">
               <div className="flex items-center gap-2 mb-2">
@@ -137,7 +137,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
               </button>
             </div>
             
-            <p className="text-xs text-slate-500 leading-relaxed mt-auto">
+            <p className="text-xs text-slate-700 leading-relaxed mt-auto">
               💡 <strong>คำแนะนำ</strong>: หากต้องการความแม่นยำสูง (เช่น คำนวณเงิน) ให้ใช้ Module <code className="bg-slate-200 px-1 rounded">decimal</code> แทน float ปกติ
             </p>
           </div>
@@ -147,12 +147,12 @@ export default function PY21910_U3_L4_FloatExplorer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
             <button 
               onClick={clearConsole}
-              className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-xs"
+              className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-xs"
             >
               <RotateCcw size={14} /> Clear
             </button>
@@ -162,7 +162,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
             {consoleHistory.map((line, idx) => (
               <div key={idx} className="leading-relaxed">
                 {line.type === 'command' && (
-                  <div className="text-slate-300">
+                  <div className="text-slate-600">
                     <span className="text-green-400 mr-2">{">>>"}</span>{line.text}
                   </div>
                 )}
@@ -170,7 +170,7 @@ export default function PY21910_U3_L4_FloatExplorer() {
                   <div className="text-cyan-300">{line.text}</div>
                 )}
                 {line.type === 'system' && (
-                  <div className="text-slate-500">{line.text}</div>
+                  <div className="text-slate-700">{line.text}</div>
                 )}
                 {line.type === 'warning' && (
                   <div className="text-amber-400 mt-1 mb-2 font-bold">{line.text}</div>

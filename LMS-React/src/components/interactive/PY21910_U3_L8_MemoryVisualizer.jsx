@@ -153,7 +153,7 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Memory Visualizer (หน่วยความจำ)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           จำลองการทำงานของตัวแปรในหน่วยความจำ RAM และทำความเข้าใจความแตกต่างของ Immutable vs Mutable ใน Python
         </p>
       </div>
@@ -189,11 +189,11 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
                     key={idx} 
                     className={`relative p-5 rounded-2xl border-2 ${mem.color} min-w-[160px] bg-white transition-all duration-500 shadow-sm ${mem.changed ? 'ring-4 ring-rose-300 ring-offset-2 scale-105' : ''} ${mem.isNew ? 'ring-4 ring-emerald-300 ring-offset-2 scale-105' : ''}`}
                   >
-                    <div className="text-xs font-bold text-slate-400 mb-1">ตัวแปร</div>
+                    <div className="text-xs font-bold text-slate-600 mb-1">ตัวแปร</div>
                     <div className="text-2xl font-extrabold text-slate-900 mb-2 font-mono">{mem.name}</div>
-                    <div className="text-xs text-slate-500 mb-1">ค่า:</div>
+                    <div className="text-xs text-slate-700 mb-1">ค่า:</div>
                     <div className="font-mono text-lg font-bold text-slate-800">{mem.value}</div>
-                    <div className="text-[11px] text-slate-400 mt-3 font-mono bg-slate-50 p-1 rounded inline-block">addr: {mem.addr}</div>
+                    <div className="text-[11px] text-slate-600 mt-3 font-mono bg-slate-50 p-1 rounded inline-block">addr: {mem.addr}</div>
                     
                     {mem.changed && <div className="absolute -top-3 -right-3 bg-rose-500 text-white text-[10px] px-2 py-1 rounded-full font-bold shadow-sm animate-bounce">Changed!</div>}
                     {mem.isNew && <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-[10px] px-2 py-1 rounded-full font-bold shadow-sm animate-pulse">New!</div>}
@@ -211,7 +211,7 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
 
           {/* Right: Control / Gamification */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">การทำงานปัจจุบัน</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">การทำงานปัจจุบัน</h4>
             
             <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-6 flex-1 flex flex-col justify-center">
               <div className="text-xs font-bold text-indigo-500 mb-2 uppercase tracking-wider flex items-center gap-2">
@@ -234,7 +234,7 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
                 <button 
                   onClick={() => setStep(Math.min(scenario.steps.length - 1, step + 1))} 
                   disabled={step >= scenario.steps.length - 1}
-                  className="flex-[2] flex items-center justify-center gap-2 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed transition-all shadow-sm active:scale-95 text-sm"
+                  className="flex-[2] flex items-center justify-center gap-2 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 disabled:bg-slate-300 disabled:text-slate-700 disabled:cursor-not-allowed transition-all shadow-sm active:scale-95 text-sm"
                 >
                   ขั้นตอนถัดไป <ArrowRight size={16} />
                 </button>
@@ -253,8 +253,8 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python memory_test.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python memory_test.py</span>
             </div>
             <div className="flex gap-1 items-center">
               <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
@@ -267,7 +267,7 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
             {consoleHistory.map((line, idx) => (
               <div key={idx} className="leading-relaxed">
                 {line.type === 'command' && (
-                  <div className="text-slate-300">
+                  <div className="text-slate-600">
                     <span className="text-green-400 mr-2">{line.text.startsWith('>>>') ? '' : '>>>'}</span>
                     {line.text}
                   </div>
@@ -276,7 +276,7 @@ export default function PY21910_U3_L8_MemoryVisualizer() {
                   <div className="text-cyan-300">{line.text}</div>
                 )}
                 {line.type === 'system' && (
-                  <div className="text-slate-500 mb-2 font-bold">{line.text}</div>
+                  <div className="text-slate-700 mb-2 font-bold">{line.text}</div>
                 )}
               </div>
             ))}

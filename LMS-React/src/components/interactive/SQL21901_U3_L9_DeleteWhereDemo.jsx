@@ -241,7 +241,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
                 <p className="text-sm text-slate-600 mb-4">ระบุชื่อตาราง และตามด้วยเงื่อนไขเพื่อหา <strong>"แถว"</strong> ที่ต้องการลบ</p>
                 <div className="bg-slate-900 p-4 rounded-xl font-mono text-sm shadow-inner border border-slate-700 leading-relaxed">
                   <span className="text-rose-400 font-bold">DELETE FROM</span> <span className="text-emerald-300">table_name</span><br/>
-                  <span className="text-purple-400 font-bold">WHERE</span> <span className="text-slate-300">condition1</span> <span className="text-blue-400 font-bold">AND</span> <span className="text-slate-300">condition2</span>;
+                  <span className="text-purple-400 font-bold">WHERE</span> <span className="text-slate-600">condition1</span> <span className="text-blue-400 font-bold">AND</span> <span className="text-slate-600">condition2</span>;
                 </div>
              </div>
 
@@ -278,7 +278,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
 
             {/* Sidebar: Scenarios */}
             <div className="flex flex-col bg-slate-50 md:w-80 shrink-0 border-r border-slate-200 z-10">
-                <div className="px-5 py-4 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2 bg-slate-100/50">
+                <div className="px-5 py-4 border-b border-slate-200 text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2 bg-slate-100/50">
                   <Layers size={14}/> เลือกเงื่อนไขการลบ
                 </div>
                 {Object.keys(scenarios).map((key) => {
@@ -298,7 +298,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
                       </div>
                       <div>
                         <div className={`font-bold text-sm mb-1 ${isActive ? 'text-rose-700' : 'text-slate-700'}`}>{scenarios[key].title}</div>
-                        <div className="text-xs text-slate-500 leading-relaxed">{scenarios[key].desc}</div>
+                        <div className="text-xs text-slate-700 leading-relaxed">{scenarios[key].desc}</div>
                       </div>
                     </button>
                   )
@@ -337,7 +337,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
 
                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                   {products.length === 0 ? (
-                    <div className="p-12 text-center text-slate-400 flex flex-col items-center justify-center h-48">
+                    <div className="p-12 text-center text-slate-600 flex flex-col items-center justify-center h-48">
                       <Database size={40} className="mb-3 opacity-20" />
                       <p>ตารางว่างเปล่า (Empty Table)</p>
                     </div>
@@ -366,7 +366,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
 
                           return (
                             <tr key={row.id} className={rowClasses}>
-                              <td className="p-3 font-mono text-xs text-slate-400 text-center font-semibold">
+                              <td className="p-3 font-mono text-xs text-slate-600 text-center font-semibold">
                                 {isTarget ? <XCircle size={14} className="mx-auto text-rose-500 animate-pulse"/> : row.id}
                               </td>
                               <td className={`p-3 font-medium ${isTarget ? 'line-through text-rose-500' : 'text-slate-700'}`}>{row.name}</td>
@@ -404,7 +404,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
             <div className="bg-indigo-100 p-2.5 rounded-xl shadow-sm border border-indigo-200"><Layers className="text-indigo-600" size={24} /></div>
             <div>
                <h2 className="text-2xl font-bold text-slate-800">Logic Challenge: สร้างเงื่อนไขสุดหิน</h2>
-               <p className="text-slate-500 text-sm mt-1">ทดสอบการประกอบคำสั่ง DELETE ที่มีหลายเงื่อนไข (AND)</p>
+               <p className="text-slate-700 text-sm mt-1">ทดสอบการประกอบคำสั่ง DELETE ที่มีหลายเงื่อนไข (AND)</p>
             </div>
           
       {/* Bottom Full-Width Console Output (VS Code Style) */}
@@ -419,10 +419,10 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
                   <Trash2 className="text-white" size={28} />
                 </div>
                 <div>
-                  <h3 className="text-indigo-300 font-bold text-xl mb-2">ภารกิจ: เคลียร์สินค้าชำรุด</h3>
-                  <p className="text-slate-300 leading-relaxed text-base">
+                  <h3 className="text-indigo-600 font-bold text-xl mb-2">ภารกิจ: เคลียร์สินค้าชำรุด</h3>
+                  <p className="text-slate-600 leading-relaxed text-base">
                     จงประกอบคำสั่งเพื่อ <strong>ลบข้อมูล</strong> สินค้าที่สถานะชำรุด (<code className="text-rose-300 bg-slate-900 px-1 rounded">status = 'Damaged'</code>) <strong>และ</strong> สต็อกหมดแล้ว (<code className="text-rose-300 bg-slate-900 px-1 rounded">stock = 0</code>)<br/>
-                    <span className="text-sm text-slate-400 mt-1 block">*ระวังบล็อกหลอกที่ไม่ควรใช้ในคำสั่ง DELETE</span>
+                    <span className="text-sm text-slate-600 mt-1 block">*ระวังบล็อกหลอกที่ไม่ควรใช้ในคำสั่ง DELETE</span>
                   </p>
                 </div>
               </div>
@@ -446,7 +446,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
                     </button>
                   ))}
                   <div className="h-14 flex items-end pb-2">
-                    <span className="text-slate-500 font-mono text-3xl font-bold leading-none">;</span>
+                    <span className="text-slate-700 font-mono text-3xl font-bold leading-none">;</span>
                   </div>
                 </div>
               </div>
@@ -454,7 +454,7 @@ Unit 3.9 การลบข้อมูล (DELETE WHERE)
               {/* Blocks Bank */}
               <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50">
                 <div className="flex justify-between items-center mb-5 px-2">
-                  <p className="text-sm text-slate-400 font-mono font-bold uppercase tracking-widest">Blocks Bank</p>
+                  <p className="text-sm text-slate-600 font-mono font-bold uppercase tracking-widest">Blocks Bank</p>
                   <button onClick={resetGame} className="text-slate-400 hover:text-white flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-full transition-all border border-slate-700">
                     <RefreshCcw size={14} /> เริ่มใหม่
                   </button>

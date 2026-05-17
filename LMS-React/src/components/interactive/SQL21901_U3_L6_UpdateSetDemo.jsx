@@ -225,7 +225,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การแก้ไขข้อมูล (UPDATE SET)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้คำสั่ง UPDATE ควบคู่กับ SET เพื่อกำหนดค่าใหม่ให้กับคอลัมน์ ทั้งแบบค่าคงที่ และแบบการคำนวณ
         </p>
       </div>
@@ -236,7 +236,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
              <div className="p-6 hover:bg-slate-50 transition-colors">
                 <div className="bg-blue-100 w-10 h-10 rounded-full flex items-center justify-center mb-4"><Edit3 size={20} className="text-blue-600"/></div>
                 <h3 className="font-bold text-slate-800 mb-2">แก้ไข 1 คอลัมน์</h3>
-                <p className="text-sm text-slate-500 mb-4">กำหนดค่าตรงไปตรงมา</p>
+                <p className="text-sm text-slate-700 mb-4">กำหนดค่าตรงไปตรงมา</p>
                 <code className="block bg-slate-100 text-blue-700 p-3 rounded-lg text-sm font-mono border border-slate-200">
                   SET salary = 35000
                 </code>
@@ -255,7 +255,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
              <div className="p-6 hover:bg-slate-50 transition-colors">
                 <div className="bg-amber-100 w-10 h-10 rounded-full flex items-center justify-center mb-4"><Calculator size={20} className="text-amber-600"/></div>
                 <h3 className="font-bold text-slate-800 mb-2">แก้ไขด้วยการคำนวณ</h3>
-                <p className="text-sm text-slate-500 mb-4">อ้างอิงค่าเดิมมาบวก/ลบได้</p>
+                <p className="text-sm text-slate-700 mb-4">อ้างอิงค่าเดิมมาบวก/ลบได้</p>
                 <code className="block bg-slate-100 text-amber-700 p-3 rounded-lg text-sm font-mono border border-slate-200">
                   SET price = price + 50
                 </code>
@@ -301,7 +301,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
                    <div key={activeScenario} className="animate-in fade-in zoom-in-95 duration-300">
                      {scenarios[activeScenario].sql}
                      <div className="mt-4 pt-4 border-t border-slate-700/50">
-                        <p className="text-xs text-slate-400 leading-relaxed font-sans">{scenarios[activeScenario].desc}</p>
+                        <p className="text-xs text-slate-600 leading-relaxed font-sans">{scenarios[activeScenario].desc}</p>
                      </div>
                    </div>
                 </div>
@@ -350,7 +350,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
                           if (isChanged) {
                             return (
                               <div className="flex flex-col justify-center animate-in zoom-in duration-500 items-end md:items-start">
-                                <span className="text-[9px] text-slate-400 line-through leading-none mb-0.5">{origVal.toLocaleString()}</span>
+                                <span className="text-[9px] text-slate-600 line-through leading-none mb-0.5">{origVal.toLocaleString()}</span>
                                 <span className={highlightClass}>{currentVal.toLocaleString()}</span>
                               </div>
                             );
@@ -360,7 +360,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
 
                         return (
                           <tr key={row.id} className={rowClasses}>
-                            <td className="p-2 font-mono text-[11px] text-slate-400 text-center">{row.id}</td>
+                            <td className="p-2 font-mono text-[11px] text-slate-600 text-center">{row.id}</td>
                             <td className="p-2 font-medium text-slate-700">{row.name}</td>
                             <td className="p-2 text-xs">
                               {renderCell(row.position, row.orig_position, posChanged, "text-indigo-700 font-bold bg-indigo-100 px-1.5 py-0.5 rounded")}
@@ -384,10 +384,10 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
         {/* Minigame Area */}
         <div className="p-6 bg-slate-50 border-b border-slate-200">
            <div className="flex justify-between items-center mb-4">
-             <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+             <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                <HelpCircle size={16} className="text-teal-500" /> Syntax Challenge: กับดัก AND
              </h4>
-             <button onClick={resetGame} className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
+             <button onClick={resetGame} className="text-xs text-slate-700 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
                 <RefreshCcw size={12} /> เริ่มใหม่
               </button>
            </div>
@@ -412,7 +412,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
                   {block ? block.text : (idx === 2 ? '?' : `ส่วน ${idx + 1}`)}
                 </button>
               ))}
-              <span className="text-slate-500 font-mono text-lg font-bold">;</span>
+              <span className="text-slate-700 font-mono text-lg font-bold">;</span>
            </div>
 
            {/* Blocks */}
@@ -446,9 +446,9 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Query Execution Log</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Query Execution Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
@@ -456,7 +456,7 @@ export default function SQL21901_U3_L6_UpdateSetDemo() {
               <div key={i} className="leading-relaxed flex gap-2">
                 {line.type === 'command' && <><span className="text-teal-400 font-bold shrink-0"></span> <div className="text-teal-300 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

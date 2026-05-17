@@ -55,7 +55,7 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
           style={{ paddingLeft: `${depth * 15 + 10}px` }}
         >
           {isFolder ? (
-            isExpanded ? <ChevronDown size={14} className="text-slate-400" /> : <ChevronRight size={14} className="text-slate-400" />
+            isExpanded ? <ChevronDown size={14} className="text-slate-600" /> : <ChevronRight size={14} className="text-slate-600" />
           ) : <span className="w-3.5" />}
           {isFolder ? <FolderOpen size={14} className="text-amber-400" /> : <span className="text-xs">{node.icon || '📄'}</span>}
           <span className={`font-mono text-xs ${isFolder ? 'font-bold text-slate-200' : 'text-slate-300'}`}>{node.name}</span>
@@ -96,7 +96,7 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การจัดโครงสร้างโปรเจกต์</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้มาตรฐานการจัดเก็บไฟล์ โฟลเดอร์ที่จำเป็นต้องมีในโปรเจกต์ Python ขนาดกลาง-ใหญ่
         </p>
       </div>
@@ -105,7 +105,7 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: VS Code File Explorer */}
           <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-[#252526] select-none">
-            <div className="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700/50">
+            <div className="px-4 py-3 text-[11px] font-bold text-slate-600 uppercase tracking-wider border-b border-slate-700/50">
               Explorer
             </div>
             <div className="flex-1 overflow-y-auto py-2">
@@ -146,7 +146,7 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
                         </button>
                       )}
                     </div>
-                    <div className="bg-[#1e1e1e] p-4 rounded-lg font-mono text-xs text-slate-300 flex-1 whitespace-pre-wrap leading-loose shadow-inner border border-slate-700">
+                    <div className="bg-[#1e1e1e] p-4 rounded-lg font-mono text-xs text-slate-600 flex-1 whitespace-pre-wrap leading-loose shadow-inner border border-slate-700">
                       {selectedItem.code.split('\n').map((line, i) => {
                         let formattedLine = line;
                         if (line.includes('class ') || line.includes('def ')) formattedLine = <span className="text-pink-400">{line}</span>;
@@ -159,7 +159,7 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
                 )}
               </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-400">
+              <div className="h-full flex flex-col items-center justify-center text-slate-600">
                 <MousePointerClick size={32} className="mb-2 opacity-50" />
                 <p className="text-sm">คลิกที่โฟลเดอร์หรือไฟล์ใน Explorer ด้านซ้าย</p>
               </div>
@@ -171,18 +171,18 @@ export default function OOP21910_U1_L7_ProjectStructureDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs transition-colors">
               <RotateCcw size={14} /> Reset Explorer
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">$</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">$</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

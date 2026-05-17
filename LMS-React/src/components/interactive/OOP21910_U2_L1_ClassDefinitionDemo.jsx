@@ -50,7 +50,7 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">คลาสและการสร้างออบเจ็กต์เบื้องต้น</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การประกาศ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">class</code> เพื่อสร้างเป็น "แม่พิมพ์" และทดลองสร้างวัตถุ (Object) จากแม่พิมพ์นั้น
         </p>
       </div>
@@ -70,7 +70,7 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
                 
                 <div className="bg-[#1e1e1e] text-white rounded-lg p-4 font-mono text-left text-sm shadow-inner mb-6">
                   <span className="text-pink-400">class</span> <span className="text-yellow-300">Cookie</span>:<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-slate-400">pass</span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-slate-600">pass</span>
                 </div>
                 
                 <button onClick={handleCreateObject}
@@ -80,7 +80,7 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
               </div>
 
               {/* Arrow */}
-              <div className="text-slate-300">
+              <div className="text-slate-600">
                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
@@ -99,14 +99,14 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
 
                 <div className="flex-1 flex flex-wrap content-start gap-4 overflow-y-auto max-h-[250px] relative">
                   {objects.length === 0 ? (
-                    <div className="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-600 text-sm">
                       ยังไม่มี Object ถูกสร้าง
                     </div>
                   ) : (
                     objects.map(obj => (
                       <div key={obj.id} className="flex flex-col items-center justify-center bg-white p-3 rounded-xl shadow border border-emerald-100 w-20 animate-in zoom-in duration-300">
                         <Cookie className={`w-8 h-8 mb-2 ${obj.color}`} />
-                        <span className="text-[10px] font-mono text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">obj_{obj.id}</span>
+                        <span className="text-[10px] font-mono text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">obj_{obj.id}</span>
                       </div>
                     ))
                   )}
@@ -118,7 +118,7 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[320px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โครงสร้างและไวยากรณ์</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โครงสร้างและไวยากรณ์</h4>
             
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm mb-4 flex-1">
               <div className="space-y-4">
@@ -141,7 +141,7 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
                   </p>
                 </div>
                 <div className="pt-3 border-t border-slate-200">
-                  <h5 className="font-bold text-slate-500 text-sm font-mono mb-1">pass</h5>
+                  <h5 className="font-bold text-slate-700 text-sm font-mono mb-1">pass</h5>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     คำสั่งพิเศษที่บอกให้ Python "ข้ามไปก่อน" ใช้เมื่อเราสร้างโครงคลาสไว้ แต่ยังไม่ได้เขียนการทำงานข้างใน เพื่อไม่ให้เกิด Error
                   </p>
@@ -167,16 +167,16 @@ export default function OOP21910_U2_L1_ClassDefinitionDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Python</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Python</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

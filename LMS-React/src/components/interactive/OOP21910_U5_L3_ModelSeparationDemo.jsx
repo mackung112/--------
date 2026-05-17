@@ -78,7 +78,7 @@ export default function OOP21910_U5_L3_ModelSeparationDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การแยกไฟล์และโมดูล (Model Separation)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เพื่อให้โปรเจกต์ขนาดใหญ่อ่านง่ายและจัดการง่าย เราจะแยกแต่ละคลาส (Class) ออกไปอยู่คนละไฟล์ (File) แล้วค่อย <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">import</code> เข้ามาใช้งานที่ไฟล์หลัก
         </p>
       </div>
@@ -87,13 +87,13 @@ export default function OOP21910_U5_L3_ModelSeparationDemo() {
         <div className="flex flex-col lg:flex-row flex-1">
           
           {/* Left: Project Explorer */}
-          <div className="w-full lg:w-[280px] border-b lg:border-b-0 lg:border-r border-slate-200 bg-[#252526] flex flex-col text-slate-300">
-            <div className="px-4 py-3 text-xs font-bold tracking-widest text-slate-400 uppercase">Explorer</div>
+          <div className="w-full lg:w-[280px] border-b lg:border-b-0 lg:border-r border-slate-200 bg-[#252526] flex flex-col text-slate-600">
+            <div className="px-4 py-3 text-xs font-bold tracking-widest text-slate-600 uppercase">Explorer</div>
             
             <div className="flex-1 py-2">
               <div className="px-2 flex flex-col gap-0.5">
                 <div className="px-2 py-1 flex items-center gap-1.5 text-xs font-bold text-slate-200">
-                  <FolderTree size={14} className="text-slate-400" /> POS_Project
+                  <FolderTree size={14} className="text-slate-600" /> POS_Project
                 </div>
                 
                 {/* File list */}
@@ -149,16 +149,16 @@ export default function OOP21910_U5_L3_ModelSeparationDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">bash</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">bash</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">PS C:\pos_project&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">PS C:\pos_project&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

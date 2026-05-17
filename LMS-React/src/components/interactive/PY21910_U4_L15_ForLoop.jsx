@@ -52,7 +52,7 @@ export default function PY21910_U4_L15_ForLoop() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">for Loop (วนซ้ำตามชุดข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           <code className="bg-slate-200 px-1 rounded text-pink-600">for</code> loop วนซ้ำผ่านสมาชิกแต่ละตัวในลิสต์ทีละค่า กดปุ่มถัดไปเพื่อดูการทำงานแบบ Step-by-step
         </p>
       </div>
@@ -61,7 +61,7 @@ export default function PY21910_U4_L15_ForLoop() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Visual */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">รายการผลไม้ (List)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">รายการผลไม้ (List)</h4>
             <div className="space-y-2 mb-6">
               {FRUITS.map((item, i) => (
                 <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border-2 transition-all duration-300 ${
@@ -89,7 +89,7 @@ export default function PY21910_U4_L15_ForLoop() {
 
           {/* Right: Controls */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โค้ด Python</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โค้ด Python</h4>
             <div className="bg-slate-900 rounded-xl p-4 font-mono text-sm mb-4">
               <div className="text-purple-400">fruits = [...]</div>
               <div className="text-pink-400 mt-1">for fruit in fruits:</div>
@@ -119,19 +119,19 @@ export default function PY21910_U4_L15_ForLoop() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python for_loop.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python for_loop.py</span>
             </div>
-            <button onClick={reset} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={reset} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Reset
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

@@ -108,7 +108,7 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">SQL Constraints (ข้อจำกัดข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้กฎเหล็กเพื่อป้องกันไม่ให้มีข้อมูลขยะหรือข้อมูลผิดพลาดเข้ามาในตารางของเรา
         </p>
       </div>
@@ -147,10 +147,10 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
           
           {/* Left: Interactive Schema Builder */}
           <div className="w-full lg:w-[40%] p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <Database size={16} className="text-indigo-500"/> Schema Constraint Builder
             </h4>
-            <p className="text-xs text-slate-500 mb-6">ลากป้าย Constraint ด้านล่าง ไปวางให้ตรงกับคอลัมน์ที่เหมาะสมที่สุด (ลองดูคอนโซลด้านล่างประกอบ หากวางผิด)</p>
+            <p className="text-xs text-slate-700 mb-6">ลากป้าย Constraint ด้านล่าง ไปวางให้ตรงกับคอลัมน์ที่เหมาะสมที่สุด (ลองดูคอนโซลด้านล่างประกอบ หากวางผิด)</p>
 
             <div className="space-y-3 mb-8">
               {Object.keys(schemaZones).map((col) => (
@@ -168,7 +168,7 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
             </div>
 
             <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 mt-auto">
-              <h5 className="text-xs font-semibold text-slate-400 mb-3 text-center uppercase tracking-wider">คลัง Constraints</h5>
+              <h5 className="text-xs font-semibold text-slate-600 mb-3 text-center uppercase tracking-wider">คลัง Constraints</h5>
               <div className="flex flex-wrap gap-2 justify-center">
                 {!Object.values(schemaZones).includes('PRIMARY KEY') && (
                   <div draggable onDragStart={(e) => handleDragStart(e, 'PRIMARY KEY')} className="cursor-grab active:cursor-grabbing bg-yellow-500 hover:bg-yellow-400 text-slate-900 px-3 py-1.5 rounded-lg shadow-md font-bold text-[10px]">
@@ -202,10 +202,10 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
 
           {/* Right: Simulator */}
           <div className="w-full lg:w-[60%] bg-white p-6 flex flex-col relative">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <Play size={16} className="text-emerald-500"/> Data Insertion Simulator
             </h4>
-            <p className="text-xs text-slate-500 mb-4">ลองเพิ่มข้อมูลลงตาราง โดยจงใจทำผิดกฎของ Constraint ดูสิครับ</p>
+            <p className="text-xs text-slate-700 mb-4">ลองเพิ่มข้อมูลลงตาราง โดยจงใจทำผิดกฎของ Constraint ดูสิครับ</p>
 
             <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm mb-6">
               <div className="overflow-x-auto">
@@ -249,19 +249,19 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
               <h4 className="text-[11px] font-bold text-indigo-600 mb-3 uppercase tracking-wider">Test INSERT Query</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                 <div>
-                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">id (PK)</label>
+                  <label className="block text-[10px] text-slate-700 mb-1 font-bold">id (PK)</label>
                   <input type="text" value={insertVals.id} onChange={e => setInsertVals({...insertVals, id: e.target.value})} placeholder="e.g. 2" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
                 </div>
                 <div>
-                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">name (NOT NULL)</label>
+                  <label className="block text-[10px] text-slate-700 mb-1 font-bold">name (NOT NULL)</label>
                   <input type="text" value={insertVals.name} onChange={e => setInsertVals({...insertVals, name: e.target.value})} placeholder="e.g. Suda" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
                 </div>
                 <div>
-                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">email (UNIQUE)</label>
+                  <label className="block text-[10px] text-slate-700 mb-1 font-bold">email (UNIQUE)</label>
                   <input type="text" value={insertVals.email} onChange={e => setInsertVals({...insertVals, email: e.target.value})} placeholder="Leave blank for NULL" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
                 </div>
                 <div>
-                  <label className="block text-[10px] text-slate-500 mb-1 font-bold">role (DEFAULT)</label>
+                  <label className="block text-[10px] text-slate-700 mb-1 font-bold">role (DEFAULT)</label>
                   <input type="text" value={insertVals.role} onChange={e => setInsertVals({...insertVals, role: e.target.value})} placeholder="Leave blank" className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono bg-white shadow-sm" />
                 </div>
               </div>
@@ -282,17 +282,17 @@ export default function SQL21901_U2_L3_SQLConstraintsDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Constraint Engine</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Constraint Engine</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300">{line.text}</div></>}
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

@@ -50,7 +50,7 @@ export default function OOP21910_U2_L2_ConstructorDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">กำหนดค่าเริ่มต้นด้วย Constructor (__init__)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีกำหนดคุณสมบัติ (Attributes) ให้กับ Object ทันทีที่ถูกสร้างขึ้น ผ่านฟังก์ชันพิเศษ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">__init__</code>
         </p>
       </div>
@@ -64,7 +64,7 @@ export default function OOP21910_U2_L2_ConstructorDemo() {
               {/* Form Side */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
                 <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                  <Settings size={18} className="text-slate-400" /> ตั้งค่าพารามิเตอร์
+                  <Settings size={18} className="text-slate-600" /> ตั้งค่าพารามิเตอร์
                 </h4>
                 
                 <div className="space-y-5 flex-1">
@@ -102,13 +102,13 @@ export default function OOP21910_U2_L2_ConstructorDemo() {
 
               {/* Objects Side */}
               <div className="bg-[#2d2d2d] rounded-2xl p-5 shadow-inner border border-black flex flex-col h-[350px]">
-                <h4 className="font-bold text-slate-300 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2 text-sm">
+                <h4 className="font-bold text-slate-600 mb-4 flex items-center gap-2 border-b border-slate-700 pb-2 text-sm">
                   <Car size={16} /> Car Objects in Memory
                 </h4>
 
                 <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
                   {cars.length === 0 ? (
-                    <div className="h-full flex items-center justify-center text-slate-500 text-xs">
+                    <div className="h-full flex items-center justify-center text-slate-700 text-xs">
                       รอคำสั่งสร้าง Object...
                     </div>
                   ) : (
@@ -118,8 +118,8 @@ export default function OOP21910_U2_L2_ConstructorDemo() {
                           <Car size={24} className={obj.color.class} />
                         </div>
                         <div>
-                          <div className="text-[10px] text-slate-400 font-mono mb-0.5">car_{obj.id} = Car()</div>
-                          <div className="text-xs text-white font-bold">{obj.brand} <span className="text-slate-400 font-normal">({obj.color.name})</span></div>
+                          <div className="text-[10px] text-slate-600 font-mono mb-0.5">car_{obj.id} = Car()</div>
+                          <div className="text-xs text-white font-bold">{obj.brand} <span className="text-slate-600 font-normal">({obj.color.name})</span></div>
                         </div>
                       </div>
                     ))
@@ -132,9 +132,9 @@ export default function OOP21910_U2_L2_ConstructorDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[320px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-xs leading-loose">
               <span className="text-pink-400">class</span> <span className="text-yellow-300">Car</span>:<br />
               &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">__init__</span>(<span className="text-orange-300">self</span>, brand, color):<br />
               &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.brand = brand<br />
@@ -175,16 +175,16 @@ export default function OOP21910_U2_L2_ConstructorDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Python Memory Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Python Memory Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

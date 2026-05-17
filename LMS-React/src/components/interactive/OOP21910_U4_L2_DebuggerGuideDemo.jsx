@@ -100,7 +100,7 @@ export default function OOP21910_U4_L2_DebuggerGuideDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">จำลองการทำงานของ Debugger</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการใช้ <strong>Breakpoint</strong> และ <strong>Step Over</strong> เพื่อตรวจสอบค่าตัวแปรระหว่างที่โปรแกรมทำงานทีละบรรทัด (Step-through)
         </p>
       </div>
@@ -126,7 +126,7 @@ export default function OOP21910_U4_L2_DebuggerGuideDemo() {
                   <RotateCcw size={14} /> Stop
                 </button>
               </div>
-              <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold hidden sm:block">main.py</div>
+              <div className="text-[10px] text-slate-700 uppercase tracking-widest font-bold hidden sm:block">main.py</div>
             </div>
 
             {/* Code Lines */}
@@ -155,19 +155,19 @@ export default function OOP21910_U4_L2_DebuggerGuideDemo() {
 
           {/* Right: Info & Variables */}
           <div className="w-full lg:w-[380px] bg-slate-50 p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <Eye size={16} /> Variables Watch
             </h4>
             
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 mb-6 overflow-y-auto min-h-[200px]">
               {Object.keys(variables).length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-slate-400 text-sm p-6 text-center">
+                <div className="h-full flex flex-col items-center justify-center text-slate-600 text-sm p-6 text-center">
                   <Eye size={32} className="mb-2 opacity-20" />
                   <p>กดปุ่ม <strong>Start Debug</strong> เพื่อเริ่มดูค่าตัวแปรในหน่วยความจำ</p>
                 </div>
               ) : (
                 <div className="p-2 space-y-1">
-                  <div className="grid grid-cols-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 pb-1 border-b border-slate-100">
+                  <div className="grid grid-cols-2 text-[10px] font-bold text-slate-600 uppercase tracking-wider px-2 pb-1 border-b border-slate-100">
                     <div>Name</div>
                     <div>Value</div>
                   </div>
@@ -205,16 +205,16 @@ export default function OOP21910_U4_L2_DebuggerGuideDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">DEBUG CONSOLE</span>
-              <span className="text-slate-500 text-xs">Standard Output</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">DEBUG CONSOLE</span>
+              <span className="text-slate-700 text-xs">Standard Output</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

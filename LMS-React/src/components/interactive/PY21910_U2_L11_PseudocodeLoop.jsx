@@ -70,7 +70,7 @@ export default function PY21910_U2_L11_PseudocodeLoop() {
           <Sparkles className="w-4 h-4" /> จำลอง WHILE...DO แบบ Real-time
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">🔄 การวนซ้ำในรหัสเทียม (WHILE...DO)</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">ใช้ WHILE...DO เมื่อต้องทำงานซ้ำ ลองรันดูว่าแต่ละรอบเกิดอะไรขึ้น และสังเกตว่าโค้ดบรรทัดไหนทำงานในแต่ละ step</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">ใช้ WHILE...DO เมื่อต้องทำงานซ้ำ ลองรันดูว่าแต่ละรอบเกิดอะไรขึ้น และสังเกตว่าโค้ดบรรทัดไหนทำงานในแต่ละ step</p>
       </div>
 
       {/* Controls */}
@@ -166,7 +166,7 @@ export default function PY21910_U2_L11_PseudocodeLoop() {
     
       {/* Bottom Full-Width Console Output (VS Code Style) */}
       <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-        <div className="text-slate-500 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
+        <div className="text-slate-700 mb-2 text-xs font-bold uppercase tracking-wider">Execution Log</div>
         {logs.length === 0 && <div className="text-slate-600">กดปุ่มเพื่อเริ่มจำลอง...</div>}
         {logs.map((l, i) => (
           <div key={i} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : l.includes('PRINT') ? 'text-yellow-300' : 'text-slate-300'}`}>{l}</div>

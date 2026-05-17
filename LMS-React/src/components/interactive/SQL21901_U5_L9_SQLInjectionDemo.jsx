@@ -108,7 +108,7 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
             <form onSubmit={handleLogin} className="space-y-6 max-w-sm mx-auto w-full">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-slate-800">Welcome Back</h3>
-                <p className="text-slate-500 text-sm mt-1">กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
+                <p className="text-slate-700 text-sm mt-1">กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ</p>
               </div>
 
               {loginStatus === 'error' && (
@@ -121,7 +121,7 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Username</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-3 text-slate-400" size={18} />
+                    <User className="absolute left-3 top-3 text-slate-600" size={18} />
                     <input 
                       type="text" 
                       value={username}
@@ -134,7 +134,7 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 text-slate-400" size={18} />
+                    <Lock className="absolute left-3 top-3 text-slate-600" size={18} />
                     <input 
                       type="text" // Made text instead of password so user can see what they type
                       value={password}
@@ -156,13 +156,13 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
         {/* Right: Backend Terminal */}
         <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-700 flex flex-col">
           <div className="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center">
-            <div className="font-semibold text-slate-300 flex items-center gap-2">
+            <div className="font-semibold text-slate-600 flex items-center gap-2">
               <Terminal size={18}/> คำสั่ง SQL ด้านหลังบ้าน (Backend)
             </div>
           </div>
           
           <div className="p-6 flex-1 flex flex-col font-mono text-sm leading-relaxed">
-            <p className="text-slate-400 mb-4">// โค้ด Backend รับค่าจากฟอร์มมาต่อกันตรงๆ</p>
+            <p className="text-slate-600 mb-4">// โค้ด Backend รับค่าจากฟอร์มมาต่อกันตรงๆ</p>
             
             <div className="bg-black/50 p-4 rounded-xl border border-slate-800 break-all">
               <span className="text-purple-400">SELECT</span> <span className="text-white">*</span> <span className="text-purple-400">FROM</span> <span className="text-sky-300">users</span><br/>
@@ -175,8 +175,8 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
                 </>
               ) : (
                 <>
-                  <span className="text-slate-500"> ?</span><br/>
-                  <span className="text-purple-400">AND</span> <span className="text-sky-300">password</span> <span className="text-white">=</span> <span className="text-slate-500">?</span>
+                  <span className="text-slate-700"> ?</span><br/>
+                  <span className="text-purple-400">AND</span> <span className="text-sky-300">password</span> <span className="text-white">=</span> <span className="text-slate-700">?</span>
                 </>
               )}
             </div>
@@ -185,7 +185,7 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
               <div className="mt-4 bg-emerald-900/30 border border-emerald-500/30 p-4 rounded-xl text-emerald-300">
                 <ShieldCheck size={18} className="mb-2" />
                 <p>โหมดปลอดภัย (Prepared Statements): ข้อมูลที่พิมพ์มาจะถูกนำไปเป็น "ค่าตัวแปร" เท่านั้น ไม่สามารถแปลความหมายเป็น "คำสั่ง SQL" ได้อีกต่อไป แฮกเกอร์จึงทำอะไรไม่ได้</p>
-                <div className="mt-3 text-slate-400 text-xs">
+                <div className="mt-3 text-slate-600 text-xs">
                   Parameters: <br/>
                   [1] = "{username}" <br/>
                   [2] = "{password}"
@@ -202,7 +202,7 @@ export default function SQL21901_U5_L9_SQLInjectionDemo() {
 
             <div className="mt-auto pt-8">
               <h4 className="text-white font-bold mb-3 border-b border-slate-700 pb-2">🎯 ภารกิจแฮกเกอร์:</h4>
-              <ul className="text-slate-400 space-y-2">
+              <ul className="text-slate-600 space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="mt-0.5 px-2 bg-slate-800 rounded text-xs">1</div>
                   ลองเข้าสู่ระบบปกติ: ใช้ <code className="text-yellow-400">admin</code> และรหัสผ่าน <code className="text-yellow-400">1234</code>

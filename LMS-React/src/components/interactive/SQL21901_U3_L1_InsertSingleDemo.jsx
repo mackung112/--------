@@ -152,7 +152,7 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การเพิ่มข้อมูล (INSERT INTO)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           จำลองการนำข้อมูลใหม่เข้าไปเก็บในตาราง (Table) ของฐานข้อมูล ทีละ 1 แถว (Row)
         </p>
       </div>
@@ -163,10 +163,10 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
           
           {/* Left Panel: Simulator Form */}
           <div className="w-full xl:w-[35%] p-6 border-b xl:border-b-0 xl:border-r border-slate-200 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <MousePointerClick size={16} className="text-indigo-500" /> Database Simulator
             </h4>
-            <p className="text-xs text-slate-500 mb-6">กรอกข้อมูลพนักงานใหม่ทางด้านล่าง สังเกตการตอบสนองใน Terminal และในตาราง</p>
+            <p className="text-xs text-slate-700 mb-6">กรอกข้อมูลพนักงานใหม่ทางด้านล่าง สังเกตการตอบสนองใน Terminal และในตาราง</p>
 
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 mb-6">
               <div>
@@ -212,7 +212,7 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
             
             {/* Table Area */}
             <div className="p-6 bg-white border-b border-slate-200">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
                 <Table2 size={16} className="text-purple-500" /> employees Table
               </h4>
               <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
@@ -237,7 +237,7 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
                       </tr>
                     ))}
                     {tableData.length === 0 && (
-                      <tr><td colSpan="4" className="p-6 text-center text-slate-400">ไม่มีข้อมูลในตาราง</td></tr>
+                      <tr><td colSpan="4" className="p-6 text-center text-slate-600">ไม่มีข้อมูลในตาราง</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -247,10 +247,10 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
             {/* Minigame Area */}
             <div className="p-6 flex-1 flex flex-col bg-slate-50">
                <div className="flex justify-between items-center mb-4">
-                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                    <Database size={16} className="text-emerald-500" /> Syntax Builder
                  </h4>
-                 <button onClick={resetGame} className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
+                 <button onClick={resetGame} className="text-xs text-slate-700 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
                     <RefreshCcw size={12} /> เริ่มใหม่
                   </button>
                </div>
@@ -274,7 +274,7 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
                       {block ? block.text : `ส่วน ${idx + 1}`}
                     </button>
                   ))}
-                  <span className="text-slate-500 font-mono text-lg font-bold">;</span>
+                  <span className="text-slate-700 font-mono text-lg font-bold">;</span>
                </div>
 
                {/* Blocks */}
@@ -310,9 +310,9 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">SQL Event Logger</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">SQL Event Logger</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
@@ -320,7 +320,7 @@ export default function SQL21901_U3_L1_InsertSingleDemo() {
               <div key={i} className="leading-relaxed flex gap-2">
                 {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0"></span> <div className="text-emerald-300 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

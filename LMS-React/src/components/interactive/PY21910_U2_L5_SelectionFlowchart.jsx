@@ -32,7 +32,7 @@ export default function PY21910_U2_L5_SelectionFlowchart() {
           <Sparkles className="w-4 h-4" /> จำลองผังงานแบบตัดสินใจ
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">🔀 ผังงานแบบมีทางเลือก (Selection)</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">ใช้เมื่อต้องตัดสินใจ — ผลลัพธ์จะแยกเป็น 2 ทาง (Yes/No) ตามเงื่อนไขที่กำหนด ลองลากแถบเปลี่ยนคะแนนแล้วดูว่าผังงานเดินทางไหน</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">ใช้เมื่อต้องตัดสินใจ — ผลลัพธ์จะแยกเป็น 2 ทาง (Yes/No) ตามเงื่อนไขที่กำหนด ลองลากแถบเปลี่ยนคะแนนแล้วดูว่าผังงานเดินทางไหน</p>
       </div>
 
       {/* Controls */}
@@ -151,7 +151,7 @@ export default function PY21910_U2_L5_SelectionFlowchart() {
 
       {/* Bottom Full-Width Console Output (VS Code Style) */}
       <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-        <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Python Code Trace</div>
+        <div className="text-slate-700 mb-3 text-xs font-bold uppercase tracking-wider">Python Code Trace</div>
         <div className={step>=1 ? 'text-purple-400' : 'text-slate-700'}>score = {score}</div>
         <div className={step>=2 ? 'text-pink-400' : 'text-slate-700'}>if score {'>'}= 50:</div>
         <div className={`ml-4 ${step===3 && passed ? 'text-yellow-300 font-bold' : 'text-slate-700'}`}>print("สอบผ่าน ✅")</div>

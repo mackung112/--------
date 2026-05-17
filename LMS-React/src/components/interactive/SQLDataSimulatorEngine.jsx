@@ -76,11 +76,11 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
             </div>
             <h3 className="font-display text-xl font-semibold text-slate-900">{title}</h3>
           </div>
-          <button onClick={handleReset} className="text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-1 text-sm bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
+          <button onClick={handleReset} className="text-slate-700 hover:text-slate-800 transition-colors flex items-center gap-1 text-sm bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
             <RotateCcw size={14}/> Reset DB
           </button>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">{description}</p>
+        <p className="font-base text-sm leading-relaxed text-slate-700">{description}</p>
       </div>
 
       <div className="flex flex-col min-h-[500px]">
@@ -89,7 +89,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
           {/* Left: Query Selection */}
           <div className="w-full lg:w-[350px] p-0 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
             <div className="p-4 border-b border-slate-200">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                 <Database size={16} /> SQL Queries
               </h4>
             </div>
@@ -101,7 +101,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
                   onClick={() => handleRunQuery(q)}
                 >
                   <div className={`font-mono text-xs font-bold mb-2 ${activeQuery === q.id ? 'text-teal-700' : 'text-slate-700'}`}>{q.sql}</div>
-                  <p className="text-slate-500 text-xs leading-relaxed">{q.desc}</p>
+                  <p className="text-slate-700 text-xs leading-relaxed">{q.desc}</p>
                   <div className="mt-3 flex justify-end">
                     <span className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${activeQuery === q.id ? 'bg-teal-600 text-white shadow' : 'bg-slate-100 text-slate-500 group-hover:bg-teal-100 group-hover:text-teal-700'}`}>
                       <Play size={12}/> {activeQuery === q.id ? 'Executed' : 'Run'}
@@ -115,10 +115,10 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
           {/* Right: Result Data Table & Quiz */}
           <div className="flex-1 bg-white flex flex-col">
             <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500">
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700">
                 Result Set
               </h4>
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-500 bg-white px-2 py-1 border border-slate-200 rounded shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-700 bg-white px-2 py-1 border border-slate-200 rounded shadow-sm">
                 <Table2 size={14}/> {currentTable.rows.length} rows
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
             <div className="flex-1 p-4 overflow-auto bg-[#f8fafc] relative">
               <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                 <table className="w-full text-left text-sm text-slate-600">
-                  <thead className="text-xs text-slate-500 uppercase bg-slate-100 border-b border-slate-200 font-mono">
+                  <thead className="text-xs text-slate-700 uppercase bg-slate-100 border-b border-slate-200 font-mono">
                     <tr>
                       {currentTable.columns.map((col, i) => (
                         <th key={i} className="px-4 py-3 font-bold border-r border-slate-200 last:border-0">{col}</th>
@@ -136,7 +136,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
                   <tbody>
                     {currentTable.rows.length === 0 ? (
                       <tr>
-                        <td colSpan={currentTable.columns.length} className="px-4 py-8 text-center text-slate-400 italic">
+                        <td colSpan={currentTable.columns.length} className="px-4 py-8 text-center text-slate-600 italic">
                           (Empty set)
                         </td>
                       </tr>
@@ -158,7 +158,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
 
             {/* Quiz Section (Collapsible or small at the bottom of Right pane) */}
             <div className="border-t border-slate-200 bg-white p-5">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-2 flex items-center gap-2">
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-2 flex items-center gap-2">
                 <span className="text-yellow-500">?</span> Knowledge Check
               </h4>
               <div className="flex flex-col xl:flex-row gap-4 items-start xl:items-center justify-between">
@@ -179,7 +179,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
                     </button>
                   ))}
                   <div className="flex gap-1">
-                    <button onClick={resetQuiz} className="px-2 py-1.5 rounded-lg text-slate-500 hover:bg-slate-100 border border-slate-200">
+                    <button onClick={resetQuiz} className="px-2 py-1.5 rounded-lg text-slate-700 hover:bg-slate-100 border border-slate-200">
                       <RotateCcw size={14}/>
                     </button>
                     <button onClick={submitQuiz} disabled={qc} className="bg-slate-800 hover:bg-slate-900 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-xs">
@@ -196,16 +196,16 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">MySQL CLI Simulation</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">MySQL CLI Simulation</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-teal-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300 font-bold">{line.text.substring(2)}</div></>}
-                {line.type === 'output'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-teal-300">{line.text.substring(2)}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'command' && <><span className="text-teal-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-600 font-bold">{line.text.substring(2)}</div></>}
+                {line.type === 'output'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-teal-300">{line.text.substring(2)}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-red-500 font-bold shrink-0"></span> <div className="text-red-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

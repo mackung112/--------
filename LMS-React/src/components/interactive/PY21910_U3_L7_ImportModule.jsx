@@ -66,7 +66,7 @@ export default function PY21910_U3_L7_ImportModule() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Import Module (การเรียกใช้โมดูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการใช้คำสั่ง <code className="bg-slate-200 px-1 rounded text-pink-600">import</code> เพื่อนำเครื่องมือเสริม (Standard Library) มาใช้งาน
         </p>
       </div>
@@ -79,7 +79,7 @@ export default function PY21910_U3_L7_ImportModule() {
           
           {/* Left: Visual Explorer */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">1. เลือกโมดูล (Select Module)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">1. เลือกโมดูล (Select Module)</h4>
             
             <div className="flex flex-wrap gap-3 mb-8">
               {modules.map((m, i) => {
@@ -101,7 +101,7 @@ export default function PY21910_U3_L7_ImportModule() {
             </div>
 
             <div className="flex items-center justify-between mb-4">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500">2. ฟังก์ชันใน {mod.name}</h4>
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700">2. ฟังก์ชันใน {mod.name}</h4>
               <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded font-bold">{mod.desc}</span>
             </div>
 
@@ -114,7 +114,7 @@ export default function PY21910_U3_L7_ImportModule() {
                 >
                   <div className="text-left flex-1">
                     <div className="font-mono text-sm font-bold text-slate-800 mb-1">{f.call}</div>
-                    <div className="text-xs text-slate-500">{f.desc}</div>
+                    <div className="text-xs text-slate-700">{f.desc}</div>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-indigo-600 font-bold bg-indigo-50 py-1.5 px-3 rounded-md">
                     <Play size={12} className="fill-current" /> รันดูผลลัพธ์
@@ -126,7 +126,7 @@ export default function PY21910_U3_L7_ImportModule() {
 
           {/* Right: Control / Gamification */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">เกร็ดความรู้ (Did you know?)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">เกร็ดความรู้ (Did you know?)</h4>
             
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4">
               <div className="flex items-center gap-2 mb-2">
@@ -147,12 +147,12 @@ export default function PY21910_U3_L7_ImportModule() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python</span>
             </div>
             <button 
               onClick={clearConsole}
-              className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-xs"
+              className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-xs"
             >
               <RotateCcw size={14} /> Clear
             </button>
@@ -162,7 +162,7 @@ export default function PY21910_U3_L7_ImportModule() {
             {consoleHistory.map((line, idx) => (
               <div key={idx} className="leading-relaxed">
                 {line.type === 'command' && (
-                  <div className="text-slate-300">
+                  <div className="text-slate-600">
                     <span className="text-green-400 mr-2">{">>>"}</span>
                     <span className={line.text.startsWith('import') ? 'text-pink-400' : ''}>
                       {line.text.startsWith('import') ? 'import ' : ''}
@@ -176,7 +176,7 @@ export default function PY21910_U3_L7_ImportModule() {
                   <div className="text-cyan-300">{line.text}</div>
                 )}
                 {line.type === 'system' && (
-                  <div className="text-slate-500">{line.text}</div>
+                  <div className="text-slate-700">{line.text}</div>
                 )}
                 {line.type === 'success' && (
                   <div className="text-emerald-400 text-xs mt-1 mb-2">{line.text}</div>

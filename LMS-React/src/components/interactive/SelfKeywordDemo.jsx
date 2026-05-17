@@ -51,7 +51,7 @@ export default function SelfKeywordDemo() {
           {/* Code View */}
           <div className="bg-slate-900 rounded-2xl p-5 font-mono text-sm shadow-inner relative overflow-hidden">
             <div className="absolute top-0 right-0 px-3 py-1 bg-slate-800 text-xs text-slate-400 rounded-bl-lg border-b border-l border-slate-700">class_definition.py</div>
-            <pre className="text-slate-300 mt-4 leading-relaxed">
+            <pre className="text-slate-600 mt-4 leading-relaxed">
 <span className="text-pink-400">class</span> <span className="text-emerald-300">Student</span>:
     <span className="text-pink-400">def</span> <span className="text-blue-300">__init__</span>(self, name, age):
         <span className={`transition-all duration-300 px-1 rounded ${activeObject ? 'bg-slate-700 font-bold text-white' : ''}`}>self</span>.name = name
@@ -80,7 +80,7 @@ export default function SelfKeywordDemo() {
                 </div>
                 
                 <div className="flex-1">
-                  <div className="text-xs font-mono text-slate-500 mb-1">{student.varName} = Student("{student.name}", {student.age})</div>
+                  <div className="text-xs font-mono text-slate-700 mb-1">{student.varName} = Student("{student.name}", {student.age})</div>
                   <div className="font-bold text-slate-800">{student.name}</div>
                 </div>
 
@@ -105,7 +105,7 @@ export default function SelfKeywordDemo() {
       <div className={`h-48 p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800 shadow-inner transition-colors duration-300
         ${activeObject ? 'bg-[#1e1e1e] text-emerald-400' : 'bg-slate-900 text-slate-500'}`}
       >
-        <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+        <div className="text-slate-700 mb-3 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
           <ArrowRight className="w-3 h-3" /> Terminal Output
         </div>
         <div>

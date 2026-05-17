@@ -45,7 +45,7 @@ export default function PY21910_U2_L12_PseudocodeFormat() {
           <Sparkles className="w-4 h-4" /> เกม: จัดย่อหน้ารหัสเทียม
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">📐 การจัดย่อหน้า (Indentation) ของรหัสเทียม</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">ลองเลื่อนแต่ละบรรทัดให้ย่อหน้าถูกต้อง — บรรทัดภายใน IF/ELSE ต้องย่อเข้าไป เพื่อให้อ่านง่ายและเห็นโครงสร้างชัดเจน</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">ลองเลื่อนแต่ละบรรทัดให้ย่อหน้าถูกต้อง — บรรทัดภายใน IF/ELSE ต้องย่อเข้าไป เพื่อให้อ่านง่ายและเห็นโครงสร้างชัดเจน</p>
       </div>
 
       {/* Progress bar */}
@@ -67,17 +67,17 @@ export default function PY21910_U2_L12_PseudocodeFormat() {
             <div className="w-3 h-3 rounded-full bg-red-500" />
             <div className="w-3 h-3 rounded-full bg-yellow-500" />
             <div className="w-3 h-3 rounded-full bg-green-500" />
-            <span className="text-slate-400 text-xs ml-3 font-mono">calculate_discount.pseudo</span>
+            <span className="text-slate-600 text-xs ml-3 font-mono">calculate_discount.pseudo</span>
           </div>
           <div className="flex items-center gap-2">
             {isCorrect ? (
               <span className="text-green-400 text-xs font-bold flex items-center gap-1"><Trophy className="w-4 h-4" /> สมบูรณ์แบบ!</span>
             ) : (
               <>
-                <button onClick={() => setShowHints(!showHints)} className="text-slate-400 text-xs hover:text-indigo-400 transition-colors">
+                <button onClick={() => setShowHints(!showHints)} className="text-slate-600 text-xs hover:text-indigo-600 transition-colors">
                   {showHints ? 'ซ่อน Hints' : '💡 แสดง Hints'}
                 </button>
-                <button onClick={() => setIndents(lines.map(l => l.correct))} className="text-indigo-400 text-xs underline hover:text-indigo-300 transition-colors">
+                <button onClick={() => setIndents(lines.map(l => l.correct))} className="text-indigo-600 text-xs underline hover:text-indigo-600 transition-colors">
                   ดูเฉลย
                 </button>
               </>

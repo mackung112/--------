@@ -53,7 +53,7 @@ export default function OOP21910_U3_L2_TkinterWindowDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">สร้างหน้าต่างหลัก (Main Window)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้ขั้นตอนพื้นฐานที่สุดในการสร้างโปรแกรม GUI ด้วยการเรียกใช้ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">tk.Tk()</code> และ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">mainloop()</code>
         </p>
       </div>
@@ -68,7 +68,7 @@ export default function OOP21910_U3_L2_TkinterWindowDemo() {
               {!showWindow && (
                 <div className="absolute inset-0 flex items-center justify-center bg-slate-100 border-2 border-dashed border-slate-300 rounded-2xl">
                   <div className="text-center">
-                    <AppWindow size={48} className="text-slate-300 mx-auto mb-4" />
+                    <AppWindow size={48} className="text-slate-600 mx-auto mb-4" />
                     <button onClick={handleRun} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2">
                       <Play size={18} fill="currentColor" /> Run Program
                     </button>
@@ -84,7 +84,7 @@ export default function OOP21910_U3_L2_TkinterWindowDemo() {
                       <div className="w-4 h-4 bg-blue-500 rounded-sm flex items-center justify-center opacity-80">
                         <AppWindow size={10} className="text-white" />
                       </div>
-                      <span className="text-slate-300 text-xs font-mono">My First App</span>
+                      <span className="text-slate-600 text-xs font-mono">My First App</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-slate-500" />
@@ -95,7 +95,7 @@ export default function OOP21910_U3_L2_TkinterWindowDemo() {
                     </div>
                   </div>
                   {/* Window Content */}
-                  <div className="bg-slate-100 flex-1 flex flex-col items-center justify-center text-slate-400 text-xs font-mono p-4 text-center border-t border-slate-400/20">
+                  <div className="bg-slate-100 flex-1 flex flex-col items-center justify-center text-slate-600 text-xs font-mono p-4 text-center border-t border-slate-400/20">
                     <div className="border-2 border-dashed border-slate-300 w-full h-full rounded flex items-center justify-center opacity-50">
                       Ready for Widgets
                     </div>
@@ -109,17 +109,17 @@ export default function OOP21910_U3_L2_TkinterWindowDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
               <span className="text-pink-400">import</span> <span className="text-sky-300">tkinter</span> <span className="text-pink-400">as</span> <span className="text-sky-300">tk</span><br />
               <br />
-              <span className="text-slate-500"># 1. สร้างหน้าต่างหลัก</span><br />
+              <span className="text-slate-700"># 1. สร้างหน้าต่างหลัก</span><br />
               <span className="text-yellow-300">root</span> = <span className="text-sky-300">tk</span>.<span className="text-blue-300">Tk</span>()<br />
               <span className="text-yellow-300">root</span>.<span className="text-blue-300">title</span>(<span className="text-green-300">"My First App"</span>)<br />
               <span className="text-yellow-300">root</span>.<span className="text-blue-300">geometry</span>(<span className="text-green-300">"300x200"</span>)<br />
               <br />
-              <span className="text-slate-500"># 2. เริ่มลูป Event</span><br />
+              <span className="text-slate-700"># 2. เริ่มลูป Event</span><br />
               <span className="text-yellow-300">root</span>.<span className="text-blue-300">mainloop</span>()
             </div>
 
@@ -157,16 +157,16 @@ export default function OOP21910_U3_L2_TkinterWindowDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

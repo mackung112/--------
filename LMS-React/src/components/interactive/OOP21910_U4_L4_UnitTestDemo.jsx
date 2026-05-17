@@ -74,7 +74,7 @@ export default function OOP21910_U4_L4_UnitTestDemo() {
             </div>
           )}
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้คำสั่ง <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">assert</code> เพื่อตรวจสอบว่าฟังก์ชันที่เราเขียนทำงานได้ผลลัพธ์ตรงตามที่คาดหวังหรือไม่
         </p>
       </div>
@@ -83,14 +83,14 @@ export default function OOP21910_U4_L4_UnitTestDemo() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Code to Test */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ฟังก์ชันที่ต้องการทดสอบ (math_funcs.py)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ฟังก์ชันที่ต้องการทดสอบ (math_funcs.py)</h4>
             
             <div className="bg-[#1e1e1e] p-5 rounded-2xl shadow-inner border border-slate-700 font-mono text-[13px] leading-loose flex-1">
-              <span className="text-slate-500"># ฟังก์ชันบวกเลข</span><br />
+              <span className="text-slate-700"># ฟังก์ชันบวกเลข</span><br />
               <span className="text-pink-400">def</span> <span className="text-blue-300">add</span>(<span className="text-orange-300">a</span>, <span className="text-orange-300">b</span>):<br />
               &nbsp;&nbsp;<span className="text-pink-400">return</span> <span className="text-orange-300">a</span> + <span className="text-orange-300">b</span><br />
               <br />
-              <span className="text-slate-500"># ฟังก์ชันคูณเลข</span><br />
+              <span className="text-slate-700"># ฟังก์ชันคูณเลข</span><br />
               <span className="text-pink-400">def</span> <span className="text-blue-300">multiply</span>(<span className="text-orange-300">a</span>, <span className="text-orange-300">b</span>):<br />
               &nbsp;&nbsp;<span className="text-pink-400">return</span> <span className="text-orange-300">a</span> * <span className="text-orange-300">b</span>
             </div>
@@ -107,7 +107,7 @@ export default function OOP21910_U4_L4_UnitTestDemo() {
 
           {/* Right: Test Cases */}
           <div className="w-full lg:w-[450px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">กรณีทดสอบ (Test Cases - test_math.py)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">กรณีทดสอบ (Test Cases - test_math.py)</h4>
             
             <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
               {tests.map(t => (
@@ -152,16 +152,16 @@ export default function OOP21910_U4_L4_UnitTestDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">pytest console</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">pytest console</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-600 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

@@ -69,7 +69,7 @@ export default function PY21910_U8_L1_DocGenerator() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การจัดทำเอกสารประกอบโปรแกรม</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เอกสารที่ดีเปรียบเสมือนแผนที่ ช่วยให้ผู้อื่น (หรือตัวเราในอนาคต) เข้าใจและใช้งานโปรแกรมได้ง่ายขึ้น ลองสำรวจโครงสร้างเอกสารมาตรฐานด้านล่าง
         </p>
       </div>
@@ -94,7 +94,7 @@ export default function PY21910_U8_L1_DocGenerator() {
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex-1 flex flex-col">
               <div className="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center gap-2">
-                <FileText size={16} className="text-slate-500" />
+                <FileText size={16} className="text-slate-700" />
                 <span className="text-sm font-bold text-slate-700">{s.title}</span>
               </div>
               <div className="p-5 flex-1 bg-white">
@@ -112,7 +112,7 @@ export default function PY21910_U8_L1_DocGenerator() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">รูปแบบเอกสาร (Markdown)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">รูปแบบเอกสาร (Markdown)</h4>
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <p className="text-sm text-slate-600 leading-relaxed mb-4">
                 นักพัฒนาซอฟต์แวร์นิยมเขียนเอกสารด้วยภาษา <strong>Markdown (.md)</strong> เพราะเขียนง่าย อ่านง่ายแม้อยู่ในรูปแบบโค้ด และแสดงผลได้สวยงามบน GitHub
@@ -120,15 +120,15 @@ export default function PY21910_U8_L1_DocGenerator() {
               
               <div className="space-y-3">
                 <div className="border border-slate-200 rounded overflow-hidden">
-                  <div className="bg-slate-100 text-[10px] font-bold text-slate-500 px-2 py-1 border-b border-slate-200">หัวข้อใหญ่</div>
+                  <div className="bg-slate-100 text-[10px] font-bold text-slate-700 px-2 py-1 border-b border-slate-200">หัวข้อใหญ่</div>
                   <div className="font-mono text-xs p-2 text-slate-700"># หัวข้อหลัก<br/>## หัวข้อย่อย</div>
                 </div>
                 <div className="border border-slate-200 rounded overflow-hidden">
-                  <div className="bg-slate-100 text-[10px] font-bold text-slate-500 px-2 py-1 border-b border-slate-200">ลิสต์รายการ</div>
+                  <div className="bg-slate-100 text-[10px] font-bold text-slate-700 px-2 py-1 border-b border-slate-200">ลิสต์รายการ</div>
                   <div className="font-mono text-xs p-2 text-slate-700">- รายการ 1<br/>- รายการ 2</div>
                 </div>
                 <div className="border border-slate-200 rounded overflow-hidden">
-                  <div className="bg-slate-100 text-[10px] font-bold text-slate-500 px-2 py-1 border-b border-slate-200">แทรกโค้ด</div>
+                  <div className="bg-slate-100 text-[10px] font-bold text-slate-700 px-2 py-1 border-b border-slate-200">แทรกโค้ด</div>
                   <div className="font-mono text-xs p-2 text-slate-700">```python<br/>print("Hello")<br/>```</div>
                 </div>
               </div>
@@ -144,19 +144,19 @@ export default function PY21910_U8_L1_DocGenerator() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">cat README.md</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">cat README.md</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">$</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">$</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-emerald-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

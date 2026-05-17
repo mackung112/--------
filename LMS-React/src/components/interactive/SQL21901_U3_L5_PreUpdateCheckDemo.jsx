@@ -197,7 +197,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การตรวจสอบก่อนแก้ไข (Pre-update Check)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           คำสั่ง UPDATE เป็นคำสั่งที่อันตราย ดังนั้นควรใช้ SELECT ทดสอบเงื่อนไข WHERE ดูข้อมูลก่อนการอัปเดตเสมอ
         </p>
       </div>
@@ -276,7 +276,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
               </div>
 
               <div className="p-5 flex-1 flex flex-col justify-between gap-4">
-                <div className="font-mono text-[15px] leading-loose overflow-x-auto w-full text-slate-300">
+                <div className="font-mono text-[15px] leading-loose overflow-x-auto w-full text-slate-600">
                   {simMode === 'SELECT' ? (
                     <div className="animate-in fade-in zoom-in-95 duration-300">
                       <span className="text-[#89b4fa] font-bold">SELECT</span> * <span className="text-[#89b4fa] font-bold">FROM</span> <span className="text-[#a6e3a1]">products</span><br/>
@@ -290,7 +290,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
                         <option value="price < 5000">price &lt; 5000</option>
                         <option value="NONE">(ไม่มีเงื่อนไข - อันตราย!)</option>
                       </select>
-                      <span className="text-slate-400">;</span>
+                      <span className="text-slate-600">;</span>
                     </div>
                   ) : (
                     <div className="animate-in fade-in zoom-in-95 duration-300">
@@ -308,7 +308,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
                         <span className="bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded font-bold animate-pulse inline-block mt-1">-- ไม่มี WHERE Clause! --</span>
                       )}
 
-                      <span className="text-slate-400">;</span>
+                      <span className="text-slate-600">;</span>
                     </div>
                   )}
                 </div>
@@ -382,7 +382,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
 
                         return (
                           <tr key={row.id} className={rowClasses}>
-                            <td className="p-2 font-mono text-[11px] text-slate-400 text-center">{row.id}</td>
+                            <td className="p-2 font-mono text-[11px] text-slate-600 text-center">{row.id}</td>
                             <td className="p-2 font-medium text-slate-800">{row.name}</td>
                             <td className="p-2">
                               <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider
@@ -392,7 +392,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
                             <td className={priceClasses}>
                               <div className="flex flex-col items-end justify-center h-full">
                                 {isPriceChanged && (
-                                   <span className="text-[9px] text-slate-400 line-through mb-0.5 leading-none">
+                                   <span className="text-[9px] text-slate-600 line-through mb-0.5 leading-none">
                                      {row.originalPrice.toLocaleString()}
                                    </span>
                                 )}
@@ -421,10 +421,10 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
         {/* Minigame Area */}
         <div className="p-6 bg-slate-50 border-b border-slate-200">
            <div className="flex justify-between items-center mb-4">
-             <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+             <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                <HelpCircle size={16} className="text-amber-500" /> Syntax Challenge
              </h4>
-             <button onClick={resetGame} className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
+             <button onClick={resetGame} className="text-xs text-slate-700 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
                 <RefreshCcw size={12} /> เริ่มใหม่
               </button>
            </div>
@@ -448,7 +448,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
                   {block ? block.text : `ส่วน ${idx + 1}`}
                 </button>
               ))}
-              <span className="text-slate-500 font-mono text-lg font-bold">;</span>
+              <span className="text-slate-700 font-mono text-lg font-bold">;</span>
            </div>
 
            {/* Blocks */}
@@ -482,9 +482,9 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Query Execution Log</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Query Execution Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
@@ -492,7 +492,7 @@ export default function SQL21901_U3_L5_PreUpdateCheckDemo() {
               <div key={i} className="leading-relaxed flex gap-2">
                 {line.type === 'command' && <><span className="text-blue-400 font-bold shrink-0"></span> <div className="text-blue-300 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'warning' && <><span className="text-amber-500 font-bold shrink-0"></span> <div className="text-amber-400 font-bold">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}

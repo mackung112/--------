@@ -46,7 +46,7 @@ export default function PY21910_U2_L9_PseudocodeKeywords() {
           <Sparkles className="w-4 h-4" /> สำรวจคำหลัก 6 ตัว
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">🔑 คำหลัก (Keywords) ของรหัสเทียม</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">คำหลักเป็นคำที่มีหน้าที่ชัดเจนในรหัสเทียม ช่วยให้ทุกคนอ่านแล้วเข้าใจตรงกัน กดที่แต่ละคำเพื่อดูรายละเอียดและตัวอย่าง Python ที่ตรงกัน</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">คำหลักเป็นคำที่มีหน้าที่ชัดเจนในรหัสเทียม ช่วยให้ทุกคนอ่านแล้วเข้าใจตรงกัน กดที่แต่ละคำเพื่อดูรายละเอียดและตัวอย่าง Python ที่ตรงกัน</p>
       </div>
 
       {/* Keyword buttons */}
@@ -71,7 +71,7 @@ export default function PY21910_U2_L9_PseudocodeKeywords() {
               </h4>
               <p className="text-gray-700 leading-relaxed mb-6">{active.desc}</p>
               <div className="bg-white/80 rounded-xl p-4 border border-gray-200/50">
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">ตัวอย่าง Pseudocode</span>
+                <span className="text-xs font-bold text-gray-700 uppercase tracking-wider block mb-2">ตัวอย่าง Pseudocode</span>
                 <pre className="font-mono text-sm text-gray-800 whitespace-pre-wrap">{active.example}</pre>
               </div>
             </div>
@@ -81,10 +81,10 @@ export default function PY21910_U2_L9_PseudocodeKeywords() {
                 <span className="font-bold text-emerald-800">แปลงเป็น Python ได้อย่างไร?</span>
               </div>
               <div className="bg-slate-900 rounded-2xl p-5 font-mono text-sm">
-                <div className="text-slate-500 text-xs mb-3 uppercase tracking-wider font-bold">Python Equivalent</div>
+                <div className="text-slate-700 text-xs mb-3 uppercase tracking-wider font-bold">Python Equivalent</div>
                 <pre className="text-emerald-400 whitespace-pre-wrap">{active.python}</pre>
               </div>
-              <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
+              <div className="mt-3 flex items-center gap-2 text-xs text-gray-700">
                 <ArrowRight className="w-3 h-3" />
                 <span><code className="bg-gray-100 px-1 rounded font-mono">{active.word}</code> ใน Pseudocode → ตรงกับฟังก์ชัน/คำสั่งใน Python ด้านบน</span>
               </div>

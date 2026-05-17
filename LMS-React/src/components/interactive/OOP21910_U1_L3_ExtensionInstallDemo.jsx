@@ -54,7 +54,7 @@ export default function OOP21910_U1_L3_ExtensionInstallDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">ติดตั้ง Extensions ที่จำเป็น</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           VS Code เปล่าๆ ไม่สามารถทำอะไรได้มากนัก เราต้องติดตั้ง "ส่วนเสริม" (Extensions) เพื่อให้มันเก่งขึ้น โดยเฉพาะสำหรับภาษา Python
         </p>
       </div>
@@ -80,7 +80,7 @@ export default function OOP21910_U1_L3_ExtensionInstallDemo() {
           <div className="flex-1 p-0 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-100">
             <div className="p-4 border-b border-slate-200 bg-[#252526] text-white">
               <div className="relative">
-                <Search size={16} className="absolute left-3 top-2.5 text-slate-400" />
+                <Search size={16} className="absolute left-3 top-2.5 text-slate-600" />
                 <input type="text" placeholder="Search Extensions in Marketplace" readOnly 
                        className="w-full bg-[#3c3c3c] border-none text-sm text-slate-200 pl-10 pr-3 py-2 rounded focus:outline-none" />
               </div>
@@ -96,8 +96,8 @@ export default function OOP21910_U1_L3_ExtensionInstallDemo() {
                       <h4 className="font-bold text-slate-200 text-sm truncate">{ext.name}</h4>
                       {ext.essential && <span className="text-[9px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded ml-2 border border-amber-500/30">จำเป็น</span>}
                     </div>
-                    <div className="text-xs text-slate-400 mt-1 truncate">{ext.desc}</div>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500">
+                    <div className="text-xs text-slate-600 mt-1 truncate">{ext.desc}</div>
+                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-700">
                       <span>{ext.author}</span>
                       <span className="flex items-center gap-0.5"><Download size={10} /> {ext.downloads}</span>
                       <span className="flex items-center gap-0.5"><Star size={10} className="text-amber-500" /> {ext.stars}</span>
@@ -121,7 +121,7 @@ export default function OOP21910_U1_L3_ExtensionInstallDemo() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-4 text-xs text-slate-500 mb-6 pb-6 border-b border-slate-100">
+                  <div className="flex items-center gap-4 text-xs text-slate-700 mb-6 pb-6 border-b border-slate-100">
                     <span className="flex items-center gap-1"><Download size={14} /> {activeExt.downloads}</span>
                     <span className="flex items-center gap-1"><Star size={14} className="text-amber-400" /> {activeExt.stars}</span>
                   </div>
@@ -147,7 +147,7 @@ export default function OOP21910_U1_L3_ExtensionInstallDemo() {
                   )}
                 </div>
               ) : (
-                <div className="h-full flex items-center justify-center text-slate-400">
+                <div className="h-full flex items-center justify-center text-slate-600">
                   Select an extension to view details.
                 </div>
               )}
@@ -166,19 +166,19 @@ export default function OOP21910_U1_L3_ExtensionInstallDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Extension CLI</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Extension CLI</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs transition-colors">
               <RotateCcw size={14} /> Clear Log
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">$</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">$</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

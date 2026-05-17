@@ -61,7 +61,7 @@ export default function PY21910_U6_L3_ReturnScope() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">return & ขอบเขตตัวแปร (Scope)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทำความเข้าใจการส่งค่ากลับด้วย <code className="bg-slate-200 px-1 rounded text-pink-600">return</code> และความแตกต่างระหว่างตัวแปร Local กับ Global
         </p>
       </div>
@@ -93,10 +93,10 @@ export default function PY21910_U6_L3_ReturnScope() {
                   <div className="ml-4 text-emerald-300">result = a + b</div>
                   <div className="ml-4 mt-2 mb-4">
                     <span className="bg-pink-500 text-white px-1.5 py-0.5 rounded font-bold">return</span> <span className="text-emerald-300">result</span>
-                    <span className="text-slate-500 ml-2"># ส่งค่ากลับ</span>
+                    <span className="text-slate-700 ml-2"># ส่งค่ากลับ</span>
                   </div>
                   
-                  <div className="text-slate-500 mb-1"># การเรียกใช้และรับค่ากลับ</div>
+                  <div className="text-slate-700 mb-1"># การเรียกใช้และรับค่ากลับ</div>
                   <div className="text-yellow-300">total = add(3, 5)</div>
                   <div className="text-cyan-300">print(total)</div>
                 </div>
@@ -120,14 +120,14 @@ export default function PY21910_U6_L3_ReturnScope() {
                 <div className="bg-slate-900 rounded-xl p-5 font-mono text-sm leading-relaxed">
                   <div className="flex items-center gap-2 mb-1">
                     <div className="w-3 h-3 rounded-full bg-rose-500"></div>
-                    <span className="text-slate-500">ตัวแปร Global (อยู่ข้างนอกฟังก์ชัน)</span>
+                    <span className="text-slate-700">ตัวแปร Global (อยู่ข้างนอกฟังก์ชัน)</span>
                   </div>
                   <div className="text-emerald-300 mb-4">x = <span className="text-rose-400 font-bold">"Global"</span></div>
 
                   <div className="text-pink-400">def <span className="text-blue-400 font-bold">test</span>():</div>
                   <div className="ml-4 flex items-center gap-2 mt-2 mb-1">
                     <div className="w-3 h-3 rounded-full bg-cyan-500"></div>
-                    <span className="text-slate-500">ตัวแปร Local (อยู่ข้างในฟังก์ชัน สร้างใหม่)</span>
+                    <span className="text-slate-700">ตัวแปร Local (อยู่ข้างในฟังก์ชัน สร้างใหม่)</span>
                   </div>
                   <div className="ml-4 text-emerald-300">x = <span className="text-cyan-400 font-bold">"Local"</span></div>
                   <div className="ml-4 text-cyan-300 mt-2">print(f"ในฟังก์ชัน x = {'{'}x{'}'}")</div>
@@ -152,7 +152,7 @@ export default function PY21910_U6_L3_ReturnScope() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">สรุปแนวคิด</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">สรุปแนวคิด</h4>
             {tab === 'return' ? (
               <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
                 <ul className="space-y-4 text-sm text-slate-600">
@@ -197,19 +197,19 @@ export default function PY21910_U6_L3_ReturnScope() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

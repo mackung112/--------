@@ -56,7 +56,7 @@ export default function PY21910_U5_L1_ListExplorer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">List (รายการข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           List คือตัวแปรที่สามารถเก็บข้อมูลได้หลายค่า (เหมือน array) โดยแต่ละค่าจะมี <code className="bg-slate-200 px-1 rounded text-pink-600">index</code> กำกับ เริ่มจาก 0
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function PY21910_U5_L1_ListExplorer() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Interactive List */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">จัดการ List</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">จัดการ List</h4>
             
             <div className="flex gap-2 mb-6">
               <input type="text" value={newItem}
@@ -82,7 +82,7 @@ export default function PY21910_U5_L1_ListExplorer() {
             <div className="space-y-2">
               {items.map((item, i) => (
                 <div key={i} className="flex items-center gap-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl p-3 transition-colors group">
-                  <div className="bg-slate-200 text-slate-500 text-xs font-mono font-bold px-2 py-1 rounded">
+                  <div className="bg-slate-200 text-slate-700 text-xs font-mono font-bold px-2 py-1 rounded">
                     [{i}]
                   </div>
                   <span className="flex-1 font-bold text-slate-700 text-sm font-mono">"{item}"</span>
@@ -93,7 +93,7 @@ export default function PY21910_U5_L1_ListExplorer() {
                 </div>
               ))}
               {items.length === 0 && (
-                <div className="text-center py-8 text-slate-400 text-sm border-2 border-dashed border-slate-200 rounded-xl">
+                <div className="text-center py-8 text-slate-600 text-sm border-2 border-dashed border-slate-200 rounded-xl">
                   List ว่างเปล่า (Empty List)
                 </div>
               )}
@@ -102,14 +102,14 @@ export default function PY21910_U5_L1_ListExplorer() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โค้ด Python ที่เทียบเท่า</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โค้ด Python ที่เทียบเท่า</h4>
             <div className="bg-slate-900 rounded-xl p-4 font-mono text-sm mb-4 flex-1">
               <div className="text-green-400 mb-2">langs = {JSON.stringify(items).replace(/,/g, ', ')}</div>
-              <div className="text-slate-500 text-xs mb-3"># จำนวนข้อมูล: {items.length}</div>
+              <div className="text-slate-700 text-xs mb-3"># จำนวนข้อมูล: {items.length}</div>
               
               {items.length > 0 && (
                 <>
-                  <div className="text-slate-500 text-xs mb-1 mt-4"># เข้าถึงข้อมูลด้วย Index</div>
+                  <div className="text-slate-700 text-xs mb-1 mt-4"># เข้าถึงข้อมูลด้วย Index</div>
                   <div className="flex justify-between items-center bg-slate-800/50 rounded px-2 py-1 mb-1">
                     <span className="text-pink-400">langs[0]</span>
                     <span className="text-emerald-300">"{items[0]}"</span>
@@ -132,16 +132,16 @@ export default function PY21910_U5_L1_ListExplorer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

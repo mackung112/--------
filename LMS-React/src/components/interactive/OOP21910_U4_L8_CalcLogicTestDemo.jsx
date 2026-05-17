@@ -92,7 +92,7 @@ export default function OOP21910_U4_L8_CalcLogicTestDemo() {
             </div>
           )}
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">assert</code> เพื่อตรวจสอบสูตรและตรรกะการคำนวณที่สำคัญในระบบ e-Commerce
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function OOP21910_U4_L8_CalcLogicTestDemo() {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Left: Test Cases */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex justify-between items-center">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex justify-between items-center">
               <span>Test Cases (test_calculator.py)</span>
               <div className="flex gap-2">
                 <button onClick={runAll} disabled={isRunningAll || runIdx >= 0} className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
@@ -147,7 +147,7 @@ export default function OOP21910_U4_L8_CalcLogicTestDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">การทำงานของ Assert</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">การทำงานของ Assert</h4>
             
             <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-5 mb-6 text-sm text-indigo-900 leading-relaxed">
               <div className="font-mono font-bold text-indigo-700 mb-2 pb-2 border-b border-indigo-200">assert {"<condition>"} == {"<expected>"}</div>
@@ -164,9 +164,9 @@ export default function OOP21910_U4_L8_CalcLogicTestDemo() {
             </div>
 
             <div className="bg-slate-800 text-slate-300 p-4 rounded-xl font-mono text-[11px] shadow-inner flex-1 flex flex-col justify-center">
-              <div className="text-slate-500 mb-2"># เบื้องหลังฟังก์ชันสมมติ (mock implementation)</div>
+              <div className="text-slate-700 mb-2"># เบื้องหลังฟังก์ชันสมมติ (mock implementation)</div>
               <span className="text-pink-400">def</span> <span className="text-blue-300">apply_discount</span>(<span className="text-orange-300">price</span>, <span className="text-orange-300">pct</span>):<br />
-              &nbsp;&nbsp;<span className="text-slate-500"># 200 - (200 * 10 / 100) = 180</span><br />
+              &nbsp;&nbsp;<span className="text-slate-700"># 200 - (200 * 10 / 100) = 180</span><br />
               &nbsp;&nbsp;<span className="text-pink-400">return</span> <span className="text-orange-300">price</span> - (<span className="text-orange-300">price</span> * <span className="text-orange-300">pct</span> / <span className="text-orange-300">100</span>)
             </div>
 
@@ -177,17 +177,17 @@ export default function OOP21910_U4_L8_CalcLogicTestDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">pytest console</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">pytest console</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

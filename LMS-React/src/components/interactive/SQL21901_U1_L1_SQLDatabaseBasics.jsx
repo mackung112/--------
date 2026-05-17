@@ -86,7 +86,7 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Index Racing Simulator (แข่งความเร็วค้นหาข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทำไมฐานข้อมูลถึงค้นหาข้อมูลนับล้านเรคคอร์ดได้ในเสี้ยววินาที? คำตอบคือการทำ <strong>Index (ดัชนี)</strong> ลองกดปุ่มค้นหาเพื่อดูแอนิเมชันเปรียบเทียบระหว่างการหาแบบปกติกับการใช้ Index ดูครับ!
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
           {/* Left: Race Track */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
             <div className="flex justify-between items-center mb-6">
-               <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+               <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                 <Search size={16} /> เป้าหมายการค้นหา
               </h4>
               <div className="flex items-center gap-3">
@@ -111,7 +111,7 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
                     <RotateCcw size={16}/> Reset
                   </button>
                 ) : (
-                  <button disabled className="bg-slate-300 text-slate-500 px-4 py-2 rounded-lg font-bold text-sm cursor-not-allowed">
+                  <button disabled className="bg-slate-300 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm cursor-not-allowed">
                     Running...
                   </button>
                 )}
@@ -197,7 +197,7 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
 
           {/* Right: Explanations */}
           <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">
               อธิบายการทำงาน
             </h4>
             
@@ -217,7 +217,7 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
                   <h5 className="font-bold flex items-center gap-2 mb-2 text-yellow-400">
                     <CheckCircle2 size={18}/> สรุปผล
                   </h5>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-600 leading-relaxed">
                     นี่คือเหตุผลที่การกำหนด <code>Primary Key</code> หรือการใส่ <code>INDEX</code> ให้กับคอลัมน์ที่มีการค้นหาบ่อยๆ ถึงทำให้ระบบทำงานเร็วขึ้นแบบก้าวกระโดด!
                   </p>
                 </div>
@@ -230,16 +230,16 @@ export default function SQL21901_U1_L1_SQLDatabaseBasics() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Query Performance Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Query Performance Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-yellow-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'command' && <><span className="text-yellow-400 font-bold shrink-0">mysql&gt;</span> <div className="text-slate-600">{line.text.substring(2)}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0">[Sys]</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-400 font-bold shrink-0">[Slow]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Fast]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

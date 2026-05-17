@@ -62,7 +62,7 @@ export default function OOP21910_U2_L6_EncapsulationDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Encapsulation (การห่อหุ้มข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">__</code> (Double Underscore) เพื่อซ่อนข้อมูลสำคัญใน Object ไม่ให้ถูกแก้ไขจากภายนอกโดยตรง
         </p>
       </div>
@@ -121,7 +121,7 @@ export default function OOP21910_U2_L6_EncapsulationDemo() {
                   <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
                   
                   <div className={`w-20 h-20 rounded-full border-4 border-slate-500 flex items-center justify-center transition-all duration-500 ${isError ? 'bg-rose-100 rotate-12' : 'bg-slate-200'}`}>
-                    {isError ? <Lock size={32} className="text-rose-500" /> : <Unlock size={32} className="text-slate-500" />}
+                    {isError ? <Lock size={32} className="text-rose-500" /> : <Unlock size={32} className="text-slate-700" />}
                   </div>
 
                   <div className="mt-3 bg-emerald-900 text-emerald-400 font-mono px-2 py-1 rounded border-2 border-slate-500 text-xs shadow-inner w-24 text-center truncate">
@@ -135,12 +135,12 @@ export default function OOP21910_U2_L6_EncapsulationDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[360px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
               <span className="text-pink-400">class</span> <span className="text-yellow-300">BankAccount</span>:<br />
               &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">__init__</span>(<span className="text-orange-300">self</span>):<br />
-              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.<span className="text-rose-400 font-bold">__money</span> = 1000 <span className="text-slate-500"># Private</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.<span className="text-rose-400 font-bold">__money</span> = 1000 <span className="text-slate-700"># Private</span><br />
               <br />
               &nbsp;&nbsp;<span className="text-pink-400">def</span> <span className="text-sky-300">deposit</span>(<span className="text-orange-300">self</span>, amount):<br />
               &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-orange-300">self</span>.<span className="text-rose-400 font-bold">__money</span> += amount<br />
@@ -178,16 +178,16 @@ export default function OOP21910_U2_L6_EncapsulationDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Security Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Security Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-rose-400 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}

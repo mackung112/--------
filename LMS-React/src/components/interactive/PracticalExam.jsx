@@ -53,11 +53,11 @@ export default function PracticalExam({ practicalData, onComplete }) {
       
       <div className="flex items-center gap-3 mb-8 border-b border-slate-700 pb-4">
         <div className="bg-slate-800 p-2 rounded-lg">
-          <Terminal className="w-6 h-6 text-indigo-400" />
+          <Terminal className="w-6 h-6 text-indigo-600" />
         </div>
         <div>
           <h3 className="text-xl font-bold text-white">ข้อสอบปฏิบัติ (Coding Challenge)</h3>
-          <p className="text-slate-400 text-sm">ข้อที่ {currentQuestionIdx + 1} จาก {practicalData.length}</p>
+          <p className="text-slate-600 text-sm">ข้อที่ {currentQuestionIdx + 1} จาก {practicalData.length}</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ export default function PracticalExam({ practicalData, onComplete }) {
       </div>
 
       <div className="relative">
-        <div className="absolute left-4 top-4 text-slate-500 font-mono select-none">1</div>
+        <div className="absolute left-4 top-4 text-slate-700 font-mono select-none">1</div>
         <textarea
           value={userInput}
           onChange={(e) => {

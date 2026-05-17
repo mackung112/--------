@@ -123,7 +123,7 @@ export default function SQLInnerJoinDemo() {
               </div>
             </div>
 
-            <div className="absolute bottom-0 w-full text-center text-slate-400 text-sm font-mono mt-8">
+            <div className="absolute bottom-0 w-full text-center text-slate-600 text-sm font-mono mt-8">
               {joinType === 'inner' && "SELECT * FROM A INNER JOIN B ON A.id = B.c_id"}
               {joinType === 'left' && "SELECT * FROM A LEFT JOIN B ON A.id = B.c_id"}
               {joinType === 'right' && "SELECT * FROM A RIGHT JOIN B ON A.id = B.c_id"}
@@ -138,7 +138,7 @@ export default function SQLInnerJoinDemo() {
               <div className="flex-1 bg-white rounded-xl overflow-hidden border border-slate-300">
                 <div className="bg-slate-100 px-3 py-2 text-xs font-bold text-slate-600 text-center border-b">Table A (Customers)</div>
                 <table className="w-full text-xs text-center">
-                  <thead><tr className="bg-slate-50 text-slate-500"><th className="p-1">id</th><th className="p-1">name</th></tr></thead>
+                  <thead><tr className="bg-slate-50 text-slate-700"><th className="p-1">id</th><th className="p-1">name</th></tr></thead>
                   <tbody>
                     {customers.map(c => <tr key={c.id} className="border-t"><td className="p-1">{c.id}</td><td className="p-1">{c.name}</td></tr>)}
                   </tbody>
@@ -149,7 +149,7 @@ export default function SQLInnerJoinDemo() {
               <div className="flex-1 bg-white rounded-xl overflow-hidden border border-slate-300">
                 <div className="bg-slate-100 px-3 py-2 text-xs font-bold text-slate-600 text-center border-b">Table B (Orders)</div>
                 <table className="w-full text-xs text-center">
-                  <thead><tr className="bg-slate-50 text-slate-500"><th className="p-1">id</th><th className="p-1">c_id</th><th className="p-1">item</th></tr></thead>
+                  <thead><tr className="bg-slate-50 text-slate-700"><th className="p-1">id</th><th className="p-1">c_id</th><th className="p-1">item</th></tr></thead>
                   <tbody>
                     {orders.map(o => <tr key={o.id} className="border-t"><td className="p-1">{o.id}</td><td className="p-1 text-indigo-600 font-bold">{o.c_id}</td><td className="p-1">{o.item}</td></tr>)}
                   </tbody>
@@ -175,7 +175,7 @@ export default function SQLInnerJoinDemo() {
                   </thead>
                   <tbody>
                     {results.length === 0 ? (
-                      <tr><td colSpan="5" className="p-4 text-slate-400">No data found</td></tr>
+                      <tr><td colSpan="5" className="p-4 text-slate-600">No data found</td></tr>
                     ) : (
                       results.map((r, i) => (
                         <tr key={i} className="border-b border-indigo-50 bg-white hover:bg-indigo-50 transition-colors animate-in fade-in slide-in-from-top-2">
@@ -196,7 +196,7 @@ export default function SQLInnerJoinDemo() {
         </div>
 
         <div className="bg-slate-800 p-6 border-t border-slate-700 text-slate-300 text-sm leading-relaxed">
-          {joinType === 'inner' && <p><strong className="text-indigo-400">INNER JOIN:</strong> ดึงมาเฉพาะแถวที่ <strong>A.id และ B.c_id ตรงกันเท่านั้น</strong> (สมชายสั่งซื้อของ 2 ชิ้น เลยได้ 2 แถว ส่วนสมหญิงกับวิชัยไม่ได้ซื้อของ เลยหายไป)</p>}
+          {joinType === 'inner' && <p><strong className="text-indigo-600">INNER JOIN:</strong> ดึงมาเฉพาะแถวที่ <strong>A.id และ B.c_id ตรงกันเท่านั้น</strong> (สมชายสั่งซื้อของ 2 ชิ้น เลยได้ 2 แถว ส่วนสมหญิงกับวิชัยไม่ได้ซื้อของ เลยหายไป)</p>}
           {joinType === 'left' && <p><strong className="text-emerald-400">LEFT JOIN:</strong> เอาตาราง <strong>A (ซ้าย) เป็นหลัก ดึงลูกค้ามาทุกคน</strong> ใครไม่มี Order (เช่น สมหญิง, วิชัย) ข้อมูลฝั่ง B จะกลายเป็น <span className="bg-slate-700 px-1 rounded text-white">NULL</span></p>}
           {joinType === 'right' && <p><strong className="text-rose-400">RIGHT JOIN:</strong> เอาตาราง <strong>B (ขวา) เป็นหลัก ดึงออเดอร์มาทั้งหมด</strong> ออเดอร์ของคีย์บอร์ดที่ไม่มีเจ้าของ (c_id=99) ข้อมูลฝั่ง A จะกลายเป็น <span className="bg-slate-700 px-1 rounded text-white">NULL</span></p>}
         </div>

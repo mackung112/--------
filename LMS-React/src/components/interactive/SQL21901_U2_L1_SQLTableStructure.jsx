@@ -129,7 +129,7 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Table Structure (โครงสร้างตาราง)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทำความรู้จักส่วนประกอบพื้นฐานของตารางข้อมูล: คอลัมน์, แถว, และข้อมูล
         </p>
       </div>
@@ -139,7 +139,7 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
           
           {/* Left: Table Visualizer */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50 overflow-hidden">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               Interactive Table Anatomy
             </h4>
 
@@ -174,14 +174,14 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
                 <div onClick={() => handleCellClick('cell', '4-3')} className={getCellClasses('cell', 4, 3)}>42000</div>
               </div>
             </div>
-            <div className="text-center text-xs text-slate-500 font-medium animate-pulse mt-2">
+            <div className="text-center text-xs text-slate-700 font-medium animate-pulse mt-2">
               👆 ลองคลิกที่หัวคอลัมน์ ตัวเลขแถว หรือข้อมูลข้างในดูสิครับ
             </div>
 
             {/* Info Panel under table */}
             <div className="mt-6 bg-white rounded-xl border border-slate-200 p-5 min-h-[140px] flex items-center shadow-sm">
               {!highlight.type ? (
-                <div className="text-center text-slate-400 w-full flex flex-col items-center">
+                <div className="text-center text-slate-600 w-full flex flex-col items-center">
                   <ArrowRight className="mb-2 opacity-50 transform rotate-90 md:rotate-0" size={24} />
                   <p className="text-sm">คำอธิบายจะปรากฏที่นี่</p>
                 </div>
@@ -201,15 +201,15 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
 
           {/* Right: Drag & Drop Quiz */}
           <div className="w-full lg:w-[450px] bg-white p-6 flex flex-col border-t lg:border-t-0 border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <span className="text-yellow-500">?</span> Knowledge Check
             </h4>
             
-            <p className="text-xs text-slate-500 mb-4">ลากป้ายคำศัพท์ด้านล่าง ไปวางในช่องว่างให้ตรงกับความหมายที่ถูกต้อง</p>
+            <p className="text-xs text-slate-700 mb-4">ลากป้ายคำศัพท์ด้านล่าง ไปวางในช่องว่างให้ตรงกับความหมายที่ถูกต้อง</p>
 
             <div className="space-y-4 flex-1">
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
-                <span className="font-bold text-slate-400 mr-2">1.</span> ข้อมูลใน <strong className="text-sky-500">แนวตั้ง</strong> เช่น 'ราคาสินค้า' เรียกว่า
+                <span className="font-bold text-slate-600 mr-2">1.</span> ข้อมูลใน <strong className="text-sky-500">แนวตั้ง</strong> เช่น 'ราคาสินค้า' เรียกว่า
                 <div 
                   onDragOver={(e) => e.preventDefault()} 
                   onDrop={(e) => handleDrop(e, 'column')}
@@ -220,7 +220,7 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
               </div>
 
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
-                <span className="font-bold text-slate-400 mr-2">2.</span> ข้อมูล 1 รายการ ใน <strong className="text-rose-500">แนวนอน</strong> เรียกว่า
+                <span className="font-bold text-slate-600 mr-2">2.</span> ข้อมูล 1 รายการ ใน <strong className="text-rose-500">แนวนอน</strong> เรียกว่า
                 <div 
                   onDragOver={(e) => e.preventDefault()} 
                   onDrop={(e) => handleDrop(e, 'row')}
@@ -231,7 +231,7 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
               </div>
 
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
-                <span className="font-bold text-slate-400 mr-2">3.</span> คำศัพท์ที่โปรแกรมเมอร์มักใช้เรียกแทนคำว่า 'Column'
+                <span className="font-bold text-slate-600 mr-2">3.</span> คำศัพท์ที่โปรแกรมเมอร์มักใช้เรียกแทนคำว่า 'Column'
                 <div 
                   onDragOver={(e) => e.preventDefault()} 
                   onDrop={(e) => handleDrop(e, 'field')}
@@ -244,7 +244,7 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
 
             {/* Draggables Box */}
             <div className="mt-6 bg-slate-800 p-4 rounded-xl shadow-inner border border-slate-700">
-              <h5 className="text-xs font-semibold text-slate-400 mb-3 text-center uppercase tracking-wider">คลังคำศัพท์ (Drag Words)</h5>
+              <h5 className="text-xs font-semibold text-slate-600 mb-3 text-center uppercase tracking-wider">คลังคำศัพท์ (Drag Words)</h5>
               <div className="flex flex-wrap gap-2 justify-center">
                 {!Object.values(dropZones).includes('Column') && (
                   <div draggable onDragStart={(e) => handleDragStart(e, 'Column')} className="cursor-grab active:cursor-grabbing bg-sky-500 hover:bg-sky-400 text-white px-3 py-1.5 rounded-lg shadow-md font-bold text-xs flex items-center gap-1">
@@ -282,17 +282,17 @@ export default function SQL21901_U2_L1_SQLTableStructure() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Logger</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Logger</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-600">{line.text.substring(2)}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text.substring(2)}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0">[Sys]</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-400 font-bold shrink-0">[Err]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Ok]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

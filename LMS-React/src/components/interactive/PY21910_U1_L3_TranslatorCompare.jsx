@@ -160,8 +160,8 @@ export default function PY21910_U1_L3_TranslatorCompare() {
 
           <div className="flex-1 bg-slate-800 rounded-xl p-4 shadow-inner relative overflow-hidden flex flex-col">
             <div className="flex items-center gap-2 mb-3 border-b border-slate-700 pb-2">
-              <FileCode2 className="w-4 h-4 text-slate-400" />
-              <span className="text-xs font-bold text-slate-300">source_code.py</span>
+              <FileCode2 className="w-4 h-4 text-slate-600" />
+              <span className="text-xs font-bold text-slate-600">source_code.py</span>
             </div>
             
             <div className="space-y-2 flex-1">
@@ -201,7 +201,7 @@ export default function PY21910_U1_L3_TranslatorCompare() {
           
           <div className="p-6 flex-1 overflow-y-auto">
             {simState === 0 && (
-              <div className="text-center text-slate-500 mt-10">
+              <div className="text-center text-slate-700 mt-10">
                 <ArrowRight className="w-12 h-12 mx-auto mb-3 opacity-20" />
                 <p>เลือกกดปุ่ม <b>Interpreter</b> หรือ <b>Compiler</b><br/>ทางด้านซ้ายเพื่อดูการทำงาน</p>
               </div>
@@ -215,11 +215,11 @@ export default function PY21910_U1_L3_TranslatorCompare() {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-xs text-slate-500 block mb-1">จุดเด่น</span>
+                    <span className="text-xs text-slate-700 block mb-1">จุดเด่น</span>
                     <span className="text-sm text-emerald-600 font-medium">แก้ไขง่าย เห็นผลทันที เหมาะกับการเรียนรู้ (เช่น Python)</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-xs text-slate-500 block mb-1">จุดด้อย</span>
+                    <span className="text-xs text-slate-700 block mb-1">จุดด้อย</span>
                     <span className="text-sm text-rose-600 font-medium">ทำงานช้า เพราะต้องแปลใหม่ทุกครั้งที่รัน</span>
                   </div>
                 </div>
@@ -234,11 +234,11 @@ export default function PY21910_U1_L3_TranslatorCompare() {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-xs text-slate-500 block mb-1">จุดเด่น</span>
+                    <span className="text-xs text-slate-700 block mb-1">จุดเด่น</span>
                     <span className="text-sm text-emerald-600 font-medium">เมื่อแปลเสร็จแล้ว จะทำงานได้เร็วมาก (เช่น C++, Java)</span>
                   </div>
                   <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                    <span className="text-xs text-slate-500 block mb-1">จุดด้อย</span>
+                    <span className="text-xs text-slate-700 block mb-1">จุดด้อย</span>
                     <span className="text-sm text-rose-600 font-medium">ต้องรอแปลจนเสร็จ ถ้ามี Error นิดเดียวก็แปลไม่ผ่านเลย</span>
                   </div>
                 </div>
@@ -298,13 +298,13 @@ export default function PY21910_U1_L3_TranslatorCompare() {
                 {simState === 1 && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${simState === 1 ? 'bg-green-500' : 'bg-slate-600'}`}></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">Live Console</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">Live Console</span>
             </div>
 
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed flex-1">
               {logs.map((log, idx) => (
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
-                  <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                  <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                   <span className={`shrink-0 w-10 font-bold ${
                     log.type === 'error' ? 'text-red-400' :
                     log.type === 'warn' ? 'text-amber-400' :

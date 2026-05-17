@@ -59,7 +59,7 @@ export default function PY21910_U4_L10_BitwiseOps() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Bitwise Operators (ตัวดำเนินการระดับบิต)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           สำรวจการทำงานของ Bitwise operators ที่ใช้ในงานระดับ low-level เช่น Network, Cryptography และ Embedded Systems
         </p>
       </div>
@@ -70,17 +70,17 @@ export default function PY21910_U4_L10_BitwiseOps() {
           {/* Left: Visual */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
             {/* Input Controls */}
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">1. กำหนดค่า a และ b</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">1. กำหนดค่า a และ b</h4>
             <div className="flex justify-center gap-6 mb-6">
               <div className="text-center">
-                <label className="text-xs text-slate-500 block mb-1 font-medium">a</label>
+                <label className="text-xs text-slate-700 block mb-1 font-medium">a</label>
                 <input type="number" value={a}
                   onChange={e => setA(+e.target.value)}
                   className="w-20 text-center text-xl font-bold border-2 border-amber-300 rounded-xl p-2 focus:outline-none focus:border-amber-500" />
                 <div className="font-mono text-[11px] text-amber-600 mt-1">{toBin(a)}</div>
               </div>
               <div className="text-center">
-                <label className="text-xs text-slate-500 block mb-1 font-medium">b</label>
+                <label className="text-xs text-slate-700 block mb-1 font-medium">b</label>
                 <input type="number" value={b}
                   onChange={e => setB(+e.target.value)}
                   className="w-20 text-center text-xl font-bold border-2 border-amber-300 rounded-xl p-2 focus:outline-none focus:border-amber-500" />
@@ -93,7 +93,7 @@ export default function PY21910_U4_L10_BitwiseOps() {
             </div>
 
             {/* Operation Buttons */}
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">2. เลือก Bitwise Operator</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">2. เลือก Bitwise Operator</h4>
             <div className="space-y-2">
               {ops.map((op, i) => (
                 <button key={i} onClick={() => runOp(op)}
@@ -104,10 +104,10 @@ export default function PY21910_U4_L10_BitwiseOps() {
                   }`}>
                   <span className="font-mono font-bold text-amber-600 w-10 text-center shrink-0">{op.sym}</span>
                   <span className="text-sm font-medium text-slate-700 w-24 shrink-0">{op.name}</span>
-                  <span className="text-xs text-slate-500 flex-1 text-left leading-relaxed">{op.desc}</span>
-                  <div className="font-mono text-xs text-slate-400 shrink-0">{toBin(op.result)}</div>
+                  <span className="text-xs text-slate-700 flex-1 text-left leading-relaxed">{op.desc}</span>
+                  <div className="font-mono text-xs text-slate-600 shrink-0">{toBin(op.result)}</div>
                   <div className="font-bold text-emerald-600 w-12 text-right shrink-0">= {op.result}</div>
-                  <Play size={12} className="text-slate-400 shrink-0 fill-current" />
+                  <Play size={12} className="text-slate-600 shrink-0 fill-current" />
                 </button>
               ))}
             </div>
@@ -115,11 +115,11 @@ export default function PY21910_U4_L10_BitwiseOps() {
 
           {/* Right: Info Panel */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ตารางอ้างอิง Bitwise</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ตารางอ้างอิง Bitwise</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4 overflow-auto">
               <table className="w-full text-xs text-center font-mono">
                 <thead>
-                  <tr className="border-b border-slate-200 text-slate-500">
+                  <tr className="border-b border-slate-200 text-slate-700">
                     <th className="py-1.5">bit A</th>
                     <th className="py-1.5 border-l border-slate-100">bit B</th>
                     <th className="py-1.5 border-l border-slate-100">AND</th>
@@ -151,19 +151,19 @@ export default function PY21910_U4_L10_BitwiseOps() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

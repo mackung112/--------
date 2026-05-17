@@ -90,7 +90,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">โปรเจกต์: ระบบ POS ร้านกาแฟ (POS System)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทดลองใช้งานระบบ POS ฉบับย่อ ที่รวบรวมแนวคิด Class, Object, List, และ Loop มาทำงานร่วมกันอย่างสมบูรณ์
         </p>
       </div>
@@ -100,7 +100,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
           
           {/* Left: Menu Items */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               Menu (เมนูสินค้า)
             </h4>
 
@@ -122,7 +122,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
             {showReceipt && cart.length > 0 ? (
               // Receipt View
               <div className="p-6 flex-1 flex flex-col bg-slate-50">
-                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
                   Receipt (ใบเสร็จรับเงิน)
                 </h4>
                 <div className="flex-1 bg-white border border-slate-200 rounded-xl shadow-sm p-6 flex flex-col relative overflow-hidden">
@@ -132,7 +132,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
                   </div>
                   
                   <div className="text-center font-mono font-bold text-lg text-slate-800 mb-1 pt-2">☕ Coffee OOP</div>
-                  <div className="text-center text-xs text-slate-500 mb-4 font-mono">TAX ID: 0123456789012</div>
+                  <div className="text-center text-xs text-slate-700 mb-4 font-mono">TAX ID: 0123456789012</div>
                   
                   <div className="border-b-2 border-dashed border-slate-300 mb-4"></div>
                   
@@ -141,7 +141,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
                       <div key={c.id} className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="text-slate-800 font-bold">{c.name}</div>
-                          <div className="text-xs text-slate-500">{c.qty} x {c.price}</div>
+                          <div className="text-xs text-slate-700">{c.qty} x {c.price}</div>
                         </div>
                         <div className="text-slate-800">{c.price * c.qty}</div>
                       </div>
@@ -163,7 +163,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
                     </div>
                   </div>
                   
-                  <div className="text-center text-xs text-slate-400 font-mono mt-6">
+                  <div className="text-center text-xs text-slate-600 font-mono mt-6">
                     Thank you / ขอบคุณที่ใช้บริการ
                   </div>
 
@@ -180,14 +180,14 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
             ) : (
               // Cart View
               <div className="p-6 flex-1 flex flex-col h-full">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center justify-between">
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center justify-between">
                   <div className="flex items-center gap-2"><ShoppingCart size={16} /> Cart (ตะกร้า)</div>
                   {cartItemCount > 0 && <span className="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full text-xs font-bold">{cartItemCount} item{cartItemCount > 1 ? 's' : ''}</span>}
                 </h4>
 
                 <div className="flex-1 border border-slate-200 rounded-xl bg-slate-50 flex flex-col overflow-hidden">
                   {cart.length === 0 ? (
-                    <div className="flex-1 flex flex-col items-center justify-center text-slate-400 p-6 text-center">
+                    <div className="flex-1 flex flex-col items-center justify-center text-slate-600 p-6 text-center">
                       <ShoppingCart size={48} className="mb-4 opacity-20" />
                       <p className="text-sm">ตะกร้าว่างเปล่า<br/>คลิกเลือกสินค้าจากเมนูด้านซ้าย</p>
                     </div>
@@ -199,7 +199,7 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
                             <span className="text-xl bg-slate-50 p-1.5 rounded-md">{c.emoji}</span>
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-bold text-slate-800 truncate">{c.name}</div>
-                              <div className="text-xs text-slate-500 font-mono">{c.price}฿</div>
+                              <div className="text-xs text-slate-700 font-mono">{c.price}฿</div>
                             </div>
                             <div className="flex flex-col items-end gap-1">
                               <div className="flex items-center gap-0.5 bg-slate-100 rounded-lg p-0.5 border border-slate-200">
@@ -214,8 +214,8 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
                       </div>
 
                       <div className="bg-white border-t border-slate-200 p-4 space-y-2">
-                        <div className="flex justify-between text-slate-500 text-xs font-mono"><span>Subtotal:</span><span>{subtotal}฿</span></div>
-                        <div className="flex justify-between text-slate-500 text-xs font-mono"><span>VAT (7%):</span><span>{vat}฿</span></div>
+                        <div className="flex justify-between text-slate-700 text-xs font-mono"><span>Subtotal:</span><span>{subtotal}฿</span></div>
+                        <div className="flex justify-between text-slate-700 text-xs font-mono"><span>VAT (7%):</span><span>{vat}฿</span></div>
                         <div className="flex justify-between text-lg font-bold text-slate-900 border-t border-slate-100 pt-2"><span>Total:</span><span className="text-emerald-600 font-mono">{total}฿</span></div>
                         
                         <div className="flex gap-2 mt-4 pt-2">
@@ -239,16 +239,16 @@ export default function OOP21910_U5_L5_POSSystemDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">POS Server Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">POS Server Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

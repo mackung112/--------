@@ -244,7 +244,7 @@ export default function PY21910_U2_L1_AlgorithmFlowchart() {
 
             {/* Answer Area */}
             <div className="bg-slate-900 p-6 rounded-2xl shadow-inner border border-slate-800 flex flex-col">
-              <h4 className="font-bold text-indigo-300 mb-4 text-center">ลำดับอัลกอริทึมของคุณ</h4>
+              <h4 className="font-bold text-indigo-600 mb-4 text-center">ลำดับอัลกอริทึมของคุณ</h4>
               
               <div className="flex-1 flex flex-col gap-3">
                 {Array.from({ length: 5 }).map((_, idx) => {

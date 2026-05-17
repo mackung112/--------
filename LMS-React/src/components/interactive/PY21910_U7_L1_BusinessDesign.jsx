@@ -70,7 +70,7 @@ export default function PY21910_U7_L1_BusinessDesign() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">หลักการออกแบบโปรแกรมทางธุรกิจ</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้แนวปฏิบัติที่ดี (Best Practices) ในการเขียนโค้ดสำหรับระบบงานจริง เพื่อให้ระบบดูแลรักษาง่าย และลดข้อผิดพลาด
         </p>
       </div>
@@ -124,7 +124,7 @@ export default function PY21910_U7_L1_BusinessDesign() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ทำไมต้องสนใจ Best Practices?</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ทำไมต้องสนใจ Best Practices?</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1 space-y-4">
               <p className="text-sm text-slate-600 leading-relaxed">
                 ในโลกการทำงานจริง โค้ดที่เราเขียนจะถูกนำไปใช้งานเป็นเวลานาน และอาจมีคนอื่น (หรือตัวเราในอนาคต) ต้องกลับมาแก้ไข
@@ -150,19 +150,19 @@ export default function PY21910_U7_L1_BusinessDesign() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

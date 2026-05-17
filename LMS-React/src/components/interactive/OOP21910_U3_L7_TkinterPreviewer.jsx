@@ -74,7 +74,7 @@ export default function OOP21910_U3_L7_TkinterPreviewer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การจัดวาง Layout (Pack vs Grid)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้ความแตกต่างระหว่างการจัดวาง Widget ด้วย <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">.pack()</code> (เรียงต่อกัน) และ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">.grid()</code> (จัดเป็นตาราง)
         </p>
       </div>
@@ -89,7 +89,7 @@ export default function OOP21910_U3_L7_TkinterPreviewer() {
               {/* Form */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col space-y-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">รูปแบบการจัดวาง (Layout)</label>
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-2">รูปแบบการจัดวาง (Layout)</label>
                   <div className="flex bg-slate-100 p-1 rounded-lg">
                     {layoutOptions.map(opt => (
                       <button key={opt.id} onClick={() => handleLayoutChange(opt.id)}
@@ -101,7 +101,7 @@ export default function OOP21910_U3_L7_TkinterPreviewer() {
                 </div>
                 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">สีปุ่ม (Button Color)</label>
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-2">สีปุ่ม (Button Color)</label>
                   <div className="flex gap-2">
                     {['#4f46e5', '#10b981', '#ef4444', '#f59e0b'].map(c => (
                       <button key={c} onClick={() => handleColorChange(c)}
@@ -118,7 +118,7 @@ export default function OOP21910_U3_L7_TkinterPreviewer() {
                 <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl w-full max-w-sm border border-slate-400">
                   <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400" /><div className="w-2.5 h-2.5 rounded-full bg-yellow-400" /><div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                    <span className="text-slate-300 text-xs ml-2 font-mono">ระบบล็อกอิน</span>
+                    <span className="text-slate-600 text-xs ml-2 font-mono">ระบบล็อกอิน</span>
                   </div>
                   
                   <div className="p-6 min-h-[220px] transition-colors duration-500 bg-slate-100 flex items-center justify-center">
@@ -178,15 +178,15 @@ export default function OOP21910_U3_L7_TkinterPreviewer() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
-              <span className="text-slate-500"># 1. การใช้ .pack()</span><br />
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              <span className="text-slate-700"># 1. การใช้ .pack()</span><br />
               <span className="text-yellow-300">lbl_title</span>.<span className="text-blue-300">pack</span>(<span className="text-orange-300">pady</span>=<span className="text-purple-300">5</span>)<br />
               <span className="text-yellow-300">lbl_user</span>.<span className="text-blue-300">pack</span>(<span className="text-orange-300">pady</span>=<span className="text-purple-300">5</span>)<br />
               <span className="text-yellow-300">entry_user</span>.<span className="text-blue-300">pack</span>(<span className="text-orange-300">pady</span>=<span className="text-purple-300">5</span>)<br />
               <br />
-              <span className="text-slate-500"># 2. การใช้ .grid()</span><br />
+              <span className="text-slate-700"># 2. การใช้ .grid()</span><br />
               <span className="text-yellow-300">lbl_title</span>.<span className="text-blue-300">grid</span>(<span className="text-orange-300">row</span>=<span className="text-purple-300">0</span>, <span className="text-orange-300">column</span>=<span className="text-purple-300">0</span>, <span className="text-orange-300">columnspan</span>=<span className="text-purple-300">2</span>)<br />
               <span className="text-yellow-300">lbl_user</span>.<span className="text-blue-300">grid</span>(<span className="text-orange-300">row</span>=<span className="text-purple-300">1</span>, <span className="text-orange-300">column</span>=<span className="text-purple-300">0</span>)<br />
               <span className="text-yellow-300">entry_user</span>.<span className="text-blue-300">grid</span>(<span className="text-orange-300">row</span>=<span className="text-purple-300">1</span>, <span className="text-orange-300">column</span>=<span className="text-purple-300">1</span>)
@@ -220,16 +220,16 @@ export default function OOP21910_U3_L7_TkinterPreviewer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

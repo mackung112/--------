@@ -77,7 +77,7 @@ export default function PY21910_U2_L4_SequenceFlowchart() {
           <Sparkles className="w-4 h-4" /> จำลองการทำงานแบบ Step-by-Step
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">🔽 ผังงานแบบเรียงลำดับ (Sequence)</h3>
-        <p className="text-gray-500 max-w-xl mx-auto">คำสั่งทำงานจากบนลงล่าง ทีละขั้น ไม่มีเงื่อนไขหรือการวนซ้ำ — ตัวอย่าง: คำนวณพื้นที่วงกลม</p>
+        <p className="text-gray-700 max-w-xl mx-auto">คำสั่งทำงานจากบนลงล่าง ทีละขั้น ไม่มีเงื่อนไขหรือการวนซ้ำ — ตัวอย่าง: คำนวณพื้นที่วงกลม</p>
       </div>
 
       {/* Controls */}
@@ -150,7 +150,7 @@ export default function PY21910_U2_L4_SequenceFlowchart() {
 
       {/* Bottom Full-Width Console Output (VS Code Style) */}
       <div className="h-48 mt-6 bg-[#1e1e1e] p-4 font-mono text-[13px] overflow-y-auto flex flex-col relative w-full rounded-2xl border border-slate-800 shadow-inner">
-        <div className="text-slate-500 mb-3 text-xs font-bold uppercase tracking-wider">Live Console</div>
+        <div className="text-slate-700 mb-3 text-xs font-bold uppercase tracking-wider">Live Console</div>
         {current >= 0 && <div className="text-emerald-400 mb-1">{'>'} โปรแกรมเริ่มทำงาน...</div>}
         {current >= 1 && <div className="text-purple-400 mb-1">{'>'} radius = <span className="text-yellow-300">{radius}</span></div>}
         {current >= 2 && <div className="text-blue-400 mb-1">{'>'} area = π × {radius}² = <span className="text-yellow-300">{area}</span></div>}

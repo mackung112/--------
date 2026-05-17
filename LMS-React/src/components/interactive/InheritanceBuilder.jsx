@@ -44,7 +44,7 @@ export default function InheritanceBuilder() {
           </div>
           
           <div className="p-4 bg-slate-50 border-b border-slate-100">
-            <h4 className="text-xs font-bold text-slate-500 uppercase mb-3 text-center">จัดการคุณสมบัติพื้นฐาน</h4>
+            <h4 className="text-xs font-bold text-slate-700 uppercase mb-3 text-center">จัดการคุณสมบัติพื้นฐาน</h4>
             <div className="grid grid-cols-2 gap-2">
               {availableBaseAttrs.map(attr => {
                 const isActive = baseAttrs.includes(attr.id);
@@ -64,14 +64,14 @@ export default function InheritanceBuilder() {
           </div>
 
           <div className="p-4">
-            <div className="text-xs font-mono text-slate-500 mb-2">คุณสมบัติที่มี:</div>
+            <div className="text-xs font-mono text-slate-700 mb-2">คุณสมบัติที่มี:</div>
             <div className="flex flex-wrap gap-2">
               {baseAttrs.map(attr => (
                 <span key={attr} className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-mono border border-blue-200">
                   self.{attr}
                 </span>
               ))}
-              {baseAttrs.length === 0 && <span className="text-slate-400 text-xs italic">ไม่มีคุณสมบัติ</span>}
+              {baseAttrs.length === 0 && <span className="text-slate-600 text-xs italic">ไม่มีคุณสมบัติ</span>}
             </div>
           </div>
         </div>
@@ -82,10 +82,10 @@ export default function InheritanceBuilder() {
           <div className="absolute top-8 w-2/3 h-px bg-slate-300"></div>
           
           <div className="absolute top-8 left-[16.6%] bottom-0 w-px bg-slate-300">
-            <ArrowDown className="absolute -bottom-3 -left-2 w-4 h-4 text-slate-400" />
+            <ArrowDown className="absolute -bottom-3 -left-2 w-4 h-4 text-slate-600" />
           </div>
           <div className="absolute top-8 right-[16.6%] bottom-0 w-px bg-slate-300">
-            <ArrowDown className="absolute -bottom-3 -left-2 w-4 h-4 text-slate-400" />
+            <ArrowDown className="absolute -bottom-3 -left-2 w-4 h-4 text-slate-600" />
           </div>
         </div>
 
@@ -100,7 +100,7 @@ export default function InheritanceBuilder() {
             </div>
             
             <div className="p-4 bg-slate-50 border-b border-slate-100">
-              <div className="text-xs font-mono text-slate-500 mb-2">คุณสมบัติที่สืบทอดมา (Inherited):</div>
+              <div className="text-xs font-mono text-slate-700 mb-2">คุณสมบัติที่สืบทอดมา (Inherited):</div>
               <div className="flex flex-wrap gap-2 min-h-[28px]">
                 {baseAttrs.map(attr => (
                   <span key={`t-${attr}`} className="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-mono border border-blue-100 animate-in fade-in zoom-in">
@@ -111,7 +111,7 @@ export default function InheritanceBuilder() {
             </div>
 
             <div className="p-4">
-              <div className="text-xs font-mono text-slate-500 mb-2">คุณสมบัติเฉพาะตัว (Specific):</div>
+              <div className="text-xs font-mono text-slate-700 mb-2">คุณสมบัติเฉพาะตัว (Specific):</div>
               <div className="flex flex-wrap gap-2">
                 <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-mono border border-emerald-200">
                   self.salary
@@ -131,7 +131,7 @@ export default function InheritanceBuilder() {
             </div>
             
             <div className="p-4 bg-slate-50 border-b border-slate-100">
-              <div className="text-xs font-mono text-slate-500 mb-2">คุณสมบัติที่สืบทอดมา (Inherited):</div>
+              <div className="text-xs font-mono text-slate-700 mb-2">คุณสมบัติที่สืบทอดมา (Inherited):</div>
               <div className="flex flex-wrap gap-2 min-h-[28px]">
                 {baseAttrs.map(attr => (
                   <span key={`s-${attr}`} className="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-mono border border-blue-100 animate-in fade-in zoom-in">
@@ -142,7 +142,7 @@ export default function InheritanceBuilder() {
             </div>
 
             <div className="p-4">
-              <div className="text-xs font-mono text-slate-500 mb-2">คุณสมบัติเฉพาะตัว (Specific):</div>
+              <div className="text-xs font-mono text-slate-700 mb-2">คุณสมบัติเฉพาะตัว (Specific):</div>
               <div className="flex flex-wrap gap-2">
                 <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-mono border border-orange-200">
                   self.grade
@@ -158,11 +158,11 @@ export default function InheritanceBuilder() {
 
         {/* Code Explanation */}
         <div className="w-full max-w-2xl mt-8 bg-slate-900 rounded-xl p-5 shadow-inner border border-slate-800 relative">
-          <div className="text-xs text-slate-400 absolute top-3 right-4 font-mono">python</div>
-          <pre className="font-mono text-sm text-slate-300 leading-relaxed overflow-x-auto">
-<span className="text-pink-400">class</span> <span className="text-blue-300">Teacher</span>(<span className="text-emerald-300">Person</span>):  <span className="text-slate-500"># สืบทอดจาก Person</span>
+          <div className="text-xs text-slate-600 absolute top-3 right-4 font-mono">python</div>
+          <pre className="font-mono text-sm text-slate-600 leading-relaxed overflow-x-auto">
+<span className="text-pink-400">class</span> <span className="text-blue-300">Teacher</span>(<span className="text-emerald-300">Person</span>):  <span className="text-slate-700"># สืบทอดจาก Person</span>
     <span className="text-pink-400">def</span> <span className="text-blue-300">__init__</span>(self, {baseAttrs.join(', ')}{baseAttrs.length > 0 ? ', ' : ''}salary, subject):
-        <span className="text-yellow-200">super()</span>.__init__({baseAttrs.join(', ')}) <span className="text-slate-500"># เรียกใช้ __init__ ของแม่</span>
+        <span className="text-yellow-200">super()</span>.__init__({baseAttrs.join(', ')}) <span className="text-slate-700"># เรียกใช้ __init__ ของแม่</span>
         self.salary = salary
         self.subject = subject
           </pre>

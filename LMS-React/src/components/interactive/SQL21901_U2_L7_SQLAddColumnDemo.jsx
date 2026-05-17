@@ -116,7 +116,7 @@ const SQLAddColumnDemo = () => {
         <h3 className="text-xl font-bold mb-4 flex items-center gap-2 relative z-10 text-cyan-300">
           <Wrench className="w-5 h-5" /> โครงสร้างไวยากรณ์ (Syntax)
         </h3>
-        <p className="text-sm text-slate-300 mb-6 relative z-10">เราสามารถระบุตำแหน่งของคอลัมน์ใหม่ได้ด้วยคำสั่งเสริม <code>AFTER</code> หรือ <code>FIRST</code></p>
+        <p className="text-sm text-slate-600 mb-6 relative z-10">เราสามารถระบุตำแหน่งของคอลัมน์ใหม่ได้ด้วยคำสั่งเสริม <code>AFTER</code> หรือ <code>FIRST</code></p>
 
         <div className="bg-[#282c34] p-5 rounded-xl text-sm leading-relaxed shadow-inner border border-slate-700 overflow-x-auto relative z-10 font-mono">
           <div dangerouslySetInnerHTML={{ __html: SQLSyntaxEngine.highlight(`-- แบบปกติ (คอลัมน์ใหม่จะไปต่อท้ายสุดของตาราง)
@@ -236,7 +236,7 @@ ADD COLUMN new_column_name datatype AFTER existing_column;`) }} />
 
             {/* Live SQL Preview */}
             <div className="bg-[#1e1e1e] rounded-xl p-4 shadow-xl border border-slate-800">
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1">SQL Preview:</div>
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1">SQL Preview:</div>
               <div 
                 className="text-sm font-mono break-words min-h-[40px] leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: SQLSyntaxEngine.highlight(getSqlPreview()) }}
@@ -251,7 +251,7 @@ ADD COLUMN new_column_name datatype AFTER existing_column;`) }} />
                 <div className="font-bold text-slate-700 flex items-center gap-2">
                   <Database className="w-4 h-4 text-indigo-600" /> ตาราง employees
                 </div>
-                <div className="text-xs text-slate-500 bg-white px-2 py-1 rounded border border-slate-200 shadow-inner">
+                <div className="text-xs text-slate-700 bg-white px-2 py-1 rounded border border-slate-200 shadow-inner">
                   Rows: <span className="font-bold text-slate-700">{tableData.length}</span>
                 </div>
               </div>
@@ -271,7 +271,7 @@ ADD COLUMN new_column_name datatype AFTER existing_column;`) }} />
                             {col.name}
                             {col.isPK && <Key className="w-3 h-3 text-amber-500" title="PK" />}
                           </div>
-                          <div className="text-[10px] text-slate-400 font-normal mt-0.5">{col.type}</div>
+                          <div className="text-[10px] text-slate-600 font-normal mt-0.5">{col.type}</div>
                         </th>
                       ))}
                     </tr>
@@ -290,7 +290,7 @@ ADD COLUMN new_column_name datatype AFTER existing_column;`) }} />
                               }`}
                             >
                               {val === undefined ? (
-                                <span className="text-slate-400 italic">NULL</span>
+                                <span className="text-slate-600 italic">NULL</span>
                               ) : (
                                 <span className={col.isPK ? 'font-bold text-slate-600' : 'text-indigo-600'}>
                                   {val}

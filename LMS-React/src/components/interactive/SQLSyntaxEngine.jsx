@@ -68,7 +68,7 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">{title}</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">{description}</p>
+        <p className="font-base text-sm leading-relaxed text-slate-700">{description}</p>
       </div>
 
       <div className="flex flex-col min-h-[500px]">
@@ -76,7 +76,7 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
           
           {/* Left: Syntax Viewer */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <TerminalSquare size={16} /> SQL Syntax Explorer
             </h4>
 
@@ -107,7 +107,7 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
               
               {/* Definition Box */}
               <div>
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">
                   Token Definition
                 </h4>
                 <div className="bg-slate-50 border border-slate-200 p-5 rounded-xl min-h-[140px] flex items-center justify-center">
@@ -119,7 +119,7 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
                         <p className="text-slate-700 text-sm leading-relaxed">{explanations[activeTooltip].desc}</p>
                     </div>
                   ) : (
-                    <div className="text-center text-slate-400 flex flex-col items-center">
+                    <div className="text-center text-slate-600 flex flex-col items-center">
                         <MousePointerClick className="w-8 h-8 mb-2 opacity-50" />
                         <span className="text-xs font-semibold uppercase tracking-wide">Hover a keyword</span>
                     </div>
@@ -129,7 +129,7 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
 
               {/* Quiz Box */}
               <div className="border-t border-slate-200 pt-6">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3 flex items-center gap-2">
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3 flex items-center gap-2">
                   <span className="text-yellow-500">?</span> Knowledge Check
                 </h4>
                 <p className="text-sm text-slate-800 font-bold mb-4 leading-relaxed">{quiz.q}</p>
@@ -152,7 +152,7 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
                 </div>
 
                 <div className="flex gap-2 mt-4">
-                  <button onClick={resetQuiz} className="px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200">
+                  <button onClick={resetQuiz} className="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200">
                     <RotateCcw size={16}/>
                   </button>
                   <button 
@@ -173,16 +173,16 @@ export default function SQLSyntaxEngine({ title, icon: Icon, description, codePa
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Syntax Engine</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Syntax Engine</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-600">{line.text.substring(2)}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text.substring(2)}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0">[Sys]</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-red-400 font-bold shrink-0">[Err]</span> <div className="text-red-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Ok]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

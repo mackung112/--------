@@ -162,7 +162,7 @@ RENAME COLUMN tel TO phone_number;`) }} />
                   </select>
                 </div>
 
-                <div className="flex justify-center text-slate-400">
+                <div className="flex justify-center text-slate-600">
                   <ArrowDown className="w-5 h-5" />
                 </div>
 
@@ -195,7 +195,7 @@ RENAME COLUMN tel TO phone_number;`) }} />
 
             {/* SQL Preview */}
             <div className="bg-[#1e1e1e] rounded-xl p-4 shadow-xl border border-slate-800">
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1">SQL Preview:</div>
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1">SQL Preview:</div>
               <div className="text-sm font-mono break-words min-h-[40px] leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: SQLSyntaxEngine.highlight(getSqlPreview()) }}
               />
@@ -257,7 +257,7 @@ RENAME COLUMN tel TO phone_number;`) }} />
             {/* History Log */}
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-600">
               <strong>บันทึกประวัติการแก้ไข:</strong>
-              <ul className="mt-2 space-y-1 text-xs font-mono text-slate-500 list-disc list-inside pl-4">
+              <ul className="mt-2 space-y-1 text-xs font-mono text-slate-700 list-disc list-inside pl-4">
                 {historyLog.length === 0 ? (
                   <li className="italic opacity-50">ยังไม่มีการแก้ไข...</li>
                 ) : (

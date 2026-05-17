@@ -59,7 +59,7 @@ export default function OOP21910_U3_L4_TkinterLabelDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การสร้างข้อความด้วย Label</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการใช้ Widget <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">tk.Label</code> เพื่อแสดงข้อความบนหน้าจอ รวมถึงการกำหนดฟอนต์และสี
         </p>
       </div>
@@ -74,17 +74,17 @@ export default function OOP21910_U3_L4_TkinterLabelDemo() {
               {/* Form */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col space-y-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ข้อความ (text)</label>
+                  <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">ข้อความ (text)</label>
                   <input type="text" value={draftText} onChange={e => setDraftText(e.target.value)} className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-rose-500" />
                 </div>
                 
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ขนาดฟอนต์: <span className="text-rose-600">{draftSize}px</span></label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">ขนาดฟอนต์: <span className="text-rose-600">{draftSize}px</span></label>
                     <input type="range" min="10" max="40" value={draftSize} onChange={e => setDraftSize(Number(e.target.value))} className="w-full accent-rose-600" />
                   </div>
                   <div className="flex-1">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ชุดสี</label>
+                    <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">ชุดสี</label>
                     <div className="flex gap-2">
                       {colorPresets.map(p => (
                         <button key={p.label} onClick={() => setDraftColors(p)}
@@ -107,7 +107,7 @@ export default function OOP21910_U3_L4_TkinterLabelDemo() {
                 <div className="bg-slate-200 rounded-xl overflow-hidden shadow-2xl w-full max-w-sm border border-slate-400">
                   <div className="bg-slate-700 px-3 py-1.5 flex items-center gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400" /><div className="w-2.5 h-2.5 rounded-full bg-yellow-400" /><div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                    <span className="text-slate-300 text-xs ml-2 font-mono">App Window</span>
+                    <span className="text-slate-600 text-xs ml-2 font-mono">App Window</span>
                   </div>
                   <div className="bg-slate-100 p-8 flex items-center justify-center min-h-[160px]">
                     <div className="px-4 py-3 rounded shadow-sm transition-all" style={{ fontSize: `${appliedConfig.size}px`, color: appliedConfig.fg, backgroundColor: appliedConfig.bg }}>
@@ -123,9 +123,9 @@ export default function OOP21910_U3_L4_TkinterLabelDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
               <span className="text-sky-300">tk</span>.<span className="text-blue-300">Label</span>(<br />
               &nbsp;&nbsp;<span className="text-yellow-300">root</span>,<br />
               &nbsp;&nbsp;<span className="text-orange-300">text</span>=<span className="text-green-300">"{appliedConfig.text}"</span>,<br />
@@ -169,16 +169,16 @@ export default function OOP21910_U3_L4_TkinterLabelDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

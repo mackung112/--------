@@ -53,7 +53,7 @@ export default function PY21910_U6_L1_BuiltinFunctions() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Built-in Functions</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ฟังก์ชันมาตรฐานที่ Python เตรียมไว้ให้ใช้งานได้ทันทีโดยไม่ต้อง <code className="bg-slate-200 px-1 rounded text-pink-600">import</code>
         </p>
       </div>
@@ -63,9 +63,9 @@ export default function PY21910_U6_L1_BuiltinFunctions() {
           {/* Left: Interactive List */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
             <div className="flex items-center gap-2 mb-4 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 transition-all">
-              <Search size={18} className="text-slate-400" />
+              <Search size={18} className="text-slate-600" />
               <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-                className="bg-transparent border-none focus:outline-none text-sm w-full font-medium placeholder:text-slate-400 text-slate-700" 
+                className="bg-transparent border-none focus:outline-none text-sm w-full font-medium placeholder:text-slate-600 text-slate-700" 
                 placeholder="ค้นหาฟังก์ชัน เช่น len, type หรือ คำอธิบาย..." />
             </div>
 
@@ -77,7 +77,7 @@ export default function PY21910_U6_L1_BuiltinFunctions() {
                     <span>{b.name}</span>
                     <Terminal size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <div className="text-xs text-slate-500 mb-3 flex-1">{b.desc}</div>
+                  <div className="text-xs text-slate-700 mb-3 flex-1">{b.desc}</div>
                   <div className="bg-slate-900 rounded-lg p-2 font-mono text-[11px] mt-auto">
                     <div className="text-emerald-400">{b.example}</div>
                     <div className="text-cyan-300">→ {b.result}</div>
@@ -85,7 +85,7 @@ export default function PY21910_U6_L1_BuiltinFunctions() {
                 </button>
               ))}
               {filtered.length === 0 && (
-                <div className="col-span-1 sm:col-span-2 text-center py-10 text-slate-400 text-sm border-2 border-dashed border-slate-200 rounded-xl">
+                <div className="col-span-1 sm:col-span-2 text-center py-10 text-slate-600 text-sm border-2 border-dashed border-slate-200 rounded-xl">
                   ไม่พบฟังก์ชันที่ค้นหา "{search}"
                 </div>
               )}
@@ -94,7 +94,7 @@ export default function PY21910_U6_L1_BuiltinFunctions() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">แนวคิดสำคัญ</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">แนวคิดสำคัญ</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
               <p className="text-sm text-slate-700 font-bold mb-2">โครงสร้างการเรียกใช้</p>
               <div className="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-100 leading-relaxed mb-4">
@@ -117,19 +117,19 @@ export default function PY21910_U6_L1_BuiltinFunctions() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

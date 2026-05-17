@@ -75,7 +75,7 @@ export default function OOP21910_U5_L8_PresentationDemo() {
             </div>
           )}
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ขั้นตอนสุดท้ายของโปรเจกต์คือการนำเสนอ (Pitching) ผลงานให้ผู้อื่นเข้าใจ Checklist ด้านล่างจะช่วยให้คุณไม่พลาดสิ่งสำคัญ
         </p>
       </div>
@@ -85,7 +85,7 @@ export default function OOP21910_U5_L8_PresentationDemo() {
           
           {/* Left: Checklist */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">
               ✅ Preparation Checklist
             </h4>
             
@@ -128,7 +128,7 @@ export default function OOP21910_U5_L8_PresentationDemo() {
 
           {/* Right: Slide Template */}
           <div className="w-full lg:w-[450px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <LayoutTemplate size={16} /> Slide Deck Template
             </h4>
             
@@ -141,7 +141,7 @@ export default function OOP21910_U5_L8_PresentationDemo() {
                     </div>
                     <div className="flex-1 min-w-0 pt-0.5">
                       <div className="font-bold text-slate-800 text-sm mb-0.5">{s.title}</div>
-                      <div className="text-xs text-slate-500 leading-relaxed pr-2">{s.desc}</div>
+                      <div className="text-xs text-slate-700 leading-relaxed pr-2">{s.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -159,16 +159,16 @@ export default function OOP21910_U5_L8_PresentationDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Progress Tracker</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Progress Tracker</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

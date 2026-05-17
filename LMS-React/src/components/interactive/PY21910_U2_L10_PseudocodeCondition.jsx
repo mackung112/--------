@@ -84,7 +84,7 @@ export default function PY21910_U2_L10_PseudocodeCondition() {
           <Sparkles className="w-4 h-4" /> จำลอง IF...THEN...ELSE แบบ Real-time
         </div>
         <h3 className="text-2xl font-extrabold text-gray-900 mb-2">🔀 เงื่อนไขในรหัสเทียม (IF...THEN...ELSE)</h3>
-        <p className="text-gray-500 max-w-2xl mx-auto">เมื่อต้องตัดสินใจ ใช้โครงสร้าง IF...THEN...ELSE ลองปรับค่าดูว่าโปรแกรมเดินทางไหน บรรทัดที่ทำงานจะสว่างขึ้น</p>
+        <p className="text-gray-700 max-w-2xl mx-auto">เมื่อต้องตัดสินใจ ใช้โครงสร้าง IF...THEN...ELSE ลองปรับค่าดูว่าโปรแกรมเดินทางไหน บรรทัดที่ทำงานจะสว่างขึ้น</p>
       </div>
 
       {/* Scenario tabs */}

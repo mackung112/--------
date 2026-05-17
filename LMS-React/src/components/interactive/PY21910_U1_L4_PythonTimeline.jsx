@@ -124,7 +124,7 @@ export default function PY21910_U1_L4_PythonTimeline() {
                   `}
                 >
                   <div className={`font-bold text-lg mb-1 ${activeIdx === idx ? item.text : 'text-slate-700'}`}>{item.year}</div>
-                  <div className="text-xs font-bold text-slate-500">{item.version}</div>
+                  <div className="text-xs font-bold text-slate-700">{item.version}</div>
                   
                   {/* Arrow pointer */}
                   <div className={`absolute top-1/2 -translate-y-1/2 w-3 h-3 rotate-45 border-t-2 border-r-2
@@ -145,7 +145,7 @@ export default function PY21910_U1_L4_PythonTimeline() {
           
           <div className="p-6 flex-1 overflow-y-auto">
             {activeIdx === null && (
-              <div className="text-center text-slate-500 mt-20">
+              <div className="text-center text-slate-700 mt-20">
                 <History className="w-12 h-12 mx-auto mb-3 opacity-20" />
                 <p>กดปุ่ม <b>ค.ศ. (ปี)</b> ทางด้านซ้าย<br/>เพื่อเริ่มการสแกนข้อมูลทางประวัติศาสตร์</p>
               </div>
@@ -215,13 +215,13 @@ export default function PY21910_U1_L4_PythonTimeline() {
                 {activeIdx !== null && !scanned && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${activeIdx !== null && !scanned ? 'bg-green-500' : 'bg-slate-600'}`}></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">Time Scanner Log</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">Time Scanner Log</span>
             </div>
 
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed flex-1">
               {logs.map((log, idx) => (
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
-                  <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                  <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                   <span className={`shrink-0 w-10 font-bold ${
                     log.type === 'error' ? 'text-red-400' :
                     log.type === 'warn' ? 'text-amber-400' :

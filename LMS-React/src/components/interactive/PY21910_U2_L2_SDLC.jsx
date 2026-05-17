@@ -212,7 +212,7 @@ export default function PY21910_U2_L2_SDLC() {
                     <activePhase.icon className="w-10 h-10" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">ขั้นตอนที่ {activePhase.id}</p>
+                    <p className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-1">ขั้นตอนที่ {activePhase.id}</p>
                     <h3 className="text-3xl md:text-4xl font-bold text-gray-900">{activePhase.title}</h3>
                   </div>
                 </div>

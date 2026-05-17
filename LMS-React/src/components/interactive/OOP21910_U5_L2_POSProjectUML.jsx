@@ -65,7 +65,7 @@ export default function OOP21910_U5_L2_POSProjectUML() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การออกแบบ Class Diagram (UML)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การออกแบบโครงสร้างคลาส ความสัมพันธ์ระหว่างคลาส และคุณสมบัติ (Attributes/Methods) สำหรับระบบ POS
         </p>
       </div>
@@ -76,7 +76,7 @@ export default function OOP21910_U5_L2_POSProjectUML() {
           {/* Left: Interactive Diagram */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-[url('https://www.transparenttextures.com/patterns/grid-me.png')] bg-slate-50 relative flex items-center justify-center min-h-[450px]">
             <div className="absolute top-4 left-4">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 bg-white/80 backdrop-blur px-3 py-1 rounded shadow-sm border border-slate-200">Interactive UML Diagram</h4>
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 bg-white/80 backdrop-blur px-3 py-1 rounded shadow-sm border border-slate-200">Interactive UML Diagram</h4>
             </div>
 
             <div className="w-full max-w-2xl relative flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 p-4">
@@ -93,16 +93,16 @@ export default function OOP21910_U5_L2_POSProjectUML() {
                 <div className="p-3 text-[11px] font-mono border-b border-slate-100 text-slate-600 bg-white leading-relaxed">
                   + id<br/>+ name<br/>+ price<br/>+ stock
                 </div>
-                <div className="p-3 text-[11px] font-mono text-slate-500 bg-slate-50 leading-relaxed">
+                <div className="p-3 text-[11px] font-mono text-slate-700 bg-slate-50 leading-relaxed">
                   + get_info()<br/>+ update_stock()
                 </div>
               </div>
 
               {/* Relation Line 1 */}
               <div className="hidden md:flex flex-col items-center relative w-20 z-0">
-                <div className="text-[10px] font-bold text-slate-400 absolute -top-5 bg-slate-50/80 px-1 rounded">1..1</div>
+                <div className="text-[10px] font-bold text-slate-600 absolute -top-5 bg-slate-50/80 px-1 rounded">1..1</div>
                 <ArrowRight className={`w-8 h-8 transition-colors ${activeClass === 'CartItem' || activeClass === 'Product' ? 'text-amber-400' : 'text-slate-300'}`} />
-                <div className="text-[10px] font-bold text-slate-400 absolute -bottom-5 bg-slate-50/80 px-1 rounded">1..*</div>
+                <div className="text-[10px] font-bold text-slate-600 absolute -bottom-5 bg-slate-50/80 px-1 rounded">1..*</div>
               </div>
 
               <div className="md:hidden flex flex-col items-center h-12">
@@ -121,16 +121,16 @@ export default function OOP21910_U5_L2_POSProjectUML() {
                 <div className="p-3 text-[11px] font-mono border-b border-slate-100 text-slate-600 bg-white leading-relaxed">
                   + product (Ref)<br/>+ qty
                 </div>
-                <div className="p-3 text-[11px] font-mono text-slate-500 bg-slate-50 leading-relaxed">
+                <div className="p-3 text-[11px] font-mono text-slate-700 bg-slate-50 leading-relaxed">
                   + get_subtotal()
                 </div>
               </div>
 
               {/* Relation Line 2 */}
               <div className="hidden md:flex flex-col items-center relative w-20 z-0">
-                <div className="text-[10px] font-bold text-slate-400 absolute -top-5 bg-slate-50/80 px-1 rounded">1..*</div>
+                <div className="text-[10px] font-bold text-slate-600 absolute -top-5 bg-slate-50/80 px-1 rounded">1..*</div>
                 <ArrowRight className={`w-8 h-8 transition-colors ${activeClass === 'POSSystem' || activeClass === 'CartItem' ? 'text-indigo-400' : 'text-slate-300'}`} />
-                <div className="text-[10px] font-bold text-slate-400 absolute -bottom-5 bg-slate-50/80 px-1 rounded">1..1</div>
+                <div className="text-[10px] font-bold text-slate-600 absolute -bottom-5 bg-slate-50/80 px-1 rounded">1..1</div>
               </div>
 
               <div className="md:hidden flex flex-col items-center h-12">
@@ -149,7 +149,7 @@ export default function OOP21910_U5_L2_POSProjectUML() {
                 <div className="p-3 text-[11px] font-mono border-b border-slate-100 text-slate-600 bg-white leading-relaxed">
                   + products: List<br/>+ cart: List<br/>+ total: float
                 </div>
-                <div className="p-3 text-[11px] font-mono text-slate-500 bg-slate-50 leading-relaxed">
+                <div className="p-3 text-[11px] font-mono text-slate-700 bg-slate-50 leading-relaxed">
                   + add_to_cart()<br/>+ remove_cart()<br/>+ checkout()
                 </div>
               </div>
@@ -160,11 +160,11 @@ export default function OOP21910_U5_L2_POSProjectUML() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">Class Inspector</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">Class Inspector</h4>
             
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col flex-1 h-full">
               {activeClass === 'none' ? (
-                <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-center space-y-4">
+                <div className="flex-1 flex flex-col items-center justify-center text-slate-600 text-center space-y-4">
                   <Network className="w-12 h-12 opacity-30 stroke-1" />
                   <p className="text-sm">นำเมาส์ไปชี้ที่กล่อง Class<br/>เพื่อดูรายละเอียดและคำอธิบาย</p>
                 </div>
@@ -180,7 +180,7 @@ export default function OOP21910_U5_L2_POSProjectUML() {
                     </p>
                     
                     <div className="mb-4">
-                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Attributes (ตัวแปร)</h4>
+                      <h4 className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-2">Attributes (ตัวแปร)</h4>
                       <ul className="space-y-1.5">
                         {classData[activeClass].attrs.map((attr, i) => (
                           <li key={i} className="text-xs text-slate-600 flex items-start gap-2">
@@ -192,7 +192,7 @@ export default function OOP21910_U5_L2_POSProjectUML() {
                     </div>
                     
                     <div>
-                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Methods (ฟังก์ชัน)</h4>
+                      <h4 className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-2">Methods (ฟังก์ชัน)</h4>
                       <ul className="space-y-1.5">
                         {classData[activeClass].methods.map((method, i) => (
                           <li key={i} className="text-xs text-slate-600 flex items-start gap-2">
@@ -213,17 +213,17 @@ export default function OOP21910_U5_L2_POSProjectUML() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">UML Output</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">UML Output</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

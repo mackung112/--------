@@ -100,7 +100,7 @@ export default function OOP21910_U5_L1_BusinessAnalysisDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">วิเคราะห์ความต้องการของระบบ (Requirement Analysis)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ขั้นตอนแรกสุดของการทำโปรเจกต์คือ <strong>การอ่านโจทย์ธุรกิจ</strong> เพื่อระบุผู้ใช้งาน (Actors) และความสามารถหลักที่ระบบต้องมี (Features)
         </p>
       </div>
@@ -182,7 +182,7 @@ export default function OOP21910_U5_L1_BusinessAnalysisDemo() {
 
           {/* Right: Info / Scenario */}
           <div className="w-full lg:w-[350px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">โจทย์ธุรกิจ (Business Scenario)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">โจทย์ธุรกิจ (Business Scenario)</h4>
             
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6 shadow-sm">
               <h4 className="text-base font-bold text-amber-900 mb-3 pb-2 border-b border-amber-200/50">{scenario.title}</h4>
@@ -209,17 +209,17 @@ export default function OOP21910_U5_L1_BusinessAnalysisDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Analysis Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Analysis Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-emerald-400 font-bold whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-red-400 font-bold whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-600 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

@@ -204,7 +204,7 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การเพิ่มข้อมูลหลายแถว (Multi-row Insert)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้คำสั่ง INSERT INTO ร่วมกับ VALUES หลายชุดเพื่อเพิ่มข้อมูลหลายรายการพร้อมกันในการส่งคำสั่งครั้งเดียว
         </p>
       </div>
@@ -242,7 +242,7 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
           {/* Left Panel: Simulator Form */}
           <div className="w-full lg:w-[45%] p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col h-full">
             <div className="flex justify-between items-center mb-4">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                 <CopyPlus size={16} className="text-blue-600" /> Data Rows
               </h4>
               <span className="text-xs font-bold px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full">
@@ -306,7 +306,7 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
             {/* Table Area */}
             <div className="p-6 bg-white border-b border-slate-200">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                   <Table2 size={16} className="text-indigo-600" /> products Table
                 </h4>
                 <div className="flex items-center gap-2">
@@ -315,7 +315,7 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
                       <RefreshCcw size={12} /> รีเซ็ต
                     </button>
                   )}
-                  <span className="text-xs font-mono bg-slate-100 px-2 py-1 rounded-md border border-slate-200 text-slate-500">
+                  <span className="text-xs font-mono bg-slate-100 px-2 py-1 rounded-md border border-slate-200 text-slate-700">
                     Total: {tableData.length} rows
                   </span>
                 </div>
@@ -334,7 +334,7 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
                   <tbody>
                     {tableData.map((prod, idx) => (
                       <tr key={idx} className={`border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors ${hasExecuted && idx >= initialTableData.length ? 'bg-indigo-50/50' : ''}`}>
-                        <td className="p-3 font-mono text-xs text-slate-500">{prod.prod_id}</td>
+                        <td className="p-3 font-mono text-xs text-slate-700">{prod.prod_id}</td>
                         <td className={`p-3 font-medium ${hasExecuted && idx >= initialTableData.length ? 'text-indigo-700' : 'text-slate-800'}`}>
                           {prod.name}
                           {hasExecuted && idx >= initialTableData.length && <span className="ml-2 text-[10px] bg-indigo-100 text-indigo-600 px-1.5 py-0.5 rounded uppercase">New</span>}
@@ -353,10 +353,10 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
             {/* Minigame Area */}
             <div className="p-6 flex-1 flex flex-col bg-slate-50">
                <div className="flex justify-between items-center mb-4">
-                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                    <HelpCircle size={16} className="text-amber-500" /> Syntax Builder
                  </h4>
-                 <button onClick={resetGame} className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
+                 <button onClick={resetGame} className="text-xs text-slate-700 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
                     <RefreshCcw size={12} /> เริ่มใหม่
                   </button>
                </div>
@@ -381,7 +381,7 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
                       {block ? block.text : (idx === 3 ? '?' : `ส่วน ${idx + 1}`)}
                     </button>
                   ))}
-                  <span className="text-slate-500 font-mono text-lg font-bold">;</span>
+                  <span className="text-slate-700 font-mono text-lg font-bold">;</span>
                </div>
 
                {/* Blocks */}
@@ -417,17 +417,17 @@ export default function SQL21901_U3_L3_InsertMultiDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Query Execution Log</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Query Execution Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-indigo-400 font-bold shrink-0"></span> <div className="text-indigo-300 font-bold">{line.text}</div></>}
+                {line.type === 'command' && <><span className="text-indigo-600 font-bold shrink-0"></span> <div className="text-indigo-600 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

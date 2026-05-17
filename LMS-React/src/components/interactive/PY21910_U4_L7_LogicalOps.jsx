@@ -22,7 +22,7 @@ export default function PY21910_U4_L7_LogicalOps() {
           <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border ${r.result ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
             <code className="text-sm font-bold flex-1">{r.expr}</code>
             <span className={`font-bold ${r.result ? 'text-green-600' : 'text-red-600'}`}>{String(r.result)}</span>
-            <span className="text-xs text-gray-500">{r.desc}</span>
+            <span className="text-xs text-gray-700">{r.desc}</span>
           </div>
         ))}
       </div>

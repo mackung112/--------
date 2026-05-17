@@ -121,7 +121,7 @@ export default function SQL21901_U4_L6_SQLLikeDemo() {
           <div className="flex items-center gap-2">
              <Target className="text-fuchsia-400"/> เลเวล {level > 3 ? 3 : level}/3
           </div>
-          <div className="text-center text-slate-300 font-normal">
+          <div className="text-center text-slate-600 font-normal">
             {message}
           </div>
           <div className="flex items-center gap-2 text-yellow-400">
@@ -196,7 +196,7 @@ export default function SQL21901_U4_L6_SQLLikeDemo() {
           </button>
         </form>
 
-        <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-400 justify-center">
+        <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-600 justify-center">
           <div className="bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700"><strong>%</strong> = กี่ตัวอักษรก็ได้ (หรือไม่มีเลย)</div>
           <div className="bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700"><strong>_</strong> = 1 ตัวอักษรเท่านั้น</div>
         </div>

@@ -53,7 +53,7 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">สำรวจหน้าตา VS Code</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทำความรู้จักส่วนประกอบต่างๆ ของโปรแกรม VS Code ที่เราจะใช้เป็นเครื่องมือหลัก (IDE) ตลอดทั้งเทอม
         </p>
       </div>
@@ -77,7 +77,7 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
               {/* Title Bar */}
               <div className="bg-[#2d2d2d] px-3 py-1.5 flex items-center gap-2 border-b border-black select-none">
                 <div className="flex gap-1.5"><div className="w-3 h-3 rounded-full bg-rose-500"/><div className="w-3 h-3 rounded-full bg-amber-500"/><div className="w-3 h-3 rounded-full bg-emerald-500"/></div>
-                <span className="text-slate-400 text-xs font-mono ml-2 flex-1 text-center">my_project — VS Code</span>
+                <span className="text-slate-600 text-xs font-mono ml-2 flex-1 text-center">my_project — VS Code</span>
               </div>
 
               <div className="flex flex-1 overflow-hidden relative">
@@ -98,16 +98,16 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
                 {/* Activity Bar */}
                 <div className={`w-12 bg-[#333333] flex flex-col items-center py-3 gap-4 border-r border-slate-800 transition-all cursor-pointer hover:bg-[#3a3a3a] ${activeArea === 'sidebar' ? 'ring-2 ring-inset ring-blue-500 bg-[#3a3a3a]' : ''}`}
                      onClick={() => selectArea('sidebar')}>
-                  <FolderOpen size={24} className="text-slate-400 hover:text-white" />
-                  <Search size={24} className="text-slate-400 hover:text-white" />
-                  <Puzzle size={24} className="text-slate-400 hover:text-white" />
-                  <Settings size={24} className="text-slate-400 hover:text-white mt-auto" />
+                  <FolderOpen size={24} className="text-slate-600 hover:text-white" />
+                  <Search size={24} className="text-slate-600 hover:text-white" />
+                  <Puzzle size={24} className="text-slate-600 hover:text-white" />
+                  <Settings size={24} className="text-slate-600 hover:text-white mt-auto" />
                 </div>
 
                 {/* Explorer */}
                 <div className={`w-48 bg-[#252526] border-r border-slate-800 flex flex-col transition-all cursor-pointer hover:bg-[#2a2a2b] ${activeArea === 'explorer' ? 'ring-2 ring-inset ring-rose-500 bg-[#2a2a2b]' : ''}`}
                      onClick={() => selectArea('explorer')}>
-                  <div className="px-4 py-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Explorer</div>
+                  <div className="px-4 py-2 text-[11px] font-bold text-slate-600 uppercase tracking-wider">Explorer</div>
                   <div className="px-2 py-1 flex flex-col gap-0.5">
                     <div className="text-slate-300 text-sm font-bold flex items-center gap-1 hover:bg-slate-700 px-2 py-1 rounded">
                       <span className="text-[10px]">▼</span> MY_PROJECT
@@ -140,9 +140,9 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
                   <div className={`h-32 bg-[#1e1e1e] border-t border-slate-700 flex flex-col transition-all cursor-pointer hover:bg-[#222222] ${activeArea === 'terminal' ? 'ring-2 ring-inset ring-purple-500' : ''}`}
                        onClick={() => selectArea('terminal')}>
                     <div className="flex bg-[#1e1e1e] border-b border-slate-700">
-                      <div className="text-slate-300 px-4 py-1 text-[11px] uppercase tracking-wider border-b-2 border-blue-500">Terminal</div>
+                      <div className="text-slate-600 px-4 py-1 text-[11px] uppercase tracking-wider border-b-2 border-blue-500">Terminal</div>
                     </div>
-                    <div className="p-3 font-mono text-[13px] text-slate-300">
+                    <div className="p-3 font-mono text-[13px] text-slate-600">
                       C:\project&gt; <span className="text-emerald-400">python main.py</span><br/>
                       Hello, VS Code!
                     </div>
@@ -156,7 +156,7 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[320px] bg-slate-50 p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">คำอธิบายส่วนประกอบ</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">คำอธิบายส่วนประกอบ</h4>
             
             <div className={`bg-white border-2 rounded-xl p-5 shadow-sm mb-4 flex-1 transition-all duration-300 ${activeArea ? 'border-' + areas[activeArea].color.split('-')[1] + '-200' : 'border-slate-200'}`}>
               {activeArea ? (
@@ -170,7 +170,7 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
                   </p>
                 </>
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-slate-400">
+                <div className="h-full flex flex-col items-center justify-center text-slate-600">
                   <MousePointerClick size={32} className="mb-2 opacity-50" />
                   <p className="text-sm">คลิกที่ส่วนต่างๆ ของ VS Code จำลองด้านซ้าย</p>
                 </div>
@@ -188,19 +188,19 @@ export default function OOP21910_U1_L2_VSCodeInstallGuide() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs transition-colors">
               <RotateCcw size={14} /> Clear Log
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">⌨️</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">⌨️</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap ml-6">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

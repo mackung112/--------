@@ -62,7 +62,7 @@ export default function PY21910_U4_L16_RangeFunction() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">range() Function</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           <code className="bg-slate-200 px-1 rounded text-pink-600">range(start, stop, step)</code> สร้างลำดับตัวเลขเพื่อใช้ใน for loop — ค่า <strong>stop</strong> ไม่รวมในผลลัพธ์
         </p>
       </div>
@@ -72,7 +72,7 @@ export default function PY21910_U4_L16_RangeFunction() {
           {/* Left: Visual */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
             {/* Preset buttons */}
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">ตัวอย่างที่ใช้บ่อย</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">ตัวอย่างที่ใช้บ่อย</h4>
             <div className="flex flex-wrap gap-2 mb-6">
               {presets.map((p, i) => (
                 <button key={i} onClick={() => applyPreset(p)}
@@ -83,11 +83,11 @@ export default function PY21910_U4_L16_RangeFunction() {
             </div>
 
             {/* Custom controls */}
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">ปรับเองได้เลย</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">ปรับเองได้เลย</h4>
             <div className="flex gap-4 mb-4">
               {[['start', start, setStart], ['stop', stop, setStop], ['step', step, setStep]].map(([label, val, setter]) => (
                 <div key={label} className="text-center flex-1">
-                  <label className="text-xs text-slate-500 block mb-1 font-medium">{label}</label>
+                  <label className="text-xs text-slate-700 block mb-1 font-medium">{label}</label>
                   <input type="number" value={val}
                     onChange={e => setter(+e.target.value || (label === 'step' ? 1 : 0))}
                     className="w-full text-center font-bold border-2 border-indigo-300 rounded-xl p-2 focus:outline-none focus:border-indigo-500 text-lg" />
@@ -110,11 +110,11 @@ export default function PY21910_U4_L16_RangeFunction() {
                   {n}
                 </div>
               )) : (
-                <span className="text-slate-400 text-sm">ไม่มีผลลัพธ์ (range ว่าง)</span>
+                <span className="text-slate-600 text-sm">ไม่มีผลลัพธ์ (range ว่าง)</span>
               )}
             </div>
             {result.length > 0 && (
-              <p className="text-xs text-slate-500 mt-3">
+              <p className="text-xs text-slate-700 mt-3">
                 จำนวนตัวเลข: <strong>{result.length}</strong> ตัว | ⚠️ ค่า stop ({stop}) ไม่รวมอยู่ในผลลัพธ์
               </p>
             )}
@@ -122,7 +122,7 @@ export default function PY21910_U4_L16_RangeFunction() {
 
           {/* Right: Controls */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">อธิบาย range()</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">อธิบาย range()</h4>
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex-1 mb-4">
               <div className="space-y-2 text-sm text-slate-700">
                 <div className="flex items-start gap-2">
@@ -156,19 +156,19 @@ export default function PY21910_U4_L16_RangeFunction() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
               </div>
             ))}
           </div>

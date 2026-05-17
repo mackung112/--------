@@ -64,7 +64,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การเขียนคู่มือการใช้งาน (User Manual)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้องค์ประกอบที่สำคัญในการเขียนเอกสารอธิบายการใช้งานโปรแกรม เพื่อให้ผู้ใช้สามารถเข้าใจและนำไปใช้ได้จริง
         </p>
       </div>
@@ -74,7 +74,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
           
           {/* Left: Document Builder */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col bg-slate-50">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <FileText size={16} /> Document Builder
             </h4>
 
@@ -94,7 +94,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 px-1">เลือกหัวข้อที่จะใส่ในคู่มือ</label>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 px-1">เลือกหัวข้อที่จะใส่ในคู่มือ</label>
                 <div className="space-y-2">
                   {sections.map(s => (
                     <button key={s.id} onClick={() => toggleSection(s.id)}
@@ -120,7 +120,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
 
           {/* Right: Document Preview */}
           <div className="w-full lg:w-[450px] bg-slate-200 p-6 flex flex-col items-center">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 self-start">Live Preview</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 self-start">Live Preview</h4>
             
             {showPreview && includedCount > 0 ? (
               <div className="bg-white w-full max-w-[400px] flex-1 border border-slate-300 shadow-xl p-8 flex flex-col relative aspect-[1/1.4] overflow-y-auto custom-scrollbar">
@@ -129,7 +129,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
                 <div className="text-center mb-8 pb-6 border-b border-slate-200">
                   <h2 className="text-2xl font-bold text-slate-900 leading-tight mb-2">{title}</h2>
                   {author && <p className="text-sm font-semibold text-slate-600">โดย {author}</p>}
-                  <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider">Version 1.0</p>
+                  <p className="text-xs text-slate-600 mt-1 uppercase tracking-wider">Version 1.0</p>
                 </div>
 
                 {/* Table of Contents */}
@@ -140,7 +140,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
                       <div key={`toc-${s.id}`} className="flex justify-between items-baseline text-sm">
                         <span className="text-sky-700 font-medium">{s.title}</span>
                         <div className="flex-1 border-b border-dotted border-slate-300 mx-2"></div>
-                        <span className="text-slate-500 text-xs">{(idx + 1) * 2}</span>
+                        <span className="text-slate-700 text-xs">{(idx + 1) * 2}</span>
                       </div>
                     ))}
                   </div>
@@ -155,7 +155,7 @@ export default function OOP21910_U5_L7_UserManualDemo() {
                       
                       {/* Mock content blocks */}
                       <div className="mt-3 bg-slate-50 border border-slate-100 rounded p-3 h-16 flex items-center justify-center">
-                        <span className="text-slate-300 text-xs font-mono">[Image / Code Snippet Placeholder]</span>
+                        <span className="text-slate-600 text-xs font-mono">[Image / Code Snippet Placeholder]</span>
                       </div>
                     </div>
                   ))}
@@ -163,10 +163,10 @@ export default function OOP21910_U5_L7_UserManualDemo() {
 
               </div>
             ) : (
-              <div className="flex-1 w-full bg-white/50 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 p-6 text-center">
-                <BookOpen className="text-slate-300 mb-4 opacity-50" size={48} />
+              <div className="flex-1 w-full bg-white/50 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-600 p-6 text-center">
+                <BookOpen className="text-slate-600 mb-4 opacity-50" size={48} />
                 <p className="text-sm font-semibold">ยังไม่มีตัวอย่างเอกสาร</p>
-                <p className="text-xs mt-1 text-slate-500">เลือกหัวข้อทางซ้ายแล้วกดปุ่ม "อัปเดตตัวอย่างเอกสาร"</p>
+                <p className="text-xs mt-1 text-slate-700">เลือกหัวข้อทางซ้ายแล้วกดปุ่ม "อัปเดตตัวอย่างเอกสาร"</p>
               </div>
             )}
           </div>
@@ -176,16 +176,16 @@ export default function OOP21910_U5_L7_UserManualDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">DocGen Process</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">DocGen Process</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

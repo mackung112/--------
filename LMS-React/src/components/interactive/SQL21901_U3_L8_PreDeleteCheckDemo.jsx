@@ -316,7 +316,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
 
               {/* Sidebar: Scenarios */}
               <div className="flex flex-col bg-slate-900 md:w-72 shrink-0 border-r border-slate-700 z-10 shadow-xl">
-                <div className="px-5 py-4 border-b border-slate-800 text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <div className="px-5 py-4 border-b border-slate-800 text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
                   <Search size={14} /> เลือกสถานการณ์ลบข้อมูล
                 </div>
                 {Object.keys(scenarios).map((key) => {
@@ -404,7 +404,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
 
               <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                 {users.length === 0 ? (
-                  <div className="p-12 text-center text-slate-400 flex flex-col items-center justify-center">
+                  <div className="p-12 text-center text-slate-600 flex flex-col items-center justify-center">
                     <Database size={48} className="mb-4 opacity-20" />
                     <p>ไม่มีข้อมูลเหลืออยู่ในตาราง (Table is empty)</p>
                   </div>
@@ -432,7 +432,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
 
                         return (
                           <tr key={row.id} className={rowClasses}>
-                            <td className="p-4 font-mono text-xs text-slate-400 text-center font-semibold">
+                            <td className="p-4 font-mono text-xs text-slate-600 text-center font-semibold">
                               {isHighlighted && step === 2 ? <Trash2 size={14} className="mx-auto text-amber-500" /> : row.id}
                             </td>
                             <td className={`p-4 font-medium ${isHighlighted && step === 2 ? 'text-amber-900 line-through' : 'text-slate-700'}`}>{row.username}</td>
@@ -446,7 +446,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
                                 {row.status}
                               </span>
                             </td>
-                            <td className="p-4 text-right font-mono text-sm pr-6 text-slate-500">
+                            <td className="p-4 text-right font-mono text-sm pr-6 text-slate-700">
                               {row.days_inactive}
                             </td>
                           </tr>
@@ -466,7 +466,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
             <div className="bg-rose-100 p-2.5 rounded-xl shadow-sm border border-rose-200"><AlertTriangle className="text-rose-600" size={24} /></div>
             <div>
               <h2 className="text-2xl font-bold text-slate-800">Syntax Challenge: ดอกจันที่หายไป</h2>
-              <p className="text-slate-500 text-sm mt-1">ทดสอบความเข้าใจ จุดที่คนเพิ่งเริ่มเขียน SQL ผิดบ่อยที่สุด</p>
+              <p className="text-slate-700 text-sm mt-1">ทดสอบความเข้าใจ จุดที่คนเพิ่งเริ่มเขียน SQL ผิดบ่อยที่สุด</p>
             </div>
           </div>
 
@@ -482,7 +482,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
                 </div>
                 <div>
                   <h3 className="text-rose-300 font-bold text-xl mb-2">ภารกิจ: ลบบัญชีสแปม</h3>
-                  <p className="text-slate-300 leading-relaxed text-base">
+                  <p className="text-slate-600 leading-relaxed text-base">
                     จงประกอบคำสั่งเพื่อ <strong>ลบข้อมูล</strong> ผู้ใช้ (users) ที่มีสถานะเป็น <span className="text-white font-mono bg-slate-700 px-1 rounded">status = 'spam'</span> <br />
                     (ระวัง! มีบล็อกหลอก 1 ชิ้นที่ไม่ต้องใช้ในคำสั่ง DELETE)
                   </p>
@@ -492,7 +492,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
               {/* Dropzones */}
               <div className="mb-10 overflow-x-auto pb-6">
                 <div className="flex items-center gap-2 mb-4 min-w-max px-2">
-                  <span className="text-sm text-slate-400 font-mono font-bold tracking-widest uppercase">Query Workspace</span>
+                  <span className="text-sm text-slate-600 font-mono font-bold tracking-widest uppercase">Query Workspace</span>
                 </div>
                 <div className="flex items-center gap-3 bg-black/40 p-5 rounded-2xl border border-slate-700/80 min-h-[100px] shadow-[inset_0_4px_20px_rgba(0,0,0,0.5)] min-w-max">
                   {dropzones.map((block, idx) => (
@@ -517,7 +517,7 @@ export default function SQL21901_U3_L8_PreDeleteCheckDemo() {
               {/* Blocks Bank */}
               <div className="bg-slate-800/40 p-6 rounded-3xl border border-slate-700/50">
                 <div className="flex justify-between items-center mb-4 px-2">
-                  <p className="text-sm text-slate-400 font-mono font-bold uppercase tracking-widest">Blocks Bank (คลิกเพื่อเลือก)</p>
+                  <p className="text-sm text-slate-600 font-mono font-bold uppercase tracking-widest">Blocks Bank (คลิกเพื่อเลือก)</p>
                   <button onClick={resetGame} className="text-slate-400 hover:text-white flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-full transition-all border border-slate-700">
                     <RefreshCcw size={14} /> เริ่มใหม่
                   </button>

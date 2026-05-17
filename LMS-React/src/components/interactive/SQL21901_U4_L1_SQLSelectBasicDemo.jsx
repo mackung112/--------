@@ -109,7 +109,7 @@ export default function SQL21901_U4_L1_SQLSelectBasicDemo() {
               <h3 className="text-lg font-bold text-slate-800 mb-2">{missions[level].goal}</h3>
               {level <= 2 && (
                 <>
-                  <p className="text-slate-500 text-sm mb-4">ตารางเป้าหมาย: <code className="bg-slate-100 text-pink-600 px-1 rounded">{missions[level].table}</code></p>
+                  <p className="text-slate-700 text-sm mb-4">ตารางเป้าหมาย: <code className="bg-slate-100 text-pink-600 px-1 rounded">{missions[level].table}</code></p>
                   <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-sm text-yellow-800">
                     <strong>คำใบ้:</strong> {missions[level].hint}
                   </div>
@@ -123,7 +123,7 @@ export default function SQL21901_U4_L1_SQLSelectBasicDemo() {
             </div>
           </div>
           
-          <div className="bg-slate-100 p-4 rounded-xl border border-slate-200 text-sm text-slate-500">
+          <div className="bg-slate-100 p-4 rounded-xl border border-slate-200 text-sm text-slate-700">
             <strong>ตารางที่มีในระบบ:</strong><br/>
             - employees (id, name, role)
           </div>
@@ -137,7 +137,7 @@ export default function SQL21901_U4_L1_SQLSelectBasicDemo() {
               <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
             </div>
-            <div className="mx-auto text-slate-400 text-xs font-semibold tracking-wider">mysql -u root -p</div>
+            <div className="mx-auto text-slate-600 text-xs font-semibold tracking-wider">mysql -u root -p</div>
           </div>
           
           <div className="p-4 flex-1 overflow-y-auto font-mono text-sm sm:text-base space-y-2">
@@ -149,7 +149,7 @@ export default function SQL21901_U4_L1_SQLSelectBasicDemo() {
                 {h.type === 'success' && <div className="text-green-400 flex items-center gap-2"><CheckCircle2 size={16}/> {h.text}</div>}
                 {h.type === 'data' && (
                   <div className="mt-2 mb-4 bg-[#2D2D2D] border border-slate-700 rounded-lg overflow-hidden inline-block">
-                    <table className="text-left text-slate-300">
+                    <table className="text-left text-slate-600">
                       <thead className="bg-[#3D3D3D] border-b border-slate-600">
                         <tr>
                           {Object.keys(h.data[0]).map(k => <th key={k} className="px-4 py-2 border-r border-slate-600 last:border-0">{k}</th>)}

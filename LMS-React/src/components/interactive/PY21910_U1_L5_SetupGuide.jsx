@@ -146,7 +146,7 @@ export default function PY21910_U1_L5_SetupGuide() {
             <div className="w-full max-w-sm bg-slate-50 border border-slate-300 rounded shadow-xl overflow-hidden animate-in zoom-in-95 duration-300">
               <div className="bg-white px-4 py-2 border-b border-slate-300 flex justify-between items-center text-sm">
                 <span className="font-bold text-slate-800">Python 3.13.0 Setup</span>
-                <span className="text-slate-400">✕</span>
+                <span className="text-slate-600">✕</span>
               </div>
               <div className="p-6">
                 <h4 className="text-xl font-medium text-slate-800 mb-4">Install Python 3.13.0</h4>
@@ -188,7 +188,7 @@ export default function PY21910_U1_L5_SetupGuide() {
                 <div className="absolute inset-0 bg-white/95 flex flex-col items-center justify-center p-6 text-center">
                   <CheckCircle2 className="w-12 h-12 text-green-500 mb-2" />
                   <span className="text-lg font-bold text-slate-800 mb-2">Setup was successful</span>
-                  <p className="text-xs text-slate-500 mb-4">Python and pip are now ready to use.</p>
+                  <p className="text-xs text-slate-700 mb-4">Python and pip are now ready to use.</p>
                   <button onClick={resetSimulator} className="px-6 py-1.5 rounded text-white text-sm bg-slate-800">Close</button>
                 </div>
               )}
@@ -211,9 +211,9 @@ export default function PY21910_U1_L5_SetupGuide() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
-                <span className="mx-auto text-slate-400 text-xs">user@macbook ~ zsh</span>
+                <span className="mx-auto text-slate-600 text-xs">user@macbook ~ zsh</span>
               </div>
-              <div className="p-4 text-slate-300 h-64 flex flex-col">
+              <div className="p-4 text-slate-600 h-64 flex flex-col">
                 <div className="mb-2">
                   <span className="text-green-400">➜</span> <span className="text-blue-400">~</span> 
                   {simState === 'idle' && (
@@ -224,14 +224,14 @@ export default function PY21910_U1_L5_SetupGuide() {
                   {simState !== 'idle' && <span className="ml-2">brew install python</span>}
                 </div>
                 {simState === 'installing' && (
-                  <div className="mt-2 text-slate-400 space-y-1">
+                  <div className="mt-2 text-slate-600 space-y-1">
                     <div>=={'>'} Downloading https://ghcr.io/v2/homebrew/core/python/3.13...</div>
                     <div className="text-blue-400">######################################## 100.0%</div>
                     <div>=={'>'} Pouring python@3.13.0.arm64_sonoma.bottle.tar.gz</div>
                   </div>
                 )}
                 {simState === 'success' && (
-                  <div className="mt-2 text-slate-400 space-y-1">
+                  <div className="mt-2 text-slate-600 space-y-1">
                     <div>=={'>'} Downloading https://ghcr.io/v2/homebrew/core/python/3.13...</div>
                     <div className="text-blue-400">######################################## 100.0%</div>
                     <div>=={'>'} Pouring python@3.13.0.arm64_sonoma.bottle.tar.gz</div>
@@ -247,15 +247,15 @@ export default function PY21910_U1_L5_SetupGuide() {
             <div className="w-full max-w-sm bg-[#1e1e1e] rounded shadow-xl overflow-hidden border border-slate-700 animate-in zoom-in-95 duration-300 flex flex-row">
               {/* Activity Bar */}
               <div className="w-12 bg-[#333333] flex flex-col items-center py-4 gap-6 border-r border-slate-700">
-                <div className="w-6 h-6 text-slate-500">📁</div>
-                <div className="w-6 h-6 text-slate-500">🔍</div>
+                <div className="w-6 h-6 text-slate-700">📁</div>
+                <div className="w-6 h-6 text-slate-700">🔍</div>
                 <BoxSelect className="w-6 h-6 text-white bg-blue-600 rounded p-0.5" />
               </div>
               {/* Sidebar */}
               <div className="w-full p-4 flex flex-col bg-[#252526]">
-                <div className="text-slate-300 text-xs uppercase mb-3">Extensions: Marketplace</div>
+                <div className="text-slate-600 text-xs uppercase mb-3">Extensions: Marketplace</div>
                 <div className="bg-[#3c3c3c] border border-slate-600 rounded p-1 flex items-center mb-4">
-                  <span className="text-slate-400 text-xs px-2">Python</span>
+                  <span className="text-slate-600 text-xs px-2">Python</span>
                 </div>
                 
                 {/* Extension Item */}
@@ -272,14 +272,14 @@ export default function PY21910_U1_L5_SetupGuide() {
                         </button>
                       )}
                       {simState === 'installing' && (
-                        <span className="text-slate-400 text-[10px] px-2 py-0.5">Installing...</span>
+                        <span className="text-slate-600 text-[10px] px-2 py-0.5">Installing...</span>
                       )}
                       {simState === 'success' && (
-                        <Settings className="w-4 h-4 text-slate-400" />
+                        <Settings className="w-4 h-4 text-slate-600" />
                       )}
                     </div>
-                    <div className="text-slate-400 text-[10px] mb-1">Microsoft</div>
-                    <div className="text-slate-400 text-[10px] truncate">IntelliSense (Pylance), Linting, Debugging</div>
+                    <div className="text-slate-600 text-[10px] mb-1">Microsoft</div>
+                    <div className="text-slate-600 text-[10px] truncate">IntelliSense (Pylance), Linting, Debugging</div>
                   </div>
                 </div>
 
@@ -337,7 +337,7 @@ export default function PY21910_U1_L5_SetupGuide() {
                 <div className="bg-slate-50 p-3 rounded border border-slate-200">
                   <p className="text-xs font-bold text-slate-700 mb-1">วิธีทดสอบหลังติดตั้งเสร็จ</p>
                   <code className="text-xs text-indigo-600 font-mono">ใน Terminal -{'>'} พิมพ์ python3 --version</code><br/>
-                  <span className="text-[10px] text-slate-500">(Mac ต้องเติมเลข 3 ต่อท้ายเสมอ)</span>
+                  <span className="text-[10px] text-slate-700">(Mac ต้องเติมเลข 3 ต่อท้ายเสมอ)</span>
                 </div>
               </div>
             )}
@@ -382,13 +382,13 @@ export default function PY21910_U1_L5_SetupGuide() {
                 {simState === 'installing' && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${simState === 'installing' ? 'bg-green-500' : simState === 'success' ? 'bg-emerald-500' : simState === 'error' ? 'bg-red-500' : 'bg-slate-600'}`}></span>
               </span>
-              <span className="text-slate-500 text-[10px] uppercase tracking-wider">Setup Log</span>
+              <span className="text-slate-700 text-[10px] uppercase tracking-wider">Setup Log</span>
             </div>
 
             <div className="mt-3 space-y-1.5 font-mono text-[13px] leading-relaxed flex-1">
               {logs.map((log, idx) => (
                 <div key={idx} className="flex items-start animate-in fade-in slide-in-from-left-2 duration-300">
-                  <span className="text-slate-500 mr-3 shrink-0">[{log.time}]</span>
+                  <span className="text-slate-700 mr-3 shrink-0">[{log.time}]</span>
                   <span className={`shrink-0 w-10 font-bold ${
                     log.type === 'error' ? 'text-red-400' :
                     log.type === 'warn' ? 'text-amber-400' :

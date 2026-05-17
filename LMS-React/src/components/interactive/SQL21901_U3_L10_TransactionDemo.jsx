@@ -220,7 +220,7 @@ return (
 <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
 <div className="flex items-center gap-3">
 <div className="bg-white/10 p-2 rounded-xl backdrop-blur-sm shadow-inner border border-white/20">
-<ShieldCheck className="text-indigo-300" size={28} />
+<ShieldCheck className="text-indigo-600" size={28} />
 </div>
 <div>
 <h1 className="text-xl md:text-2xl font-bold leading-tight tracking-tight">SQL Interactive Learning</h1>
@@ -295,7 +295,7 @@ Unit 3.10 การใช้ Transaction
 
             {/* Sidebar: Scenarios */}
             <div className="flex flex-col bg-slate-50 md:w-80 shrink-0 border-r border-slate-200 z-10">
-                <div className="px-5 py-4 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2 bg-slate-100/50">
+                <div className="px-5 py-4 border-b border-slate-200 text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2 bg-slate-100/50">
                   <Layers size={14}/> เลือกสถานการณ์
                 </div>
                 {Object.keys(scenarios).map((key) => {
@@ -316,7 +316,7 @@ Unit 3.10 การใช้ Transaction
                       </div>
                       <div>
                         <div className={`font-bold text-sm mb-1 ${isActive ? `text-${sc.color}-700` : 'text-slate-700'}`}>{sc.title}</div>
-                        <div className="text-xs text-slate-500 leading-relaxed">{sc.desc}</div>
+                        <div className="text-xs text-slate-700 leading-relaxed">{sc.desc}</div>
                       </div>
                     </button>
                   )
@@ -342,7 +342,7 @@ Unit 3.10 การใช้ Transaction
 
               {/* Top: Terminal SQL Viewer */}
               <div className="bg-[#1e1e2e] p-5 flex flex-col h-48 border-b border-slate-700 shadow-inner">
-                <div className="flex items-center gap-2 text-slate-400 text-xs font-mono mb-3 border-b border-slate-700 pb-2">
+                <div className="flex items-center gap-2 text-slate-600 text-xs font-mono mb-3 border-b border-slate-700 pb-2">
                   <TerminalSquare size={14}/> SQL Execution Log
                 </div>
                 <div className="flex-1 overflow-y-auto font-mono text-sm space-y-2 pr-2">
@@ -353,7 +353,7 @@ Unit 3.10 การใช้ Transaction
                         log.type === 'success' ? 'text-emerald-400 font-bold' :
                         log.type === 'rollback' ? 'text-rose-400 font-bold' : 'text-amber-400 bg-amber-400/10 inline-block px-2 py-0.5 rounded'}
                     `}>
-                      <span className="text-slate-500 mr-2">{'>'}</span>{log.text}
+                      <span className="text-slate-700 mr-2">{'>'}</span>{log.text}
                     </div>
                   ))}
                 </div>
@@ -391,11 +391,11 @@ Unit 3.10 การใช้ Transaction
                     <h3 className="font-bold text-slate-700 text-lg">บัญชีนาย A (Alice)</h3>
 
                     <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 relative overflow-hidden">
-                      <div className="text-xs text-slate-500 mb-1 font-medium uppercase tracking-widest">Balance</div>
+                      <div className="text-xs text-slate-700 mb-1 font-medium uppercase tracking-widest">Balance</div>
 
                       {pendingAlice !== null ? (
                         <div className="animate-in slide-in-from-top-4 duration-300">
-                          <div className="text-sm text-slate-400 line-through mb-0.5 font-mono">{aliceBal.toLocaleString()} ฿</div>
+                          <div className="text-sm text-slate-600 line-through mb-0.5 font-mono">{aliceBal.toLocaleString()} ฿</div>
                           <div className="text-2xl font-bold text-amber-500 font-mono flex items-center justify-center gap-1">
                             {pendingAlice.toLocaleString()} ฿ <span className="text-xs font-normal text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded-full">*Pending</span>
                           </div>
@@ -427,11 +427,11 @@ Unit 3.10 การใช้ Transaction
                     <h3 className="font-bold text-slate-700 text-lg">บัญชีนาย B (Bob)</h3>
 
                     <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 relative overflow-hidden">
-                      <div className="text-xs text-slate-500 mb-1 font-medium uppercase tracking-widest">Balance</div>
+                      <div className="text-xs text-slate-700 mb-1 font-medium uppercase tracking-widest">Balance</div>
 
                       {pendingBob !== null ? (
                         <div className="animate-in slide-in-from-top-4 duration-300">
-                          <div className="text-sm text-slate-400 line-through mb-0.5 font-mono">{bobBal.toLocaleString()} ฿</div>
+                          <div className="text-sm text-slate-600 line-through mb-0.5 font-mono">{bobBal.toLocaleString()} ฿</div>
                           <div className="text-2xl font-bold text-amber-500 font-mono flex items-center justify-center gap-1">
                             {pendingBob.toLocaleString()} ฿ <span className="text-xs font-normal text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded-full">*Pending</span>
                           </div>
@@ -457,7 +457,7 @@ Unit 3.10 การใช้ Transaction
             <div className="bg-purple-100 p-2.5 rounded-xl shadow-sm border border-purple-200"><Code2 className="text-purple-700" size={24} /></div>
             <div>
                <h2 className="text-2xl font-bold text-slate-800">Logic Challenge: สร้าง Transaction ที่สมบูรณ์</h2>
-               <p className="text-slate-500 text-sm mt-1">ทดสอบการจัดลำดับคำสั่งเพื่อความปลอดภัยของข้อมูล</p>
+               <p className="text-slate-700 text-sm mt-1">ทดสอบการจัดลำดับคำสั่งเพื่อความปลอดภัยของข้อมูล</p>
             </div>
           </div>
 
@@ -472,8 +472,8 @@ Unit 3.10 การใช้ Transaction
                   <ShieldCheck className="text-white" size={28} />
                 </div>
                 <div>
-                  <h3 className="text-indigo-300 font-bold text-xl mb-2">ภารกิจ: โอนเงิน 100 บาทอย่างปลอดภัย</h3>
-                  <p className="text-slate-300 leading-relaxed text-base">
+                  <h3 className="text-indigo-600 font-bold text-xl mb-2">ภารกิจ: โอนเงิน 100 บาทอย่างปลอดภัย</h3>
+                  <p className="text-slate-600 leading-relaxed text-base">
                     จงประกอบคำสั่งเพื่อ <strong>สร้าง Transaction</strong> ที่หักเงินบัญชีหนึ่ง และเพิ่มเงินให้อีกบัญชีหนึ่ง
                     และจบกระบวนการเพื่อ <strong>บันทึกข้อมูลถาวร</strong>
                   </p>
@@ -505,7 +505,7 @@ Unit 3.10 การใช้ Transaction
               {/* Blocks Bank */}
               <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50">
                 <div className="flex justify-between items-center mb-5 px-2">
-                  <p className="text-sm text-slate-400 font-mono font-bold uppercase tracking-widest">Blocks Bank</p>
+                  <p className="text-sm text-slate-600 font-mono font-bold uppercase tracking-widest">Blocks Bank</p>
                   <button onClick={resetGame} className="text-slate-400 hover:text-white flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-full transition-all border border-slate-700">
                     <RefreshCcw size={14} /> เริ่มใหม่
                   </button>

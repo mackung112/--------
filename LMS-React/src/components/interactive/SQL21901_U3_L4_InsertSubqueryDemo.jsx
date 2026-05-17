@@ -173,7 +173,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การเพิ่มข้อมูลด้วย Subquery (INSERT INTO ... SELECT)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การนำข้อมูลที่ได้จากการ SELECT จากตารางหนึ่ง มาเพิ่ม (INSERT) ลงในอีกตารางหนึ่ง
         </p>
       </div>
@@ -198,7 +198,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
                   <div className="bg-amber-100 p-3 rounded-full text-amber-600"><Table2 size={24}/></div>
                   <div>
                     <p className="font-bold text-slate-700">ตารางต้นทาง (Source)</p>
-                    <p className="text-xs text-slate-500">มีข้อมูลอยู่แล้ว 10,000 แถว</p>
+                    <p className="text-xs text-slate-700">มีข้อมูลอยู่แล้ว 10,000 แถว</p>
                   </div>
                 </div>
                 <div className="flex justify-center -my-2 z-10">
@@ -219,7 +219,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
         {/* Middle: Simulator */}
         <div className="flex flex-col bg-slate-50 border-b border-slate-200">
           {/* SQL Command Builder */}
-          <div className="bg-[#1e1e2e] p-5 text-slate-300 relative border-b-4 border-indigo-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="bg-[#1e1e2e] p-5 text-slate-600 relative border-b-4 border-indigo-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="font-mono text-sm leading-loose overflow-x-auto w-full">
               <span className="text-[#cba6f7]">INSERT INTO</span> <span className="text-[#a6e3a1]">premium_customers</span> (name, points)<br/>
               <span className="text-[#cba6f7]">SELECT</span> name, points <span className="text-[#cba6f7]">FROM</span> <span className="text-[#f9e2af]">all_customers</span> <br className="md:hidden" />
@@ -237,7 +237,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
                 <option value="tier = 'Gold'">tier = 'Gold'</option>
                 <option value="points >= 1000">points &gt;= 1000</option>
               </select>
-              <span className="text-slate-400">;</span>
+              <span className="text-slate-600">;</span>
             </div>
 
             <div className="shrink-0 flex gap-2 w-full md:w-auto">
@@ -291,7 +291,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
                         <tr key={row.id} className={`border-b last:border-0 transition-colors duration-500
                           ${isMatch ? (hasExecuted ? 'bg-indigo-50 border-indigo-200' : 'bg-amber-50/60') : ''}
                         `}>
-                          <td className="p-2 font-mono text-xs text-slate-500">{row.id}</td>
+                          <td className="p-2 font-mono text-xs text-slate-700">{row.id}</td>
                           <td className="p-2 font-medium text-slate-800">{row.name}</td>
                           <td className="p-2 text-slate-600">{row.points}</td>
                           <td className="p-2">
@@ -326,7 +326,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
                   <tbody>
                     {targetData.length === 0 ? (
                       <tr>
-                        <td colSpan="2" className="p-8 text-center text-slate-400 italic font-medium">
+                        <td colSpan="2" className="p-8 text-center text-slate-600 italic font-medium">
                           {isAnimating ? 'กำลังคัดลอกข้อมูล...' : 'ตารางยังว่างเปล่า รันคำสั่งเพื่อดึงข้อมูลมาใส่'}
                         </td>
                       </tr>
@@ -351,10 +351,10 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
         {/* Minigame Area */}
         <div className="p-6 bg-slate-50 border-b border-slate-200">
            <div className="flex justify-between items-center mb-4">
-             <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+             <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                <HelpCircle size={16} className="text-indigo-500" /> Syntax Builder
              </h4>
-             <button onClick={resetGame} className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
+             <button onClick={resetGame} className="text-xs text-slate-700 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
                 <RefreshCcw size={12} /> เริ่มใหม่
               </button>
            </div>
@@ -378,7 +378,7 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
                   {block ? block.text : `ส่วน ${idx + 1}`}
                 </button>
               ))}
-              <span className="text-slate-500 font-mono text-lg font-bold">;</span>
+              <span className="text-slate-700 font-mono text-lg font-bold">;</span>
            </div>
 
            {/* Blocks */}
@@ -412,17 +412,17 @@ export default function SQL21901_U3_L4_InsertSubqueryDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Query Execution Log</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Query Execution Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-indigo-400 font-bold shrink-0"></span> <div className="text-indigo-300 font-bold">{line.text}</div></>}
+                {line.type === 'command' && <><span className="text-indigo-600 font-bold shrink-0"></span> <div className="text-indigo-600 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

@@ -182,7 +182,7 @@ export default function SQL21901_U2_L2_SQLDataTypesDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">SQL Data Types (ชนิดข้อมูล)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้ชนิดข้อมูลหลักๆ ใน SQL และทดสอบความเข้าใจผ่าน Validator และ Match Game
         </p>
       </div>
@@ -194,21 +194,21 @@ export default function SQL21901_U2_L2_SQLDataTypesDemo() {
             <div className="p-2 bg-blue-100 text-blue-600 rounded-lg shrink-0"><Hash size={18}/></div>
             <div>
               <h4 className="font-bold text-sm text-slate-800 mb-1">ตัวเลข (Numeric)</h4>
-              <p className="text-xs text-slate-500 mb-2">INT (จำนวนเต็ม) <br/>DECIMAL (ทศนิยม)</p>
+              <p className="text-xs text-slate-700 mb-2">INT (จำนวนเต็ม) <br/>DECIMAL (ทศนิยม)</p>
             </div>
           </div>
           <div className="p-5 flex gap-4 items-start">
             <div className="p-2 bg-orange-100 text-orange-600 rounded-lg shrink-0"><Type size={18}/></div>
             <div>
               <h4 className="font-bold text-sm text-slate-800 mb-1">ตัวอักษร (String)</h4>
-              <p className="text-xs text-slate-500 mb-2">VARCHAR (ยาวตามจริง) <br/>CHAR (ความยาวคงที่)</p>
+              <p className="text-xs text-slate-700 mb-2">VARCHAR (ยาวตามจริง) <br/>CHAR (ความยาวคงที่)</p>
             </div>
           </div>
           <div className="p-5 flex gap-4 items-start">
             <div className="p-2 bg-emerald-100 text-emerald-600 rounded-lg shrink-0"><CalendarDays size={18}/></div>
             <div>
               <h4 className="font-bold text-sm text-slate-800 mb-1">วันที่ (Date/Time)</h4>
-              <p className="text-xs text-slate-500 mb-2">DATE (YYYY-MM-DD) <br/>DATETIME (วันที่+เวลา)</p>
+              <p className="text-xs text-slate-700 mb-2">DATE (YYYY-MM-DD) <br/>DATETIME (วันที่+เวลา)</p>
             </div>
           </div>
         </div>
@@ -217,7 +217,7 @@ export default function SQL21901_U2_L2_SQLDataTypesDemo() {
           
           {/* Left: Data Validator */}
           <div className="w-full lg:w-1/2 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <FlaskConical size={16} className="text-sky-500"/> Data Validator
             </h4>
             
@@ -263,10 +263,10 @@ export default function SQL21901_U2_L2_SQLDataTypesDemo() {
             
             <div className="p-6 relative z-20 flex flex-col h-full">
               <div className="flex justify-between items-center mb-6">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                   <Puzzle size={16} className="text-orange-500"/> Match Game
                 </h4>
-                <div className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                <div className="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-1 rounded">
                   Score: <span className="text-emerald-600 text-sm">{matches.length}/4</span>
                 </div>
               </div>
@@ -330,17 +330,17 @@ export default function SQL21901_U2_L2_SQLDataTypesDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Type Caster</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Type Caster</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed flex gap-2">
-                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-300">{line.text.substring(2)}</div></>}
+                {line.type === 'command' && <><span className="text-emerald-400 font-bold shrink-0">&gt;&gt;&gt;</span> <div className="text-slate-600">{line.text.substring(2)}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0">[Log]</span> <div className="text-cyan-300">{line.text.substring(2)}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0">[Sys]</span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0">[Sys]</span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-400 font-bold shrink-0">[Err]</span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-400 font-bold shrink-0">[Ok]</span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

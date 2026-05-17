@@ -109,7 +109,7 @@ export default function PY21910_U8_L2_MiniPOS() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">โปรเจกต์: ระบบแคชเชียร์ (Mini POS)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           นำความรู้ทั้งหมดมาสร้างระบบจำลองการขายสินค้า กดเพิ่มสินค้าแล้วดูการทำงานและการออกใบเสร็จใน Terminal
         </p>
       </div>
@@ -134,17 +134,17 @@ export default function PY21910_U8_L2_MiniPOS() {
                     <div className="font-bold text-slate-700 text-sm truncate">{item.name}</div>
                     <div className="text-emerald-600 font-bold text-sm">{item.price} ฿</div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-600 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
                     <Plus size={16} />
                   </div>
                 </button>
               ))}
             </div>
 
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-3">โค้ดที่อยู่เบื้องหลัง (Behind the Scenes)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-3">โค้ดที่อยู่เบื้องหลัง (Behind the Scenes)</h4>
             <div className="bg-slate-900 rounded-xl p-4 font-mono text-xs leading-relaxed text-slate-100 flex-1 shadow-inner overflow-x-auto min-h-[150px] border border-slate-700">
               <div className="text-pink-400">def <span className="text-blue-400 font-bold">add_item</span>(<span className="text-orange-300">name</span>):</div>
-              <div className="ml-4 text-slate-500"># จำลองการเพิ่มสินค้าลงตะกร้า (List)</div>
+              <div className="ml-4 text-slate-700"># จำลองการเพิ่มสินค้าลงตะกร้า (List)</div>
               <div className="ml-4 text-emerald-300">cart.append(name)</div>
               <div className="text-pink-400 mt-2">def <span className="text-blue-400 font-bold">checkout</span>():</div>
               <div className="ml-4 text-emerald-300">subtotal = sum_prices(cart)</div>
@@ -172,7 +172,7 @@ export default function PY21910_U8_L2_MiniPOS() {
               {cart.length === 0 ? (
                 <div className="text-center py-10 flex flex-col items-center justify-center">
                   <ShoppingCart size={32} className="text-slate-200 mb-2" />
-                  <p className="text-slate-400 text-sm">ยังไม่มีสินค้าในตะกร้า</p>
+                  <p className="text-slate-600 text-sm">ยังไม่มีสินค้าในตะกร้า</p>
                 </div>
               ) : (
                 cart.map(item => (
@@ -180,8 +180,8 @@ export default function PY21910_U8_L2_MiniPOS() {
                     <div className="flex flex-col min-w-0 flex-1">
                       <span className="font-bold text-xs text-slate-800 truncate">{item.name}</span>
                       <div className="flex items-center gap-2 text-[11px] mt-0.5">
-                        <span className="text-slate-500">{item.price} ฿</span>
-                        <span className="text-slate-300">x</span>
+                        <span className="text-slate-700">{item.price} ฿</span>
+                        <span className="text-slate-600">x</span>
                         <span className="font-bold text-emerald-600">{item.qty}</span>
                       </div>
                     </div>
@@ -198,8 +198,8 @@ export default function PY21910_U8_L2_MiniPOS() {
 
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-auto">
               <div className="space-y-2 mb-3">
-                <div className="flex justify-between text-xs"><span className="text-slate-500">รวมเป็นเงิน:</span><span className="font-mono font-bold text-slate-700">{subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span></div>
-                <div className="flex justify-between text-xs"><span className="text-slate-500">ภาษี (VAT 7%):</span><span className="font-mono font-bold text-slate-700">{vat.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-700">รวมเป็นเงิน:</span><span className="font-mono font-bold text-slate-700">{subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span></div>
+                <div className="flex justify-between text-xs"><span className="text-slate-700">ภาษี (VAT 7%):</span><span className="font-mono font-bold text-slate-700">{vat.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span></div>
                 <div className="flex justify-between text-sm pt-2 border-t border-slate-200">
                   <span className="font-bold text-slate-800">ยอดชำระสุทธิ:</span>
                   <span className="font-mono font-bold text-emerald-600">{total.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</span>
@@ -221,19 +221,19 @@ export default function PY21910_U8_L2_MiniPOS() {
         <div className="h-[250px] bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python mini_pos.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python mini_pos.py</span>
             </div>
-            <button onClick={clearLog} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+            <button onClick={clearLog} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs transition-colors">
               <RotateCcw size={14} /> Clear Log
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-slate-200 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-rose-400 font-bold whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}

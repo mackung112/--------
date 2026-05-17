@@ -84,7 +84,7 @@ export default function PY21910_U3_L2_NamingConvention() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Python Naming Convention</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้กฎการตั้งชื่อตัวแปรที่ถูกต้อง และทดสอบตั้งชื่อตัวแปรใน Validator Console
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function PY21910_U3_L2_NamingConvention() {
           
           {/* Left: Visual Explorer (Rules) */}
           <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">1. กฎการตั้งชื่อ (Naming Rules)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">1. กฎการตั้งชื่อ (Naming Rules)</h4>
             
             <div className="flex flex-col gap-3">
               {rules.map((r, idx) => {
@@ -129,7 +129,7 @@ export default function PY21910_U3_L2_NamingConvention() {
 
           {/* Right: Control / Gamification (Validator) */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">2. ทดสอบตั้งชื่อ (Validator)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">2. ทดสอบตั้งชื่อ (Validator)</h4>
             
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4">
               <p className="text-sm text-slate-600 mb-3 leading-relaxed">
@@ -166,12 +166,12 @@ export default function PY21910_U3_L2_NamingConvention() {
           {/* Console Header */}
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">name_validator.py</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">name_validator.py</span>
             </div>
             <button 
               onClick={clearConsole}
-              className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 text-xs"
+              className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-xs"
             >
               <RotateCcw size={14} /> Clear
             </button>
@@ -182,12 +182,12 @@ export default function PY21910_U3_L2_NamingConvention() {
             {consoleHistory.map((line, idx) => (
               <div key={idx} className="leading-relaxed">
                 {line.type === 'command' && (
-                  <div className="text-slate-300">
+                  <div className="text-slate-600">
                     <span className="text-green-400 mr-2">{">>>"}</span>{line.text}
                   </div>
                 )}
                 {line.type === 'system' && (
-                  <div className="text-slate-500 mt-2 mb-1">{line.text}</div>
+                  <div className="text-slate-700 mt-2 mb-1">{line.text}</div>
                 )}
                 {line.type === 'success' && (
                   <div className="text-emerald-400">{line.text}</div>

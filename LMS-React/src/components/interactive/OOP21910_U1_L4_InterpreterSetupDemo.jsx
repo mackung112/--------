@@ -57,7 +57,7 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การตั้งค่า Python Interpreter</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีบอก VS Code ว่าเราต้องการใช้ Python เวอร์ชันไหนในการรันโค้ด ผ่านเมนู Command Palette
         </p>
       </div>
@@ -70,7 +70,7 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
             <div className="w-full max-w-lg bg-[#1e1e1e] rounded-xl overflow-hidden shadow-2xl border border-slate-700 flex flex-col h-[350px] relative">
               <div className="bg-[#2d2d2d] px-3 py-1.5 flex items-center gap-2 border-b border-black">
                 <div className="flex gap-1.5"><div className="w-3 h-3 rounded-full bg-rose-500"/><div className="w-3 h-3 rounded-full bg-amber-500"/><div className="w-3 h-3 rounded-full bg-emerald-500"/></div>
-                <span className="text-slate-400 text-xs font-mono ml-2 flex-1 text-center">VS Code</span>
+                <span className="text-slate-600 text-xs font-mono ml-2 flex-1 text-center">VS Code</span>
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center p-6 relative">
@@ -78,12 +78,12 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
                 {step === 0 && (
                   <div className="text-center space-y-6">
                     <div className="bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-600">
-                      <div className="text-slate-400 text-xs mb-3 font-mono">1. กดปุ่มลัดเพื่อเปิด Command Palette</div>
+                      <div className="text-slate-600 text-xs mb-3 font-mono">1. กดปุ่มลัดเพื่อเปิด Command Palette</div>
                       <div className="flex items-center justify-center gap-2">
                         {['Ctrl', 'Shift', 'P'].map((key, i) => (
                           <React.Fragment key={key}>
                             <div className="bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg font-mono font-bold shadow text-sm border border-slate-600">{key}</div>
-                            {i < 2 && <span className="text-slate-500 text-sm">+</span>}
+                            {i < 2 && <span className="text-slate-700 text-sm">+</span>}
                           </React.Fragment>
                         ))}
                       </div>
@@ -120,7 +120,7 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
                                 <span className="truncate">{interp.label}</span>
                                 {interp.recommended && <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/30">Recommended</span>}
                               </div>
-                              <div className="text-slate-500 text-[10px] font-mono mt-1 truncate">{interp.path}</div>
+                              <div className="text-slate-700 text-[10px] font-mono mt-1 truncate">{interp.path}</div>
                             </div>
                           </button>
                         ))}
@@ -135,10 +135,10 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
                       <CheckCircle2 size={32} className="text-emerald-400" />
                     </div>
                     <h4 className="text-lg font-bold text-emerald-400">Setup Complete!</h4>
-                    <p className="text-slate-400 text-sm max-w-xs mx-auto">
+                    <p className="text-slate-600 text-sm max-w-xs mx-auto">
                       VS Code จะใช้ <span className="text-yellow-400">{interpreters.find(i => i.id === selectedInterpreter)?.label}</span> ในการรันไฟล์ Python
                     </p>
-                    <div className="mt-4 p-2 bg-[#2d2d2d] rounded-lg border border-slate-600 inline-flex items-center gap-2 text-xs text-slate-300 font-mono">
+                    <div className="mt-4 p-2 bg-[#2d2d2d] rounded-lg border border-slate-600 inline-flex items-center gap-2 text-xs text-slate-600 font-mono">
                       <span>🐍 3.12.4</span>
                       <span className="text-slate-600">|</span>
                       <span>UTF-8</span>
@@ -153,7 +153,7 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[320px] bg-slate-50 p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">คำอธิบาย</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">คำอธิบาย</h4>
             
             <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-4 flex-1">
               <div className="space-y-4">
@@ -192,19 +192,19 @@ export default function OOP21910_U1_L4_InterpreterSetupDemo() {
         <div className="h-40 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs transition-colors">
               <RotateCcw size={14} /> Clear Log
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">⚙️</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">⚙️</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap ml-6">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

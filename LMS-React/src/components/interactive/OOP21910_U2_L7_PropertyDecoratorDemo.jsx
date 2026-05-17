@@ -71,7 +71,7 @@ export default function OOP21910_U2_L7_PropertyDecoratorDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Property Decorators (@property, @setter)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้การใช้ <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">@property</code> เพื่อสร้าง Getter และ Setter ทำให้ตัวแปร Private สามารถถูกอ่านหรือเขียนได้ง่ายเหมือนตัวแปรปกติ แต่ยังคงกรองข้อมูลได้
         </p>
       </div>
@@ -85,9 +85,9 @@ export default function OOP21910_U2_L7_PropertyDecoratorDemo() {
               
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
                 <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
-                  <Keyboard size={16} className="text-slate-400" /> จำลองการ Assign Value
+                  <Keyboard size={16} className="text-slate-600" /> จำลองการ Assign Value
                 </h4>
-                <p className="text-xs text-slate-500 mb-4">ลองใส่คะแนนที่ <u>ผิดปกติ</u> (เช่น -50 หรือ 999) แล้วดูว่าระบบ Setter ป้องกันอย่างไร</p>
+                <p className="text-xs text-slate-700 mb-4">ลองใส่คะแนนที่ <u>ผิดปกติ</u> (เช่น -50 หรือ 999) แล้วดูว่าระบบ Setter ป้องกันอย่างไร</p>
                 
                 <div className="flex items-center gap-2 mb-4">
                   <code className="bg-slate-100 border border-slate-200 px-3 py-2.5 rounded-lg text-slate-800 font-mono flex-1 text-sm">
@@ -144,9 +144,9 @@ export default function OOP21910_U2_L7_PropertyDecoratorDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[380px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
               <span className="text-yellow-300 bg-slate-800 px-1 rounded">@property</span><br />
               <span className="text-pink-400">def</span> <span className="text-sky-300">score</span>(<span className="text-orange-300">self</span>):<br />
               &nbsp;&nbsp;<span className="text-pink-400">return</span> <span className="text-orange-300">self</span>.__score<br />
@@ -191,16 +191,16 @@ export default function OOP21910_U2_L7_PropertyDecoratorDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

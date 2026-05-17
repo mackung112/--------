@@ -62,7 +62,7 @@ export default function PY21910_U5_L2_TupleDictExplorer() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Tuple & Dictionary</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้โครงสร้างข้อมูลแบบ Tuple (ไม่สามารถแก้ไขได้) และ Dictionary (คู่ Key-Value)
         </p>
       </div>
@@ -93,7 +93,7 @@ export default function PY21910_U5_L2_TupleDictExplorer() {
                   <div className="text-pink-400 mb-3"># สร้าง Tuple (ใช้วงเล็บ)</div>
                   <div className="text-green-400 mb-2">colors = ("red", "green", "blue")</div>
                   
-                  <div className="text-slate-500 mt-4 mb-1"># การเข้าถึงข้อมูล</div>
+                  <div className="text-slate-700 mt-4 mb-1"># การเข้าถึงข้อมูล</div>
                   <div className="flex justify-between items-center bg-slate-800/50 rounded px-2 py-1 mb-1">
                     <span className="text-cyan-300">colors[0]</span>
                     <span className="text-emerald-300">"red"</span>
@@ -123,11 +123,11 @@ export default function PY21910_U5_L2_TupleDictExplorer() {
                 <div className="bg-slate-900 rounded-xl p-5 font-mono text-sm leading-relaxed">
                   <div className="text-pink-400 mb-3"># สร้าง Dictionary (ใช้วงเล็บปีกกา)</div>
                   <div className="text-green-400">student = {'{'}</div>
-                  <div className="ml-4 text-emerald-300">"name"<span className="text-slate-400">: </span><span className="text-green-400">"สมชาย"</span>,</div>
-                  <div className="ml-4 text-emerald-300">"age"<span className="text-slate-400">: </span><span className="text-purple-300">18</span></div>
+                  <div className="ml-4 text-emerald-300">"name"<span className="text-slate-600">: </span><span className="text-green-400">"สมชาย"</span>,</div>
+                  <div className="ml-4 text-emerald-300">"age"<span className="text-slate-600">: </span><span className="text-purple-300">18</span></div>
                   <div className="text-green-400 mb-2">{'}'}</div>
 
-                  <div className="text-slate-500 mt-4 mb-1"># การเข้าถึงข้อมูล (ใช้ Key)</div>
+                  <div className="text-slate-700 mt-4 mb-1"># การเข้าถึงข้อมูล (ใช้ Key)</div>
                   <div className="flex justify-between items-center bg-slate-800/50 rounded px-2 py-1 mb-1">
                     <span className="text-cyan-300">student["name"]</span>
                     <span className="text-emerald-300">"สมชาย"</span>
@@ -157,7 +157,7 @@ export default function PY21910_U5_L2_TupleDictExplorer() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">สรุปความแตกต่าง</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">สรุปความแตกต่าง</h4>
             {tab === 'tuple' ? (
               <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1">
                 <ul className="space-y-3 text-sm text-slate-600">
@@ -190,19 +190,19 @@ export default function PY21910_U5_L2_TupleDictExplorer() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">python -i</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">python -i</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs">
               <RotateCcw size={14} /> Clear
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">{">>>"}</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700">{line.text}</div>}
                 {line.type === 'error'   && <div className="text-rose-400 font-bold">{line.text}</div>}
               </div>
             ))}

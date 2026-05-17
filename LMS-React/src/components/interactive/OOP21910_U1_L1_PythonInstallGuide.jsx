@@ -55,7 +55,7 @@ export default function OOP21910_U1_L1_PythonInstallGuide() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การติดตั้ง Python</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีดาวน์โหลดและติดตั้งตัวแปรภาษา (Interpreter) ของ Python พร้อมการตั้งค่าสำคัญอย่าง PATH
         </p>
       </div>
@@ -157,13 +157,13 @@ export default function OOP21910_U1_L1_PythonInstallGuide() {
               <div className="w-full max-w-md">
                 <div className="bg-slate-900 rounded-xl overflow-hidden shadow-xl border border-slate-700">
                   <div className="bg-[#2d2d2d] px-4 py-2 border-b border-black flex items-center gap-2">
-                    <Monitor size={14} className="text-slate-400" />
-                    <span className="text-slate-300 text-xs font-mono">Command Prompt</span>
+                    <Monitor size={14} className="text-slate-600" />
+                    <span className="text-slate-600 text-xs font-mono">Command Prompt</span>
                   </div>
                   <div className="p-4 font-mono text-sm leading-loose">
-                    <div className="text-slate-400">C:\Users\Student&gt; <span className="text-white">python --version</span></div>
+                    <div className="text-slate-600">C:\Users\Student&gt; <span className="text-white">python --version</span></div>
                     <div className="text-emerald-400 mb-2">Python 3.12.4</div>
-                    <div className="text-slate-400">C:\Users\Student&gt; <span className="text-white">pip --version</span></div>
+                    <div className="text-slate-600">C:\Users\Student&gt; <span className="text-white">pip --version</span></div>
                     <div className="text-emerald-400">pip 24.0 from ...</div>
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export default function OOP21910_U1_L1_PythonInstallGuide() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[320px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ข้อมูลเพิ่มเติม</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ข้อมูลเพิ่มเติม</h4>
             
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm mb-4 flex-1 overflow-y-auto custom-scrollbar">
               {activeStep === 0 && (
@@ -230,19 +230,19 @@ export default function OOP21910_U1_L1_PythonInstallGuide() {
         <div className="h-[200px] bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">bash</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">bash</span>
             </div>
-            <button onClick={clear} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
+            <button onClick={clear} className="text-slate-600 hover:text-white flex items-center gap-1 text-xs transition-colors">
               <RotateCcw size={14} /> Clear Log
             </button>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-green-400 mr-2">$</span>{line.text}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-green-400 mr-2">$</span>{line.text}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

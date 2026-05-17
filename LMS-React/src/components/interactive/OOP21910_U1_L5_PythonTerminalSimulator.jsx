@@ -84,7 +84,7 @@ export default function OOP21910_U1_L5_PythonTerminalSimulator() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">Python Terminal & Interactive Mode</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           จำลองการใช้งาน Terminal (Command Line) พิมพ์คำสั่งเพื่อรัน Python หรือจัดการไลบรารีด้วย pip
         </p>
       </div>
@@ -102,7 +102,7 @@ export default function OOP21910_U1_L5_PythonTerminalSimulator() {
               {presetCommands.map((cmd, idx) => (
                 <button key={idx} onClick={() => { setInput(cmd); }}
                   className="w-full text-left p-3 rounded-lg border border-slate-200 bg-white hover:border-emerald-400 hover:shadow-md transition-all group flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-500 shrink-0 mt-0.5" />
+                  <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-emerald-500 shrink-0 mt-0.5" />
                   <code className="text-xs text-slate-700">{cmd}</code>
                 </button>
               ))}
@@ -123,7 +123,7 @@ export default function OOP21910_U1_L5_PythonTerminalSimulator() {
 
           {/* Right: Info */}
           <div className="flex-1 bg-white p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">สถานะการทำงาน (Mode)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">สถานะการทำงาน (Mode)</h4>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
               {/* OS Terminal Mode */}

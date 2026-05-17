@@ -65,7 +65,7 @@ export default function OOP21910_U4_L5_TypeCastingDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การแปลงชนิดข้อมูล (Type Casting)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           ทดลองป้อนค่าต่างๆ แล้วดูผลลัพธ์เมื่อใช้ฟังก์ชันแปลงข้อมูล เช่น <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">int()</code>, <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">float()</code>, <code className="bg-slate-200 px-1 rounded text-pink-600 font-mono">str()</code>
         </p>
       </div>
@@ -77,15 +77,15 @@ export default function OOP21910_U4_L5_TypeCastingDemo() {
             <div className="flex flex-col items-center justify-center h-full bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
               
               <div className="text-center w-full max-w-xs mb-8">
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ค่าเริ่มต้น (ชนิด String)</label>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">ค่าเริ่มต้น (ชนิด String)</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span className="text-slate-400 font-mono text-xl">"</span>
+                    <span className="text-slate-600 font-mono text-xl">"</span>
                   </div>
                   <input type="text" value={inputVal} onChange={e => setInputVal(e.target.value)} onKeyDown={e => e.key === 'Enter' && testCasting()}
                     className="text-center text-2xl font-mono border-2 border-violet-300 rounded-xl px-8 py-4 w-full outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all shadow-inner bg-slate-50" placeholder="ป้อนข้อความ..." />
                   <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                    <span className="text-slate-400 font-mono text-xl">"</span>
+                    <span className="text-slate-600 font-mono text-xl">"</span>
                   </div>
                 </div>
                 
@@ -111,7 +111,7 @@ export default function OOP21910_U4_L5_TypeCastingDemo() {
 
           {/* Right: Results Dashboard */}
           <div className="w-full lg:w-[450px] bg-slate-100 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 text-center">ผลลัพธ์การแปลงค่า</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 text-center">ผลลัพธ์การแปลงค่า</h4>
             
             <div className="grid grid-cols-1 gap-3 flex-1">
               {results.map(r => (
@@ -142,16 +142,16 @@ export default function OOP21910_U4_L5_TypeCastingDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Casting Output</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Casting Output</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'error'  && <div className="text-red-400 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-400 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-600 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>

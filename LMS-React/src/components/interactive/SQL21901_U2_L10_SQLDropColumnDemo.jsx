@@ -173,10 +173,10 @@ DROP TABLE table_name;`) }} />
 
             {/* Live SQL Preview */}
             <div className="bg-[#1e1e1e] rounded-xl p-4 shadow-xl border border-slate-800">
-              <div className="text-xs font-mono text-slate-400 mb-2 border-b border-slate-700 pb-1">SQL Preview:</div>
+              <div className="text-xs font-mono text-slate-600 mb-2 border-b border-slate-700 pb-1">SQL Preview:</div>
               <div className="text-sm font-mono break-words min-h-[40px] leading-relaxed">
                 {removableCols.length === 0 ? (
-                  <span className="text-slate-500 italic">-- No columns available to drop --</span>
+                  <span className="text-slate-700 italic">-- No columns available to drop --</span>
                 ) : (
                   <div dangerouslySetInnerHTML={{ __html: SQLSyntaxEngine.highlight(getSqlPreview()).replace(/DROP COLUMN/g, '<span class="text-rose-400 font-bold">DROP COLUMN</span>') }} />
                 )}

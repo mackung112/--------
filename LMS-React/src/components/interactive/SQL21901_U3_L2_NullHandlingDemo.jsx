@@ -166,7 +166,7 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">การจัดการค่า NULL (NULL Handling)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้ความแตกต่างระหว่าง 0, ค่าว่าง และ NULL และการใช้คำสั่ง IS NULL ในการกรองข้อมูล
         </p>
       </div>
@@ -178,21 +178,21 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
             <div className="w-10 h-10 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center font-bold text-lg shrink-0">0</div>
             <div>
               <h4 className="font-bold text-sm text-slate-800 mb-1">เลขศูนย์ (Zero)</h4>
-              <p className="text-xs text-slate-500">มีข้อมูลเป็นตัวเลขศูนย์ (เช่น ได้โบนัส 0 บาท ถือเป็นค่าหนึ่งค่า)</p>
+              <p className="text-xs text-slate-700">มีข้อมูลเป็นตัวเลขศูนย์ (เช่น ได้โบนัส 0 บาท ถือเป็นค่าหนึ่งค่า)</p>
             </div>
           </div>
           <div className="p-5 flex gap-4 items-start hover:bg-slate-50 transition-colors">
             <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center font-bold text-lg shrink-0">''</div>
             <div>
               <h4 className="font-bold text-sm text-slate-800 mb-1">ช่องว่าง (Empty String)</h4>
-              <p className="text-xs text-slate-500">มีข้อมูลเป็นข้อความแต่ไม่มีตัวอักษร</p>
+              <p className="text-xs text-slate-700">มีข้อมูลเป็นข้อความแต่ไม่มีตัวอักษร</p>
             </div>
           </div>
           <div className="p-5 flex gap-4 items-start bg-indigo-50/50">
             <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center font-bold text-sm shrink-0">NULL</div>
             <div>
               <h4 className="font-bold text-sm text-slate-800 mb-1">NULL</h4>
-              <p className="text-xs text-slate-500">ช่องโหว่ ยังไม่มีการกรอกข้อมูลใดๆ ลงไปเลย ไม่ทราบค่า</p>
+              <p className="text-xs text-slate-700">ช่องโหว่ ยังไม่มีการกรอกข้อมูลใดๆ ลงไปเลย ไม่ทราบค่า</p>
             </div>
           </div>
         </div>
@@ -202,10 +202,10 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
           
           {/* Left Panel: Simulator Form */}
           <div className="w-full lg:w-[40%] p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4 flex items-center gap-2">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4 flex items-center gap-2">
               <MousePointerClick size={16} className="text-teal-500" /> Query Simulator
             </h4>
-            <p className="text-xs text-slate-500 mb-6">ทดลองดึงข้อมูลจากตาราง <code>employees</code> โดยใช้เงื่อนไขต่างๆ สังเกตความแตกต่างเมื่อใช้ <code>=</code> กับ <code>IS</code></p>
+            <p className="text-xs text-slate-700 mb-6">ทดลองดึงข้อมูลจากตาราง <code>employees</code> โดยใช้เงื่อนไขต่างๆ สังเกตความแตกต่างเมื่อใช้ <code>=</code> กับ <code>IS</code></p>
 
             <div className="space-y-2 mb-6">
               {[
@@ -243,10 +243,10 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
             {/* Table Area */}
             <div className="p-6 bg-white border-b border-slate-200">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                   <Table2 size={16} className="text-indigo-500" /> employees Table
                 </h4>
-                <span className="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-500">
+                <span className="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-700">
                   Rows: {hasExecuted ? tableData.length : initialData.length}
                 </span>
               </div>
@@ -289,10 +289,10 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
             {/* Minigame Area */}
             <div className="p-6 flex-1 flex flex-col bg-slate-50">
                <div className="flex justify-between items-center mb-4">
-                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                 <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2">
                    <HelpCircle size={16} className="text-amber-500" /> Syntax Builder
                  </h4>
-                 <button onClick={resetGame} className="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
+                 <button onClick={resetGame} className="text-xs text-slate-700 hover:text-slate-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
                     <RefreshCcw size={12} /> เริ่มใหม่
                   </button>
                </div>
@@ -316,7 +316,7 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
                       {block ? block.text : `ส่วน ${idx + 1}`}
                     </button>
                   ))}
-                  <span className="text-slate-500 font-mono text-lg font-bold">;</span>
+                  <span className="text-slate-700 font-mono text-lg font-bold">;</span>
                </div>
 
                {/* Blocks */}
@@ -352,9 +352,9 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800 shadow-inner">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <TerminalSquare size={14} className="text-slate-400" />
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Condition Evaluator</span>
+              <TerminalSquare size={14} className="text-slate-600" />
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Condition Evaluator</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
@@ -362,7 +362,7 @@ export default function SQL21901_U3_L2_NullHandlingDemo() {
               <div key={i} className="leading-relaxed flex gap-2">
                 {line.type === 'command' && <><span className="text-teal-400 font-bold shrink-0"></span> <div className="text-teal-300 font-bold">{line.text}</div></>}
                 {line.type === 'output'  && <><span className="text-cyan-400 font-bold shrink-0"></span> <div className="text-cyan-300">{line.text}</div></>}
-                {line.type === 'system'  && <><span className="text-slate-500 font-bold shrink-0"></span> <div className="text-slate-400">{line.text}</div></>}
+                {line.type === 'system'  && <><span className="text-slate-700 font-bold shrink-0"></span> <div className="text-slate-600">{line.text}</div></>}
                 {line.type === 'error'   && <><span className="text-rose-500 font-bold shrink-0"></span> <div className="text-rose-400 font-bold">{line.text}</div></>}
                 {line.type === 'success' && <><span className="text-emerald-500 font-bold shrink-0"></span> <div className="text-emerald-400 font-bold">{line.text}</div></>}
               </div>

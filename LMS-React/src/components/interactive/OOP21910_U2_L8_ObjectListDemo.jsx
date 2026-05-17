@@ -74,7 +74,7 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
           </div>
           <h3 className="font-display text-xl font-semibold text-slate-900">List of Objects (การเก็บออบเจ็กต์ลงใน List)</h3>
         </div>
-        <p className="font-base text-sm leading-relaxed text-slate-500">
+        <p className="font-base text-sm leading-relaxed text-slate-700">
           เรียนรู้วิธีการเก็บ Object หลายๆ ตัวไว้ใน List เดียวกัน (เช่น ตะกร้าสินค้า) และการใช้ Loop เพื่อเข้าถึง Object แต่ละตัว
         </p>
       </div>
@@ -88,13 +88,13 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
               {/* Form */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
                 <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm">
-                  <PackageOpen size={18} className="text-slate-400" /> สร้าง Product Object
+                  <PackageOpen size={18} className="text-slate-600" /> สร้าง Product Object
                 </h4>
                 
                 <div className="space-y-4 mb-4">
                   <div className="flex gap-4">
                     <div className="flex-1">
-                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Name</label>
+                      <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Name</label>
                       <input 
                         type="text" 
                         value={prodName}
@@ -104,7 +104,7 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
                       />
                     </div>
                     <div className="w-24">
-                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Price</label>
+                      <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Price</label>
                       <input 
                         type="number" 
                         value={prodPrice}
@@ -125,8 +125,8 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
               {/* Memory Visualizer */}
               <div className="flex-1 bg-slate-800 rounded-2xl p-5 shadow-inner border border-slate-700 flex flex-col min-h-[220px]">
                 <div className="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
-                  <h4 className="font-mono font-bold text-slate-300 text-sm flex items-center gap-2">
-                    <span className="text-indigo-400">cart</span> = [ <span className="text-white">{cartArray.length} items</span> ]
+                  <h4 className="font-mono font-bold text-slate-600 text-sm flex items-center gap-2">
+                    <span className="text-indigo-600">cart</span> = [ <span className="text-white">{cartArray.length} items</span> ]
                   </h4>
                   <button onClick={handleLoopPrint} className="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg shadow transition-colors active:scale-95">
                     Run for-loop
@@ -135,7 +135,7 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
 
                 <div className="flex-1 flex gap-3 overflow-x-auto pb-2 custom-scrollbar items-center px-1">
                   {cartArray.length === 0 ? (
-                    <div className="w-full text-center text-slate-500 text-xs italic">
+                    <div className="w-full text-center text-slate-700 text-xs italic">
                       List ว่างเปล่า ลองเพิ่มสินค้าดูสิ
                     </div>
                   ) : (
@@ -160,17 +160,17 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
 
           {/* Right: Info */}
           <div className="w-full lg:w-[360px] bg-white p-6 flex flex-col border-l border-slate-200">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-500 mb-4">ไวยากรณ์ (Syntax)</h4>
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">ไวยากรณ์ (Syntax)</h4>
             
-            <div className="bg-[#1e1e1e] text-slate-300 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
-              <span className="text-slate-500"># 1. เตรียม List ว่าง</span><br />
-              <span className="text-indigo-400">cart</span> = []<br />
+            <div className="bg-[#1e1e1e] text-slate-600 rounded-xl p-4 shadow-inner border border-slate-700 mb-6 font-mono text-[11px] leading-loose">
+              <span className="text-slate-700"># 1. เตรียม List ว่าง</span><br />
+              <span className="text-indigo-600">cart</span> = []<br />
               <br />
-              <span className="text-slate-500"># 2. นำ Object ไปต่อท้าย List ทันที</span><br />
-              <span className="text-indigo-400">cart</span>.append(<span className="text-yellow-300">Product</span>(<span className="text-sky-300">"Water"</span>, <span className="text-purple-300">10</span>))<br />
+              <span className="text-slate-700"># 2. นำ Object ไปต่อท้าย List ทันที</span><br />
+              <span className="text-indigo-600">cart</span>.append(<span className="text-yellow-300">Product</span>(<span className="text-sky-300">"Water"</span>, <span className="text-purple-300">10</span>))<br />
               <br />
-              <span className="text-slate-500"># 3. วนลูปเพื่อใช้งาน Object</span><br />
-              <span className="text-pink-400">for</span> <span className="text-sky-300">item</span> <span className="text-pink-400">in</span> <span className="text-indigo-400">cart</span>:<br />
+              <span className="text-slate-700"># 3. วนลูปเพื่อใช้งาน Object</span><br />
+              <span className="text-pink-400">for</span> <span className="text-sky-300">item</span> <span className="text-pink-400">in</span> <span className="text-indigo-600">cart</span>:<br />
               &nbsp;&nbsp;<span className="text-yellow-300">print</span>(<span className="text-sky-300">item</span>.name, <span className="text-sky-300">item</span>.price)
             </div>
 
@@ -202,16 +202,16 @@ export default function OOP21910_U2_L8_ObjectListDemo() {
         <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full border-t border-slate-800">
           <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
-              <span className="text-slate-300 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-500 text-xs">Event Log</span>
+              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+              <span className="text-slate-700 text-xs">Event Log</span>
             </div>
           </div>
           <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
             {consoleHistory.map((line, i) => (
               <div key={i} className="leading-relaxed">
-                {line.type === 'command' && <div className="text-slate-300"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
+                {line.type === 'command' && <div className="text-slate-600"><span className="text-emerald-400 mr-2">&gt;&gt;&gt;</span>{line.text.substring(2)}</div>}
                 {line.type === 'output'  && <div className="text-cyan-300 whitespace-pre-wrap">{line.text}</div>}
-                {line.type === 'system'  && <div className="text-slate-500 whitespace-pre-wrap">{line.text}</div>}
+                {line.type === 'system'  && <div className="text-slate-700 whitespace-pre-wrap">{line.text}</div>}
               </div>
             ))}
           </div>
