@@ -1,6 +1,6 @@
 # 🎯 Active Task (หน่วยความจำระยะสั้น & สถานะงาน)
 
-> ⚠️ **สำหรับ AI (CRITICAL RULE)**: ไฟล์นี้คือ "จุดศูนย์กลางการทำงาน (Single Source of Truth)" ของคุณ **คุณต้องยึดเป้าหมายในนี้เป็นหลัก อัปเดตเช็คลิสต์ `[ ]` เป็น `[x]` ตลอดเวลาที่ทำงานลงในไฟล์ `d:\STD\---------1\task.md` นี้เท่านั้น!** (ห้ามเขียนแยกไปที่ไฟล์อื่น เพื่อป้องกันปัญหาสถานะงานหายกรณีเซสชันหลุด/เครดิตหมด) และหากคุณกำลังจะหยุดทำงาน ให้สรุปงานส่งมอบที่ "ข้อ 3" เสมอ!
+> ⚠️ **สำหรับ AI (CRITICAL RULE)**: ไฟล์นี้คือ "จุดศูนย์กลางการทำงาน (Single Source of Truth)" ของคุณ **คุณต้องยึดเป้าหมายในนี้เป็นหลัก อัปเดตเช็คลิสต์ `[ ]` เป็น `[x]` ตลอดเวลาที่ทำงานลงในไฟล์ `d:\Teach\task.md` นี้เท่านั้น!** (ห้ามเขียนแยกไปที่ไฟล์อื่น เพื่อป้องกันปัญหาสถานะงานหายกรณีเซสชันหลุด/เครดิตหมด) และหากคุณกำลังจะหยุดทำงาน ให้สรุปงานส่งมอบที่ "ข้อ 3" เสมอ!
 
 ## 📌 1. เป้าหมายระยะสั้น (Current Objective)
 - [x] ปรับปรุงระบบเพิ่มเนื้อหา (Auto-Registry) ให้ง่ายขึ้น ไม่ต้องยุ่งกับ `LessonViewer.jsx` อีกต่อไป
@@ -8,7 +8,9 @@
 - [x] ลบวิชาที่ยังไม่มีบทเรียนออกจาก `data.js` (10 วิชา → เหลือ 3 วิชา)
 - [x] **อัปเดต SKILL.md**: บังคับใช้ Single Source of Task (task.md ในโปรเจกต์) เพื่อความต่อเนื่อง
 - [x] **เป้าหมายใหม่**: อัปเกรด/Refactor สื่อ Interactive ทั้งหมดให้ตรงตามมาตรฐาน `DESIGN.md` และ `SKILL.md` (Explorer Pattern)
-- [ ] ดำเนินการ **Phase 3: SQL (SQL21901)** ให้เป็นรูปแบบ Explorer Pattern
+- [ ] ดำเนินการ **Phase 3: SQL (SQL21901)** ให้เป็นรูปแบบ Explorer Pattern ครบทุกหน่วย
+
+**ความคืบหน้า Phase 3 (โดยประมาณ)**: Unit 1–2 ✅ | Unit 3 60% (L7–L10 ค้าง) | Unit 4 ⏳ | Unit 5 ✅ | Unit 6 ⏳
 
 ## 🔄 2. แผนการทำงาน (Execution Steps)
 *(⚠️ AI: ให้คุณวิเคราะห์งานที่ได้รับ และซอยย่อยลงมาเป็นเฟส แล้วจัดการไล่ทำไปเรื่อยๆ อย่างต่อเนื่อง ห้ามหยุดทำกลางคัน)*
@@ -53,55 +55,61 @@
   - [x] SQL21901_U3_L3_InsertMultiDemo.jsx
   - [x] SQL21901_U3_L4_InsertSubqueryDemo.jsx
   - [x] SQL21901_U3_L5_PreUpdateCheckDemo.jsx
-  - [x] SQL21901_U3_L6_UpdateSetDemo.jsx
-  - `[ ]` SQL21901_U3_L7_UpdateWhereDemo.jsx
-  - `[ ]` SQL21901_U3_L8_PreDeleteCheckDemo.jsx
-  - `[ ]` SQL21901_U3_L9_DeleteWhereDemo.jsx
-  - `[ ]` SQL21901_U3_L10_TransactionDemo.jsx
-- `[ ]` **Batch 11: SQL Unit 4 (DQL - Select, Join, Aggregate)**
-  - `[ ]` SQL21901_U4_L1_SQLSelectBasicDemo.jsx
-  - `[ ]` SQL21901_U4_L2_SQLDistinctDemo.jsx
-  - `[ ]` SQL21901_U4_L3_SQLOrderByDemo.jsx
-  - `[ ]` SQL21901_U4_L4_SQLComparisonDemo.jsx
-  - `[ ]` SQL21901_U4_L5_SQLLogicalDemo.jsx
-  - `[ ]` SQL21901_U4_L6_SQLLikeDemo.jsx
-  - `[ ]` SQL21901_U4_L7_SQLInnerJoinDemo.jsx
-  - `[ ]` SQL21901_U4_L8_SQLOuterJoinDemo.jsx
-  - `[ ]` SQL21901_U4_L9_SQLGroupByDemo.jsx
-  - `[ ]` SQL21901_U4_L10_SQLHavingDemo.jsx
-  - `[ ]` SQL21901_U4_L11_SQLUnionDemo.jsx
-  - `[ ]` SQL21901_U4_L12_SQLReportDesignDemo.jsx
-- `[ ]` **Batch 12: SQL Unit 5 (DCL - Security & Control)**
-  - `[ ]` SQL21901_U5_L1_SQLSecurityImportance.jsx
-  - `[ ]` SQL21901_U5_L2_SQLControlProcess.jsx
-  - `[ ]` SQL21901_U5_L3_SQLFirewallDemo.jsx
-  - `[ ]` SQL21901_U5_L4_SQLIAMDemo.jsx
-  - `[ ]` SQL21901_U5_L5_SQLAccessControlDemo.jsx
-  - `[ ]` SQL21901_U5_L6_SQLGrantDemo.jsx
-  - `[ ]` SQL21901_U5_L7_SQLRevokeDemo.jsx
-  - `[ ]` SQL21901_U5_L8_SQLAuditDemo.jsx
-  - `[ ]` SQL21901_U5_L9_SQLInjectionDemo.jsx
-  - `[ ]` SQL21901_U5_L10_SQLIntegrityDemo.jsx
-- `[ ]` **Batch 13: SQL Unit 6 (Advanced Functions & Dashboards)**
-  - `[ ]` SQL21901_U6_L1_SQLFunctionIntro.jsx
-  - `[ ]` SQL21901_U6_L2_SQLFunctionTypes.jsx
-  - `[ ]` SQL21901_U6_L3_SQLSumDemo.jsx
-  - `[ ]` SQL21901_U6_L4_SQLAvgDemo.jsx
-  - `[ ]` SQL21901_U6_L5_SQLCountDemo.jsx
-  - `[ ]` SQL21901_U6_L6_SQLCaseDemo.jsx
-  - `[ ]` SQL21901_U6_L7_SQLConcatDemo.jsx
-  - `[ ]` SQL21901_U6_L8_SQLDateTimeDemo.jsx
-  - `[ ]` SQL21901_U6_L9_SQLCaseIfDemo.jsx
-  - `[ ]` SQL21901_U6_L10_SQLTrendAnalysis.jsx
-  - `[ ]` SQL21901_U6_L11_SQLReportBuilder.jsx
-  - `[ ]` SQL21901_U6_L12_SQLDashboardDemo.jsx
+  - [x] SQL21901_U3_L6_UpdateSetDemo.jsx *(reference Explorer)*
+  - [ ] SQL21901_U3_L7_UpdateWhereDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
+  - [ ] SQL21901_U3_L8_PreDeleteCheckDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
+  - [ ] SQL21901_U3_L9_DeleteWhereDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
+  - [ ] SQL21901_U3_L10_TransactionDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
+- [ ] **Batch 11: SQL Unit 4 (DQL - Select, Join, Aggregate)** — 0/12 Explorer
+  - [ ] SQL21901_U4_L1_SQLSelectBasicDemo.jsx — layout เก่า (ไม่ใช่ Explorer shell)
+  - [ ] SQL21901_U4_L2_SQLDistinctDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U4_L3_SQLOrderByDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U4_L4_SQLComparisonDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U4_L5_SQLLogicalDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U4_L6_SQLLikeDemo.jsx
+  - [ ] SQL21901_U4_L7_SQLInnerJoinDemo.jsx — layout เก่า
+  - [ ] SQL21901_U4_L8_SQLOuterJoinDemo.jsx
+  - [ ] SQL21901_U4_L9_SQLGroupByDemo.jsx
+  - [ ] SQL21901_U4_L10_SQLHavingDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U4_L11_SQLUnionDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U4_L12_SQLReportDesignDemo.jsx — SQLSyntaxEngine
+- [x] **Batch 12: SQL Unit 5 (DCL - Security & Control)** — 10/10 ✅
+  - [x] SQL21901_U5_L1_SQLSecurityImportance.jsx
+  - [x] SQL21901_U5_L2_SQLControlProcess.jsx
+  - [x] SQL21901_U5_L3_SQLFirewallDemo.jsx
+  - [x] SQL21901_U5_L4_SQLIAMDemo.jsx
+  - [x] SQL21901_U5_L5_SQLAccessControlDemo.jsx
+  - [x] SQL21901_U5_L6_SQLGrantDemo.jsx
+  - [x] SQL21901_U5_L7_SQLRevokeDemo.jsx
+  - [x] SQL21901_U5_L8_SQLAuditDemo.jsx
+  - [x] SQL21901_U5_L9_SQLInjectionDemo.jsx
+  - [x] SQL21901_U5_L10_SQLIntegrityDemo.jsx
+- [ ] **Batch 13: SQL Unit 6 (Advanced Functions & Dashboards)** — 0/12 Explorer
+  - [ ] SQL21901_U6_L1_SQLFunctionIntro.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L2_SQLFunctionTypes.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L3_SQLSumDemo.jsx
+  - [ ] SQL21901_U6_L4_SQLAvgDemo.jsx
+  - [ ] SQL21901_U6_L5_SQLCountDemo.jsx
+  - [ ] SQL21901_U6_L6_SQLCaseDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L7_SQLConcatDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L8_SQLDateTimeDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L9_SQLCaseIfDemo.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L10_SQLTrendAnalysis.jsx — SQLSyntaxEngine
+  - [ ] SQL21901_U6_L11_SQLReportBuilder.jsx
+  - [ ] SQL21901_U6_L12_SQLDashboardDemo.jsx — SQLSyntaxEngine
 
 ## 📝 3. โน้ตส่งมอบงาน (AI Handoff Notes)
 *(⚠️ AI: หากเซสชันถูกตัด, โควต้า Token ใกล้หมด, หรืองานติดขัดยังไม่เสร็จ ให้ทิ้งข้อความอธิบายปัญหาและแนวทางไว้ให้ AI ตัวต่อไปมาอ่านที่นี่)*
 
 **อัปเดตระบบ [2026-05-16]**:
-- ดำเนินการ **Phase 1: Python Basic** และ **Phase 2: OOP** เสร็จสมบูรณ์ 100%
-- ทำการรวมศูนย์ข้อมูล Task มาไว้ที่ `d:\STD\---------1\task.md` แล้ว
-- **Phase 3 (SQL)**: ดำเนินการ Batch 10 ถึง L6 (Explorer Pattern) เสร็จเรียบร้อย
-- **หมายเหตุ**: L7 และ L8 มีความพยายาม Refactor แล้วแต่ถูก Revert กลับเป็น Legacy Style (อาจเกิดจากปัญหาการบันทึกหรือความต้องการของผู้ใช้) AI ตัวต่อไปควรเริ่มตรวจสอบที่ L7 เป็นต้นไป
-- **เป้าหมายถัดไป**: ดำเนินการ Batch 10 (L7-L10) และ Batch 11 เป็นต้นไป
+- **Phase 1–2** เสร็จ 100%
+- **Phase 3**: Batch 8–9 และ U3 L1–L6 เป็น Explorer Pattern แล้ว
+
+**อัปเดตระบบ [2026-05-18]**:
+- **Batch 12 (Unit 5 DCL) เสร็จสมบูรณ์**: L1–L10 refactor เป็น Explorer Pattern (simulator + VS Code terminal + quiz) — ไม่ใช้ `SQLSyntaxEngine` แล้ว
+- **อ้างอิงโค้ด**: `SQL21901_U3_L6_UpdateSetDemo.jsx`, `SQL21901_U5_L3_SQLFirewallDemo.jsx`
+- **ลำดับงานแนะนำถัดไป**:
+  1. Batch 10 — refactor U3 L7–L10 (ยังมี `min-h-screen`)
+  2. Batch 11 — Unit 4 DQL ทั้งหมด
+  3. Batch 13 — Unit 6 Functions (ส่วนใหญ่ยังเป็น SQLSyntaxEngine)
+- **กฎ refactor**: ห้าม `min-h-screen` + card แยก | ต้องมี terminal `h-48 bg-[#1e1e1e]` | ต้องมี minigame/simulator | Tailwind hardcode เท่านั้น
