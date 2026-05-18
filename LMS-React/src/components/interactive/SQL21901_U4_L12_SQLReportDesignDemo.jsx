@@ -1,58 +1,115 @@
-import React from 'react';
-import SQLSyntaxEngine from './SQLSyntaxEngine';
-import { TerminalSquare } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { FileText, Play, CheckCircle2, RefreshCcw, HelpCircle, TerminalSquare, Settings2 } from 'lucide-react';
 
 export default function SQL21901_U4_L12_SQLReportDesignDemo() {
-  const codeParts = [
-  {
-    "text": "เข้าใจความต้องการ ",
-    "key": "req"
-  },
-  {
-    "text": "เขียน Query สรุป ",
-    "key": "query"
-  },
-  {
-    "text": "จัดรูปแบบด้วย SQL ",
-    "key": "format"
-  },
-  {
-    "text": "สร้างเป็น VIEW ",
-    "key": "view"
-  }
-];
-  const explanations = {
-  "req": {
-    "title": "เข้าใจความต้องการ",
-    "desc": "ใครเป็นคนดูรายงาน? เขาต้องการรู้อะไร?",
-    "color": "text-pink-500"
-  },
-  "query": {
-    "title": "เขียน Query สรุป",
-    "desc": "ใช้ JOIN, GROUP BY, Aggregate ให้ดึงเฉพาะผลสรุป (ไม่ดึง Data ดิบไปคำนวณข้างนอก)",
-    "color": "text-yellow-500"
-  },
-  "format": {
-    "title": "จัดรูปแบบด้วย SQL",
-    "desc": "ใช้ DATE_FORMAT, CONCAT, CAST เพื่อให้ผลลัพธ์พร้อมใช้งาน",
-    "color": "text-emerald-400"
-  },
-  "view": {
-    "title": "สร้างเป็น VIEW",
-    "desc": "ถ้า Query ยาวมาก ให้บันทึกเป็น VIEW เพื่อเรียกใช้ง่ายๆ เหมือนตารางปกติ",
-    "color": "text-sky-400"
-  }
-};
-  const quiz = { q: `หลักการที่ดีในการทำรายงานด้วยฐานข้อมูลคืออะไร?`, opts: [{"val":"db","label":"ให้ Database ช่วยคำนวณผลสรุปและจัดกลุ่มมาให้เสร็จสรรพผ่าน Query","correct":true},{"val":"raw","label":"SELECT * ดึงข้อมูลดิบทั้งหมด แล้วค่อยไปวนลูปคำนวณในโปรแกรม"},{"val":"view","label":"ไม่ต้องออกแบบ เขียน SQL แบบสุ่มๆ ไป"}] };
+  const [consoleHistory, setConsoleHistory] = useState([{ type: 'system', text: 'Report Design Studio ready.' }]);
+  const consoleRef = useRef(null);
+  useEffect(() => { if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight; }, [consoleHistory]);
+  const log = (t, type = 'output') => setConsoleHistory(p => [...p, { text: t, type }]);
 
+  const steps = [
+    { key: 'req', title: '1. เข้าใจความต้องการ', desc: 'ใครเป็นคนดูรายงาน? ต้องการรู้อะไร?', icon: '🎯', color: 'bg-pink-50 border-pink-200 text-pink-700',
+      sql: "-- ผู้จัดการต้องการดูยอดขายรายแผนก",
+      query: "-- Step 1: ระบุผู้ใช้และข้อมูลที่ต้องการ\n-- ผู้ใช้: ผู้จัดการ\n-- ข้อมูล: ยอดขายรวมแยกตามแผนก" },
+    { key: 'query', title: '2. เขียน Query สรุป', desc: 'ใช้ JOIN + GROUP BY + Aggregate', icon: '⚙️', color: 'bg-amber-50 border-amber-200 text-amber-700',
+      sql: "SELECT d.name AS dept,\n  COUNT(o.id) AS total_orders,\n  SUM(o.amount) AS revenue\nFROM departments d\nJOIN orders o ON d.id = o.dept_id\nGROUP BY d.name\nORDER BY revenue DESC;",
+      query: null },
+    { key: 'format', title: '3. จัดรูปแบบ', desc: 'ใช้ CONCAT, DATE_FORMAT ให้พร้อมใช้', icon: '🎨', color: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+      sql: "SELECT d.name AS dept,\n  CONCAT('฿', FORMAT(SUM(o.amount), 0)) AS revenue,\n  DATE_FORMAT(MAX(o.order_date), '%d/%m/%Y') AS last_order\nFROM departments d\nJOIN orders o ON d.id = o.dept_id\nGROUP BY d.name;",
+      query: null },
+    { key: 'view', title: '4. สร้าง VIEW', desc: 'บันทึกเป็น VIEW เรียกใช้ง่ายเหมือนตาราง', icon: '💾', color: 'bg-sky-50 border-sky-200 text-sky-700',
+      sql: "CREATE VIEW v_dept_report AS\nSELECT d.name, SUM(o.amount) AS revenue\nFROM departments d\nJOIN orders o ON d.id = o.dept_id\nGROUP BY d.name;\n\n-- เรียกใช้: SELECT * FROM v_dept_report;",
+      query: null },
+  ];
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [anim, setAnim] = useState(false);
+
+  const handleRun = () => {
+    setAnim(true);
+    const s = steps[activeStep];
+    log(`mysql> ${s.sql.split('\n')[0]}`, 'command');
+    setTimeout(() => {
+      setAnim(false);
+      log(`> Step "${s.title}" executed`, 'success');
+      if (s.query) log(s.query, 'output');
+      else s.sql.split('\n').forEach(line => log(`  ${line}`, 'output'));
+    }, 500);
+  };
+  const reset = () => { setActiveStep(0); log('> Reset to Step 1.', 'system'); };
+
+  const [qAns, setQAns] = useState(null);
+  const [qDone, setQDone] = useState(false);
+  const qOpts = [
+    { val: 'a', label: 'ให้ Database คำนวณผลสรุปผ่าน Query (GROUP BY + Aggregate)', correct: true },
+    { val: 'b', label: 'SELECT * ดึงดิบทั้งหมด แล้ววนลูปคำนวณในโปรแกรม' },
+    { val: 'c', label: 'ไม่ต้องออกแบบ เขียน SQL สุ่มๆ ไป' },
+  ];
+  const checkQ = () => { setQDone(true); const ok = qOpts.find(o => o.val === qAns)?.correct; log(ok ? '> ✅ ถูกต้อง! ให้ DB คำนวณ = เร็วกว่า ประหยัด bandwidth ไม่ต้องส่ง raw data ออก' : '> ❌ SELECT * + loop ในโปรแกรมทำให้ช้ามากเมื่อข้อมูลเยอะ', ok ? 'success' : 'error'); };
+
+  const s = steps[activeStep];
   return (
-    <SQLSyntaxEngine 
-      title="การออกแบบรายงาน"
-      description="เรียนรู้โครงสร้างคำสั่งหลักโดยการคลิกหรือนำเมาส์ไปชี้ที่ส่วนต่างๆ ของโค้ด"
-      icon={TerminalSquare}
-      codeParts={codeParts}
-      explanations={explanations}
-      quiz={quiz}
-    />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg"><FileText size={20} className="stroke-2"/></div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การออกแบบรายงาน (Report Design)</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">4 ขั้นตอนสร้างรายงาน: เข้าใจความต้องการ → เขียน Query สรุป → จัดรูปแบบ → สร้าง VIEW</p>
+      </div>
+      <div className="flex flex-col">
+        <div className="flex flex-col lg:flex-row border-b border-slate-200">
+          <div className="lg:w-5/12 p-5 bg-slate-50 border-b lg:border-b-0 lg:border-r border-slate-200">
+            <div className="flex items-center gap-2 mb-4 text-sm font-bold text-slate-700"><Settings2 size={16}/> ขั้นตอนการออกแบบ</div>
+            <div className="space-y-2">
+              {steps.map((st, i) => (
+                <button key={st.key} onClick={() => setActiveStep(i)}
+                  className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all active:scale-95 text-sm text-left ${activeStep === i ? `${st.color} border-current shadow-sm font-bold` : 'border-slate-200 hover:border-slate-300 text-slate-600'}`}>
+                  <span className="text-lg">{st.icon}</span>
+                  <div><div className="font-bold">{st.title}</div><div className="text-xs opacity-70">{st.desc}</div></div>
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-2 mt-4 justify-end">
+              <button onClick={reset} className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-sm transition-all active:scale-95"><RefreshCcw size={13}/></button>
+              <button onClick={handleRun} disabled={anim} className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 disabled:opacity-50 text-sm">
+                <Play size={14} fill="currentColor"/> {anim ? 'Running...' : 'Run Step'}
+              </button>
+            </div>
+          </div>
+          <div className="lg:w-7/12 flex flex-col">
+            <div className="p-5 bg-[#1e1e2e] flex-1">
+              <div className="flex items-center gap-2 mb-3 text-sm font-bold text-white">{s.icon} {s.title}</div>
+              <pre className="font-mono text-sm leading-relaxed text-white whitespace-pre-wrap bg-[#2d2d2d] p-4 rounded-lg border border-slate-700">{s.sql}</pre>
+              <p className="text-xs text-slate-500 mt-3 border-t border-slate-700 pt-3">{s.desc}</p>
+            </div>
+          </div>
+        </div>
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2"><HelpCircle size={16} className="text-emerald-500"/> Quiz: Report Design</h4>
+            <button onClick={() => { setQAns(null); setQDone(false); }} className="text-xs text-slate-700 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm"><RefreshCcw size={12}/> เริ่มใหม่</button>
+          </div>
+          <p className="text-sm text-slate-700 mb-3 bg-white p-3 rounded-lg border border-slate-200">หลักการที่ดีในการทำรายงานด้วย Database คืออะไร?</p>
+          <div className="space-y-2 mb-4">
+            {qOpts.map(o => (
+              <button key={o.val} onClick={() => !qDone && setQAns(o.val)} disabled={qDone}
+                className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm transition-all ${qAns === o.val ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-medium' : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'} ${qDone && o.correct ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-bold' : ''} ${qDone && qAns === o.val && !o.correct ? 'bg-rose-50 border-rose-400 text-rose-800' : ''}`}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-end">
+            <button onClick={checkQ} disabled={!qAns || qDone} className="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold py-2 px-6 rounded-lg text-sm flex items-center gap-2 transition-all active:scale-95"><CheckCircle2 size={16}/> ตรวจคำตอบ</button>
+          </div>
+        </div>
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10"><TerminalSquare size={14} className="text-slate-600"/><span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span></div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((l, i) => (<div key={i} className="leading-relaxed">{l.type==='command' && <div className="text-emerald-300 font-bold">{l.text}</div>}{l.type==='output' && <div className="text-cyan-300">{l.text}</div>}{l.type==='system' && <div className="text-slate-600">{l.text}</div>}{l.type==='error' && <div className="text-rose-400 font-bold">{l.text}</div>}{l.type==='success' && <div className="text-emerald-400 font-bold">{l.text}</div>}</div>))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

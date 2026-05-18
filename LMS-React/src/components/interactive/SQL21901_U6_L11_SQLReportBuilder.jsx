@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import { PieChart, BarChart3, GripHorizontal, Settings2, Download, Table2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { PieChart, BarChart3, CheckCircle2, RefreshCcw, HelpCircle, TerminalSquare, Settings2 } from 'lucide-react';
 
 export default function SQL21901_U6_L11_SQLReportBuilder() {
-  const [xAxis, setXAxis] = useState('dept'); // dept, role
-  const [yAxis, setYAxis] = useState('sum'); // count, sum, avg
+  const [consoleHistory, setConsoleHistory] = useState([{ type: 'system', text: 'Report Builder Studio ready.' }]);
+  const consoleRef = useRef(null);
+  useEffect(() => { if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight; }, [consoleHistory]);
+  const log = (t, type = 'output') => setConsoleHistory(p => [...p, { text: t, type }]);
+
+  const [xAxis, setXAxis] = useState('dept');
+  const [yAxis, setYAxis] = useState('sum');
 
   const rawData = [
     { dept: 'IT', role: 'Dev', salary: 50 },
@@ -16,162 +21,134 @@ export default function SQL21901_U6_L11_SQLReportBuilder() {
     { dept: 'HR', role: 'Staff', salary: 40 },
   ];
 
-  // Process data based on selections
   const getChartData = () => {
     const groups = {};
     rawData.forEach(item => {
       const key = item[xAxis];
-      if (!groups[key]) {
-        groups[key] = { total: 0, count: 0 };
-      }
+      if (!groups[key]) groups[key] = { total: 0, count: 0 };
       groups[key].total += item.salary;
       groups[key].count += 1;
     });
-
-    const result = Object.keys(groups).map(key => {
+    return Object.keys(groups).map(key => {
       let value = 0;
       if (yAxis === 'sum') value = groups[key].total;
       if (yAxis === 'count') value = groups[key].count;
-      if (yAxis === 'avg') value = groups[key].total / groups[key].count;
+      if (yAxis === 'avg') value = Math.round(groups[key].total / groups[key].count);
       return { label: key, value };
     });
-
-    return result;
   };
 
   const chartData = getChartData();
   const maxVal = Math.max(...chartData.map(d => d.value), 1);
 
+  const handleChange = (axis, val) => {
+    if (axis === 'x') setXAxis(val); else setYAxis(val);
+    log(`> เปลี่ยน ${axis === 'x' ? 'GROUP BY' : 'Aggregate'}: ${val.toUpperCase()}`, 'output');
+  };
+
+  const sqlQuery = `SELECT ${xAxis}, ${yAxis.toUpperCase()}(${yAxis === 'count' ? 'id' : 'salary'}) AS result\nFROM employees\nGROUP BY ${xAxis}\nORDER BY result DESC;`;
+
+  const [qAns, setQAns] = useState(null);
+  const [qDone, setQDone] = useState(false);
+  const qOpts = [
+    { val: 'a', label: 'SUM, AVG, COUNT เป็น Aggregate Functions ที่ใช้กับ GROUP BY', correct: true },
+    { val: 'b', label: 'Aggregate Functions ไม่จำเป็นต้องใช้กับ GROUP BY' },
+    { val: 'c', label: 'GROUP BY ใช้ได้กับ Scalar Functions เท่านั้น' },
+  ];
+  const checkQ = () => { setQDone(true); const ok = qOpts.find(o => o.val === qAns)?.correct; log(ok ? '> ✅ ถูกต้อง! SUM, AVG, COUNT เป็น Aggregate ที่ต้องใช้คู่กับ GROUP BY เพื่อแยกกลุ่ม' : '> ❌ Aggregate Functions ต้องใช้กับ GROUP BY เพื่อแยกกลุ่มข้อมูล', ok ? 'success' : 'error'); };
+
   return (
-    <div className="space-y-12 my-8">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex gap-4 items-start">
-        <div className="p-4 bg-indigo-100 text-indigo-600 rounded-xl shrink-0">
-          <PieChart size={32} />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg"><PieChart size={20} className="stroke-2"/></div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">Report Builder Studio</h3>
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Report Builder Studio (ลากวางสร้างกราฟ)</h2>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            หัวใจสำคัญของการดึงข้อมูลคือการ <strong>สรุปผลและทำรายงาน (Reporting)</strong> ลองปรับแต่งแกน X และแกน Y ด้านล่าง เพื่อดูระบบสร้างกราฟและ <code className="bg-slate-100 px-1 rounded text-pink-600">SQL Query</code> ออกมาให้แบบเรียลไทม์!
-          </p>
-        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">สรุปผลและทำรายงาน — ปรับแกน X (GROUP BY) และ Y (Aggregate) เพื่อดูกราฟและ SQL Query แบบเรียลไทม์</p>
       </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Settings Panel */}
-        <div className="lg:col-span-1 bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col">
-          <div className="bg-slate-50 p-4 border-b border-slate-200 flex items-center gap-2 font-bold text-slate-700">
-            <Settings2 size={20} /> Data Configuration
+      <div className="flex flex-col">
+        <div className="flex flex-col lg:flex-row border-b border-slate-200">
+          {/* Config Panel */}
+          <div className="lg:w-5/12 p-5 bg-slate-50 border-b lg:border-b-0 lg:border-r border-slate-200">
+            <div className="flex items-center gap-2 mb-4 text-sm font-bold text-slate-700"><Settings2 size={16}/> Data Configuration</div>
+            <div className="space-y-5">
+              <div>
+                <label className="block font-bold text-slate-700 text-sm mb-2">แกน X (GROUP BY)</label>
+                <div className="space-y-2">
+                  {[{ v: 'dept', l: 'แผนก (Department)' }, { v: 'role', l: 'ตำแหน่ง (Role)' }].map(o => (
+                    <button key={o.v} onClick={() => handleChange('x', o.v)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all active:scale-95 text-sm ${xAxis === o.v ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold shadow-sm' : 'border-slate-200 hover:border-indigo-300 text-slate-600'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block font-bold text-slate-700 text-sm mb-2">แกน Y (Aggregate)</label>
+                <div className="space-y-2">
+                  {[{ v: 'sum', l: 'ยอดรวม (SUM)' }, { v: 'avg', l: 'ค่าเฉลี่ย (AVG)' }, { v: 'count', l: 'จำนวน (COUNT)' }].map(o => (
+                    <button key={o.v} onClick={() => handleChange('y', o.v)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all active:scale-95 text-sm ${yAxis === o.v ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-sm' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="p-6 space-y-8 flex-1">
-            
-            {/* X-Axis */}
-            <div>
-              <label className="block font-bold text-slate-700 mb-2 flex items-center gap-2">
-                แกน X (GROUP BY)
-              </label>
-              <div className="space-y-2">
-                <button 
-                  onClick={() => setXAxis('dept')}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${xAxis === 'dept' ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold shadow-md' : 'border-slate-200 hover:border-indigo-300 text-slate-600'}`}
-                >
-                  <GripHorizontal className="text-slate-600" size={16}/> แผนก (Department)
-                </button>
-                <button 
-                  onClick={() => setXAxis('role')}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${xAxis === 'role' ? 'border-indigo-500 bg-indigo-50 text-indigo-700 font-bold shadow-md' : 'border-slate-200 hover:border-indigo-300 text-slate-600'}`}
-                >
-                  <GripHorizontal className="text-slate-600" size={16}/> ตำแหน่ง (Role)
-                </button>
+          {/* Chart + SQL */}
+          <div className="lg:w-7/12 flex flex-col">
+            <div className="p-5 bg-slate-900 flex-1">
+              <div className="flex items-center gap-2 mb-4 text-white font-bold text-sm"><BarChart3 size={16} className="text-sky-400"/> Live Dashboard Preview</div>
+              <div className="flex items-end justify-around gap-3 h-[180px] pb-2">
+                {chartData.map((d, i) => (
+                  <div key={i} className="flex flex-col items-center w-full group">
+                    <div className="text-xs text-slate-400 mb-1 font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                      {yAxis === 'count' ? `${d.value} คน` : `฿${d.value}k`}
+                    </div>
+                    <div className="w-full max-w-[60px] bg-gradient-to-t from-indigo-600 to-sky-400 rounded-t-lg shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-all duration-700 group-hover:brightness-110"
+                      style={{ height: `${(d.value / maxVal) * 140}px` }}></div>
+                    <div className="mt-2 text-slate-300 font-bold text-xs bg-slate-800 px-2 py-0.5 rounded-full">{d.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
-
-            {/* Y-Axis */}
-            <div>
-              <label className="block font-bold text-slate-700 mb-2 flex items-center gap-2">
-                แกน Y (Aggregate)
-              </label>
-              <div className="space-y-2">
-                <button 
-                  onClick={() => setYAxis('sum')}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${yAxis === 'sum' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-md' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}
-                >
-                  <GripHorizontal className="text-slate-600" size={16}/> ยอดเงินเดือนรวม (SUM)
-                </button>
-                <button 
-                  onClick={() => setYAxis('avg')}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${yAxis === 'avg' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-md' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}
-                >
-                  <GripHorizontal className="text-slate-600" size={16}/> เงินเดือนเฉลี่ย (AVG)
-                </button>
-                <button 
-                  onClick={() => setYAxis('count')}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${yAxis === 'count' ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold shadow-md' : 'border-slate-200 hover:border-emerald-300 text-slate-600'}`}
-                >
-                  <GripHorizontal className="text-slate-600" size={16}/> จำนวนพนักงาน (COUNT)
-                </button>
-              </div>
+            <div className="bg-[#1e1e2e] p-4 border-t border-slate-700">
+              <div className="text-slate-500 text-xs font-semibold mb-2">Generated SQL Query</div>
+              <pre className="font-mono text-sm leading-relaxed text-white whitespace-pre-wrap">
+                <span className="text-purple-400">SELECT</span> <span className="text-sky-300">{xAxis}</span>, <span className="text-emerald-400">{yAxis.toUpperCase()}</span>(<span className="text-sky-300">{yAxis === 'count' ? 'id' : 'salary'}</span>) <span className="text-purple-400">AS</span> <span className="text-yellow-300">result</span>{'\n'}
+                <span className="text-purple-400">FROM</span> <span className="text-sky-300">employees</span>{'\n'}
+                <span className="text-purple-400">GROUP BY</span> <span className="text-sky-300">{xAxis}</span>{'\n'}
+                <span className="text-purple-400">ORDER BY</span> <span className="text-yellow-300">result</span> <span className="text-purple-400">DESC</span>;
+              </pre>
             </div>
-
           </div>
         </div>
-
-        {/* Dashboard Preview */}
-        <div className="lg:col-span-2 flex flex-col gap-8">
-          
-          {/* Chart Panel */}
-          <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-700">
-            <div className="bg-slate-800 p-4 border-b border-slate-700 flex justify-between items-center text-white font-bold">
-              <div className="flex items-center gap-2"><BarChart3 className="text-sky-400"/> Live Dashboard Preview</div>
-              <button className="text-slate-600 hover:text-white transition-colors flex items-center gap-1 text-sm"><Download size={16}/> Export</button>
-            </div>
-            
-            <div className="p-8 h-[300px] flex items-end justify-around gap-4 pb-12 relative">
-              {/* Grid Lines */}
-              <div className="absolute inset-x-8 inset-y-8 pointer-events-none flex flex-col justify-between opacity-10">
-                <div className="border-t border-white w-full"></div>
-                <div className="border-t border-white w-full"></div>
-                <div className="border-t border-white w-full"></div>
-                <div className="border-t border-white w-full"></div>
-                <div className="border-t border-white w-full"></div>
-              </div>
-
-              {chartData.map((d, i) => (
-                <div key={i} className="flex flex-col items-center w-full group relative z-10">
-                  {/* Tooltip */}
-                  <div className="absolute -top-10 bg-white text-slate-800 font-bold px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                    {yAxis === 'count' ? `${d.value} คน` : `฿${d.value.toFixed(0)}k`}
-                  </div>
-                  
-                  {/* Bar */}
-                  <div 
-                    className="w-full max-w-[80px] bg-gradient-to-t from-indigo-600 to-sky-400 rounded-t-lg shadow-[0_0_15px_rgba(56,189,248,0.3)] transition-all duration-1000 group-hover:brightness-110"
-                    style={{ height: `${(d.value / maxVal) * 200}px` }}
-                  ></div>
-                  
-                  {/* Label */}
-                  <div className="mt-4 text-slate-300 font-bold bg-slate-800 px-3 py-1 rounded-full text-sm">
-                    {d.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* Quiz */}
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2"><HelpCircle size={16} className="text-indigo-500"/> Quiz: Aggregate + GROUP BY</h4>
+            <button onClick={() => { setQAns(null); setQDone(false); }} className="text-xs text-slate-700 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm"><RefreshCcw size={12}/> เริ่มใหม่</button>
           </div>
-
-          {/* SQL Generated */}
-          <div className="bg-[#1E1E1E] rounded-2xl shadow-xl overflow-hidden border border-slate-700 flex flex-col">
-             <div className="bg-[#323233] p-3 flex justify-between items-center">
-              <div className="text-slate-600 text-xs font-semibold tracking-wider">Generated SQL Query</div>
-            </div>
-            <div className="p-6 font-mono text-sm sm:text-base leading-relaxed overflow-x-auto text-white">
-              <span className="text-purple-400">SELECT</span> <span className="text-sky-300">{xAxis}</span>, <span className="text-emerald-400">{yAxis.toUpperCase()}</span>(<span className="text-sky-300">{yAxis === 'count' ? 'id' : 'salary'}</span>) <span className="text-purple-400">AS</span> <span className="text-yellow-300">result</span><br/>
-              <span className="text-purple-400">FROM</span> <span className="text-sky-300">employees</span><br/>
-              <span className="text-purple-400">GROUP BY</span> <span className="text-sky-300">{xAxis}</span><br/>
-              <span className="text-purple-400">ORDER BY</span> <span className="text-yellow-300">result</span> <span className="text-purple-400">DESC</span>;
-            </div>
+          <p className="text-sm text-slate-700 mb-3 bg-white p-3 rounded-lg border border-slate-200">ข้อใดอธิบายความสัมพันธ์ของ Aggregate Functions กับ GROUP BY ได้ถูกต้อง?</p>
+          <div className="space-y-2 mb-4">
+            {qOpts.map(o => (
+              <button key={o.val} onClick={() => !qDone && setQAns(o.val)} disabled={qDone}
+                className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm transition-all ${qAns === o.val ? 'bg-indigo-50 border-indigo-400 text-indigo-800 font-medium' : 'bg-white border-slate-200 text-slate-700 hover:border-indigo-300'} ${qDone && o.correct ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-bold' : ''} ${qDone && qAns === o.val && !o.correct ? 'bg-rose-50 border-rose-400 text-rose-800' : ''}`}>
+                {o.label}
+              </button>
+            ))}
           </div>
-
+          <div className="flex justify-end">
+            <button onClick={checkQ} disabled={!qAns || qDone} className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white font-bold py-2 px-6 rounded-lg text-sm flex items-center gap-2 transition-all active:scale-95"><CheckCircle2 size={16}/> ตรวจคำตอบ</button>
+          </div>
+        </div>
+        {/* Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10"><TerminalSquare size={14} className="text-slate-600"/><span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span></div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((l, i) => (<div key={i} className="leading-relaxed">{l.type==='command' && <div className="text-indigo-300 font-bold">{l.text}</div>}{l.type==='output' && <div className="text-cyan-300">{l.text}</div>}{l.type==='system' && <div className="text-slate-600">{l.text}</div>}{l.type==='error' && <div className="text-rose-400 font-bold">{l.text}</div>}{l.type==='success' && <div className="text-emerald-400 font-bold">{l.text}</div>}</div>))}
+          </div>
         </div>
       </div>
     </div>

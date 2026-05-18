@@ -1,195 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import { LayoutGrid, ArrowDownCircle, Users, Box, Play, Calculator, RotateCcw } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { LayoutGrid, Play, CheckCircle2, RefreshCcw, HelpCircle, Table2, TerminalSquare } from 'lucide-react';
 
 export default function SQL21901_U4_L9_SQLGroupByDemo() {
-  const [step, setStep] = useState(0); // 0: initial, 1: grouping, 2: grouped, 3: aggregating, 4: result
-  
-  // Initial mixed raw data
-  const rawData = [
-    { id: 1, dept: 'IT', salary: 50, color: 'bg-sky-500' },
-    { id: 2, dept: 'HR', salary: 30, color: 'bg-rose-500' },
-    { id: 3, dept: 'IT', salary: 40, color: 'bg-sky-500' },
-    { id: 4, dept: 'Sales', salary: 60, color: 'bg-amber-500' },
-    { id: 5, dept: 'HR', salary: 35, color: 'bg-rose-500' },
-    { id: 6, dept: 'Sales', salary: 45, color: 'bg-amber-500' },
-    { id: 7, dept: 'IT', salary: 55, color: 'bg-sky-500' },
-    { id: 8, dept: 'Sales', salary: 50, color: 'bg-amber-500' },
+  const [consoleHistory, setConsoleHistory] = useState([{ type: 'system', text: 'GROUP BY Simulator ready.' }]);
+  const consoleRef = useRef(null);
+  useEffect(() => { if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight; }, [consoleHistory]);
+  const log = (t, type = 'output') => setConsoleHistory(p => [...p, { text: t, type }]);
+
+  const employees = [
+    { id: 1, name: 'สมชาย', dept: 'IT', salary: 50000 },
+    { id: 2, name: 'สมหญิง', dept: 'HR', salary: 30000 },
+    { id: 3, name: 'วิชัย', dept: 'IT', salary: 40000 },
+    { id: 4, name: 'มาลี', dept: 'Sales', salary: 60000 },
+    { id: 5, name: 'สมศรี', dept: 'HR', salary: 35000 },
+    { id: 6, name: 'พิชัย', dept: 'Sales', salary: 45000 },
+    { id: 7, name: 'อรุณ', dept: 'IT', salary: 55000 },
+    { id: 8, name: 'ดาว', dept: 'Sales', salary: 50000 },
   ];
 
-  const runGroupBy = () => {
-    setStep(1);
-    setTimeout(() => setStep(2), 1500); // Wait for sort animation
+  const scenarios = {
+    count: {
+      title: '1. COUNT', desc: 'นับจำนวนคนแต่ละแผนก',
+      sqlStr: 'SELECT dept, COUNT(*) AS cnt FROM employees GROUP BY dept;',
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> dept, <span className="text-[#89dceb]">COUNT</span>(*) <span className="text-[#f9e2af]">AS</span> cnt<br/><span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">employees</span><br/><span className="text-[#cba6f7] font-bold">GROUP BY</span> dept;</>),
+      run: () => {
+        const g = {};
+        employees.forEach(e => { g[e.dept] = (g[e.dept] || 0) + 1; });
+        return Object.entries(g).map(([d, c]) => ({ dept: d, cnt: c }));
+      },
+    },
+    sum: {
+      title: '2. SUM', desc: 'ผลรวมเงินเดือนแต่ละแผนก',
+      sqlStr: 'SELECT dept, SUM(salary) AS total FROM employees GROUP BY dept;',
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> dept, <span className="text-[#89dceb]">SUM</span>(salary) <span className="text-[#f9e2af]">AS</span> total<br/><span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">employees</span><br/><span className="text-[#cba6f7] font-bold">GROUP BY</span> dept;</>),
+      run: () => {
+        const g = {};
+        employees.forEach(e => { g[e.dept] = (g[e.dept] || 0) + e.salary; });
+        return Object.entries(g).map(([d, s]) => ({ dept: d, total: s }));
+      },
+    },
+    avg: {
+      title: '3. AVG', desc: 'ค่าเฉลี่ยเงินเดือนแต่ละแผนก',
+      sqlStr: 'SELECT dept, ROUND(AVG(salary)) AS avg_sal FROM employees GROUP BY dept;',
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> dept, <span className="text-[#89dceb]">ROUND</span>(<span className="text-[#89dceb]">AVG</span>(salary))<br/>{'  '}<span className="text-[#f9e2af]">AS</span> avg_sal<br/><span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">employees</span><br/><span className="text-[#cba6f7] font-bold">GROUP BY</span> dept;</>),
+      run: () => {
+        const g = {};
+        employees.forEach(e => { if (!g[e.dept]) g[e.dept] = { sum: 0, cnt: 0 }; g[e.dept].sum += e.salary; g[e.dept].cnt++; });
+        return Object.entries(g).map(([d, v]) => ({ dept: d, avg_sal: Math.round(v.sum / v.cnt) }));
+      },
+    },
   };
 
-  const runAggregate = () => {
-    setStep(3);
-    setTimeout(() => setStep(4), 1500); // Wait for math animation
-  };
+  const [active, setActive] = useState('count');
+  const [results, setResults] = useState([]);
+  const [anim, setAnim] = useState(false);
 
-  const reset = () => {
-    setStep(0);
+  const handleRun = () => {
+    setAnim(true); setResults([]);
+    const sc = scenarios[active];
+    log(`mysql> ${sc.sqlStr}`, 'command');
+    setTimeout(() => {
+      const r = sc.run();
+      setResults(r); setAnim(false);
+      log(`> ${r.length} group(s) returned`, 'success');
+      r.forEach(row => log(`> ${Object.values(row).join(' | ')}`, 'output'));
+    }, 500);
   };
+  const reset = () => { setResults([]); log('> Reset.', 'system'); };
 
+  // Mini bar chart
+  const maxVal = results.length > 0 ? Math.max(...results.map(r => Object.values(r)[1])) : 0;
+  const barColors = { IT: 'bg-sky-500', HR: 'bg-rose-500', Sales: 'bg-amber-500' };
+
+  const [qAns, setQAns] = useState(null);
+  const [qDone, setQDone] = useState(false);
+  const qOpts = [
+    { val: 'a', label: '3 แถว — 1 แถวต่อ 1 แผนก (IT, HR, Sales)', correct: true },
+    { val: 'b', label: '8 แถว — ทุกคนแสดงผล' },
+    { val: 'c', label: '1 แถว — GROUP BY ยุบเป็น 1 แถวเสมอ' },
+  ];
+  const checkQ = () => { setQDone(true); const ok = qOpts.find(o => o.val === qAns)?.correct; log(ok ? '> ✅ ถูกต้อง! GROUP BY ยุบเป็น 1 แถวต่อ 1 กลุ่ม (unique dept)' : '> ❌ GROUP BY จัดกลุ่ม ได้จำนวนแถวเท่ากับ unique values ของคอลัมน์ที่ GROUP', ok ? 'success' : 'error'); };
+
+  const sc = scenarios[active];
   return (
-    <div className="space-y-12 my-8">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex gap-4 items-start">
-        <div className="p-4 bg-teal-100 text-teal-600 rounded-xl shrink-0">
-          <LayoutGrid size={32} />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-teal-100 text-teal-700 rounded-lg"><LayoutGrid size={20} className="stroke-2"/></div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การจัดกลุ่มข้อมูล (GROUP BY)</h3>
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">The Great Sorter (เครื่องคัดแยก GROUP BY)</h2>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            คำสั่ง <code className="bg-teal-50 text-teal-600 font-bold px-1 rounded">GROUP BY</code> คือการเอาข้อมูลที่กระจัดกระจาย มา "จัดกลุ่ม" ตามหมวดหมู่ ก่อนที่จะเอาไปคำนวณทางสถิติ (Aggregate) เช่น นับจำนวน, หาผลรวม
-          </p>
-        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">GROUP BY จัดข้อมูลเป็นกลุ่ม แล้วใช้ Aggregate (COUNT, SUM, AVG) คำนวณผลสรุปแต่ละกลุ่ม</p>
       </div>
-
-      <div className="bg-slate-50 rounded-2xl shadow-inner border-2 border-slate-200 p-6 md:p-8 relative overflow-hidden">
-        
-        {/* Conveyor Belt Background / Factory Theme */}
-        <div className="absolute top-1/2 left-0 w-full h-12 bg-slate-200 -translate-y-1/2 flex items-center overflow-hidden z-0">
-          <div className="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iNCIgZmlsbD0iI2NidDU1ZSIvPjwvc3ZnPg==')] animate-[bg-pan-right_2s_linear_infinite] opacity-50"></div>
-        </div>
-
-        {/* Step 0: Mixed Data */}
-        <div className="relative z-10 min-h-[400px] flex flex-col justify-between">
-          
-          <div className="text-center font-bold text-slate-700 mb-4 bg-white/80 backdrop-blur-sm inline-block mx-auto px-4 py-2 rounded-full shadow-sm">
-            ตาราง Employees (ยังไม่ได้จัดกลุ่ม)
-          </div>
-
-          {/* Mixed Area (Top) */}
-          <div className={`flex flex-wrap justify-center gap-4 transition-all duration-1000 ${step > 0 ? 'opacity-0 translate-y-20 scale-50 absolute pointer-events-none' : 'opacity-100'}`}>
-            {rawData.map(d => (
-              <div key={d.id} className={`w-20 h-24 ${d.color} rounded-xl shadow-lg border-2 border-white flex flex-col items-center justify-center text-white font-bold transform hover:-translate-y-2 transition-transform`}>
-                <Users size={24} className="mb-1 opacity-80" />
-                <span>{d.dept}</span>
-                <span className="text-xs bg-black/20 px-2 rounded-full mt-1">฿{d.salary}k</span>
+      <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row border-b border-slate-200">
+          <div className="bg-[#1e1e2e] md:w-5/12 flex flex-col border-r border-slate-700">
+            <div className="flex bg-slate-900 border-b border-slate-700">
+              {Object.keys(scenarios).map(k => (
+                <button key={k} onClick={() => { setActive(k); setResults([]); }}
+                  className={`flex-1 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors px-1 ${active === k ? 'bg-[#1e1e2e] text-teal-400 border-b-2 border-teal-500' : 'text-slate-500 hover:bg-slate-800 hover:text-slate-300'}`}>
+                  {scenarios[k].title}
+                </button>
+              ))}
+            </div>
+            <div className="p-5 flex-1 flex flex-col justify-between gap-4">
+              <div>
+                <div className="font-mono text-[14px] leading-loose mb-3"><div key={active} className="animate-in fade-in zoom-in-95 duration-300">{sc.sql}</div></div>
+                <p className="text-xs text-slate-600 border-t border-slate-700/50 pt-3">{sc.desc}</p>
               </div>
+              <div className="flex gap-2 justify-end">
+                <button onClick={reset} className="bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold py-2 px-3 rounded-lg text-sm transition-all active:scale-95"><RefreshCcw size={13}/></button>
+                <button onClick={handleRun} disabled={anim} className="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 text-sm">
+                  <Play size={14} fill="currentColor"/> {anim ? 'Running...' : 'Run Query'}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="md:w-7/12 p-5 bg-slate-50 flex flex-col gap-4">
+            <h4 className="font-bold text-slate-700 flex items-center gap-2 mb-2 text-sm"><Table2 size={14} className="text-teal-600"/> ตาราง employees (8 rows)</h4>
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm max-h-44 overflow-y-auto">
+              <table className="w-full text-left border-collapse text-sm">
+                <thead className="bg-slate-100 text-slate-600 sticky top-0"><tr><th className="p-2 border-b font-semibold text-center">id</th><th className="p-2 border-b font-semibold">name</th><th className="p-2 border-b font-semibold">dept</th><th className="p-2 border-b font-semibold text-right">salary</th></tr></thead>
+                <tbody className="divide-y divide-slate-100">
+                  {employees.map(r => (
+                    <tr key={r.id} className="bg-white hover:bg-slate-50 transition-all">
+                      <td className="p-1.5 text-center font-mono text-xs text-slate-500">{r.id}</td>
+                      <td className="p-1.5 font-medium text-slate-700 text-sm">{r.name}</td>
+                      <td className="p-1.5"><span className={`px-2 py-0.5 rounded-full text-xs font-bold ${barColors[r.dept]?.replace('bg-', 'bg-') || 'bg-slate-200'} text-white`}>{r.dept}</span></td>
+                      <td className="p-1.5 text-right font-mono text-xs">฿{r.salary.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {results.length > 0 && (
+              <div className="animate-in fade-in zoom-in-95 duration-300">
+                <h4 className="font-bold text-slate-700 text-sm mb-2">ผลลัพธ์ GROUP BY ({results.length} กลุ่ม)</h4>
+                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                  <table className="w-full text-sm"><thead className="bg-teal-50 text-teal-700"><tr>{Object.keys(results[0]).map(k => <th key={k} className="p-2 border-b font-semibold text-left">{k}</th>)}</tr></thead>
+                    <tbody>{results.map((r, i) => <tr key={i} className="border-t bg-teal-50/50">{Object.entries(r).map(([k, v]) => <td key={k} className="p-2 font-mono text-sm font-bold">{typeof v === 'number' ? v.toLocaleString() : v}</td>)}</tr>)}</tbody>
+                  </table>
+                </div>
+                {/* Mini bar chart */}
+                <div className="mt-3 space-y-2">
+                  {results.map((r, i) => {
+                    const val = Object.values(r)[1];
+                    return (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className="text-xs font-bold w-12 text-right text-slate-600">{r.dept}</span>
+                        <div className="flex-1 bg-slate-100 rounded-full h-5 overflow-hidden">
+                          <div className={`h-full ${barColors[r.dept] || 'bg-teal-500'} rounded-full transition-all duration-700 flex items-center justify-end pr-2`} style={{ width: `${(val / maxVal) * 100}%` }}>
+                            <span className="text-[10px] text-white font-bold">{typeof val === 'number' ? val.toLocaleString() : val}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500"/> Quiz: GROUP BY</h4>
+            <button onClick={() => { setQAns(null); setQDone(false); }} className="text-xs text-slate-700 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm"><RefreshCcw size={12}/> เริ่มใหม่</button>
+          </div>
+          <p className="text-sm text-slate-700 mb-3 bg-white p-3 rounded-lg border border-slate-200">พนักงาน 8 คน 3 แผนก ใช้ GROUP BY dept จะได้ผลลัพธ์กี่แถว?</p>
+          <div className="space-y-2 mb-4">
+            {qOpts.map(o => (
+              <button key={o.val} onClick={() => !qDone && setQAns(o.val)} disabled={qDone}
+                className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm transition-all ${qAns === o.val ? 'bg-teal-50 border-teal-400 text-teal-800 font-medium' : 'bg-white border-slate-200 text-slate-700 hover:border-teal-300'} ${qDone && o.correct ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-bold' : ''} ${qDone && qAns === o.val && !o.correct ? 'bg-rose-50 border-rose-400 text-rose-800' : ''}`}>
+                {o.label}
+              </button>
             ))}
           </div>
-
-          {/* Grouped Area (Bottom) */}
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-1000 ${step === 0 ? 'opacity-0 translate-y-20 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
-            
-            {/* IT Bucket */}
-            <div className="bg-white p-4 rounded-2xl shadow-xl border-4 border-sky-200 flex flex-col items-center relative">
-              <div className="absolute -top-4 bg-sky-500 text-white font-black px-4 py-1 rounded-full shadow-md">IT</div>
-              <div className="min-h-[120px] flex flex-wrap justify-center gap-2 mt-4 pt-4">
-                {rawData.filter(d => d.dept === 'IT').map((d, i) => (
-                  <div key={d.id} className={`w-16 h-16 ${d.color} rounded-lg shadow-sm border-2 border-white flex flex-col items-center justify-center text-white font-bold text-xs animate-in zoom-in slide-in-from-top-12`} style={{ animationDelay: `${i * 100}ms` }}>
-                    <span>{d.dept}</span>
-                    <span className="bg-black/20 px-1 rounded-full mt-1">{d.salary}k</span>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Aggregation Result */}
-              <div className={`mt-4 w-full bg-slate-800 text-white rounded-xl p-3 text-center transition-all duration-500 ${step < 3 ? 'opacity-0 h-0 overflow-hidden' : step === 3 ? 'opacity-50 animate-pulse h-[80px]' : 'opacity-100 h-[80px]'}`}>
-                {step === 4 ? (
-                  <div className="animate-in slide-in-from-bottom-2">
-                    <div className="text-xs text-sky-300">COUNT() = 3 คน</div>
-                    <div className="font-bold text-lg text-emerald-400">SUM() = ฿145k</div>
-                  </div>
-                ) : (
-                  <Calculator className="mx-auto animate-spin text-slate-600" />
-                )}
-              </div>
-            </div>
-
-            {/* HR Bucket */}
-            <div className="bg-white p-4 rounded-2xl shadow-xl border-4 border-rose-200 flex flex-col items-center relative">
-              <div className="absolute -top-4 bg-rose-500 text-white font-black px-4 py-1 rounded-full shadow-md">HR</div>
-              <div className="min-h-[120px] flex flex-wrap justify-center gap-2 mt-4 pt-4">
-                {rawData.filter(d => d.dept === 'HR').map((d, i) => (
-                  <div key={d.id} className={`w-16 h-16 ${d.color} rounded-lg shadow-sm border-2 border-white flex flex-col items-center justify-center text-white font-bold text-xs animate-in zoom-in slide-in-from-top-12`} style={{ animationDelay: `${i * 100 + 300}ms` }}>
-                    <span>{d.dept}</span>
-                    <span className="bg-black/20 px-1 rounded-full mt-1">{d.salary}k</span>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Aggregation Result */}
-              <div className={`mt-4 w-full bg-slate-800 text-white rounded-xl p-3 text-center transition-all duration-500 ${step < 3 ? 'opacity-0 h-0 overflow-hidden' : step === 3 ? 'opacity-50 animate-pulse h-[80px]' : 'opacity-100 h-[80px]'}`}>
-                {step === 4 ? (
-                  <div className="animate-in slide-in-from-bottom-2">
-                    <div className="text-xs text-rose-300">COUNT() = 2 คน</div>
-                    <div className="font-bold text-lg text-emerald-400">SUM() = ฿65k</div>
-                  </div>
-                ) : (
-                  <Calculator className="mx-auto animate-spin text-slate-600" />
-                )}
-              </div>
-            </div>
-
-            {/* Sales Bucket */}
-            <div className="bg-white p-4 rounded-2xl shadow-xl border-4 border-amber-200 flex flex-col items-center relative">
-              <div className="absolute -top-4 bg-amber-500 text-white font-black px-4 py-1 rounded-full shadow-md">Sales</div>
-              <div className="min-h-[120px] flex flex-wrap justify-center gap-2 mt-4 pt-4">
-                {rawData.filter(d => d.dept === 'Sales').map((d, i) => (
-                  <div key={d.id} className={`w-16 h-16 ${d.color} rounded-lg shadow-sm border-2 border-white flex flex-col items-center justify-center text-white font-bold text-xs animate-in zoom-in slide-in-from-top-12`} style={{ animationDelay: `${i * 100 + 600}ms` }}>
-                    <span>{d.dept}</span>
-                    <span className="bg-black/20 px-1 rounded-full mt-1">{d.salary}k</span>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Aggregation Result */}
-              <div className={`mt-4 w-full bg-slate-800 text-white rounded-xl p-3 text-center transition-all duration-500 ${step < 3 ? 'opacity-0 h-0 overflow-hidden' : step === 3 ? 'opacity-50 animate-pulse h-[80px]' : 'opacity-100 h-[80px]'}`}>
-                {step === 4 ? (
-                  <div className="animate-in slide-in-from-bottom-2">
-                    <div className="text-xs text-amber-300">COUNT() = 3 คน</div>
-                    <div className="font-bold text-lg text-emerald-400">SUM() = ฿155k</div>
-                  </div>
-                ) : (
-                  <Calculator className="mx-auto animate-spin text-slate-600" />
-                )}
-              </div>
-            </div>
-
+          <div className="flex justify-end">
+            <button onClick={checkQ} disabled={!qAns || qDone} className="bg-teal-600 hover:bg-teal-500 disabled:opacity-40 text-white font-bold py-2 px-6 rounded-lg text-sm flex items-center gap-2 transition-all active:scale-95"><CheckCircle2 size={16}/> ตรวจคำตอบ</button>
           </div>
         </div>
-
-        {/* Controls Overlay */}
-        <div className="mt-8 flex flex-col items-center gap-4 relative z-20">
-          
-          <div className="bg-slate-900 text-white font-mono text-sm md:text-lg px-6 py-4 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700">
-            <span className="text-teal-400">SELECT</span> dept, <span className="text-rose-400">COUNT</span>(id), <span className="text-emerald-400">SUM</span>(salary) <br className="md:hidden" />
-            <span className="text-teal-400">FROM</span> employees <br className="md:hidden" />
-            <span className="text-yellow-400">GROUP BY</span> dept;
-          </div>
-
-          <div className="flex gap-4">
-            {step === 0 && (
-              <button 
-                onClick={runGroupBy}
-                className="bg-teal-600 hover:bg-teal-500 text-white font-black px-8 py-3 rounded-full shadow-lg hover:shadow-teal-500/50 transition-all hover:-translate-y-1 flex items-center gap-2"
-              >
-                <ArrowDownCircle /> 1. เริ่มจัดกลุ่มข้อมูล (GROUP BY)
-              </button>
-            )}
-
-            {step === 2 && (
-              <button 
-                onClick={runAggregate}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-8 py-3 rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all hover:-translate-y-1 flex items-center gap-2 animate-in zoom-in"
-              >
-                <Calculator /> 2. คำนวณผลรวมแต่ละกลุ่ม (Aggregate)
-              </button>
-            )}
-
-            {step >= 4 && (
-              <button 
-                onClick={reset}
-                className="bg-slate-700 hover:bg-slate-600 text-white font-bold px-8 py-3 rounded-full shadow-lg transition-all hover:-translate-y-1 flex items-center gap-2 animate-in zoom-in"
-              >
-                <RotateCcw /> เริ่มใหม่
-              </button>
-            )}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10"><TerminalSquare size={14} className="text-slate-600"/><span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span></div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((l, i) => (<div key={i} className="leading-relaxed">{l.type==='command' && <div className="text-teal-300 font-bold">{l.text}</div>}{l.type==='output' && <div className="text-cyan-300">{l.text}</div>}{l.type==='system' && <div className="text-slate-600">{l.text}</div>}{l.type==='error' && <div className="text-rose-400 font-bold">{l.text}</div>}{l.type==='success' && <div className="text-emerald-400 font-bold">{l.text}</div>}</div>))}
           </div>
         </div>
-
       </div>
     </div>
   );

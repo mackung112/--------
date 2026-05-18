@@ -1,204 +1,148 @@
-import React, { useState, useEffect } from 'react';
-import { Target, Zap, RotateCcw, AlertCircle, Play, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Play, CheckCircle2, RefreshCcw, HelpCircle, Table2, TerminalSquare } from 'lucide-react';
 
 export default function SQL21901_U4_L6_SQLLikeDemo() {
-  const [pattern, setPattern] = useState('');
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [score, setScore] = useState(0);
-  const [level, setLevel] = useState(1);
-  const [message, setMessage] = useState('เตรียมตัวยิงเลเซอร์! พิมพ์คำสั่ง LIKE ให้ตรงกับเป้าหมาย');
+  const [consoleHistory, setConsoleHistory] = useState([{ type: 'system', text: 'LIKE Pattern Matching Simulator ready.' }]);
+  const consoleRef = useRef(null);
+  useEffect(() => { if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight; }, [consoleHistory]);
+  const log = (t, type = 'output') => setConsoleHistory(p => [...p, { text: t, type }]);
 
-  const [targets, setTargets] = useState([]);
+  const customers = [
+    { id: 1, name: 'Somchai', city: 'กรุงเทพฯ' },
+    { id: 2, name: 'Somsri', city: 'เชียงใหม่' },
+    { id: 3, name: 'Manee', city: 'กรุงเทพฯ' },
+    { id: 4, name: 'Banana', city: 'ขอนแก่น' },
+    { id: 5, name: 'Piti', city: 'กรุงเทพฯ' },
+  ];
 
-  // Generate targets based on level
-  const startLevel = (lvl) => {
-    let words = [];
-    if (lvl === 1) {
-      words = ['Somchai', 'Somsri', 'Manee', 'Piti', 'Chujai'];
-      setMessage('Level 1: ทำลายคำที่ขึ้นต้นด้วย "S" (ใช้ S%)');
-    } else if (lvl === 2) {
-      words = ['Banana', 'Apple', 'Orange', 'Mango', 'Melon'];
-      setMessage('Level 2: ทำลายคำที่มีตัว "a" อยู่ข้างใน (ใช้ %a%)');
-    } else if (lvl === 3) {
-      words = ['car', 'cat', 'cap', 'dog', 'bat'];
-      setMessage('Level 3: ทำลายคำที่ขึ้นต้นด้วย c และลงท้ายด้วย t (ใช้ c%t หรือ c_t)');
-    } else {
-      setMessage('🎉 ภารกิจสำเร็จทั้งหมด!');
-      setTargets([]);
-      setIsPlaying(false);
-      return;
-    }
-
-    const newTargets = words.map((w, i) => ({
-      id: i,
-      word: w,
-      destroyed: false,
-      x: Math.random() * 60 + 20, // 20% to 80% width
-      y: Math.random() * 40 + 10  // 10% to 50% height
-    }));
-    
-    setTargets(newTargets);
-    setPattern('');
-    setLevel(lvl);
-    setIsPlaying(true);
+  const scenarios = {
+    start: {
+      title: '1. ขึ้นต้น S%', desc: "ค้นหาชื่อที่ขึ้นต้นด้วย 'S' (% = กี่ตัวก็ได้)",
+      sqlStr: "SELECT * FROM customers WHERE name LIKE 'S%';",
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> * <span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">customers</span><br/><span className="text-[#cba6f7] font-bold">WHERE</span> name <span className="text-[#89dceb]">LIKE</span> <span className="text-[#a6e3a1]">'S%'</span>;</>),
+      run: () => customers.filter(c => c.name.startsWith('S')),
+    },
+    contain: {
+      title: '2. มี %a%', desc: "ค้นหาชื่อที่มีตัว 'a' อยู่ข้างใน",
+      sqlStr: "SELECT * FROM customers WHERE name LIKE '%a%';",
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> * <span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">customers</span><br/><span className="text-[#cba6f7] font-bold">WHERE</span> name <span className="text-[#89dceb]">LIKE</span> <span className="text-[#a6e3a1]">'%a%'</span>;</>),
+      run: () => customers.filter(c => c.name.toLowerCase().includes('a')),
+    },
+    underscore: {
+      title: '3. _ (1 ตัวอักษร)', desc: "ค้นหาชื่อ 4 ตัวอักษร: ____",
+      sqlStr: "SELECT * FROM customers WHERE name LIKE '____';",
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> * <span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">customers</span><br/><span className="text-[#cba6f7] font-bold">WHERE</span> name <span className="text-[#89dceb]">LIKE</span> <span className="text-[#a6e3a1]">'____'</span>;</>),
+      run: () => customers.filter(c => c.name.length === 4),
+    },
   };
 
-  const handleFire = (e) => {
-    e.preventDefault();
-    if (!isPlaying) return;
+  const [active, setActive] = useState('start');
+  const [results, setResults] = useState([]);
+  const [hlIds, setHlIds] = useState([]);
+  const [anim, setAnim] = useState(false);
 
-    // Convert SQL LIKE to JS Regex
-    // % -> .*
-    // _ -> .
-    let regexStr = '^' + pattern.replace(/%/g, '.*').replace(/_/g, '.') + '$';
-    let regex;
-    try {
-      regex = new RegExp(regexStr, 'i');
-    } catch (e) {
-      setMessage('Syntax Error: รูปแบบ LIKE ไม่ถูกต้อง!');
-      return;
-    }
-
-    let hits = 0;
-    const updatedTargets = targets.map(t => {
-      if (!t.destroyed && regex.test(t.word)) {
-        hits++;
-        return { ...t, destroyed: true };
-      }
-      return t;
-    });
-
-    setTargets(updatedTargets);
-
-    if (hits > 0) {
-      setScore(prev => prev + (hits * 100));
-      // Check if level clear
-      const remaining = updatedTargets.filter(t => !t.destroyed).length;
-      
-      // Validation rules for levels
-      let valid = false;
-      if (level === 1 && pattern.toLowerCase() === 's%') valid = true;
-      else if (level === 2 && pattern.toLowerCase() === '%a%') valid = true;
-      else if (level === 3 && (pattern.toLowerCase() === 'c%t' || pattern.toLowerCase() === 'c_t')) valid = true;
-
-      if (valid) {
-        if (remaining === 3 || remaining === 2 || remaining === 4) {
-             setMessage(`Boom! โดนไป ${hits} เป้าหมาย! ลุยต่อเลเวลถัดไป`);
-             setTimeout(() => startLevel(level + 1), 2000);
-        } else {
-            // Might have hit but not the right exact ones? Actually if logic valid, we just pass
-            setMessage(`Boom! โดนไป ${hits} เป้าหมาย! ลุยต่อเลเวลถัดไป`);
-             setTimeout(() => startLevel(level + 1), 2000);
-        }
-      } else {
-        setMessage(`โดนเป้าหมาย แต่ยังไม่ตรงกับโจทย์ที่ขอ ลองใหม่นะ!`);
-        setTimeout(() => startLevel(level), 2000);
-      }
-    } else {
-      setMessage('Miss! ยิงพลาด ไม่มีคำไหนตรงกับเงื่อนไขนี้เลย');
-    }
+  const handleRun = () => {
+    setAnim(true); setResults([]); setHlIds([]);
+    const sc = scenarios[active];
+    log(`mysql> ${sc.sqlStr}`, 'command');
+    setTimeout(() => {
+      const r = sc.run();
+      setResults(r); setHlIds(r.map(c => c.id)); setAnim(false);
+      log(`> ${r.length} row(s) matched`, 'success');
+      r.forEach(row => log(`> ${row.name} (${row.city})`, 'output'));
+    }, 500);
   };
+  const reset = () => { setResults([]); setHlIds([]); log('> Reset.', 'system'); };
 
+  const [qAns, setQAns] = useState(null);
+  const [qDone, setQDone] = useState(false);
+  const qOpts = [
+    { val: 'a', label: "% = กี่ตัวอักษรก็ได้ (หรือไม่มีเลย), _ = 1 ตัวอักษรเท่านั้น", correct: true },
+    { val: 'b', label: "% = 1 ตัวอักษร, _ = กี่ตัวก็ได้" },
+    { val: 'c', label: "% และ _ ทำงานเหมือนกัน" },
+  ];
+  const checkQ = () => { setQDone(true); const ok = qOpts.find(o => o.val === qAns)?.correct; log(ok ? '> ✅ ถูกต้อง! % = wildcard กี่ตัวก็ได้, _ = พอดี 1 ตัว' : '> ❌ % แทนกี่ตัวก็ได้ แต่ _ แทนได้แค่ 1 ตัว', ok ? 'success' : 'error'); };
+
+  const sc = scenarios[active];
   return (
-    <div className="space-y-12 my-8">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex gap-4 items-start">
-        <div className="p-4 bg-fuchsia-100 text-fuchsia-600 rounded-xl shrink-0">
-          <Target size={32} />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-fuchsia-100 text-fuchsia-700 rounded-lg"><Search size={20} className="stroke-2"/></div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">การค้นหาข้อความ (LIKE)</h3>
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">The Regex Blaster (เกมยิงเป้าคำสั่ง LIKE)</h2>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            คำสั่ง <code className="text-fuchsia-600 font-bold bg-fuchsia-50 px-1 rounded">LIKE</code> ใช้สำหรับค้นหาข้อความบางส่วน (Pattern Matching) โดยใช้สัญลักษณ์ <code>%</code> (แทนกี่ตัวอักษรก็ได้) และ <code>_</code> (แทน 1 ตัวอักษร)
-          </p>
-        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">LIKE ค้นหาข้อความบางส่วน — <code className="bg-fuchsia-50 text-fuchsia-700 px-1 rounded font-bold">%</code> แทนกี่ตัวอักษรก็ได้ <code className="bg-fuchsia-50 text-fuchsia-700 px-1 rounded font-bold">_</code> แทน 1 ตัวอักษร</p>
       </div>
-
-      <div className="bg-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-700 p-6">
-        
-        {/* Score Board */}
-        <div className="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700 mb-6 text-white font-bold">
-          <div className="flex items-center gap-2">
-             <Target className="text-fuchsia-400"/> เลเวล {level > 3 ? 3 : level}/3
+      <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row border-b border-slate-200">
+          <div className="bg-[#1e1e2e] md:w-5/12 flex flex-col border-r border-slate-700">
+            <div className="flex bg-slate-900 border-b border-slate-700">
+              {Object.keys(scenarios).map(k => (
+                <button key={k} onClick={() => { setActive(k); setResults([]); setHlIds([]); }}
+                  className={`flex-1 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors px-1 ${active === k ? 'bg-[#1e1e2e] text-fuchsia-400 border-b-2 border-fuchsia-500' : 'text-slate-500 hover:bg-slate-800 hover:text-slate-300'}`}>
+                  {scenarios[k].title}
+                </button>
+              ))}
+            </div>
+            <div className="p-5 flex-1 flex flex-col justify-between gap-4">
+              <div>
+                <div className="font-mono text-[14px] leading-loose mb-3"><div key={active} className="animate-in fade-in zoom-in-95 duration-300">{sc.sql}</div></div>
+                <p className="text-xs text-slate-600 border-t border-slate-700/50 pt-3">{sc.desc}</p>
+              </div>
+              <div className="flex gap-2 justify-end">
+                <button onClick={reset} className="bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold py-2 px-3 rounded-lg text-sm transition-all active:scale-95"><RefreshCcw size={13}/></button>
+                <button onClick={handleRun} disabled={anim} className="bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold py-2 px-5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 text-sm">
+                  <Play size={14} fill="currentColor"/> {anim ? 'Running...' : 'Run Query'}
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="text-center text-slate-600 font-normal">
-            {message}
-          </div>
-          <div className="flex items-center gap-2 text-yellow-400">
-             <Zap /> Score: {score}
+          <div className="md:w-7/12 p-5 bg-slate-50 flex flex-col gap-4">
+            <h4 className="font-bold text-slate-700 flex items-center gap-2 mb-2 text-sm"><Table2 size={14} className="text-fuchsia-600"/> ตาราง customers</h4>
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+              <table className="w-full text-left border-collapse text-sm">
+                <thead className="bg-slate-100 text-slate-600"><tr><th className="p-2 border-b font-semibold text-center">id</th><th className="p-2 border-b font-semibold">name</th><th className="p-2 border-b font-semibold">city</th></tr></thead>
+                <tbody className="divide-y divide-slate-100">
+                  {customers.map(r => (
+                    <tr key={r.id} className={`transition-all duration-500 ${hlIds.includes(r.id) ? 'bg-fuchsia-50 ring-1 ring-fuchsia-300' : 'bg-white hover:bg-slate-50'}`}>
+                      <td className="p-2 text-center font-mono text-xs text-slate-500">{r.id}</td>
+                      <td className="p-2 font-medium text-slate-700 font-mono">{r.name}</td>
+                      <td className="p-2 text-slate-600">{r.city}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {results.length > 0 && <p className="text-sm text-fuchsia-700 font-bold animate-in fade-in duration-300">✓ {results.length} แถวตรง pattern</p>}
+            <div className="flex gap-3 text-xs text-slate-500">
+              <span className="bg-slate-100 px-2 py-1 rounded-lg font-mono"><strong>%</strong> = กี่ตัวก็ได้</span>
+              <span className="bg-slate-100 px-2 py-1 rounded-lg font-mono"><strong>_</strong> = 1 ตัว</span>
+            </div>
           </div>
         </div>
-
-        {/* Game Canvas */}
-        <div className="relative w-full h-[300px] bg-slate-950 rounded-xl border-2 border-slate-800 overflow-hidden mb-6"
-             style={{ backgroundImage: 'radial-gradient(circle at center, #1e293b 0%, #020617 100%)' }}>
-          
-          {/* Targets */}
-          {targets.map(t => (
-            <div 
-              key={t.id}
-              className={`absolute px-4 py-2 rounded-full font-mono text-lg font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all duration-500 ${
-                t.destroyed ? 'scale-150 opacity-0 bg-red-500 text-white' : 'scale-100 opacity-100 bg-slate-800 text-sky-300 border border-sky-500/30'
-              }`}
-              style={{ left: `${t.x}%`, top: `${t.y}%`, transform: 'translate(-50%, -50%)' }}
-            >
-              {t.destroyed ? '💥 BOOM' : t.word}
-            </div>
-          ))}
-
-          {/* Start Screen Overlay */}
-          {!isPlaying && level <= 3 && (
-            <div className="absolute inset-0 bg-slate-900/80 flex flex-col items-center justify-center backdrop-blur-sm z-10">
-              <button 
-                onClick={() => startLevel(1)}
-                className="px-8 py-4 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-black text-xl rounded-full shadow-[0_0_30px_rgba(192,38,211,0.5)] transition-transform hover:scale-110 flex items-center gap-3"
-              >
-                <Play size={24}/> START GAME
-              </button>
-            </div>
-          )}
-
-          {level > 3 && (
-            <div className="absolute inset-0 bg-emerald-900/80 flex flex-col items-center justify-center backdrop-blur-sm z-10 text-white">
-              <CheckCircle2 size={64} className="text-emerald-400 mb-4 animate-bounce" />
-              <h3 className="text-3xl font-black mb-2">MISSION CLEARED!</h3>
-              <p className="text-emerald-200">คุณมีความแม่นยำในการใช้ LIKE ยอดเยี่ยมมาก</p>
-              <button 
-                onClick={() => { setScore(0); startLevel(1); }}
-                className="mt-6 px-6 py-2 bg-white text-emerald-900 font-bold rounded-full hover:bg-emerald-100 flex items-center gap-2"
-              >
-                <RotateCcw size={18}/> เล่นอีกครั้ง
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Command Input Form */}
-        <form onSubmit={handleFire} className="flex gap-4">
-          <div className="flex-1 bg-slate-800 p-2 rounded-xl flex items-center border border-slate-700 focus-within:border-fuchsia-500 focus-within:ring-1 focus-within:ring-fuchsia-500 transition-all">
-            <div className="px-4 text-fuchsia-400 font-mono font-bold">SELECT * FROM words WHERE word LIKE</div>
-            <input 
-              type="text" 
-              value={pattern}
-              onChange={(e) => setPattern(e.target.value)}
-              className="flex-1 bg-transparent border-none outline-none text-white font-mono text-lg"
-              placeholder="e.g. %a%"
-              disabled={!isPlaying}
-              autoFocus
-            />
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2"><HelpCircle size={16} className="text-fuchsia-500"/> Quiz: LIKE Wildcards</h4>
+            <button onClick={() => { setQAns(null); setQDone(false); }} className="text-xs text-slate-700 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm"><RefreshCcw size={12}/> เริ่มใหม่</button>
           </div>
-          <button 
-            type="submit"
-            disabled={!isPlaying || !pattern}
-            className="px-8 bg-fuchsia-600 hover:bg-fuchsia-500 disabled:opacity-50 text-white font-black rounded-xl transition-all shadow-[0_4px_0_rgb(134,25,143)] hover:translate-y-[2px] hover:shadow-[0_2px_0_rgb(134,25,143)] active:translate-y-[4px] active:shadow-none flex items-center gap-2"
-          >
-            <Target size={20}/> FIRE!
-          </button>
-        </form>
-
-        <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-600 justify-center">
-          <div className="bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700"><strong>%</strong> = กี่ตัวอักษรก็ได้ (หรือไม่มีเลย)</div>
-          <div className="bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700"><strong>_</strong> = 1 ตัวอักษรเท่านั้น</div>
+          <p className="text-sm text-slate-700 mb-3 bg-white p-3 rounded-lg border border-slate-200">ความแตกต่างของ % และ _ ใน LIKE คืออะไร?</p>
+          <div className="space-y-2 mb-4">
+            {qOpts.map(o => (
+              <button key={o.val} onClick={() => !qDone && setQAns(o.val)} disabled={qDone}
+                className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm transition-all ${qAns === o.val ? 'bg-fuchsia-50 border-fuchsia-400 text-fuchsia-800 font-medium' : 'bg-white border-slate-200 text-slate-700 hover:border-fuchsia-300'} ${qDone && o.correct ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-bold' : ''} ${qDone && qAns === o.val && !o.correct ? 'bg-rose-50 border-rose-400 text-rose-800' : ''}`}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-end">
+            <button onClick={checkQ} disabled={!qAns || qDone} className="bg-fuchsia-600 hover:bg-fuchsia-500 disabled:opacity-40 text-white font-bold py-2 px-6 rounded-lg text-sm flex items-center gap-2 transition-all active:scale-95"><CheckCircle2 size={16}/> ตรวจคำตอบ</button>
+          </div>
+        </div>
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10"><TerminalSquare size={14} className="text-slate-600"/><span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span></div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((l, i) => (<div key={i} className="leading-relaxed">{l.type==='command' && <div className="text-fuchsia-300 font-bold">{l.text}</div>}{l.type==='output' && <div className="text-cyan-300">{l.text}</div>}{l.type==='system' && <div className="text-slate-600">{l.text}</div>}{l.type==='error' && <div className="text-rose-400 font-bold">{l.text}</div>}{l.type==='success' && <div className="text-emerald-400 font-bold">{l.text}</div>}</div>))}
+          </div>
         </div>
       </div>
     </div>

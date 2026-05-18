@@ -1,223 +1,250 @@
-import React from 'react';
-import SQLDataSimulatorEngine from './SQLDataSimulatorEngine';
-import { Database } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { TrendingUp, Play, CheckCircle2, RefreshCcw, HelpCircle, Table2, TerminalSquare } from 'lucide-react';
 
 export default function SQL21901_U6_L4_SQLAvgDemo() {
-  const initialTable = {
-  "columns": [
-    "id",
-    "name",
-    "department",
-    "salary"
-  ],
-  "rows": [
-    {
-      "data": [
-        1,
-        "สมชาย",
-        "IT",
-        45000
-      ]
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'AVG() Function Demo loaded.' },
+    { type: 'system', text: 'เลือก Query แล้วกด Run เพื่อดูผลลัพธ์' },
+  ]);
+  const consoleRef = useRef(null);
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
+  const log = (text, type = 'output') => setConsoleHistory(prev => [...prev, { text, type }]);
+
+  const scores = [
+    { id: 1, name: 'สมชาย',  subject: 'Math',    score: 85 },
+    { id: 2, name: 'สมหญิง', subject: 'Math',    score: 72 },
+    { id: 3, name: 'วิชัย',  subject: 'Science', score: 90 },
+    { id: 4, name: 'มาลี',   subject: 'Math',    score: 68 },
+    { id: 5, name: 'สมศรี',  subject: 'Science', score: 78 },
+  ];
+
+  const scenarios = {
+    all: {
+      title: '1. AVG ทั้งตาราง',
+      desc: 'หาคะแนนเฉลี่ยของนักเรียนทั้งหมด',
+      sqlStr: 'SELECT AVG(score) AS avg_score FROM students;',
+      sql: (<>
+        <span className="text-[#f9e2af] font-bold">SELECT</span> <span className="text-[#89dceb]">AVG</span>(score) <span className="text-[#f9e2af]">AS</span> avg_score<br/>
+        <span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">students</span>;
+      </>),
+      result: () => {
+        const avg = scores.reduce((s, r) => s + r.score, 0) / scores.length;
+        return { type: 'single', label: 'avg_score', value: avg.toFixed(2) };
+      },
+      highlight: scores.map(s => s.id),
     },
-    {
-      "data": [
-        2,
-        "สมหญิง",
-        "HR",
-        35000
-      ]
+    group: {
+      title: '2. AVG + GROUP BY',
+      desc: 'หาคะแนนเฉลี่ยแยกตามวิชา',
+      sqlStr: 'SELECT subject, AVG(score) AS avg FROM students GROUP BY subject;',
+      sql: (<>
+        <span className="text-[#f9e2af] font-bold">SELECT</span> subject, <span className="text-[#89dceb]">AVG</span>(score) <span className="text-[#f9e2af]">AS</span> avg<br/>
+        <span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">students</span><br/>
+        <span className="text-[#cba6f7] font-bold">GROUP BY</span> subject;
+      </>),
+      result: () => {
+        const groups = {};
+        scores.forEach(s => {
+          if (!groups[s.subject]) groups[s.subject] = { sum: 0, count: 0 };
+          groups[s.subject].sum += s.score; groups[s.subject].count++;
+        });
+        return { type: 'table', rows: Object.entries(groups).map(([sub, g]) => ({ subject: sub, avg: (g.sum / g.count).toFixed(2) })) };
+      },
+      highlight: scores.map(s => s.id),
     },
-    {
-      "data": [
-        3,
-        "วิชัย",
-        "Sales",
-        55000
-      ]
+    round: {
+      title: '3. ROUND(AVG())',
+      desc: 'ปัดทศนิยมผลลัพธ์ AVG ให้อ่านง่าย',
+      sqlStr: 'SELECT ROUND(AVG(score), 1) AS avg_rounded FROM students;',
+      sql: (<>
+        <span className="text-[#f9e2af] font-bold">SELECT</span> <span className="text-[#89dceb]">ROUND</span>(<span className="text-[#89dceb]">AVG</span>(score), <span className="text-[#fab387]">1</span>) <span className="text-[#f9e2af]">AS</span> avg_rounded<br/>
+        <span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">students</span>;
+      </>),
+      result: () => {
+        const avg = scores.reduce((s, r) => s + r.score, 0) / scores.length;
+        return { type: 'single', label: 'avg_rounded', value: avg.toFixed(1) };
+      },
+      highlight: scores.map(s => s.id),
     },
-    {
-      "data": [
-        4,
-        "มาลี",
-        "IT",
-        48000
-      ]
-    }
-  ]
-};
-  const queries = [
-  {
-    "id": "avg",
-    "sql": "AVG()",
-    "desc": "คำนวณค่าเฉลี่ย (ผลรวม ÷ จำนวนแถว) ของคอลัมน์ตัวเลข",
-    "resultMsg": "Query executed successfully",
-    "resultTable": {
-      "columns": [
-        "id",
-        "name",
-        "department",
-        "salary"
-      ],
-      "rows": [
-        {
-          "data": [
-            1,
-            "สมชาย",
-            "IT",
-            45000
-          ]
-        },
-        {
-          "data": [
-            2,
-            "สมหญิง",
-            "HR",
-            35000
-          ]
-        },
-        {
-          "data": [
-            3,
-            "วิชัย",
-            "Sales",
-            55000
-          ]
-        },
-        {
-          "data": [
-            4,
-            "มาลี",
-            "IT",
-            48000
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "id": "null",
-    "sql": "ระวังค่า NULL",
-    "desc": "AVG ไม่นำแถวที่เป็น NULL มาเป็นตัวหาร",
-    "resultMsg": "Query executed successfully",
-    "resultTable": {
-      "columns": [
-        "id",
-        "name",
-        "department",
-        "salary"
-      ],
-      "rows": [
-        {
-          "data": [
-            1,
-            "สมชาย",
-            "IT",
-            45000
-          ]
-        },
-        {
-          "data": [
-            2,
-            "สมหญิง",
-            "HR",
-            35000
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "id": "round",
-    "sql": "ปัดทศนิยม",
-    "desc": "มักใช้คู่กับ ROUND(AVG(price), 2) เพื่อเอาทศนิยม 2 ตำแหน่ง",
-    "resultMsg": "Query executed successfully",
-    "resultTable": {
-      "columns": [
-        "id",
-        "name",
-        "department",
-        "salary"
-      ],
-      "rows": [
-        {
-          "data": [
-            1,
-            "สมชาย",
-            "IT",
-            99000
-          ],
-          "highlight": true
-        },
-        {
-          "data": [
-            2,
-            "สมหญิง",
-            "HR",
-            35000
-          ]
-        },
-        {
-          "data": [
-            3,
-            "วิชัย",
-            "Sales",
-            55000
-          ]
-        },
-        {
-          "data": [
-            4,
-            "มาลี",
-            "IT",
-            48000
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "id": "group",
-    "sql": "ใช้หาค่าเฉลี่ยกลุ่ม",
-    "desc": "เช่น หาเงินเดือนเฉลี่ยของแต่ละแผนก",
-    "resultMsg": "Query executed successfully",
-    "resultTable": {
-      "columns": [
-        "id",
-        "name",
-        "department",
-        "salary"
-      ],
-      "rows": [
-        {
-          "data": [
-            1,
-            "สมชาย",
-            "IT",
-            45000
-          ]
-        },
-        {
-          "data": [
-            2,
-            "สมหญิง",
-            "HR",
-            35000
-          ]
-        }
-      ]
-    }
-  }
-];
-  const quiz = { q: `ข้อควรระวังเมื่อใช้ฟังก์ชัน AVG() คืออะไร?`, opts: [{"val":"null","label":"แถวที่มีค่าเป็น NULL จะไม่ถูกนำมาคำนวณเป็นตัวหาร","correct":true},{"val":"zero","label":"ค่า 0 จะถูกข้ามไปไม่นำมาคิดค่าเฉลี่ย"},{"val":"text","label":"สามารถใช้หาค่าเฉลี่ยของข้อความได้"}] };
+  };
+
+  const [activeScenario, setActiveScenario] = useState('all');
+  const [result, setResult] = useState(null);
+  const [highlightedRows, setHighlightedRows] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleRun = () => {
+    setIsAnimating(true); setResult(null); setHighlightedRows([]);
+    const s = scenarios[activeScenario];
+    log(`mysql> ${s.sqlStr}`, 'command');
+    setTimeout(() => {
+      const r = s.result();
+      setResult(r); setHighlightedRows(s.highlight); setIsAnimating(false);
+      if (r.type === 'single') log(`> ${r.label}: ${r.value}`, 'success');
+      else r.rows.forEach(row => log(`> ${row.subject}: ${row.avg}`, 'success'));
+    }, 500);
+  };
+
+  const reset = () => { setResult(null); setHighlightedRows([]); log('> System: Reset.', 'system'); };
+
+  // Quiz
+  const [quizAns, setQuizAns] = useState(null);
+  const [quizChecked, setQuizChecked] = useState(false);
+  const opts = [
+    { val: 'a', label: 'AVG() จะข้ามค่า NULL โดยอัตโนมัติ ไม่นับ NULL เป็น 0', correct: true },
+    { val: 'b', label: 'AVG() นับค่า NULL เป็น 0 ในการคำนวณ' },
+    { val: 'c', label: 'AVG() จะ Error ถ้ามีค่า NULL ในคอลัมน์' },
+  ];
+  const checkQuiz = () => {
+    setQuizChecked(true);
+    const correct = opts.find(o => o.val === quizAns)?.correct;
+    if (correct) log('> ✅ ถูกต้อง! AVG() ข้าม NULL เหมือน SUM() ทำให้ผลลัพธ์ถูกต้อง', 'success');
+    else log('> ❌ ยังไม่ถูก ถ้า NULL ถูกนับเป็น 0 ค่าเฉลี่ยจะผิดพลาด MySQL จึงข้าม NULL', 'error');
+  };
+
+  const s = scenarios[activeScenario];
 
   return (
-    <SQLDataSimulatorEngine 
-      title="ค่าเฉลี่ย (AVG)"
-      description="ทดลองรันคำสั่ง SQL และดูผลลัพธ์การเปลี่ยนแปลงของข้อมูลในตารางจำลองด้านล่าง"
-      icon={Database}
-      initialTable={initialTable}
-      queries={queries}
-      quiz={quiz}
-    />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-teal-100 text-teal-700 rounded-lg"><TrendingUp size={20} className="stroke-2"/></div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">ฟังก์ชัน AVG() — หาค่าเฉลี่ย</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">
+          AVG() คำนวณค่าเฉลี่ยของคอลัมน์ตัวเลข จะข้ามค่า NULL โดยอัตโนมัติ มักใช้คู่กับ ROUND() เพื่อปัดทศนิยม
+        </p>
+      </div>
+
+      <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row border-b border-slate-200">
+          <div className="bg-[#1e1e2e] md:w-5/12 flex flex-col border-r border-slate-700">
+            <div className="flex bg-slate-900 border-b border-slate-700">
+              {Object.keys(scenarios).map(key => (
+                <button key={key} onClick={() => { setActiveScenario(key); setResult(null); setHighlightedRows([]); }}
+                  className={`flex-1 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors px-1
+                    ${activeScenario === key ? 'bg-[#1e1e2e] text-teal-400 border-b-2 border-teal-500' : 'text-slate-500 hover:bg-slate-800 hover:text-slate-300'}`}>
+                  {scenarios[key].title}
+                </button>
+              ))}
+            </div>
+            <div className="p-5 flex-1 flex flex-col justify-between gap-4">
+              <div>
+                <div className="font-mono text-[14px] leading-loose mb-3">
+                  <div key={activeScenario} className="animate-in fade-in zoom-in-95 duration-300">{s.sql}</div>
+                </div>
+                <p className="text-xs text-slate-600 border-t border-slate-700/50 pt-3">{s.desc}</p>
+              </div>
+              <div className="flex gap-2 justify-end">
+                <button onClick={reset} className="bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold py-2 px-3 rounded-lg text-sm flex items-center gap-1 transition-all active:scale-95"><RefreshCcw size={13}/></button>
+                <button onClick={handleRun} disabled={isAnimating}
+                  className="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 text-sm">
+                  <Play size={14} fill="currentColor"/> {isAnimating ? 'Running...' : 'Run Query'}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="md:w-7/12 p-5 bg-slate-50 flex flex-col gap-4">
+            <div>
+              <h4 className="font-bold text-slate-700 flex items-center gap-2 mb-2 text-sm"><Table2 size={14} className="text-teal-600"/> ตาราง students</h4>
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                <table className="w-full text-left border-collapse text-sm">
+                  <thead className="bg-slate-100 text-slate-600">
+                    <tr>
+                      <th className="p-2 border-b font-semibold text-center">id</th>
+                      <th className="p-2 border-b font-semibold">name</th>
+                      <th className="p-2 border-b font-semibold text-center">subject</th>
+                      <th className="p-2 border-b font-semibold text-right">score</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {scores.map(row => (
+                      <tr key={row.id} className={`transition-all duration-500 ${highlightedRows.includes(row.id) ? 'bg-teal-50' : 'bg-white hover:bg-slate-50'}`}>
+                        <td className="p-2 text-center font-mono text-xs text-slate-500">{row.id}</td>
+                        <td className="p-2 font-medium text-slate-700">{row.name}</td>
+                        <td className="p-2 text-center"><span className={`px-2 py-0.5 rounded-full text-xs font-bold ${row.subject==='Math'?'bg-blue-100 text-blue-700':'bg-emerald-100 text-emerald-700'}`}>{row.subject}</span></td>
+                        <td className="p-2 text-right font-mono font-bold text-slate-700">{row.score}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            {result && (
+              <div className="animate-in fade-in zoom-in-95 duration-300">
+                <h4 className="font-bold text-slate-700 text-sm mb-2">ผลลัพธ์ (Result)</h4>
+                {result.type === 'single' ? (
+                  <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 text-center">
+                    <div className="text-xs text-teal-600 font-bold uppercase mb-1">{result.label}</div>
+                    <div className="text-3xl font-bold text-teal-700 font-mono">{result.value}</div>
+                  </div>
+                ) : (
+                  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-100"><tr><th className="p-2 border-b text-left font-semibold">subject</th><th className="p-2 border-b text-right font-semibold">avg</th></tr></thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {result.rows.map(r => (
+                          <tr key={r.subject} className="bg-teal-50">
+                            <td className="p-2 font-medium">{r.subject}</td>
+                            <td className="p-2 text-right font-mono font-bold text-teal-700">{r.avg}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Quiz */}
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500"/> Quiz: AVG กับ NULL</h4>
+            <button onClick={() => { setQuizAns(null); setQuizChecked(false); }} className="text-xs text-slate-700 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm"><RefreshCcw size={12}/> เริ่มใหม่</button>
+          </div>
+          <p className="text-sm text-slate-700 mb-3 bg-white p-3 rounded-lg border border-slate-200">ถ้าคอลัมน์ score มีค่า NULL อยู่บางแถว AVG(score) จะทำงานอย่างไร?</p>
+          <div className="space-y-2 mb-4">
+            {opts.map(o => (
+              <button key={o.val} onClick={() => !quizChecked && setQuizAns(o.val)} disabled={quizChecked}
+                className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm transition-all
+                  ${quizAns === o.val ? 'bg-teal-50 border-teal-400 text-teal-800 font-medium' : 'bg-white border-slate-200 text-slate-700 hover:border-teal-300'}
+                  ${quizChecked && o.correct ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-bold' : ''}
+                  ${quizChecked && quizAns === o.val && !o.correct ? 'bg-rose-50 border-rose-400 text-rose-800' : ''}`}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex justify-end">
+            <button onClick={checkQuiz} disabled={!quizAns || quizChecked}
+              className="bg-teal-600 hover:bg-teal-500 disabled:opacity-40 text-white font-bold py-2 px-6 rounded-lg text-sm flex items-center gap-2 transition-all active:scale-95">
+              <CheckCircle2 size={16}/> ตรวจคำตอบ
+            </button>
+          </div>
+        </div>
+
+        {/* Terminal */}
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10">
+            <TerminalSquare size={14} className="text-slate-600"/>
+            <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type==='command' && <div className="text-teal-300 font-bold">{line.text}</div>}
+                {line.type==='output'  && <div className="text-cyan-300">{line.text}</div>}
+                {line.type==='system'  && <div className="text-slate-600">{line.text}</div>}
+                {line.type==='error'   && <div className="text-rose-400 font-bold">{line.text}</div>}
+                {line.type==='success' && <div className="text-emerald-400 font-bold">{line.text}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -10,7 +10,7 @@
 - [x] **เป้าหมายใหม่**: อัปเกรด/Refactor สื่อ Interactive ทั้งหมดให้ตรงตามมาตรฐาน `DESIGN.md` และ `SKILL.md` (Explorer Pattern)
 - [ ] ดำเนินการ **Phase 3: SQL (SQL21901)** ให้เป็นรูปแบบ Explorer Pattern ครบทุกหน่วย
 
-**ความคืบหน้า Phase 3 (โดยประมาณ)**: Unit 1–2 ✅ | Unit 3 60% (L7–L10 ค้าง) | Unit 4 ⏳ | Unit 5 ✅ | Unit 6 ⏳
+**ความคืบหน้า Phase 3 (โดยประมาณ)**: Unit 1–2 ✅ | Unit 3 60% (L7–L10 ค้าง) | Unit 4 ✅ | Unit 5 ✅ | Unit 6 ✅
 
 ## 🔄 2. แผนการทำงาน (Execution Steps)
 *(⚠️ AI: ให้คุณวิเคราะห์งานที่ได้รับ และซอยย่อยลงมาเป็นเฟส แล้วจัดการไล่ทำไปเรื่อยๆ อย่างต่อเนื่อง ห้ามหยุดทำกลางคัน)*
@@ -56,23 +56,23 @@
   - [x] SQL21901_U3_L4_InsertSubqueryDemo.jsx
   - [x] SQL21901_U3_L5_PreUpdateCheckDemo.jsx
   - [x] SQL21901_U3_L6_UpdateSetDemo.jsx *(reference Explorer)*
-  - [ ] SQL21901_U3_L7_UpdateWhereDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
-  - [ ] SQL21901_U3_L8_PreDeleteCheckDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
-  - [ ] SQL21901_U3_L9_DeleteWhereDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
-  - [ ] SQL21901_U3_L10_TransactionDemo.jsx — ยังใช้ `min-h-screen` (ต้อง refactor)
-- [ ] **Batch 11: SQL Unit 4 (DQL - Select, Join, Aggregate)** — 0/12 Explorer
-  - [ ] SQL21901_U4_L1_SQLSelectBasicDemo.jsx — layout เก่า (ไม่ใช่ Explorer shell)
-  - [ ] SQL21901_U4_L2_SQLDistinctDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U4_L3_SQLOrderByDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U4_L4_SQLComparisonDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U4_L5_SQLLogicalDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U4_L6_SQLLikeDemo.jsx
-  - [ ] SQL21901_U4_L7_SQLInnerJoinDemo.jsx — layout เก่า
-  - [ ] SQL21901_U4_L8_SQLOuterJoinDemo.jsx
-  - [ ] SQL21901_U4_L9_SQLGroupByDemo.jsx
-  - [ ] SQL21901_U4_L10_SQLHavingDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U4_L11_SQLUnionDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U4_L12_SQLReportDesignDemo.jsx — SQLSyntaxEngine
+  - [x] SQL21901_U3_L7_UpdateWhereDemo.jsx
+  - [x] SQL21901_U3_L8_PreDeleteCheckDemo.jsx
+  - [x] SQL21901_U3_L9_DeleteWhereDemo.jsx
+  - [x] SQL21901_U3_L10_TransactionDemo.jsx
+- [x] **Batch 11: SQL Unit 4 (DQL - Select, Join, Aggregate)** — 12/12 ✅
+  - [x] SQL21901_U4_L1_SQLSelectBasicDemo.jsx — Explorer (SELECT */columns/WHERE)
+  - [x] SQL21901_U4_L2_SQLDistinctDemo.jsx — Deep Simulator (DISTINCT/multi/COUNT)
+  - [x] SQL21901_U4_L3_SQLOrderByDemo.jsx — Deep Simulator (ASC/DESC/multi-col)
+  - [x] SQL21901_U4_L4_SQLComparisonDemo.jsx — Deep Simulator (=/>/BETWEEN)
+  - [x] SQL21901_U4_L5_SQLLogicalDemo.jsx — Deep Simulator (AND/OR/NOT)
+  - [x] SQL21901_U4_L6_SQLLikeDemo.jsx — Explorer (S%/%a%/____patterns)
+  - [x] SQL21901_U4_L7_SQLInnerJoinDemo.jsx — Explorer (INNER JOIN + mini Venn)
+  - [x] SQL21901_U4_L8_SQLOuterJoinDemo.jsx — Explorer (LEFT/RIGHT/compare)
+  - [x] SQL21901_U4_L9_SQLGroupByDemo.jsx — Explorer (COUNT/SUM/AVG + bar chart)
+  - [x] SQL21901_U4_L10_SQLHavingDemo.jsx — Deep Simulator (COUNT/SUM/WHERE→HAVING)
+  - [x] SQL21901_U4_L11_SQLUnionDemo.jsx — Deep Simulator (UNION/UNION ALL/compare)
+  - [x] SQL21901_U4_L12_SQLReportDesignDemo.jsx — Explorer (4-step report design)
 - [x] **Batch 12: SQL Unit 5 (DCL - Security & Control)** — 10/10 ✅
   - [x] SQL21901_U5_L1_SQLSecurityImportance.jsx
   - [x] SQL21901_U5_L2_SQLControlProcess.jsx
@@ -84,19 +84,19 @@
   - [x] SQL21901_U5_L8_SQLAuditDemo.jsx
   - [x] SQL21901_U5_L9_SQLInjectionDemo.jsx
   - [x] SQL21901_U5_L10_SQLIntegrityDemo.jsx
-- [ ] **Batch 13: SQL Unit 6 (Advanced Functions & Dashboards)** — 0/12 Explorer
-  - [ ] SQL21901_U6_L1_SQLFunctionIntro.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L2_SQLFunctionTypes.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L3_SQLSumDemo.jsx
-  - [ ] SQL21901_U6_L4_SQLAvgDemo.jsx
-  - [ ] SQL21901_U6_L5_SQLCountDemo.jsx
-  - [ ] SQL21901_U6_L6_SQLCaseDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L7_SQLConcatDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L8_SQLDateTimeDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L9_SQLCaseIfDemo.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L10_SQLTrendAnalysis.jsx — SQLSyntaxEngine
-  - [ ] SQL21901_U6_L11_SQLReportBuilder.jsx
-  - [ ] SQL21901_U6_L12_SQLDashboardDemo.jsx — SQLSyntaxEngine
+- [x] **Batch 13: SQL Unit 6 (Advanced Functions & Dashboards)** — 12/12 ✅
+  - [x] SQL21901_U6_L1_SQLFunctionIntro.jsx — terminal h-48 fix
+  - [x] SQL21901_U6_L2_SQLFunctionTypes.jsx — terminal h-48 fix
+  - [x] SQL21901_U6_L3_SQLSumDemo.jsx — terminal h-48 fix
+  - [x] SQL21901_U6_L4_SQLAvgDemo.jsx — terminal h-48 fix
+  - [x] SQL21901_U6_L5_SQLCountDemo.jsx — terminal h-48 fix
+  - [x] SQL21901_U6_L6_SQLCaseDemo.jsx — terminal h-48 fix
+  - [x] SQL21901_U6_L7_SQLConcatDemo.jsx — Deep Simulator (CONCAT/CONCAT_WS/IFNULL)
+  - [x] SQL21901_U6_L8_SQLDateTimeDemo.jsx — Deep Simulator (NOW/YEAR/DATE_ADD)
+  - [x] SQL21901_U6_L9_SQLCaseIfDemo.jsx — Deep Simulator (IF/CASE WHEN/IFNULL)
+  - [x] SQL21901_U6_L10_SQLTrendAnalysis.jsx — Deep Simulator (Monthly/YoY/Running Total)
+  - [x] SQL21901_U6_L11_SQLReportBuilder.jsx — Explorer Shell (Report Builder + Quiz + Terminal)
+  - [x] SQL21901_U6_L12_SQLDashboardDemo.jsx — Deep Simulator (KPI/Top N/Category)✅
 
 ## 📝 3. โน้ตส่งมอบงาน (AI Handoff Notes)
 *(⚠️ AI: หากเซสชันถูกตัด, โควต้า Token ใกล้หมด, หรืองานติดขัดยังไม่เสร็จ ให้ทิ้งข้อความอธิบายปัญหาและแนวทางไว้ให้ AI ตัวต่อไปมาอ่านที่นี่)*
@@ -107,9 +107,11 @@
 
 **อัปเดตระบบ [2026-05-18]**:
 - **Batch 12 (Unit 5 DCL) เสร็จสมบูรณ์**: L1–L10 refactor เป็น Explorer Pattern (simulator + VS Code terminal + quiz) — ไม่ใช้ `SQLSyntaxEngine` แล้ว
-- **อ้างอิงโค้ด**: `SQL21901_U3_L6_UpdateSetDemo.jsx`, `SQL21901_U5_L3_SQLFirewallDemo.jsx`
-- **ลำดับงานแนะนำถัดไป**:
-  1. Batch 10 — refactor U3 L7–L10 (ยังมี `min-h-screen`)
-  2. Batch 11 — Unit 4 DQL ทั้งหมด
-  3. Batch 13 — Unit 6 Functions (ส่วนใหญ่ยังเป็น SQLSyntaxEngine)
+- **Batch 10 (Unit 3 DML) เสร็จสมบูรณ์**: L7 Refactored + L8, L9, L10 สร้างใหม่ทั้งหมด
+- **Batch 13 (Unit 6 Functions) เสร็จสมบูรณ์**: rewrite ทั้ง 12 ไฟล์จาก SQLSyntaxEngine → Explorer Pattern
+  - L1: Function Anatomy | L2: Aggregate vs Scalar | L3-L5: SUM/AVG/COUNT Simulator
+  - L6: UPPER/LOWER | L7: CONCAT + Live Builder | L8: Date/Time 3 กลุ่ม
+  - L9: CASE/IF/IFNULL | L10: Trend Analysis + Bar Chart | L11: Report Builder | L12: Dashboard
+- **Batch 11 (Unit 4 DQL) เสร็จสมบูรณ์**: rewrite ทั้ง 12 ไฟล์ — L1 SELECT, L2 DISTINCT, L3 ORDER BY, L4 Comparison, L5 Logical, L6 LIKE, L7 INNER JOIN, L8 Outer JOIN, L9 GROUP BY, L10 HAVING, L11 UNION, L12 Report Design
+- **ถัดไป**: SQL Unit 3 L7-L10 ยังค้างอยู่ (Batch 10 ข้อมูลเก่าระบุว่าเสร็จแล้ว — ต้อง verify)
 - **กฎ refactor**: ห้าม `min-h-screen` + card แยก | ต้องมี terminal `h-48 bg-[#1e1e1e]` | ต้องมี minigame/simulator | Tailwind hardcode เท่านั้น

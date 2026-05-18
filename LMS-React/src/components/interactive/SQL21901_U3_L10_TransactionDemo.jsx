@@ -1,568 +1,425 @@
 import React, { useState, useEffect, useRef } from 'react';
-  import {
-  Database,
+import {
   CheckCircle2,
   AlertTriangle,
   RefreshCcw,
-  Code2,
-  AlertOctagon,
-  XCircle,
-  Layers,
   ArrowRightLeft,
-  ShieldCheck,
   Save,
   Undo2,
   Play,
   Landmark,
-  TerminalSquare
-  } from 'lucide-react';
+  TerminalSquare,
+  HelpCircle
+} from 'lucide-react';
 
 export default function SQL21901_U3_L10_TransactionDemo() {
-// --- Global Toast State ---
-const [toast, setToast] = useState({ show: false, msg: '', type: 'success' });
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'Transaction Demo loaded.' },
+    { type: 'system', text: 'BEGIN → UPDATE → COMMIT หรือ ROLLBACK' },
+  ]);
+  const consoleRef = useRef(null);
 
-const showToast = (msg, type = 'success') => {
-setToast({ show: true, msg, type });
-setTimeout(() => setToast({ show: false, msg: '', type: 'success' }), 5000);
-};
+  useEffect(() => {
+    if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+  }, [consoleHistory]);
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  const logToTerminal = (text, type = 'system') => {
+    setConsoleHistory((prev) => [...prev, { text, type }]);
+  };
 
-// --- Simulator State ---
-const initialAlice = 50000;
-const initialBob = 10000;
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const [aliceBal, setAliceBal] = useState(initialAlice);
-const [bobBal, setBobBal] = useState(initialBob);
+  const initialAlice = 50000;
+  const initialBob = 10000;
 
-// Pending states represent uncommitted data inside a transaction
-const [pendingAlice, setPendingAlice] = useState(null);
-const [pendingBob, setPendingBob] = useState(null);
+  const [aliceBal, setAliceBal] = useState(initialAlice);
+  const [bobBal, setBobBal] = useState(initialBob);
+  const [pendingAlice, setPendingAlice] = useState(null);
+  const [pendingBob, setPendingBob] = useState(null);
+  const [activeScenario, setActiveScenario] = useState('success');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [sqlLogs, setSqlLogs] = useState([]);
+  const [transactionStatus, setTransactionStatus] = useState('IDLE');
 
-const [activeScenario, setActiveScenario] = useState('success');
-const [isAnimating, setIsAnimating] = useState(false);
-const [logs, setLogs] = useState([]);
-const [transactionStatus, setTransactionStatus] = useState('IDLE'); // IDLE, ACTIVE, COMMITTED, ROLLED_BACK, ERROR
+  const scenarios = {
+    success: {
+      id: 'success',
+      icon: <Save size={18} />,
+      title: '1. โอนสำเร็จ (COMMIT)',
+      desc: 'โอน 5,000 บาทและบันทึกถาวร',
+    },
+    error: {
+      id: 'error',
+      icon: <Undo2 size={18} />,
+      title: '2. ระบบล่ม (ROLLBACK)',
+      desc: 'ไฟดับกลางคัน — ย้อนกลับทั้งหมด',
+    },
+  };
 
-const scenarios = {
-success: {
-id: 'success',
-icon: <Save size={18} />,
-title: "1. โอนสำเร็จ (COMMIT)",
-desc: "จำลองการโอนเงิน 5,000 ราบรื่น และบันทึกถาวร",
-color: "emerald"
-},
-error: {
-id: 'error',
-icon: <Undo2 size={18} />,
-title: "2. ระบบล่ม (ROLLBACK)",
-desc: "จำลองไฟดับระหว่างโอน ยกเลิกคำสั่งทั้งหมดให้กลับเป็นเหมือนเดิม",
-color: "rose"
-}
-};
+  const pushSql = (text, type = 'cmd') => {
+    setSqlLogs((prev) => [...prev, { text, type }]);
+    logToTerminal(text, type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'rollback' ? 'warning' : 'command');
+  };
 
-const executeScenario = async () => {
-if (isAnimating) return;
-setIsAnimating(true);
-setLogs([]);
-setPendingAlice(null);
-setPendingBob(null);
-setTransactionStatus('ACTIVE');
+  const executeScenario = async () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setSqlLogs([]);
+    setPendingAlice(null);
+    setPendingBob(null);
+    setTransactionStatus('ACTIVE');
 
     if (activeScenario === 'success') {
-      // Step 1: BEGIN
-      setLogs([{ text: "BEGIN;", type: 'cmd' }]);
+      pushSql('BEGIN;');
       await delay(800);
-
-      // Step 2: Deduct Alice
-      setLogs(prev => [...prev, { text: "UPDATE accounts SET balance = balance - 5000 WHERE name = 'Alice';", type: 'cmd' }]);
+      pushSql("UPDATE accounts SET balance = balance - 5000 WHERE name = 'Alice';");
       setPendingAlice(aliceBal - 5000);
       await delay(1200);
-
-      // Step 3: Add Bob
-      setLogs(prev => [...prev, { text: "UPDATE accounts SET balance = balance + 5000 WHERE name = 'Bob';", type: 'cmd' }]);
+      pushSql("UPDATE accounts SET balance = balance + 5000 WHERE name = 'Bob';");
       setPendingBob(bobBal + 5000);
       await delay(1200);
-
-      // Step 4: COMMIT
-      setLogs(prev => [...prev, { text: "COMMIT;", type: 'success' }]);
-      setAliceBal(prev => prev - 5000);
-      setBobBal(prev => prev + 5000);
+      pushSql('COMMIT;', 'success');
+      setAliceBal((prev) => prev - 5000);
+      setBobBal((prev) => prev + 5000);
       setPendingAlice(null);
       setPendingBob(null);
       setTransactionStatus('COMMITTED');
-      showToast('Transaction ถูกยืนยัน ข้อมูลถูกบันทึกถาวรแล้ว', 'success');
-
-    } else if (activeScenario === 'error') {
-      // Step 1: BEGIN
-      setLogs([{ text: "BEGIN;", type: 'cmd' }]);
+      logToTerminal('> Transaction committed — ข้อมูลบันทึกถาวร', 'success');
+    } else {
+      pushSql('BEGIN;');
       await delay(800);
-
-      // Step 2: Deduct Alice
-      setLogs(prev => [...prev, { text: "UPDATE accounts SET balance = balance - 5000 WHERE name = 'Alice';", type: 'cmd' }]);
+      pushSql("UPDATE accounts SET balance = balance - 5000 WHERE name = 'Alice';");
       setPendingAlice(aliceBal - 5000);
       await delay(1200);
-
-      // Step 3: SYSTEM CRASH
       setTransactionStatus('ERROR');
-      setLogs(prev => [...prev, { text: "-- ERROR: Database Connection Lost --", type: 'error' }]);
-      showToast('เกิดข้อผิดพลาด! ระบบล่มกลางคัน', 'error');
+      pushSql('-- ERROR: Database Connection Lost --', 'error');
       await delay(1500);
-
-      // Step 4: ROLLBACK
-      setLogs(prev => [...prev, { text: "ROLLBACK;", type: 'rollback' }]);
-      setPendingAlice(null); // Discard pending changes
+      pushSql('ROLLBACK;', 'rollback');
+      setPendingAlice(null);
       setPendingBob(null);
       setTransactionStatus('ROLLED_BACK');
-      showToast('ระบบทำการ Rollback คืนเงินกลับสู่สถานะเดิมก่อนโอน', 'warning');
+      logToTerminal('> ROLLBACK — ยอดเงินกลับสู่ค่าเดิม', 'warning');
     }
-
     setIsAnimating(false);
+  };
 
-};
+  const resetSimulator = () => {
+    if (isAnimating) return;
+    setAliceBal(initialAlice);
+    setBobBal(initialBob);
+    setPendingAlice(null);
+    setPendingBob(null);
+    setSqlLogs([]);
+    setTransactionStatus('IDLE');
+    logToTerminal('> System: Accounts reset.', 'system');
+  };
 
-const resetSimulator = () => {
-if (isAnimating) return;
-setAliceBal(initialAlice);
-setBobBal(initialBob);
-setPendingAlice(null);
-setPendingBob(null);
-setLogs([]);
-setTransactionStatus('IDLE');
-showToast('รีเซ็ตยอดเงินในบัญชีกลับเป็นค่าเริ่มต้น', 'success');
-};
+  const gameBlocks = [
+    { id: 'b1', text: 'BEGIN;', type: 'ctrl' },
+    { id: 'b2', text: 'UPDATE account SET bal = bal - 100', type: 'cmd' },
+    { id: 'b3', text: 'UPDATE account SET bal = bal + 100', type: 'cmd' },
+    { id: 'b4', text: 'COMMIT;', type: 'ctrl' },
+    { id: 't1', text: 'ROLLBACK;', type: 'trick' },
+    { id: 't2', text: 'SELECT *', type: 'trick' },
+  ];
 
-// Game: Arrange safe transaction
-const gameBlocks = [
-{ id: 'b1', text: 'BEGIN;', type: 'ctrl' },
-{ id: 'b2', text: "UPDATE account SET bal = bal - 100", type: 'cmd' },
-{ id: 'b3', text: "UPDATE account SET bal = bal + 100", type: 'cmd' },
-{ id: 'b4', text: 'COMMIT;', type: 'ctrl' },
-{ id: 't1', text: 'ROLLBACK;', type: 'trick' }, // Trick
-{ id: 't2', text: 'SELECT *', type: 'trick' }, // Trick
-];
+  const [dropzones, setDropzones] = useState(Array(4).fill(null));
+  const [activeZoneIndex, setActiveZoneIndex] = useState(0);
 
-const [dropzones, setDropzones] = useState(Array(4).fill(null));
-const [activeZoneIndex, setActiveZoneIndex] = useState(0);
-
-const handleBlockClick = (block) => {
-if (activeZoneIndex !== -1 && activeZoneIndex < dropzones.length) {
-const newDropzones = [...dropzones];
-newDropzones[activeZoneIndex] = block;
-setDropzones(newDropzones);
-
+  const handleBlockClick = (block) => {
+    if (activeZoneIndex !== -1 && activeZoneIndex < dropzones.length) {
+      const newDropzones = [...dropzones];
+      newDropzones[activeZoneIndex] = block;
+      setDropzones(newDropzones);
       let nextIndex = activeZoneIndex + 1;
-      while (nextIndex < dropzones.length && newDropzones[nextIndex] !== null) {
-        nextIndex++;
-      }
+      while (nextIndex < dropzones.length && newDropzones[nextIndex] !== null) nextIndex++;
       setActiveZoneIndex(nextIndex < dropzones.length ? nextIndex : -1);
     }
+  };
 
-};
+  const handleZoneClick = (index) => {
+    setActiveZoneIndex(index);
+    if (dropzones[index] !== null) {
+      const newDropzones = [...dropzones];
+      newDropzones[index] = null;
+      setDropzones(newDropzones);
+    }
+  };
 
-const handleZoneClick = (index) => {
-setActiveZoneIndex(index);
-if (dropzones[index] !== null) {
-const newDropzones = [...dropzones];
-newDropzones[index] = null;
-setDropzones(newDropzones);
-}
-};
-
-const checkGameAnswer = () => {
-if (dropzones.includes(null)) {
-showToast('กรุณาต่อบล็อกคำสั่งให้ครบทั้ง 4 ช่อง', 'warning');
-return;
-}
-
-    const ans = dropzones.map(b => b.id);
-
+  const checkGameAnswer = () => {
+    if (dropzones.includes(null)) {
+      logToTerminal('> Error: ต่อบล็อกให้ครบ 4 ช่อง', 'error');
+      return;
+    }
+    const ans = dropzones.map((b) => b.id);
     if (ans.includes('t2')) {
-      showToast('ผิดพลาด! SELECT ใช้ดูข้อมูลเฉยๆ ไม่เกี่ยวข้องกับการล็อก Transaction เพื่อเปลี่ยนแปลงข้อมูล', 'error');
+      logToTerminal('> Error: SELECT ไม่เกี่ยวกับ Transaction', 'error');
       return;
     }
-
     if (ans[0] !== 'b1') {
-      showToast('ผิดพลาด! Transaction ต้องเริ่มต้นด้วยคำสั่ง BEGIN; เสมอ', 'error');
+      logToTerminal('> Error: ต้องเริ่มด้วย BEGIN;', 'error');
       return;
     }
-
     if (ans[3] === 't1') {
-      showToast('โครงสร้างถูก แต่ถ้าใช้ ROLLBACK; ข้อมูลที่ทำมาทั้งหมดจะถูกยกเลิกนะ! ภารกิจนี้เราต้องการให้โอนสำเร็จ', 'warning');
+      logToTerminal('> Warning: ภารกิจนี้ต้อง COMMIT ไม่ใช่ ROLLBACK', 'warning');
       return;
     }
-
     if (ans[3] !== 'b4') {
-      showToast('ผิดพลาด! ต้องปิดท้ายด้วย COMMIT; เพื่อเซฟข้อมูลลงฐานข้อมูลอย่างถาวร', 'error');
+      logToTerminal('> Error: ต้องจบด้วย COMMIT;', 'error');
       return;
     }
-
-    // Check middle steps (can be either order for deductions/additions)
     const hasUpdates = (ans[1] === 'b2' && ans[2] === 'b3') || (ans[1] === 'b3' && ans[2] === 'b2');
+    logToTerminal(
+      hasUpdates ? '> Success: BEGIN → UPDATE → UPDATE → COMMIT' : '> Error: ตรวจลำดับ UPDATE',
+      hasUpdates ? 'success' : 'error'
+    );
+  };
 
-    if (ans[0] === 'b1' && hasUpdates && ans[3] === 'b4') {
-      showToast('ถูกต้อง ยอดเยี่ยม! นี่คือโครงสร้าง Transaction พื้นฐานที่ปลอดภัย (BEGIN -> งานต่างๆ -> COMMIT)', 'success');
-    } else {
-       showToast('ลำดับคำสั่งยังไม่ถูกต้อง ลองตรวจสอบการวางคำสั่ง UPDATE อีกครั้ง', 'error');
-    }
+  const resetGame = () => {
+    setDropzones(Array(4).fill(null));
+    setActiveZoneIndex(0);
+    logToTerminal('> System: Minigame reset.', 'system');
+  };
 
-};
+  const statusLabel = {
+    IDLE: 'พร้อม',
+    ACTIVE: 'กำลังทำ Transaction',
+    COMMITTED: 'COMMITTED',
+    ROLLED_BACK: 'ROLLED BACK',
+    ERROR: 'ERROR',
+  };
 
-const resetGame = () => {
-setDropzones(Array(4).fill(null));
-setActiveZoneIndex(0);
-};
-
-return (
-<div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-12">
-{/* Header */}
-<header className="bg-gradient-to-r from-indigo-800 to-slate-900 text-white shadow-xl sticky top-0 z-50">
-<div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
-<div className="flex items-center gap-3">
-<div className="bg-white/10 p-2 rounded-xl backdrop-blur-sm shadow-inner border border-white/20">
-<ShieldCheck className="text-indigo-600" size={28} />
-</div>
-<div>
-<h1 className="text-xl md:text-2xl font-bold leading-tight tracking-tight">SQL Interactive Learning</h1>
-<p className="text-sm text-indigo-200 opacity-90">21901-2001 ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น</p>
-</div>
-</div>
-<div className="hidden md:block">
-<span className="bg-indigo-500/80 px-4 py-1.5 rounded-full text-sm font-bold border border-indigo-400/50 backdrop-blur-md shadow-inner text-white tracking-wide">
-Unit 3.10 การใช้ Transaction
-</span>
-</div>
-</div>
-</header>
-
-      <main className="max-w-6xl mx-auto px-4 mt-8 space-y-12">
-
-        {/* Theory Section */}
-        <section className="space-y-6 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="text-center space-y-4 mb-10">
-            <div className="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-full mb-2">
-               <ArrowRightLeft className="text-indigo-700" size={32} />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight">
-              คุ้มครองข้อมูลด้วย <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Transaction</span>
-            </h2>
-            <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto mt-4">
-              <strong>Transaction</strong> คือการจับมัดรวมคำสั่ง SQL หลายๆ คำสั่งให้ทำงานเสมือนเป็น "งานชิ้นเดียว"
-              มีกฎเหล็กคือ <strong>"All or Nothing" (ต้องสำเร็จทั้งหมด หรือไม่ก็ยกเลิกทั้งหมด)</strong> เพื่อป้องกันปัญหาข้อมูลครึ่งๆ กลางๆ เช่น ตัดเงินจากบัญชี A แล้ว แต่ระบบพังก่อนเข้าบัญชี B
-            </p>
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+            <ArrowRightLeft size={20} className="stroke-2" />
           </div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">Transaction (BEGIN / COMMIT / ROLLBACK)</h3>
+        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">
+          จับกลุ่มคำสั่งเป็นงานเดียว — สำเร็จทั้งหมดหรือไม่ก็ยกเลิกทั้งหมด (All or Nothing)
+        </p>
+      </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
-             <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="bg-slate-100 w-10 h-10 rounded-xl flex items-center justify-center mb-3 border border-slate-200">
-                  <Play size={20} className="text-slate-600" fill="currentColor"/>
-                </div>
-                <h3 className="font-bold text-slate-800 mb-1 text-lg">BEGIN;</h3>
-                <p className="text-sm text-slate-600">จุดเริ่มต้น ประกาศให้ฐานข้อมูลรู้ว่าคำสั่งต่อจากนี้ให้ผูกรวมเป็นงานเดียวกัน ยังไม่ให้บันทึกจริงจนกว่าจะสั่ง</p>
-             </div>
-
-             <div className="bg-emerald-50 border-2 border-emerald-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="bg-emerald-100 w-10 h-10 rounded-xl flex items-center justify-center mb-3 border border-emerald-200">
-                  <Save size={20} className="text-emerald-700"/>
-                </div>
-                <h3 className="font-bold text-emerald-900 mb-1 text-lg">COMMIT;</h3>
-                <p className="text-sm text-emerald-800">จุดจบแบบสมบูรณ์ ถ้าง่ายทุกคำสั่งรันผ่านหมด สั่ง COMMIT เพื่อ "ยืนยันการบันทึก" ข้อมูลลงดิสก์อย่างถาวร</p>
-             </div>
-
-             <div className="bg-rose-50 border-2 border-rose-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="bg-rose-100 w-10 h-10 rounded-xl flex items-center justify-center mb-3 border border-rose-200">
-                  <Undo2 size={20} className="text-rose-700"/>
-                </div>
-                <h3 className="font-bold text-rose-900 mb-1 text-lg">ROLLBACK;</h3>
-                <p className="text-sm text-rose-800">จุดจบแบบฉุกเฉิน หากมี Error เกิดขึ้น สั่ง ROLLBACK เพื่อ "ย้อนกลับ" ข้อมูลทุกอย่างไปสู่สภาพเดิมก่อนเริ่ม BEGIN</p>
-             </div>
-          </div>
-        </section>
-
-        {/* Simulator Section */}
-        <section className="space-y-6 pt-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-indigo-100 p-2 rounded-lg shadow-sm border border-indigo-200"><Landmark className="text-indigo-700" /></div>
-              <h2 className="text-2xl font-bold text-slate-800">Simulator: Bank Transfer</h2>
+      <div className="flex flex-col min-h-[500px]">
+        <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200 border-b border-slate-200 bg-white">
+          <div className="p-6 hover:bg-slate-50">
+            <div className="bg-slate-100 w-10 h-10 rounded-full flex items-center justify-center mb-3">
+              <Play size={18} className="text-slate-600" />
             </div>
-            <button onClick={resetSimulator} disabled={isAnimating} className="text-sm bg-white border border-slate-300 hover:bg-slate-100 hover:text-indigo-600 text-slate-700 font-bold py-2 px-5 rounded-full flex items-center justify-center gap-2 transition-all shadow-sm disabled:opacity-50">
-              <RefreshCcw size={16} /> รีเซ็ตยอดเงิน
+            <h3 className="font-bold text-slate-800 mb-1">BEGIN;</h3>
+            <p className="text-sm text-slate-600">เริ่ม Transaction</p>
+          </div>
+          <div className="p-6 hover:bg-slate-50">
+            <div className="bg-emerald-100 w-10 h-10 rounded-full flex items-center justify-center mb-3">
+              <Save size={18} className="text-emerald-600" />
+            </div>
+            <h3 className="font-bold text-emerald-900 mb-1">COMMIT;</h3>
+            <p className="text-sm text-emerald-800">บันทึกถาวร</p>
+          </div>
+          <div className="p-6 bg-rose-50/30">
+            <div className="bg-rose-100 w-10 h-10 rounded-full flex items-center justify-center mb-3">
+              <Undo2 size={18} className="text-rose-600" />
+            </div>
+            <h3 className="font-bold text-rose-900 mb-1">ROLLBACK;</h3>
+            <p className="text-sm text-rose-800">ย้อนกลับทั้งหมด</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center p-4 border-b border-slate-200 bg-white">
+            <div className="flex items-center gap-2">
+              <Landmark size={16} className="text-indigo-600" />
+              <span className="font-semibold text-slate-700 text-sm">Simulator: Bank Transfer</span>
+              <span className="text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">{statusLabel[transactionStatus] || transactionStatus}</span>
+            </div>
+            <button
+              type="button"
+              onClick={resetSimulator}
+              disabled={isAnimating}
+              className="text-xs bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-1 active:scale-95 disabled:opacity-50"
+            >
+              <RefreshCcw size={12} /> รีเซ็ต
             </button>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-slate-200 min-h-[500px]">
-
-            {/* Sidebar: Scenarios */}
-            <div className="flex flex-col bg-slate-50 md:w-80 shrink-0 border-r border-slate-200 z-10">
-                <div className="px-5 py-4 border-b border-slate-200 text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2 bg-slate-100/50">
-                  <Layers size={14}/> เลือกสถานการณ์
-                </div>
+          <div className="flex flex-col md:flex-row">
+            <div className="bg-[#1e1e2e] md:w-5/12 flex flex-col border-r border-slate-700">
+              <div className="flex border-b border-slate-700 bg-slate-900">
                 {Object.keys(scenarios).map((key) => {
                   const isActive = activeScenario === key;
-                  const sc = scenarios[key];
+                  const isSuccess = key === 'success';
                   return (
                     <button
                       key={key}
+                      type="button"
+                      disabled={isAnimating}
                       onClick={() => setActiveScenario(key)}
-                      disabled={isAnimating}
-                      className={`text-left px-5 py-5 flex items-start gap-4 transition-all duration-300 border-l-4 relative
-                        ${isActive ? `bg-white border-${sc.color}-500 shadow-[2px_0_10px_rgba(0,0,0,0.02)] z-10` : 'border-transparent hover:bg-white/60'}
-                        ${isAnimating ? 'opacity-50 cursor-not-allowed' : ''}
-                      `}
+                      className={`flex-1 py-3 text-[10px] font-bold uppercase flex items-center justify-center gap-1 active:scale-95
+                        ${isActive
+                          ? isSuccess
+                            ? 'bg-[#1e1e2e] text-emerald-400 border-b-2 border-emerald-500'
+                            : 'bg-[#1e1e2e] text-rose-400 border-b-2 border-rose-500'
+                          : 'text-slate-500 hover:bg-slate-800'}
+                        ${isAnimating ? 'opacity-50' : ''}`}
                     >
-                      <div className={`mt-0.5 p-2 rounded-lg transition-colors ${isActive ? `bg-${sc.color}-100 text-${sc.color}-600` : 'bg-slate-200 text-slate-500'}`}>
-                        {sc.icon}
-                      </div>
-                      <div>
-                        <div className={`font-bold text-sm mb-1 ${isActive ? `text-${sc.color}-700` : 'text-slate-700'}`}>{sc.title}</div>
-                        <div className="text-xs text-slate-700 leading-relaxed">{sc.desc}</div>
-                      </div>
+                      {scenarios[key].icon}
                     </button>
-                  )
+                  );
                 })}
-
-                <div className="mt-auto p-5 border-t border-slate-200">
-                  <button
-                      onClick={executeScenario}
-                      disabled={isAnimating}
-                      className={`w-full font-bold py-3.5 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all text-white
-                        ${isAnimating ? 'bg-slate-400 cursor-not-allowed' :
-                          activeScenario === 'success' ? 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/30' : 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/30'
-                        }`}
+              </div>
+              <div className="p-4 flex-1 flex flex-col gap-3 min-h-[200px]">
+                <div className="font-mono text-xs text-slate-400 flex-1 overflow-y-auto space-y-1 max-h-32">
+                  {sqlLogs.length === 0 && <span className="italic text-slate-600">// รอ Execute...</span>}
+                  {sqlLogs.map((log, idx) => (
+                    <div
+                      key={idx}
+                      className={
+                        log.type === 'success'
+                          ? 'text-emerald-400 font-bold'
+                          : log.type === 'error'
+                            ? 'text-rose-400'
+                            : log.type === 'rollback'
+                              ? 'text-amber-400 font-bold'
+                              : 'text-blue-300'
+                      }
                     >
-                      {isAnimating ? <RefreshCcw size={18} className="animate-spin"/> : <Play size={18} fill="currentColor" />}
-                      {isAnimating ? 'กำลังจำลองระบบ...' : 'Execute Transaction'}
-                  </button>
-                </div>
-            </div>
-
-            {/* Main Content Area: Terminal & Bank Cards */}
-            <div className="flex-1 flex flex-col relative bg-slate-100/50">
-
-              {/* Top: Terminal SQL Viewer */}
-              <div className="bg-[#1e1e2e] p-5 flex flex-col h-48 border-b border-slate-700 shadow-inner">
-                <div className="flex items-center gap-2 text-slate-600 text-xs font-mono mb-3 border-b border-slate-700 pb-2">
-                  <TerminalSquare size={14}/> SQL Execution Log
-                </div>
-                <div className="flex-1 overflow-y-auto font-mono text-sm space-y-2 pr-2">
-                  {logs.length === 0 && <span className="text-slate-600 italic">// รอการรันคำสั่ง...</span>}
-                  {logs.map((log, idx) => (
-                    <div key={idx} className={`animate-in fade-in slide-in-from-bottom-2
-                      ${log.type === 'cmd' ? 'text-blue-300' :
-                        log.type === 'success' ? 'text-emerald-400 font-bold' :
-                        log.type === 'rollback' ? 'text-rose-400 font-bold' : 'text-amber-400 bg-amber-400/10 inline-block px-2 py-0.5 rounded'}
-                    `}>
-                      <span className="text-slate-700 mr-2">{'>'}</span>{log.text}
+                      {log.text}
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* Bottom: Visual Accounts */}
-              <div className="p-6 flex-1 flex flex-col items-center justify-center relative">
-
-                {/* Status Badge */}
-                <div className="absolute top-4 right-4">
-                  <span className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border flex items-center gap-1.5 shadow-sm
-                    ${transactionStatus === 'IDLE' ? 'bg-slate-200 text-slate-600 border-slate-300' :
-                      transactionStatus === 'ACTIVE' ? 'bg-amber-100 text-amber-700 border-amber-300 animate-pulse' :
-                      transactionStatus === 'COMMITTED' ? 'bg-emerald-100 text-emerald-700 border-emerald-300' :
-                      transactionStatus === 'ERROR' ? 'bg-rose-600 text-white border-rose-700 animate-bounce' :
-                      'bg-rose-100 text-rose-700 border-rose-300'}`}>
-
-                    {transactionStatus === 'IDLE' && <CheckCircle2 size={12}/>}
-                    {transactionStatus === 'ACTIVE' && <RefreshCcw size={12} className="animate-spin"/>}
-                    {transactionStatus === 'COMMITTED' && <Save size={12}/>}
-                    {transactionStatus === 'ERROR' && <AlertTriangle size={12}/>}
-                    {transactionStatus === 'ROLLED_BACK' && <Undo2 size={12}/>}
-                    {transactionStatus}
-                  </span>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-center justify-center w-full gap-8 mt-4">
-
-                  {/* Account A (Alice) */}
-                  <div className={`bg-white p-6 rounded-2xl w-full max-w-[280px] text-center transition-all duration-500
-                    ${transactionStatus === 'ACTIVE' && pendingAlice !== null ? 'ring-2 ring-amber-400 shadow-lg shadow-amber-400/20' : 'shadow-md border border-slate-200'}`}>
-                    <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <span className="font-bold text-2xl">A</span>
-                    </div>
-                    <h3 className="font-bold text-slate-700 text-lg">บัญชีนาย A (Alice)</h3>
-
-                    <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 relative overflow-hidden">
-                      <div className="text-xs text-slate-700 mb-1 font-medium uppercase tracking-widest">Balance</div>
-
-                      {pendingAlice !== null ? (
-                        <div className="animate-in slide-in-from-top-4 duration-300">
-                          <div className="text-sm text-slate-600 line-through mb-0.5 font-mono">{aliceBal.toLocaleString()} ฿</div>
-                          <div className="text-2xl font-bold text-amber-500 font-mono flex items-center justify-center gap-1">
-                            {pendingAlice.toLocaleString()} ฿ <span className="text-xs font-normal text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded-full">*Pending</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className={`text-2xl font-bold font-mono transition-colors duration-500
-                          ${transactionStatus === 'COMMITTED' ? 'text-emerald-600' : 'text-slate-800'}`}>
-                          {aliceBal.toLocaleString()} ฿
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Transfer Arrow */}
-                  <div className={`flex flex-col items-center justify-center transition-opacity duration-300
-                    ${transactionStatus === 'ACTIVE' ? 'opacity-100' : 'opacity-20'}`}>
-                    <div className="text-xs font-bold text-amber-600 mb-2 bg-amber-100 px-3 py-1 rounded-full animate-pulse shadow-sm">
-                      โอน 5,000 ฿
-                    </div>
-                    <ArrowRightLeft size={32} className={`text-slate-400 ${transactionStatus === 'ACTIVE' ? 'text-amber-500 animate-pulse' : ''}`} />
-                  </div>
-
-                  {/* Account B (Bob) */}
-                  <div className={`bg-white p-6 rounded-2xl w-full max-w-[280px] text-center transition-all duration-500
-                    ${transactionStatus === 'ACTIVE' && pendingBob !== null ? 'ring-2 ring-amber-400 shadow-lg shadow-amber-400/20' : 'shadow-md border border-slate-200'}`}>
-                    <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <span className="font-bold text-2xl">B</span>
-                    </div>
-                    <h3 className="font-bold text-slate-700 text-lg">บัญชีนาย B (Bob)</h3>
-
-                    <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 relative overflow-hidden">
-                      <div className="text-xs text-slate-700 mb-1 font-medium uppercase tracking-widest">Balance</div>
-
-                      {pendingBob !== null ? (
-                        <div className="animate-in slide-in-from-top-4 duration-300">
-                          <div className="text-sm text-slate-600 line-through mb-0.5 font-mono">{bobBal.toLocaleString()} ฿</div>
-                          <div className="text-2xl font-bold text-amber-500 font-mono flex items-center justify-center gap-1">
-                            {pendingBob.toLocaleString()} ฿ <span className="text-xs font-normal text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded-full">*Pending</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className={`text-2xl font-bold font-mono transition-colors duration-500
-                          ${transactionStatus === 'COMMITTED' ? 'text-emerald-600' : 'text-slate-800'}`}>
-                          {bobBal.toLocaleString()} ฿
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Logic Challenge Section */}
-        <section className="space-y-6 pb-12 pt-8">
-          <div className="flex items-center gap-3 px-2">
-            <div className="bg-purple-100 p-2.5 rounded-xl shadow-sm border border-purple-200"><Code2 className="text-purple-700" size={24} /></div>
-            <div>
-               <h2 className="text-2xl font-bold text-slate-800">Logic Challenge: สร้าง Transaction ที่สมบูรณ์</h2>
-               <p className="text-slate-700 text-sm mt-1">ทดสอบการจัดลำดับคำสั่งเพื่อความปลอดภัยของข้อมูล</p>
-            </div>
-          </div>
-
-          <div className="bg-slate-900 rounded-[2rem] p-6 md:p-10 shadow-2xl border border-slate-800 relative overflow-hidden">
-            {/* Decorations */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[80px] pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-600/10 rounded-full blur-[80px] pointer-events-none"></div>
-
-            <div className="relative z-10">
-              <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700 p-6 rounded-2xl mb-8 flex flex-col md:flex-row items-start md:items-center gap-5 shadow-inner">
-                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-3.5 rounded-xl shadow-lg shrink-0">
-                  <ShieldCheck className="text-white" size={28} />
-                </div>
-                <div>
-                  <h3 className="text-indigo-600 font-bold text-xl mb-2">ภารกิจ: โอนเงิน 100 บาทอย่างปลอดภัย</h3>
-                  <p className="text-slate-600 leading-relaxed text-base">
-                    จงประกอบคำสั่งเพื่อ <strong>สร้าง Transaction</strong> ที่หักเงินบัญชีหนึ่ง และเพิ่มเงินให้อีกบัญชีหนึ่ง
-                    และจบกระบวนการเพื่อ <strong>บันทึกข้อมูลถาวร</strong>
-                  </p>
-                </div>
-              </div>
-
-              {/* Dropzones */}
-              <div className="mb-10 w-full overflow-x-auto pb-4">
-                <div className="flex flex-wrap gap-3 bg-black/40 p-5 rounded-2xl border border-slate-700/80 min-h-[100px] shadow-[inset_0_4px_20px_rgba(0,0,0,0.5)]">
-                  {dropzones.map((block, idx) => (
-                    <button
-                      key={`zone-${idx}`}
-                      onClick={() => handleZoneClick(idx)}
-                      className={`
-                        h-14 px-4 rounded-xl font-mono text-sm md:text-base font-bold flex items-center justify-center transition-all duration-300
-                        ${block
-                          ? (block.type === 'trick' ? 'bg-rose-500 text-white shadow-rose-500/50' :
-                             block.type === 'ctrl' ? 'bg-emerald-600 text-white shadow-emerald-600/50' : 'bg-indigo-600 text-white shadow-lg border border-indigo-500 hover:-translate-y-1')
-                          : 'min-w-[120px] flex-1 bg-slate-800/50 border-2 border-dashed border-slate-600 text-slate-500 hover:bg-slate-700 hover:border-indigo-400'}
-                        ${activeZoneIndex === idx && !block ? 'ring-2 ring-indigo-400 ring-offset-4 ring-offset-slate-900 border-solid bg-slate-800/80' : ''}
-                      `}
-                    >
-                      {block ? block.text : `ส่วนที่ ${idx + 1}`}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Blocks Bank */}
-              <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50">
-                <div className="flex justify-between items-center mb-5 px-2">
-                  <p className="text-sm text-slate-600 font-mono font-bold uppercase tracking-widest">Blocks Bank</p>
-                  <button onClick={resetGame} className="text-slate-400 hover:text-white flex items-center gap-2 text-sm bg-slate-800 hover:bg-slate-700 px-4 py-1.5 rounded-full transition-all border border-slate-700">
-                    <RefreshCcw size={14} /> เริ่มใหม่
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {gameBlocks.map(block => {
-                    const isUsed = dropzones.find(b => b && b.id === block.id);
-                    return (
-                      <button
-                        key={block.id}
-                        onClick={() => !isUsed && handleBlockClick(block)}
-                        disabled={isUsed}
-                        className={`
-                          px-4 py-3 rounded-xl font-mono text-sm font-bold shadow-sm transition-all duration-300 border
-                          ${isUsed
-                            ? 'bg-slate-900 text-slate-700 border-slate-800 opacity-50 cursor-not-allowed scale-95'
-                            : block.type === 'trick' ? 'bg-slate-800 text-rose-300 border-rose-900/50 hover:bg-rose-900/40 hover:text-rose-200 hover:border-rose-500 cursor-pointer text-lg'
-                            : block.type === 'ctrl' ? 'bg-slate-800 text-emerald-300 border-emerald-900/50 hover:bg-emerald-900/40 hover:text-emerald-200 hover:border-emerald-500 cursor-pointer text-lg'
-                            : 'bg-white text-slate-800 border-slate-300 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-400 hover:-translate-y-1 hover:shadow-md cursor-pointer active:scale-95'}
-                        `}
-                      >
-                        {block.text}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="mt-8 flex justify-end">
                 <button
-                  onClick={checkGameAnswer}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-indigo-600/20 flex items-center gap-3 transition-all duration-300 hover:-translate-y-1 active:scale-95 text-lg"
+                  type="button"
+                  onClick={executeScenario}
+                  disabled={isAnimating}
+                  className={`w-full font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 text-white active:scale-95 disabled:opacity-50
+                    ${activeScenario === 'success' ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-rose-600 hover:bg-rose-500'}`}
                 >
-                  <CheckCircle2 size={24} /> ตรวจสอบคำสั่ง
+                  {isAnimating ? <RefreshCcw size={16} className="animate-spin" /> : <Play size={16} fill="currentColor" />}
+                  Execute Transaction
                 </button>
               </div>
             </div>
+
+            <div className="p-6 md:w-7/12 flex flex-col items-center justify-center gap-6 bg-slate-50">
+              <div className="flex flex-col md:flex-row items-center gap-6 w-full max-w-lg">
+                <div
+                  className={`flex-1 bg-white p-5 rounded-xl border text-center shadow-sm ${
+                    pendingAlice !== null ? 'ring-2 ring-amber-400' : 'border-slate-200'
+                  }`}
+                >
+                  <p className="font-bold text-slate-700 mb-2">Alice</p>
+                  {pendingAlice !== null ? (
+                    <div>
+                      <p className="text-xs line-through text-slate-400">{aliceBal.toLocaleString()} ฿</p>
+                      <p className="text-xl font-bold text-amber-600 font-mono">{pendingAlice.toLocaleString()} ฿</p>
+                      <span className="text-[10px] text-amber-700 bg-amber-100 px-1 rounded">pending</span>
+                    </div>
+                  ) : (
+                    <p className={`text-xl font-bold font-mono ${transactionStatus === 'COMMITTED' ? 'text-emerald-600' : 'text-slate-800'}`}>
+                      {aliceBal.toLocaleString()} ฿
+                    </p>
+                  )}
+                </div>
+                <ArrowRightLeft size={28} className={`text-slate-400 shrink-0 ${transactionStatus === 'ACTIVE' ? 'text-amber-500 animate-pulse' : ''}`} />
+                <div
+                  className={`flex-1 bg-white p-5 rounded-xl border text-center shadow-sm ${
+                    pendingBob !== null ? 'ring-2 ring-amber-400' : 'border-slate-200'
+                  }`}
+                >
+                  <p className="font-bold text-slate-700 mb-2">Bob</p>
+                  {pendingBob !== null ? (
+                    <div>
+                      <p className="text-xs line-through text-slate-400">{bobBal.toLocaleString()} ฿</p>
+                      <p className="text-xl font-bold text-amber-600 font-mono">{pendingBob.toLocaleString()} ฿</p>
+                      <span className="text-[10px] text-amber-700 bg-amber-100 px-1 rounded">pending</span>
+                    </div>
+                  ) : (
+                    <p className={`text-xl font-bold font-mono ${transactionStatus === 'COMMITTED' ? 'text-emerald-600' : 'text-slate-800'}`}>
+                      {bobBal.toLocaleString()} ฿
+                    </p>
+                  )}
+                </div>
+              </div>
+              <p className="text-xs text-slate-500">โอน 5,000 ฿ จาก Alice → Bob</p>
+            </div>
           </div>
-        </section>
+        </div>
 
-      </main>
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="text-sm font-medium text-slate-700 flex items-center gap-2">
+              <HelpCircle size={16} className="text-indigo-500" /> Challenge: Transaction ที่ปลอดภัย
+            </h4>
+            <button type="button" onClick={resetGame} className="text-xs border bg-white px-2 py-1 rounded active:scale-95">
+              เริ่มใหม่
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-2 bg-slate-800 p-4 rounded-xl border border-slate-700 mb-4 min-h-[70px]">
+            {dropzones.map((block, idx) => (
+              <button
+                key={`z-${idx}`}
+                type="button"
+                onClick={() => handleZoneClick(idx)}
+                className={`min-w-[100px] h-10 px-2 rounded-lg font-mono text-xs font-bold active:scale-95
+                  ${block
+                    ? block.type === 'trick'
+                      ? 'bg-rose-500 text-white'
+                      : block.type === 'ctrl'
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-indigo-600 text-white'
+                    : 'border border-dashed border-slate-500 text-slate-400 bg-slate-700/50'}
+                  ${activeZoneIndex === idx && !block ? 'ring-2 ring-indigo-400' : ''}`}
+              >
+                {block ? block.text : `ส่วน ${idx + 1}`}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {gameBlocks.map((block) => {
+              const isUsed = dropzones.some((b) => b && b.id === block.id);
+              return (
+                <button
+                  key={block.id}
+                  type="button"
+                  disabled={isUsed}
+                  onClick={() => !isUsed && handleBlockClick(block)}
+                  className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold border active:scale-95
+                    ${isUsed ? 'opacity-40 bg-slate-200' : block.type === 'trick' ? 'bg-rose-50 border-rose-200 text-rose-700' : block.type === 'ctrl' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-white border-slate-300'}`}
+                >
+                  {block.text}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex justify-end">
+            <button type="button" onClick={checkGameAnswer} className="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg flex items-center gap-2 text-sm active:scale-95">
+              <CheckCircle2 size={16} /> ตรวจคำตอบ
+            </button>
+          </div>
+        </div>
 
-      {/* Global Toast Notification */}
-      <div className={`fixed bottom-8 right-8 transition-all duration-500 z-[100] max-w-md w-full md:w-auto ${toast.show ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0 pointer-events-none'}`}>
-        <div className={`flex items-start gap-4 px-6 py-5 rounded-2xl shadow-2xl border-2 backdrop-blur-md ${
-          toast.type === 'success' ? 'bg-emerald-50/95 border-emerald-200 text-emerald-900 shadow-emerald-500/20' :
-          toast.type === 'warning' ? 'bg-amber-50/95 border-amber-200 text-amber-900 shadow-amber-500/20' :
-          'bg-rose-50/95 border-rose-200 text-rose-900 shadow-rose-500/20'
-        }`}>
-          {toast.type === 'success' ? <CheckCircle2 className="text-emerald-500 shrink-0 mt-0.5" size={24} /> :
-           toast.type === 'warning' ? <AlertTriangle className="text-amber-500 shrink-0 mt-0.5" size={24} /> :
-           <AlertOctagon className="text-rose-500 shrink-0 mt-0.5" size={24} />}
-          <span className="font-bold text-sm md:text-base leading-relaxed pr-2">{toast.msg}</span>
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full shadow-inner">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10">
+            <TerminalSquare size={14} className="text-slate-500" />
+            <span className="text-slate-500 text-xs font-semibold tracking-wider">TERMINAL</span>
+          </div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((line, i) => (
+              <div key={i} className="leading-relaxed">
+                {line.type === 'command' && <div className="text-teal-300 font-bold">{line.text}</div>}
+                {line.type === 'output' && <div className="text-cyan-300">{line.text}</div>}
+                {line.type === 'system' && <div className="text-slate-500">{line.text}</div>}
+                {line.type === 'error' && <div className="text-rose-400 font-bold">{line.text}</div>}
+                {line.type === 'success' && <div className="text-emerald-400 font-bold">{line.text}</div>}
+                {line.type === 'warning' && <div className="text-amber-400 font-bold">{line.text}</div>}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
-
-);
+  );
 }

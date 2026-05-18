@@ -1,189 +1,144 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Database, Play, CheckCircle2, XCircle, ChevronRight, Award } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Database, Play, CheckCircle2, RefreshCcw, HelpCircle, Table2, TerminalSquare, ChevronRight } from 'lucide-react';
 
 export default function SQL21901_U4_L1_SQLSelectBasicDemo() {
-  const [history, setHistory] = useState([
-    { type: 'system', text: 'Welcome to SQL Terminal Quest v1.0' },
-    { type: 'system', text: 'Type your SQL commands to complete the mission.' },
-    { type: 'system', text: '---' },
+  const [consoleHistory, setConsoleHistory] = useState([
+    { type: 'system', text: 'SQL Terminal Quest v2.0 loaded.' },
+    { type: 'system', text: 'พิมพ์คำสั่ง SQL เพื่อทำภารกิจ — หรือกด Run ดู Scenario' },
   ]);
-  const [input, setInput] = useState('');
-  const [level, setLevel] = useState(1);
-  const [score, setScore] = useState(0);
-  const endRef = useRef(null);
+  const consoleRef = useRef(null);
+  useEffect(() => { if (consoleRef.current) consoleRef.current.scrollTop = consoleRef.current.scrollHeight; }, [consoleHistory]);
+  const log = (t, type = 'output') => setConsoleHistory(p => [...p, { text: t, type }]);
 
-  const missions = {
-    1: {
-      goal: 'ดึงข้อมูลทั้งหมดจากตาราง employees',
-      table: 'employees',
-      hint: 'ใช้ SELECT * FROM ชื่อตาราง',
-      regex: /^\s*select\s+\*\s+from\s+employees\s*;?\s*$/i,
-      successData: [
-        { id: 1, name: 'Alice', role: 'Admin' },
-        { id: 2, name: 'Bob', role: 'User' }
-      ]
+  const employees = [
+    { id: 1, name: 'Alice', role: 'Admin', salary: 45000 },
+    { id: 2, name: 'Bob', role: 'User', salary: 35000 },
+    { id: 3, name: 'Charlie', role: 'Admin', salary: 50000 },
+    { id: 4, name: 'Diana', role: 'User', salary: 32000 },
+  ];
+
+  const scenarios = {
+    star: {
+      title: '1. SELECT *', desc: 'ดึงทุกคอลัมน์ทั้งตาราง',
+      sqlStr: 'SELECT * FROM employees;',
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> <span className="text-[#fab387]">*</span><br/><span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">employees</span>;</>),
+      run: () => employees,
+      cols: ['id', 'name', 'role', 'salary'],
     },
-    2: {
-      goal: 'ดึงเฉพาะคอลัมน์ name จากตาราง employees',
-      table: 'employees',
-      hint: 'ใช้ SELECT ชื่อคอลัมน์ FROM ชื่อตาราง',
-      regex: /^\s*select\s+name\s+from\s+employees\s*;?\s*$/i,
-      successData: [
-        { name: 'Alice' },
-        { name: 'Bob' }
-      ]
+    cols: {
+      title: '2. เลือกคอลัมน์', desc: 'ดึงเฉพาะคอลัมน์ name และ role',
+      sqlStr: 'SELECT name, role FROM employees;',
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> name, role<br/><span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">employees</span>;</>),
+      run: () => employees.map(e => ({ name: e.name, role: e.role })),
+      cols: ['name', 'role'],
     },
-    3: {
-      goal: 'Mission Complete! คุณจบหลักสูตร Terminal แล้ว',
-      table: '',
-      hint: '',
-      regex: null,
-      successData: []
-    }
+    where: {
+      title: '3. WHERE', desc: 'กรองเฉพาะ role = Admin',
+      sqlStr: "SELECT * FROM employees WHERE role = 'Admin';",
+      sql: (<><span className="text-[#f9e2af] font-bold">SELECT</span> <span className="text-[#fab387]">*</span><br/><span className="text-[#f9e2af] font-bold">FROM</span> <span className="text-[#a6e3a1]">employees</span><br/><span className="text-[#cba6f7] font-bold">WHERE</span> role = <span className="text-[#a6e3a1]">'Admin'</span>;</>),
+      run: () => employees.filter(e => e.role === 'Admin'),
+      cols: ['id', 'name', 'role', 'salary'],
+    },
   };
 
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [history]);
+  const [active, setActive] = useState('star');
+  const [results, setResults] = useState([]);
+  const [anim, setAnim] = useState(false);
 
-  const handleCommand = (e) => {
-    e.preventDefault();
-    if (!input.trim() || level > 2) return;
-
-    const cmd = input;
-    setInput('');
-    setHistory(prev => [...prev, { type: 'user', text: `> ${cmd}` }]);
-
-    const currentMission = missions[level];
-    
-    // Check answer
-    if (currentMission.regex.test(cmd)) {
-      setTimeout(() => {
-        setHistory(prev => [
-          ...prev, 
-          { type: 'success', text: `Query OK. ${currentMission.successData.length} rows affected.` },
-          { type: 'data', data: currentMission.successData }
-        ]);
-        setScore(prev => prev + 100);
-        
-        setTimeout(() => {
-          setLevel(prev => prev + 1);
-          setHistory(prev => [...prev, { type: 'system', text: '---' }, { type: 'system', text: `Level UP! New Mission Unlocked.` }]);
-        }, 1500);
-      }, 500);
-    } else {
-      setTimeout(() => {
-        setHistory(prev => [
-          ...prev, 
-          { type: 'error', text: `ERROR: You have an error in your SQL syntax or it does not match the mission goal.` }
-        ]);
-      }, 500);
-    }
+  const handleRun = () => {
+    setAnim(true); setResults([]);
+    const sc = scenarios[active];
+    log(`mysql> ${sc.sqlStr}`, 'command');
+    setTimeout(() => {
+      const r = sc.run();
+      setResults(r); setAnim(false);
+      log(`> ${r.length} row(s) returned`, 'success');
+      r.forEach(row => log(`> ${Object.values(row).join(' | ')}`, 'output'));
+    }, 500);
   };
+  const reset = () => { setResults([]); log('> Reset.', 'system'); };
 
+  const [qAns, setQAns] = useState(null);
+  const [qDone, setQDone] = useState(false);
+  const qOpts = [
+    { val: 'a', label: 'SELECT name FROM employees;', correct: true },
+    { val: 'b', label: 'SELECT * FROM employees;' },
+    { val: 'c', label: 'GET name FROM employees;' },
+  ];
+  const checkQ = () => { setQDone(true); const ok = qOpts.find(o => o.val === qAns)?.correct; log(ok ? '> ✅ ถูกต้อง! ระบุชื่อคอลัมน์แทน * เพื่อดึงเฉพาะข้อมูลที่ต้องการ' : '> ❌ SQL ไม่มี GET keyword, และ * ดึงทุกคอลัมน์ ไม่ใช่เฉพาะ name', ok ? 'success' : 'error'); };
+
+  const sc = scenarios[active];
   return (
-    <div className="space-y-12 my-8">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex gap-4 items-start">
-        <div className="p-4 bg-slate-800 text-green-400 rounded-xl shrink-0">
-          <Terminal size={32} />
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
+      <div className="bg-slate-50 border-b border-slate-200 p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-blue-100 text-blue-700 rounded-lg"><Database size={20} className="stroke-2"/></div>
+          <h3 className="font-display text-xl font-semibold text-slate-900">คำสั่ง SELECT พื้นฐาน</h3>
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Terminal Query Quest</h2>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            ฝึกพิมพ์คำสั่งดึงข้อมูล SELECT ลงใน Terminal จำลอง ทำภารกิจให้สำเร็จเพื่อเก็บคะแนนสะสม!
-          </p>
-        </div>
+        <p className="font-base text-sm leading-relaxed text-slate-700">SELECT ดึงข้อมูลจากตาราง — ใช้ <code className="bg-blue-50 text-blue-700 px-1 rounded font-bold">*</code> ดึงทุกคอลัมน์ หรือระบุชื่อคอลัมน์เพื่อดึงเฉพาะส่วนที่ต้องการ</p>
       </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Mission Panel */}
-        <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-            <div className="bg-indigo-600 p-4 text-white font-bold flex justify-between items-center">
-              <span>🎯 ภารกิจที่ {level > 2 ? 'สำเร็จ' : level}</span>
-              <span className="flex items-center gap-1 text-yellow-300"><Award size={18}/> {score} XP</span>
+      <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row border-b border-slate-200">
+          <div className="bg-[#1e1e2e] md:w-5/12 flex flex-col border-r border-slate-700">
+            <div className="flex bg-slate-900 border-b border-slate-700">
+              {Object.keys(scenarios).map(k => (
+                <button key={k} onClick={() => { setActive(k); setResults([]); }}
+                  className={`flex-1 py-2.5 text-[11px] font-bold uppercase tracking-wider transition-colors px-1 ${active === k ? 'bg-[#1e1e2e] text-blue-400 border-b-2 border-blue-500' : 'text-slate-500 hover:bg-slate-800 hover:text-slate-300'}`}>
+                  {scenarios[k].title}
+                </button>
+              ))}
             </div>
-            <div className="p-6">
-              <h3 className="text-lg font-bold text-slate-800 mb-2">{missions[level].goal}</h3>
-              {level <= 2 && (
-                <>
-                  <p className="text-slate-700 text-sm mb-4">ตารางเป้าหมาย: <code className="bg-slate-100 text-pink-600 px-1 rounded">{missions[level].table}</code></p>
-                  <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-sm text-yellow-800">
-                    <strong>คำใบ้:</strong> {missions[level].hint}
-                  </div>
-                </>
-              )}
-              {level > 2 && (
-                <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-lg text-emerald-800 text-center font-bold">
-                  🎉 ยินดีด้วย! คุณพิมพ์คำสั่ง SELECT พื้นฐานได้คล่องแล้ว
-                </div>
-              )}
+            <div className="p-5 flex-1 flex flex-col justify-between gap-4">
+              <div>
+                <div className="font-mono text-[14px] leading-loose mb-3"><div key={active} className="animate-in fade-in zoom-in-95 duration-300">{sc.sql}</div></div>
+                <p className="text-xs text-slate-600 border-t border-slate-700/50 pt-3">{sc.desc}</p>
+              </div>
+              <div className="flex gap-2 justify-end">
+                <button onClick={reset} className="bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold py-2 px-3 rounded-lg text-sm transition-all active:scale-95"><RefreshCcw size={13}/></button>
+                <button onClick={handleRun} disabled={anim} className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 text-sm">
+                  <Play size={14} fill="currentColor"/> {anim ? 'Running...' : 'Run Query'}
+                </button>
+              </div>
             </div>
           </div>
-          
-          <div className="bg-slate-100 p-4 rounded-xl border border-slate-200 text-sm text-slate-700">
-            <strong>ตารางที่มีในระบบ:</strong><br/>
-            - employees (id, name, role)
+          <div className="md:w-7/12 p-5 bg-slate-50 flex flex-col gap-4">
+            <h4 className="font-bold text-slate-700 flex items-center gap-2 mb-2 text-sm"><Table2 size={14} className="text-blue-600"/> {results.length > 0 ? `ผลลัพธ์ (${results.length} แถว)` : 'ตาราง employees'}</h4>
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+              <table className="w-full text-left border-collapse text-sm">
+                <thead className="bg-slate-100 text-slate-600"><tr>{(results.length > 0 ? Object.keys(results[0]) : ['id', 'name', 'role', 'salary']).map(k => <th key={k} className="p-2 border-b font-semibold">{k}</th>)}</tr></thead>
+                <tbody className="divide-y divide-slate-100">
+                  {(results.length > 0 ? results : employees).map((r, i) => (
+                    <tr key={i} className={`transition-all duration-500 ${results.length > 0 ? 'bg-blue-50' : 'bg-white hover:bg-slate-50'}`}>
+                      {Object.values(r).map((v, j) => <td key={j} className="p-2 font-mono text-sm">{typeof v === 'number' ? v.toLocaleString() : v}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-
-        {/* Terminal Window */}
-        <div className="lg:col-span-2 bg-[#1E1E1E] rounded-2xl shadow-2xl overflow-hidden border border-slate-700 flex flex-col h-[400px]">
-          <div className="bg-[#323233] p-3 flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            </div>
-            <div className="mx-auto text-slate-600 text-xs font-semibold tracking-wider">mysql -u root -p</div>
+        <div className="p-6 bg-slate-50 border-b border-slate-200">
+          <div className="flex justify-between items-center mb-3">
+            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 flex items-center gap-2"><HelpCircle size={16} className="text-blue-500"/> Quiz: SELECT</h4>
+            <button onClick={() => { setQAns(null); setQDone(false); }} className="text-xs text-slate-700 flex items-center gap-1 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm"><RefreshCcw size={12}/> เริ่มใหม่</button>
           </div>
-          
-          <div className="p-4 flex-1 overflow-y-auto font-mono text-sm sm:text-base space-y-2">
-            {history.map((h, i) => (
-              <div key={i} className="mb-1">
-                {h.type === 'system' && <div className="text-sky-400">{h.text}</div>}
-                {h.type === 'user' && <div className="text-white">{h.text}</div>}
-                {h.type === 'error' && <div className="text-red-400 flex items-start gap-2"><XCircle size={16} className="mt-0.5 shrink-0"/> <span>{h.text}</span></div>}
-                {h.type === 'success' && <div className="text-green-400 flex items-center gap-2"><CheckCircle2 size={16}/> {h.text}</div>}
-                {h.type === 'data' && (
-                  <div className="mt-2 mb-4 bg-[#2D2D2D] border border-slate-700 rounded-lg overflow-hidden inline-block">
-                    <table className="text-left text-slate-600">
-                      <thead className="bg-[#3D3D3D] border-b border-slate-600">
-                        <tr>
-                          {Object.keys(h.data[0]).map(k => <th key={k} className="px-4 py-2 border-r border-slate-600 last:border-0">{k}</th>)}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {h.data.map((row, j) => (
-                          <tr key={j} className="border-b border-slate-700 last:border-0">
-                            {Object.values(row).map((v, k) => <td key={k} className="px-4 py-2 border-r border-slate-700 last:border-0">{v}</td>)}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
+          <p className="text-sm text-slate-700 mb-3 bg-white p-3 rounded-lg border border-slate-200">ถ้าต้องการดึงเฉพาะชื่อ (name) จากตาราง employees ต้องใช้คำสั่งใด?</p>
+          <div className="space-y-2 mb-4">
+            {qOpts.map(o => (
+              <button key={o.val} onClick={() => !qDone && setQAns(o.val)} disabled={qDone}
+                className={`w-full text-left px-4 py-2.5 rounded-lg border text-sm font-mono transition-all ${qAns === o.val ? 'bg-blue-50 border-blue-400 text-blue-800 font-medium' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-300'} ${qDone && o.correct ? 'bg-emerald-50 border-emerald-400 text-emerald-800 font-bold' : ''} ${qDone && qAns === o.val && !o.correct ? 'bg-rose-50 border-rose-400 text-rose-800' : ''}`}>
+                {o.label}
+              </button>
             ))}
-            <div ref={endRef}></div>
-            
-            {level <= 2 && (
-              <form onSubmit={handleCommand} className="flex items-center text-white mt-2">
-                <span className="text-green-400 mr-2 flex items-center"><ChevronRight size={16}/></span>
-                <input 
-                  type="text" 
-                  value={input}
-                  onChange={e => setInput(e.target.value)}
-                  className="bg-transparent border-none outline-none flex-1 font-mono text-yellow-300 caret-white"
-                  autoFocus
-                  placeholder="พิมพ์ SQL ที่นี่แล้วกด Enter..."
-                  autoComplete="off"
-                  spellCheck="false"
-                />
-              </form>
-            )}
+          </div>
+          <div className="flex justify-end">
+            <button onClick={checkQ} disabled={!qAns || qDone} className="bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold py-2 px-6 rounded-lg text-sm flex items-center gap-2 transition-all active:scale-95"><CheckCircle2 size={16}/> ตรวจคำตอบ</button>
+          </div>
+        </div>
+        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col w-full">
+          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center gap-2 z-10"><TerminalSquare size={14} className="text-slate-600"/><span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span></div>
+          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
+            {consoleHistory.map((l, i) => (<div key={i} className="leading-relaxed">{l.type==='command' && <div className="text-blue-300 font-bold">{l.text}</div>}{l.type==='output' && <div className="text-cyan-300">{l.text}</div>}{l.type==='system' && <div className="text-slate-600">{l.text}</div>}{l.type==='error' && <div className="text-rose-400 font-bold">{l.text}</div>}{l.type==='success' && <div className="text-emerald-400 font-bold">{l.text}</div>}</div>))}
           </div>
         </div>
       </div>
