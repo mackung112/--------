@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Menu, CheckCircle, BookOpen, Sparkles, GraduationCap, Code2, Users, Zap, ArrowRight, X, Package } from 'lucide-react';
 import coursesData from './data';
@@ -156,8 +156,16 @@ function CourseView() {
   const { courseId, lessonId } = useParams();
   const navigate = useNavigate();
   const course = coursesData.find(c => c.id === courseId);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
   const [completedLessons, setCompletedLessons] = useState({});
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [lessonId]);
 
   if (!course) return <div className="p-8 text-center text-2xl font-bold">ไม่พบวิชาเรียนนี้</div>;
 
@@ -185,7 +193,6 @@ function CourseView() {
     const prevLesson = allLessons[currentIndex - 1];
     if (prevLesson) {
       navigate(`/course/${course.id}/lesson/${prevLesson.id}`);
-      window.scrollTo(0, 0);
     }
   };
 
@@ -193,7 +200,6 @@ function CourseView() {
     const nextLesson = allLessons[currentIndex + 1];
     if (nextLesson) {
       navigate(`/course/${course.id}/lesson/${nextLesson.id}`);
-      window.scrollTo(0, 0);
     } else {
       navigate('/');
     }
@@ -203,95 +209,103 @@ function CourseView() {
   const hasNext = currentIndex < allLessons.length - 1;
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      {/* Sidebar - fixed, independent scroll */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-80 bg-indigo-950 text-indigo-100 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 flex flex-col`}>
-        <div className="p-5 border-b border-indigo-900/50 flex items-center justify-between shrink-0 bg-indigo-950">
-          <div className="min-w-0">
-            <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-              <GraduationCap className="w-5 h-5 shrink-0" />
-              <span className="truncate">ห้องเรียนครูแม็ค</span>
-            </h2>
-            <p className="text-indigo-400 text-xs mt-1 truncate">{course.title}</p>
-          </div>
-          <button className="md:hidden p-1.5 hover:bg-indigo-800 rounded-lg transition-colors" onClick={() => setSidebarOpen(false)}>
-            <X className="w-5 h-5 text-indigo-300" />
+    <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
+      {/* Top Navbar - Full Width */}
+      <nav className="h-14 bg-white border-b border-gray-200/80 flex items-center justify-between px-4 md:px-6 shrink-0 z-40 relative shadow-sm">
+        <div className="flex items-center gap-2 md:gap-3">
+          <button className="md:hidden p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setIsMobileSidebarOpen(true)}>
+            <Menu className="w-5 h-5" />
+          </button>
+          <button className="hidden md:block p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}>
+            <Menu className="w-5 h-5" />
+          </button>
+          
+          <button onClick={() => navigate('/')} className="font-bold text-lg flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center shadow-sm">
+              <GraduationCap className="w-5 h-5 text-white" />
+            </div>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600 hidden sm:block">
+              ห้องเรียนครูแม็ค
+            </span>
           </button>
         </div>
 
-        {/* Sidebar scrollable content */}
-        <div className="flex-1 overflow-y-auto py-4">
-          {course.chapters.map(chapter => (
-            <div key={chapter.id} className="mb-4">
-              <div className="px-5 py-2 text-xs font-bold text-indigo-400 uppercase tracking-wider">
-                {chapter.title}
-              </div>
-              <ul className="space-y-0.5">
-                {chapter.lessons.map(lesson => {
-                  const isActive = lesson.id === currentLessonId;
-                  const isCompleted = completedLessons[lesson.id];
-
-                  return (
-                    <li key={lesson.id}>
-                      <button
-                        onClick={() => {
-                          navigate(`/course/${course.id}/lesson/${lesson.id}`);
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full text-left px-5 py-2.5 transition-all flex items-center gap-3 text-sm ${
-                          isActive
-                            ? 'bg-indigo-600 text-white font-semibold border-r-4 border-white shadow-lg shadow-indigo-800/30'
-                            : 'hover:bg-indigo-900/50 text-indigo-200'
-                        }`}
-                      >
-                        {isCompleted ? <CheckCircle className="w-4 h-4 text-green-400 shrink-0" /> : <div className={`w-4 h-4 rounded-full border shrink-0 ${isActive ? 'border-white bg-white/20' : 'border-indigo-500'}`} />}
-                        <span className="truncate">{lesson.title}</span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Sidebar footer */}
-        <div className="p-4 border-t border-indigo-900/50 shrink-0">
-          <button
-            onClick={() => navigate('/')}
-            className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-indigo-300 hover:text-white hover:bg-indigo-800 rounded-xl transition-all"
-          >
+        <div className="flex items-center gap-4">
+          <button onClick={() => navigate('/')} className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm font-medium transition-colors border border-gray-200 hover:border-gray-300">
             <ChevronLeft className="w-4 h-4" /> กลับหน้ารวมวิชา
           </button>
+          <div className="text-xs text-gray-500 font-medium bg-gray-100 px-3 py-1.5 rounded-full">
+            บทที่ {currentIndex + 1} จาก {allLessons.length}
+          </div>
         </div>
-      </aside>
+      </nav>
 
-      {/* Main Content - independent scroll */}
-      <div className="flex-1 flex flex-col min-w-0 h-screen">
-        <nav className="h-14 bg-white border-b border-gray-200/80 flex items-center justify-between px-4 md:px-6 shrink-0 z-30">
-          <div className="flex items-center gap-3">
-            <button className="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" onClick={() => setSidebarOpen(true)}>
-              <Menu className="w-5 h-5" />
-            </button>
-            <button onClick={() => navigate('/')} className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 text-sm font-medium transition-colors">
-              <ChevronLeft className="w-4 h-4" /> กลับ
-            </button>
-          </div>
-          <div className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-            ห้องเรียนครูแม็ค
-          </div>
-          <div className="text-xs text-gray-500 font-medium hidden sm:block">
-            {currentIndex + 1} / {allLessons.length}
-          </div>
-        </nav>
+      {/* Main Container below Navbar */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Mobile overlay */}
+        {isMobileSidebarOpen && (
+          <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setIsMobileSidebarOpen(false)} />
+        )}
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12">
-          <div className="max-w-4xl mx-auto">
+        {/* Sidebar */}
+        <aside className={`absolute md:relative inset-y-0 left-0 z-50 w-80 shrink-0 bg-indigo-950 text-indigo-100 transition-all duration-300 ease-in-out flex flex-col ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 ${isDesktopSidebarOpen ? 'md:ml-0' : 'md:-ml-80'}`}>
+          <div className="p-5 border-b border-indigo-900/50 flex items-center justify-between shrink-0 bg-indigo-950">
+            <div className="min-w-0">
+              <h2 className="text-base font-bold text-white tracking-tight truncate">{course.title}</h2>
+              <p className="text-indigo-400 text-xs mt-1">เนื้อหาบทเรียน</p>
+            </div>
+            <button className="md:hidden p-1.5 hover:bg-indigo-800 rounded-lg transition-colors" onClick={() => setIsMobileSidebarOpen(false)}>
+              <X className="w-5 h-5 text-indigo-300" />
+            </button>
+          </div>
+
+          {/* Sidebar scrollable content */}
+          <div className="flex-1 overflow-y-auto py-4 no-scrollbar">
+            {course.chapters.map(chapter => (
+              <div key={chapter.id} className="mb-4">
+                <div className="px-5 py-2 text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                  {chapter.title}
+                </div>
+                <ul className="space-y-0.5">
+                  {chapter.lessons.map(lesson => {
+                    const isActive = lesson.id === currentLessonId;
+                    const isCompleted = completedLessons[lesson.id];
+
+                    return (
+                      <li key={lesson.id}>
+                        <button
+                          onClick={() => {
+                            navigate(`/course/${course.id}/lesson/${lesson.id}`);
+                            setIsMobileSidebarOpen(false);
+                          }}
+                          className={`w-full text-left px-5 py-2.5 transition-all flex items-center gap-3 text-sm ${
+                            isActive
+                              ? 'bg-indigo-600 text-white font-semibold border-r-4 border-white shadow-lg shadow-indigo-800/30'
+                              : 'hover:bg-indigo-900/50 text-indigo-200'
+                          }`}
+                        >
+                          {isCompleted ? <CheckCircle className="w-4 h-4 text-green-400 shrink-0" /> : <div className={`w-4 h-4 rounded-full border shrink-0 ${isActive ? 'border-white bg-white/20' : 'border-indigo-500'}`} />}
+                          <span className="truncate">{lesson.title}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Sidebar footer */}
+          <div className="p-4 border-t border-indigo-900/50 shrink-0">
+            <div className="text-xs text-center text-indigo-400/50">
+              © ห้องเรียนครูแม็ค
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main ref={mainRef} className="flex-1 overflow-y-auto relative z-0">
+          <div className="w-full">
             {currentLesson ? (
               <LessonViewer
                 lesson={currentLesson}

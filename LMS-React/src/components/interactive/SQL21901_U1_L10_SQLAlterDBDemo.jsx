@@ -34,7 +34,6 @@ export default function SQL21901_U1_L10_SQLAlterDBDemo() {
     "color": "text-emerald-400"
   }
 };
-  const quiz = { q: `คำสั่งใดใช้แก้ไขคุณสมบัติฐานข้อมูล?`, opts: [{"val":"alter","label":"ALTER DATABASE mydb CHARACTER SET utf8mb4;","correct":true},{"val":"modify","label":"MODIFY DATABASE mydb;"},{"val":"change","label":"CHANGE DATABASE mydb;"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -43,7 +42,6 @@ export default function SQL21901_U1_L10_SQLAlterDBDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

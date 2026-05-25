@@ -43,7 +43,6 @@ export default function SQL21901_U1_L9_SQLBackupDemo() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `คำสั่งใดใช้สำรองฐานข้อมูล MySQL จาก CLI?`, opts: [{"val":"dump","label":"mysqldump -u root -p mydb > backup.sql","correct":true},{"val":"cp","label":"cp mydb backup.sql"},{"val":"export","label":"EXPORT DATABASE mydb;"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L9_SQLBackupDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

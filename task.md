@@ -98,6 +98,24 @@
   - [x] SQL21901_U6_L11_SQLReportBuilder.jsx — Explorer Shell (Report Builder + Quiz + Terminal)
   - [x] SQL21901_U6_L12_SQLDashboardDemo.jsx — Deep Simulator (KPI/Top N/Category)✅
 
+### Phase 4: Python Unit 4 (PY21910 - Immersive Full-Page Pattern) - ✅ COMPLETED
+- [x] PY21910_U4_L1_ControlFlowOverview.jsx (4.1 การควบคุมทิศทางโปรแกรม)
+- [x] PY21910_U4_L2_InputFunction.jsx (4.2 การรับข้อมูลด้วย input())
+- [x] PY21910_U4_L3_PrintFunction.jsx (4.3 การแสดงผลด้วย print())
+- [x] PY21910_U4_L4_ArithmeticOps.jsx (4.4 ตัวดำเนินการคณิตศาสตร์)
+- [x] PY21910_U4_L5_AssignmentOps.jsx (4.5 ตัวดำเนินการกำหนดค่า)
+- [x] PY21910_U4_L6_ComparisonOps.jsx (4.6 ตัวดำเนินการเปรียบเทียบ)
+- [x] PY21910_U4_L7_LogicalOps.jsx (4.7 ตัวดำเนินการทางตรรกะ)
+- [x] PY21910_U4_L8_IdentityOps.jsx (4.8 ตัวดำเนินการเอกลักษณ์)
+- [x] PY21910_U4_L9_MembershipOps.jsx (4.9 ตัวดำเนินการสมาชิก)
+- [x] PY21910_U4_L10_BitwiseOps.jsx (4.10 ตัวดำเนินการบิต)
+- [x] PY21910_U4_L11_IfStatement.jsx (4.11 เงื่อนไข if)
+- [x] PY21910_U4_L12_ElifStatement.jsx (4.12 เงื่อนไข elif)
+- [x] PY21910_U4_L13_ElseStatement.jsx (4.13 เงื่อนไข else)
+- [x] PY21910_U4_L14_WhileLoop.jsx (4.14 ลูปทำงานซ้ำ while)
+- [x] PY21910_U4_L15_ForLoop.jsx (4.15 ลูปทำงานซ้ำ for)
+- [x] PY21910_U4_L16_RangeFunction.jsx (4.16 การใช้ range() ในลูป)
+
 ## 📝 3. โน้ตส่งมอบงาน (AI Handoff Notes)
 *(⚠️ AI: หากเซสชันถูกตัด, โควต้า Token ใกล้หมด, หรืองานติดขัดยังไม่เสร็จ ให้ทิ้งข้อความอธิบายปัญหาและแนวทางไว้ให้ AI ตัวต่อไปมาอ่านที่นี่)*
 

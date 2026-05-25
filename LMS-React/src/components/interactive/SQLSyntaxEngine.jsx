@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MousePointerClick, TerminalSquare, RotateCcw } from 'lucide-react';
 
-export default function SQLSyntaxEngine({ title, icon: Icon, description, codeParts, explanations, quiz }) {
+export default function SQLSyntaxEngine({ title, icon: Icon, description, codeParts, explanations}) {
   const [activeTooltip, setActiveTooltip] = useState(null);
   const [qa, setQa] = useState(null);
   const [qc, setQc] = useState(false);

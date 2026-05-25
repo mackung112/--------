@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Database, Play, RotateCcw, Table2 } from 'lucide-react';
 
-export default function SQLDataSimulatorEngine({ title, icon: Icon, description, initialTable, queries, quiz }) {
+export default function SQLDataSimulatorEngine({ title, icon: Icon, description, initialTable, queries }) {
   const [activeQuery, setActiveQuery] = useState(null);
   const [currentTable, setCurrentTable] = useState(initialTable);
-  
-  const [qa, setQa] = useState(null);
-  const [qc, setQc] = useState(false);
   
   const [consoleHistory, setConsoleHistory] = useState([
     { type: 'system', text: 'SQL Database Engine started. Connected to virtual instance.' },
@@ -40,29 +37,6 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
       { type: 'command', text: `$ ROLLBACK;` },
       { type: 'system', text: `> Database state restored to initial.` }
     ]);
-  };
-
-  const submitQuiz = () => {
-    if (!qa) {
-      setConsoleHistory(prev => [
-        ...prev,
-        { type: 'error', text: 'Error: No answer selected for knowledge check.' }
-      ]);
-      return;
-    }
-    setQc(true); 
-    const isCorrect = quiz.opts.find(o => o.val === qa)?.correct;
-    
-    setConsoleHistory(prev => [
-      ...prev,
-      { type: 'command', text: `$ check_knowledge("${qa}")` },
-      { type: isCorrect ? 'success' : 'error', text: isCorrect ? '✅ STATUS: CORRECT (1/1 points)' : '❌ STATUS: FAILED (Incorrect Selection)' }
-    ]);
-  };
-
-  const resetQuiz = () => {
-    setQa(null);
-    setQc(false);
   };
 
   return (
@@ -156,39 +130,7 @@ export default function SQLDataSimulatorEngine({ title, icon: Icon, description,
               </div>
             </div>
 
-            {/* Quiz Section (Collapsible or small at the bottom of Right pane) */}
-            <div className="border-t border-slate-200 bg-white p-5">
-              <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-2 flex items-center gap-2">
-                <span className="text-yellow-500">?</span> Knowledge Check
-              </h4>
-              <div className="flex flex-col xl:flex-row gap-4 items-start xl:items-center justify-between">
-                <p className="text-sm text-slate-800 font-bold">{quiz.q}</p>
-                <div className="flex flex-wrap gap-2 w-full xl:w-auto">
-                  {quiz.opts.map(o => (
-                    <button 
-                      key={o.val} 
-                      onClick={() => { if (!qc) setQa(o.val) }} 
-                      className={`flex-1 xl:flex-none text-left px-3 py-1.5 rounded-lg border-2 font-semibold transition-all text-xs shadow-sm ${
-                        qc && o.correct ? 'border-emerald-500 bg-emerald-50 text-emerald-800' : 
-                        qc && qa === o.val && !o.correct ? 'border-red-400 bg-red-50 text-red-800' : 
-                        qa === o.val ? 'border-indigo-500 bg-indigo-50 text-indigo-800' : 
-                        'border-slate-200 bg-white hover:border-slate-300 text-slate-600'
-                      }`}
-                    >
-                      {o.label}
-                    </button>
-                  ))}
-                  <div className="flex gap-1">
-                    <button onClick={resetQuiz} className="px-2 py-1.5 rounded-lg text-slate-700 hover:bg-slate-100 border border-slate-200">
-                      <RotateCcw size={14}/>
-                    </button>
-                    <button onClick={submitQuiz} disabled={qc} className="bg-slate-800 hover:bg-slate-900 disabled:opacity-50 text-white px-4 py-1.5 rounded-lg font-bold shadow-md text-xs">
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Quiz Removed */}
           </div>
         </div>
 

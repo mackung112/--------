@@ -43,7 +43,6 @@ export default function SQL21901_U1_L2_SQLDatabaseTypes() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `MySQL เป็นฐานข้อมูลประเภทใด?`, opts: [{"val":"rel","label":"Relational Database — จัดเก็บข้อมูลเป็นตาราง","correct":true},{"val":"doc","label":"Document Database"},{"val":"kv","label":"Key-Value Store"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L2_SQLDatabaseTypes() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

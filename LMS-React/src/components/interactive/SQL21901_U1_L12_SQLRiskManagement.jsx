@@ -43,7 +43,6 @@ export default function SQL21901_U1_L12_SQLRiskManagement() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `วิธีลดความเสี่ยงที่ดีที่สุดคือ?`, opts: [{"val":"all","label":"Backup สม่ำเสมอ + จำกัดสิทธิ์ + ตรวจ Log","correct":true},{"val":"pray","label":"หวังว่าจะไม่เกิดอะไร"},{"val":"skip","label":"ไม่ต้องจัดการ ค่อยแก้ทีหลัง"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L12_SQLRiskManagement() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

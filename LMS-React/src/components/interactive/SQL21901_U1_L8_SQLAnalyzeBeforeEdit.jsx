@@ -43,7 +43,6 @@ export default function SQL21901_U1_L8_SQLAnalyzeBeforeEdit() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `ก่อนแก้ไขฐานข้อมูล ควรทำอะไรก่อน?`, opts: [{"val":"check","label":"ตรวจสอบข้อมูลปัจจุบัน + สำรองข้อมูล","correct":true},{"val":"drop","label":"ลบฐานข้อมูลเดิมก่อน"},{"val":"run","label":"แก้ไขเลยไม่ต้องตรวจ"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L8_SQLAnalyzeBeforeEdit() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

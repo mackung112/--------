@@ -1,6 +1,4 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import PracticalExam from './interactive/PracticalExam';
-import Quiz from './interactive/Quiz';
 const interactiveModules = import.meta.glob('./interactive/*.jsx', { eager: true });
 
 const COMPONENT_MAP = {};
@@ -10,61 +8,62 @@ for (const path in interactiveModules) {
 }
 
 export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPrev, hasPrev = false, hasNext = true }) {
-  const renderContent = () => {
-    if (!lesson.content) return null;
+  if (!lesson.content) return null;
 
-    // แยกเนื้อหาออกเป็นส่วนๆ ตาม Marker ของ Component ต่างๆ
-    const escapedKeys = Object.keys(COMPONENT_MAP).map(k => k.replace(/\[/g, '\\[').replace(/\]/g, '\\]'));
-    const markerPattern = escapedKeys.length > 0 ? new RegExp(`(${escapedKeys.join('|')})`) : /(?!)/;
-    const parts = lesson.content.split(markerPattern);
+  // แยกเนื้อหาออกเป็นส่วนๆ ตาม Marker ของ Component ต่างๆ
+  const escapedKeys = Object.keys(COMPONENT_MAP).map(k => k.replace(/\[/g, '\\[').replace(/\]/g, '\\]'));
+  const markerPattern = escapedKeys.length > 0 ? new RegExp(`(${escapedKeys.join('|')})`) : /(?!)/;
+  const parts = lesson.content.split(markerPattern);
+
+  // ตรวจสอบว่าเป็น Component แบบ Immersive หรือไม่
+  const immersivePart = parts.find(part => part.includes('[pyUnit') || part.includes('[SQL'));
+  const isImmersive = Boolean(immersivePart && COMPONENT_MAP[immersivePart]);
+
+  const renderContent = () => {
+    if (isImmersive) {
+      const ImmersiveComponent = COMPONENT_MAP[immersivePart];
+      return <ImmersiveComponent />;
+    }
 
     return (
-      <div className="lesson-content bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
-        <header className="mb-8 border-b border-gray-100 pb-6">
-          <span className="text-indigo-600 font-bold tracking-wider text-sm uppercase mb-2 block">
-            {chapter?.title}
-          </span>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
-            {lesson.title}
-          </h1>
-        </header>
+      <div className="p-4 md:p-8 lg:p-12 max-w-4xl mx-auto w-full">
+        <div className="lesson-content bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
+          <header className="mb-8 border-b border-gray-100 pb-6">
+            <span className="text-indigo-600 font-bold tracking-wider text-sm uppercase mb-2 block">
+              {chapter?.title}
+            </span>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+              {lesson.title}
+            </h1>
+          </header>
 
-        {parts.map((part, idx) => {
-          // ถ้าเป็น Marker ให้แสดง Component ที่ตรงกัน
-          const Component = COMPONENT_MAP[part];
-          if (Component) {
-            return <Component key={idx} />;
-          }
-          // ถ้าเป็น HTML ปกติให้ render ด้วย dangerouslySetInnerHTML
-          if (part.trim()) {
-            return (
-              <div
-                key={idx}
-                className="prose prose-indigo max-w-none prose-lg text-gray-700"
-                dangerouslySetInnerHTML={{ __html: part }}
-              />
-            );
-          }
-          return null;
-        })}
+          {parts.map((part, idx) => {
+            const Component = COMPONENT_MAP[part];
+            if (Component) {
+              return <Component key={idx} />;
+            }
+            if (part.trim()) {
+              return (
+                <div
+                  key={idx}
+                  className="prose prose-indigo max-w-none prose-lg text-gray-700"
+                  dangerouslySetInnerHTML={{ __html: part }}
+                />
+              );
+            }
+            return null;
+          })}
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="pb-20">
+    <div className="pb-20 w-full">
       {renderContent()}
 
-      {chapter?.practical && chapter.practical.length > 0 && (
-        <PracticalExam practicalData={chapter.practical} onComplete={() => {}} />
-      )}
-
-      {chapter?.quiz && chapter.quiz.length > 0 && (
-        <Quiz quizData={chapter.quiz} onComplete={onComplete} />
-      )}
-
       {/* Navigation buttons: Previous / Next */}
-      <div className="mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4">
+      <div className={`mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4 w-full px-6 ${isImmersive ? 'max-w-5xl mx-auto' : 'max-w-4xl mx-auto'}`}>
         {hasPrev ? (
           <button
             onClick={onPrev}

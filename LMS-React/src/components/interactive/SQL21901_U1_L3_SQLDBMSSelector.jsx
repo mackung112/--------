@@ -208,7 +208,6 @@ export default function SQL21901_U1_L3_SQLDBMSSelector() {
     }
   }
 ];
-  const quiz = { q: `DBMS ตัวไหนที่เราจะใช้ในวิชานี้?`, opts: [{"val":"mysql","label":"MySQL","correct":true},{"val":"pg","label":"PostgreSQL"},{"val":"sqlite","label":"SQLite"}] };
 
   return (
     <SQLDataSimulatorEngine 
@@ -217,7 +216,6 @@ export default function SQL21901_U1_L3_SQLDBMSSelector() {
       icon={Database}
       initialTable={initialTable}
       queries={queries}
-      quiz={quiz}
     />
   );
 }

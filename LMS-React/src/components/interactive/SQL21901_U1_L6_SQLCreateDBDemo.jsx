@@ -43,7 +43,6 @@ export default function SQL21901_U1_L6_SQLCreateDBDemo() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `คำสั่งใดใช้สร้างฐานข้อมูลใหม่?`, opts: [{"val":"create","label":"CREATE DATABASE mydb;","correct":true},{"val":"new","label":"NEW DATABASE mydb;"},{"val":"make","label":"MAKE DATABASE mydb;"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L6_SQLCreateDBDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

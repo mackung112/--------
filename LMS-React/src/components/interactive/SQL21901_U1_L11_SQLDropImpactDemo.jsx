@@ -43,7 +43,6 @@ export default function SQL21901_U1_L11_SQLDropImpactDemo() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `หลัง DROP DATABASE ข้อมูลจะเป็นอย่างไร?`, opts: [{"val":"gone","label":"หายไปถาวร กู้คืนไม่ได้ (ถ้าไม่มี Backup)","correct":true},{"val":"trash","label":"ย้ายไปถังขยะ กู้คืนได้"},{"val":"hide","label":"ซ่อนไว้ แสดงได้ใหม่"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L11_SQLDropImpactDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

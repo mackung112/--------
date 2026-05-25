@@ -43,7 +43,6 @@ export default function SQL21901_U1_L4_SQLWorkbenchIntro() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `ส่วนไหนของ MySQL Workbench ที่ใช้เขียน SQL?`, opts: [{"val":"editor","label":"SQL Editor","correct":true},{"val":"model","label":"Data Modeler"},{"val":"result","label":"Result Grid"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L4_SQLWorkbenchIntro() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

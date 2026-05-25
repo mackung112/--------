@@ -43,7 +43,6 @@ export default function SQL21901_U2_L6_SQLDefaultValueDemo() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `ถ้าตั้ง DEFAULT เป็น "pending" แล้ว INSERT โดยไม่ระบุค่าคอลัมน์นี้ ข้อมูลจะเป็นอย่างไร?`, opts: [{"val":"def","label":"ได้ค่าเป็น \"pending\" อัตโนมัติ","correct":true},{"val":"null","label":"เป็นค่าว่าง (NULL)"},{"val":"error","label":"เกิด Error"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U2_L6_SQLDefaultValueDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

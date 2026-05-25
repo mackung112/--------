@@ -34,7 +34,6 @@ export default function SQL21901_U1_L13_SQLDropDBDemo() {
     "color": "text-emerald-400"
   }
 };
-  const quiz = { q: `IF EXISTS ใน DROP DATABASE ใช้ทำอะไร?`, opts: [{"val":"prevent","label":"ป้องกัน Error ถ้าฐานข้อมูลไม่มีอยู่","correct":true},{"val":"check","label":"ตรวจสอบว่ามีข้อมูลอยู่หรือไม่"},{"val":"backup","label":"สำรองข้อมูลก่อนลบ"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -43,7 +42,6 @@ export default function SQL21901_U1_L13_SQLDropDBDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }

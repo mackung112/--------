@@ -43,7 +43,6 @@ export default function SQL21901_U1_L7_SQLShowDBDemo() {
     "color": "text-sky-400"
   }
 };
-  const quiz = { q: `คำสั่งใดใช้ดูรายชื่อฐานข้อมูลทั้งหมด?`, opts: [{"val":"show","label":"SHOW DATABASES;","correct":true},{"val":"list","label":"LIST DATABASES;"},{"val":"get","label":"GET DATABASES;"}] };
 
   return (
     <SQLSyntaxEngine 
@@ -52,7 +51,6 @@ export default function SQL21901_U1_L7_SQLShowDBDemo() {
       icon={TerminalSquare}
       codeParts={codeParts}
       explanations={explanations}
-      quiz={quiz}
     />
   );
 }
