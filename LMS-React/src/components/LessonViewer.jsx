@@ -26,7 +26,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
     }
 
     return (
-      <div className="p-4 md:p-8 lg:p-12 max-w-4xl mx-auto w-full">
+      <div className="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto w-full">
         <div className="lesson-content bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
           <header className="mb-8 border-b border-gray-100 pb-6">
             <span className="text-indigo-600 font-bold tracking-wider text-sm uppercase mb-2 block">
@@ -63,7 +63,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
       {renderContent()}
 
       {/* Navigation buttons: Previous / Next */}
-      <div className={`mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4 w-full px-6 ${isImmersive ? 'max-w-5xl mx-auto' : 'max-w-4xl mx-auto'}`}>
+      <div className={`mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4 w-full px-6 max-w-5xl mx-auto`}>
         {hasPrev ? (
           <button
             onClick={onPrev}
