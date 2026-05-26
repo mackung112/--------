@@ -94,7 +94,13 @@ export default function pyUnit2_1_AlgorithmFlowchart() {
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200 mt-8">
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-24 pt-8">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-5%] right-[-5%] w-[500px] h-[500px] rounded-full bg-indigo-100/60 blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-50/50 blur-[120px]"></div>
+      </div>
+      <main className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200 mt-8">
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white flex items-center gap-4">
         <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
@@ -288,6 +294,8 @@ export default function pyUnit2_1_AlgorithmFlowchart() {
         </div>
 
       </div>
+    </div>
+      </main>
     </div>
   );
 }

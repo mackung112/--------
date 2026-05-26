@@ -53,7 +53,13 @@ export default function pyUnit2_8_PseudocodeIntro() {
   const resetReveal = () => setRevealedLines(0);
 
   return (
-    <div className="w-full my-12">
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-24 pt-8">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-5%] right-[-5%] w-[500px] h-[500px] rounded-full bg-indigo-100/60 blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-50/50 blur-[120px]"></div>
+      </div>
+      <main className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="w-full my-12">
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-bold mb-4">
           <Sparkles className="w-4 h-4" /> เปรียบเทียบ Pseudocode กับ Python
@@ -158,6 +164,8 @@ export default function pyUnit2_8_PseudocodeIntro() {
           </p>
         </div>
       )}
+    </div>
+      </main>
     </div>
   );
 }

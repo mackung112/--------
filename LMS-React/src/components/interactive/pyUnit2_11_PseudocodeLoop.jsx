@@ -64,7 +64,13 @@ export default function pyUnit2_11_PseudocodeLoop() {
   for (let x = 1; x <= Math.min(currentI - 1, n); x++) outputs.push(x);
 
   return (
-    <div className="w-full my-12">
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-24 pt-8">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-5%] right-[-5%] w-[500px] h-[500px] rounded-full bg-indigo-100/60 blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-50/50 blur-[120px]"></div>
+      </div>
+      <main className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="w-full my-12">
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-bold mb-4">
           <Sparkles className="w-4 h-4" /> จำลอง WHILE...DO แบบ Real-time
@@ -172,6 +178,8 @@ export default function pyUnit2_11_PseudocodeLoop() {
           <div key={i} className={`mb-0.5 ${l.includes('✓') ? 'text-green-400' : l.includes('✗') ? 'text-red-400' : l.includes('▶') || l.includes('■') ? 'text-rose-400' : l.includes('PRINT') ? 'text-yellow-300' : 'text-slate-300'}`}>{l}</div>
         ))}
       </div>
+    </div>
+      </main>
     </div>
   );
 }
