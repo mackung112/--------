@@ -70,62 +70,95 @@ function HomeView() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-12 bg-white/50 border-y border-gray-100">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { value: coursesData.length, label: 'รายวิชา', icon: BookOpen, color: 'text-indigo-600 bg-indigo-100' },
-              { value: totalChapters, label: 'หน่วยเรียน', icon: Code2, color: 'text-purple-600 bg-purple-100' },
-              { value: totalLessons, label: 'บทเรียน', icon: Zap, color: 'text-pink-600 bg-pink-100' },
-              { value: '100%', label: 'Interactive', icon: Sparkles, color: 'text-amber-600 bg-amber-100' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center p-6 rounded-2xl bg-white shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                <div className={`w-12 h-12 ${stat.color} rounded-xl flex items-center justify-center mx-auto mb-3`}>
-                  <stat.icon className="w-6 h-6" />
-                </div>
-                <div className="text-3xl font-extrabold text-gray-900">{stat.value}</div>
-                <div className="text-sm text-gray-600 font-medium mt-1">{stat.label}</div>
-              </div>
-            ))}
+      {/* Courses Grid — Premium Cards */}
+      <section id="courses" className="py-24 bg-gradient-to-b from-white via-indigo-50/20 to-purple-50/30 relative overflow-hidden">
+        {/* Decorative background dots */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #6366f1 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-100/80 text-indigo-700 rounded-full text-sm font-semibold mb-5">
+              <BookOpen className="w-4 h-4" /> {coursesData.length} รายวิชา · {totalChapters} หน่วย · {totalLessons} บทเรียน
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">เลือกวิชาที่สนใจ</h2>
+            <p className="text-gray-500 text-lg max-w-xl mx-auto">ทุกวิชาเต็มไปด้วยสื่อ Interactive กดเล่นได้ เข้าใจง่าย</p>
           </div>
-        </div>
-      </section>
 
-
-
-      {/* Courses Grid */}
-      <section id="courses" className="py-20 bg-gradient-to-b from-white to-indigo-50/30">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">รายวิชาทั้งหมด</h2>
-            <p className="text-gray-600 text-lg">เลือกวิชาที่สนใจ แล้วเริ่มเรียนได้ทันที</p>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {coursesData.map(course => {
+            {coursesData.map((course, idx) => {
               const lessonCount = course.chapters.reduce((s, ch) => s + ch.lessons.length, 0);
+              const themes = [
+                { gradient: 'from-violet-600 via-indigo-600 to-blue-500', lightBg: 'bg-violet-50', accent: 'text-violet-600', border: 'border-violet-200', badge: 'bg-violet-100 text-violet-700', glow: 'shadow-violet-200/50' },
+                { gradient: 'from-emerald-500 via-teal-500 to-cyan-500', lightBg: 'bg-emerald-50', accent: 'text-emerald-600', border: 'border-emerald-200', badge: 'bg-emerald-100 text-emerald-700', glow: 'shadow-emerald-200/50' },
+                { gradient: 'from-amber-500 via-orange-500 to-rose-500', lightBg: 'bg-amber-50', accent: 'text-amber-600', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', glow: 'shadow-amber-200/50' },
+              ];
+              const theme = themes[idx % themes.length];
+
               return (
                 <div
                   key={course.id}
                   onClick={() => navigate(`/course/${course.id}`)}
-                  className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 cursor-pointer transition-all duration-400 hover:-translate-y-2 hover:shadow-xl hover:border-indigo-200 group relative overflow-hidden"
+                  className={`group relative cursor-pointer rounded-3xl bg-white border border-gray-100 overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:${theme.border}`}
                 >
-                  {/* Gradient accent top */}
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <div className="text-5xl mb-6 transform transition-transform group-hover:scale-110 group-hover:rotate-3 duration-300">
-                    {course.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-indigo-950 group-hover:text-indigo-700 transition-colors">{course.title}</h3>
-                  <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mb-6">{course.description}</p>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-                      <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5" /> {course.chapters.length} หน่วย</span>
-                      <span className="flex items-center gap-1"><Code2 className="w-3.5 h-3.5" /> {lessonCount} บท</span>
+                  {/* Gradient Header */}
+                  <div className={`relative h-40 bg-gradient-to-br ${theme.gradient} p-6 flex flex-col justify-end overflow-hidden`}>
+                    {/* Decorative circles */}
+                    <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-700" />
+                    <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-white/10 group-hover:scale-110 transition-transform duration-500" />
+                    <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10" />
+                    
+                    {/* Course ID Badge */}
+                    <div className="absolute top-4 left-4 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-xs font-semibold tracking-wide">
+                      {course.id}
                     </div>
-                    <div className="flex items-center text-indigo-600 font-semibold text-sm group-hover:text-purple-600 transition-colors">
-                      เรียน <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+
+                    {/* Emoji icon */}
+                    <div className="text-5xl mb-1 drop-shadow-lg transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                      {course.icon}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 pt-5">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 leading-snug group-hover:text-indigo-700 transition-colors duration-300 line-clamp-2">
+                      {course.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-5">
+                      {course.description}
+                    </p>
+
+                    {/* Stats row */}
+                    <div className="flex items-center gap-2 mb-5">
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${theme.badge}`}>
+                        <BookOpen className="w-3.5 h-3.5" />
+                        {course.chapters.length} หน่วย
+                      </span>
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${theme.badge}`}>
+                        <Code2 className="w-3.5 h-3.5" />
+                        {lessonCount} บทเรียน
+                      </span>
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${theme.badge}`}>
+                        <Zap className="w-3.5 h-3.5" />
+                        Interactive
+                      </span>
+                    </div>
+
+                    {/* CTA */}
+                    <div className={`flex items-center justify-between pt-4 border-t border-gray-100`}>
+                      <div className="flex -space-x-1.5">
+                        {course.chapters.slice(0, 4).map((_, i) => (
+                          <div key={i} className={`w-6 h-6 rounded-full bg-gradient-to-br ${theme.gradient} opacity-${80 - i * 15} border-2 border-white`} />
+                        ))}
+                        {course.chapters.length > 4 && (
+                          <div className="w-6 h-6 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-[9px] font-bold text-gray-500">
+                            +{course.chapters.length - 4}
+                          </div>
+                        )}
+                      </div>
+                      <div className={`flex items-center gap-1 ${theme.accent} font-bold text-sm group-hover:gap-2 transition-all duration-300`}>
+                        เริ่มเรียน
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
                     </div>
                   </div>
                 </div>
