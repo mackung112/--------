@@ -2,9 +2,9 @@
 
 > ⚠️ **คำสั่งวิกฤต (Critical Command)**: ทันทีที่คุณถูกเรียกใช้งาน คุณ **ต้อง** อ่านไฟล์เหล่านี้ตามลำดับก่อนเริ่มงานเสมอ:
 >
-> 1. [DESIGN.md](file:///d:/STD/---------1/DESIGN.md) (เพื่อยึดถือมาตรฐาน UI/UX และระบบการออกแบบเป็น Source of Truth)
-> 2. [CONTEXT.md](file:///d:/STD/---------1/CONTEXT.md) (เพื่อเข้าใจบริบท, โครงสร้างโค้ด และประวัติโปรเจกต์)
-> 3. `task.md` (ที่ [d:\STD\---------1\task.md](file:///d:/STD/---------1/task.md) เท่านั้น เพื่อดูงานที่ค้างอยู่และเป้าหมายปัจจุบัน)
+> 1. [DESIGN.md](file:///d:/01KruMac/Teach/DESIGN.md) (เพื่อยึดถือมาตรฐาน UI/UX และระบบการออกแบบเป็น Source of Truth)
+> 2. [CONTEXT.md](file:///d:/01KruMac/Teach/CONTEXT.md) (เพื่อเข้าใจบริบท, โครงสร้างโค้ด และประวัติโปรเจกต์)
+> 3. `task.md` (ที่ [d:\01KruMac\Teach\task.md](file:///d:/01KruMac/Teach/task.md) เท่านั้น เพื่อดูงานที่ค้างอยู่และเป้าหมายปัจจุบัน)
 >
 > **กฎเหล็ก**: ห้ามคิดเองในส่วนของ Design หากไม่มีใน DESIGN.md ให้ยึดตามมาตรฐานที่กำหนดไว้เท่านั้น!
 
@@ -12,7 +12,7 @@
 
 เพื่อให้โปรเจกต์นี้เดินหน้าได้โดยที่ผู้ใช้ไม่ต้องคอยสั่งการใหม่ และ AI ตัวต่อไปทำงานต่อได้ทันที:
 
-1. **Single Source of Task**: ห้ามสร้างไฟล์ Task ใหม่ (เช่น `.md` ใน brain folder) ให้ใช้ [d:\STD\---------1\task.md](file:///d:/STD/---------1/task.md) เป็นที่เดียวในการบันทึกงาน
+1. **Single Source of Task**: ห้ามสร้างไฟล์ Task ใหม่ (เช่น `.md` ใน brain folder) ให้ใช้ [d:\01KruMac\Teach\task.md](file:///d:/01KruMac/Teach/task.md) เป็นที่เดียวในการบันทึกงาน
 2. **ทำงานแบบ Self-Directed**: เมื่ออ่านเป้าหมายจาก `task.md` แล้ว ให้เริ่มทำงานทันทีโดยอิงจาก "Phase" ที่ระบุไว้
 3. **การวางแผนงาน (Planning)**: หากมีงานใหม่เข้ามา ให้เขียนเพิ่มเข้าไปในแผนงานเดิมใน `task.md` (ห้ามลบแผนเก่าที่ยังไม่เสร็จ) เพื่อให้ AI ตัวอื่นเห็นภาพรวมทั้งหมด
 4. **อัปเดตสถานะตลอดเวลา**: ทุกครั้งที่ทำแต่ละ Step ย่อยเสร็จ ต้องอัปเดต `[ ]` เป็น `[x]` ใน `task.md` ทันที
@@ -21,7 +21,7 @@
 ## 🛑 1. กฎข้อห้ามเด็ดขาด (STRICTLY PROHIBITED)
 
 - **ห้ามใช้ Vanilla JS**: ต้องใช้ React State/Ref/Hooks เสมอ
-- **ห้าม Component ซ้อนกรอบ (No Card-in-Card)**: สื่อ Interactive ต้องแนบเนียนไปกับบทเรียน (Seamless) ตามมาตรฐานใน [DESIGN.md](file:///d:/STD/---------1/DESIGN.md)
+- **ห้าม Component ซ้อนกรอบ (No Card-in-Card)**: สื่อ Interactive ต้องแนบเนียนไปกับบทเรียน (Seamless) ตามมาตรฐานใน [DESIGN.md](file:///d:/01KruMac/Teach/DESIGN.md)
 - **ห้ามแตะโครงสร้าง Architecture**: ห้ามแก้ไขระบบ Routing หรือไฟล์ Core เว้นแต่ระบุใน `task.md`
 - **ห้ามลืมใส่ Interactive Component**: ทุกบทเรียนย่อย (Lesson) ต้องมีสื่อที่โต้ตอบได้อย่างน้อย 1 ตัว
 
@@ -30,7 +30,7 @@
 - **ภาษาและเนื้อหา**: โค้ดตัวอย่างในวิชาต้องใช้ **Python** (สำหรับวิชาเขียนโปรแกรม) และ **MySQL** (สำหรับวิชาฐานข้อมูล) โดยคำอธิบายต้องเป็น **ภาษาไทย** เสมอ
 - **Tailwind CSS v4 Rules**: ห้ามใช้ class แบบ dynamic ให้ hardcode string เต็มรูปแบบเสมอ
 - **Ultimate Gamification Requirement**: สื่อ Interactive **ห้าม** ทำแค่ Flashcard พื้นๆ ต้องเป็น "มินิเกม" หรือ "เครื่องมือจำลอง (Deep Simulators)" ที่มีลูกเล่นแพรวพราว
-- **Strict UI/UX Compliance**: ปฏิบัติตาม Design System ใน [DESIGN.md](file:///d:/STD/---------1/DESIGN.md) อย่างเคร่งครัด 100% (Colors, Typography, Spacing, Buttons, Inputs)
+- **Strict UI/UX Compliance**: ปฏิบัติตาม Design System ใน [DESIGN.md](file:///d:/01KruMac/Teach/DESIGN.md) อย่างเคร่งครัด 100% (Colors, Typography, Spacing, Buttons, Inputs)
 
 ## 🛠️ 3. มาตรฐานการเขียนโค้ด (Coding Standards)
 
@@ -51,5 +51,13 @@
 ## 🕹️ 5. แนวทาง Game-Based Learning
 
 - **SVG Flowcharts**: ใช้ SVG สำหรับผังงาน แทน Unicode/CSS ให้ดูเหมือน draw.io
-- **Animation**: ทุกการตอบสนองต้องใช้ `active:scale-95 transition-all` ตาม [DESIGN.md](file:///d:/STD/---------1/DESIGN.md)
+- **Animation**: ทุกการตอบสนองต้องใช้ `active:scale-95 transition-all` ตาม [DESIGN.md](file:///d:/01KruMac/Teach/DESIGN.md)
 - **Interactive Loops**: จำลองการทำงานทีละขั้น มีปุ่ม Play/Pause/Reset (Reset ใช้ `lucide/RotateCcw`)
+
+## 📄 6. มาตรฐานการกำหนดเนื้อหารายวิชา (Course Curriculum Standards)
+
+เมื่อสร้างหรือปรับปรุงเนื้อหาของแต่ละวิชา ให้ยึดโยงกับไฟล์หลักสูตรในโฟลเดอร์ [LMS-React/docs/curriculum/](file:///d:/01KruMac/Teach/LMS-React/docs/curriculum/) เสมอ โดยมีกฎการตีความโครงสร้างดังนี้:
+- **ไฟล์บอกเนื้อหารายวิชา**: ไฟล์ทั้งหมดภายใต้โฟลเดอร์ `docs/curriculum/` (เช่น `py_curriculum.md`, `sql_curriculum.md`) คือตัวกำหนดว่าแต่ละวิชาจะเรียนเรื่องใดบ้าง
+- **Unit (เช่น Unit 1, Unit 2)**: คือตัวบอกว่าเป็น **"บทหลัก"** หรือบทเรียนหน่วยใด
+- **List ลำดับที่ 1 (เช่น 1.1, 1.2, 1.3)**: คือตัวกำหนดว่าวิชานั้นๆ **จะมีกี่หน้าเว็บ (Lessons)** และเรียนเกี่ยวกับเรื่องอะไร (1 รายการ = 1 หน้าเว็บ)
+- **List ลำดับที่ 2 (เช่น 1.1.1, 1.1.2, 1.1.3)**: คือ **หัวข้อบังคับที่ต้องปรากฏในหน้านั้นๆ** โดยผู้พัฒนา (AI) สามารถเพิ่มเติมหัวข้อย่อยอื่นๆ หรือใส่รายละเอียดที่เหมาะสมเพิ่มเติมเข้าในเนื้อหาได้ตามความเหมาะสม

@@ -12,9 +12,9 @@
 3. 🗄️ **ภาษาสอบถามข้อมูลเชิงโครงสร้างเบื้องต้น** (21901-2001) — 6 หน่วย, SQL/MySQL
 
 ## 🎨 2. Design System & UI/UX (อ้างอิง DESIGN.md)
-ทุกการออกแบบ UI, โทนสี, Typography และ Interaction **ต้อง** ปฏิบัติตามข้อกำหนดใน [DESIGN.md](file:///d:/STD/---------1/DESIGN.md) อย่างเคร่งครัด 100% ห้ามคิดเองหรือใช้สีอื่นนอกเหนือจากที่กำหนดไว้
+ทุกการออกแบบ UI, โทนสี, Typography และ Interaction **ต้อง** ปฏิบัติตามข้อกำหนดใน [DESIGN.md](file:///d:/01KruMac/Teach/DESIGN.md) อย่างเคร่งครัด 100% ห้ามคิดเองหรือใช้สีอื่นนอกเหนือจากที่กำหนดไว้
 
-- **Source of Truth**: [DESIGN.md](file:///d:/STD/---------1/DESIGN.md) คือมาตรฐานสูงสุดของโปรเจกต์
+- **Source of Truth**: [DESIGN.md](file:///d:/01KruMac/Teach/DESIGN.md) คือมาตรฐานสูงสุดของโปรเจกต์
 - **Ultimate Gamification & Simulators**: การสร้างเนื้อหาต้องไม่ใช้แค่ Card Click ธรรมดา แต่ต้องสร้าง **Mini-games** หรือ **Deep Simulators** ขั้นสูง (เช่น เกมยิงเลเซอร์, เกมแข่งรถจำลอง Index, Drag & Drop State Machine) เพื่อให้ความ Interactive สูงเทียบเท่าวิชา OOP หรือมากกว่า
 - **Explorer Pattern**: ทุก Component ควรใช้แนว Explorer Pattern (ดูรายละเอียดใน `SKILL.md` ข้อ 4-5): Header + 2-column Interactive + Live Console + Step Explanation + Gamification
 - **SVG Flowcharts**: ใช้ SVG แทน Unicode/CSS สำหรับผังงาน คุณภาพเทียบ draw.io
