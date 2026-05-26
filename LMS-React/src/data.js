@@ -13,57 +13,29 @@ const courses = [
                 title: "หน่วยที่ 1 หลักการเขียนโปรแกรมเบื้องต้น",
                 lessons: [
                     {
-                        id: "demo",
-                        title: "⭐ DEMO: ต้นแบบหน้าเรียนรู้ (Genesis)",
-                        content: `<h2>แบบร่างหน้าเรียนรู้มาตรฐานสูงสุด (Genesis Showcase)</h2>
-                        <p>หน้านี้คือผลลัพธ์ของต้นแบบหน้าเรียนรู้ <strong>Immersive Full-Page Standard</strong> ที่ล็อคมาตรฐานส่วนหัวบทเรียน (Hero Header) และส่วนท้าย (TeacherTask) ในขณะที่ให้ความเป็นอิสระในการจัดหน้าจอจำลองย่อยตรงกลางเพื่ออ้างอิงเป็นตัวอย่างมาตรฐานในการพัฒนาบทเรียนอื่นๆ ทั้งหมด</p>
-                        [DEMO]`
-                    },
-                    {
                         id: "1.1",
                         title: "1.1 แนะนำภาษาคอมพิวเตอร์และโปรแกรม",
-                        content: `<h2>ความหมายและองค์ประกอบของภาษาคอมพิวเตอร์</h2>
-                        <p>การเขียนโปรแกรมคอมพิวเตอร์ (Computer Programming) หมายถึง การนำชุดคำสั่งที่คอมพิวเตอร์สามารถเข้าใจได้มาเรียงต่อกันเป็นลำดับขั้นตอน เพื่อสั่งให้คอมพิวเตอร์ทำงานตามที่เราต้องการ โดยอาศัย <strong>ซอฟต์แวร์ (Software)</strong> เป็นตัวขับเคลื่อน</p>
-                        <p><strong>องค์ประกอบของภาษาคอมพิวเตอร์</strong> ประกอบด้วย: <strong>ไวยากรณ์ (Syntax)</strong> คือกฎในการเขียนคำสั่ง, <strong>ความหมาย (Semantics)</strong> คือความหมายของคำสั่งนั้นๆ, <strong>คำสงวน (Reserved Words)</strong> คือคำที่ภาษากำหนดไว้แล้วห้ามนำไปตั้งชื่อตัวแปร และ <strong>ชนิดข้อมูล (Data Types)</strong> คือประเภทของข้อมูลที่ภาษานั้นรองรับ</p>
-                        [pyUnit1_1_ProgramMeaning]
-                        <h2>ประวัติและวิวัฒนาการของภาษาคอมพิวเตอร์</h2>
-                        <p>ภาษาคอมพิวเตอร์มีการพัฒนามาอย่างต่อเนื่อง เริ่มจาก <strong>ภาษาเครื่อง (Machine Language)</strong> ในยุค 1940s ที่เป็นรหัสเลขฐานสอง (0 และ 1) ต่อมาพัฒนาเป็น <strong>ภาษาแอสเซมบลี (Assembly Language)</strong> ในยุค 1950s ที่ใช้ตัวย่อแทนคำสั่ง จากนั้นจึงเกิด <strong>ภาษาระดับสูง (High-Level Languages)</strong> อย่าง FORTRAN (1957), COBOL (1959), C (1972), Python (1991) จนถึงภาษาสมัยใหม่อย่าง Go, Rust, Kotlin ที่ตอบโจทย์การพัฒนาซอฟต์แวร์ในปัจจุบัน</p>
-                        <div class="note">💡 ข้อดีของการเรียนเขียนโปรแกรมคือ ทำให้เราสามารถเปลี่ยนจาก "ผู้ใช้งานซอฟต์แวร์" มาเป็น "ผู้สร้างซอฟต์แวร์" ได้ และยิ่งภาษาพัฒนาไปมากเท่าไหร่ การเขียนโปรแกรมก็ยิ่งง่ายขึ้นเท่านั้น</div>`
+                        content: "[pyUnit1_1_ProgramMeaning]"
                     },
                     {
                         id: "1.2",
                         title: "1.2 ระดับของภาษาคอมพิวเตอร์",
-                        content: `<h2>ภาษาคอมพิวเตอร์มีกี่ระดับ?</h2>
-                        <p>ภาษาคอมพิวเตอร์พัฒนาจากอดีตที่เข้าใจยาก มาสู่ปัจจุบันที่เขียนคล้ายภาษาอังกฤษมากขึ้น ลองสำรวจระดับของภาษาแบบโต้ตอบได้ด้านล่างนี้:</p>
-                        [pyUnit1_2_LanguageLevels]
-                        <div class="note">💡 <strong>สรุป</strong>: ภาษา Python ที่เราจะเรียน จัดอยู่ใน "ภาษาระดับสูง" ซึ่งอ่านง่ายที่สุด แต่ต้องผ่านตัวแปลภาษาก่อนเครื่องจึงจะเข้าใจได้</div>`
+                        content: "[pyUnit1_2_LanguageLevels]"
                     },
                     {
                         id: "1.3",
                         title: "1.3 Interpreter vs Compiler",
-                        content: `<h2>เมื่อคอมพิวเตอร์ไม่เข้าใจภาษาคน</h2>
-                        <p>ในเมื่อคอมพิวเตอร์รู้จักแต่เลข 0 และ 1 (ภาษาเครื่อง) แต่เราเขียนโปรแกรมด้วยตัวอักษรภาษาอังกฤษ (ภาษาระดับสูง) เราจึงต้องมี <strong>ตัวแปลภาษา (Translator)</strong> ซึ่งมี 2 แบบหลักๆ คือ Interpreter และ Compiler</p>
-                        [pyUnit1_3_TranslatorCompare]
-                        <div class="note">💡 <strong>ข้อควรจำ</strong>: Python ใช้ตัวแปลภาษาแบบ <strong>Interpreter</strong> ทำให้รันทีละบรรทัดได้เลย เหมาะกับการทดลองเขียนโค้ดมาก</div>`
+                        content: "[pyUnit1_3_TranslatorCompare]"
                     },
                     {
                         id: "1.4",
                         title: "1.4 จุดเด่นของภาษา Python",
-                        content: `<h2>ลักษณะเด่นและไวยากรณ์พื้นฐาน</h2>
-                        <p>Python ถูกสร้างขึ้นมาตั้งแต่ปี 1991 โดย <strong>Guido van Rossum</strong> และได้กลายมาเป็นภาษาที่ได้รับความนิยมสูงสุดระดับโลก ด้วยจุดเด่นที่สำคัญดังนี้:</p>
-                        <p><strong>จุดเด่นของ Python:</strong> 1) <strong>อ่านง่าย (Readable)</strong> — ใช้ย่อหน้า (Indentation) แทนวงเล็บปีกกา 2) <strong>เรียนรู้ง่าย</strong> — ไวยากรณ์ใกล้เคียงภาษาอังกฤษ เช่น <code>if score >= 80: print("ผ่าน")</code> 3) <strong>ข้ามแพลตฟอร์ม (Cross-Platform)</strong> — ทำงานได้ทั้ง Windows, macOS, Linux 4) <strong>ไลบรารีมากมาย</strong> — มีเครื่องมือเสริมพร้อมใช้งานกว่าแสนรายการ 5) <strong>ชุมชนขนาดใหญ่</strong> — มีผู้ใช้งานทั่วโลกคอยช่วยเหลือ</p>
-                        [pyUnit1_4_PythonTimeline]
-                        <h2>ตัวอย่างการประยุกต์ใช้งานในปัจจุบัน</h2>
-                        <p>Python ถูกนำไปใช้งานในหลากหลายสาขา ได้แก่: <strong>พัฒนาเว็บ (Web Development)</strong> ด้วย Django, Flask — <strong>วิทยาศาสตร์ข้อมูล (Data Science)</strong> ด้วย Pandas, NumPy — <strong>ปัญญาประดิษฐ์ (AI/ML)</strong> ด้วย TensorFlow, PyTorch — <strong>ระบบอัตโนมัติ (Automation)</strong> เช่น Web Scraping, การจัดการไฟล์ — <strong>เกม</strong> ด้วย Pygame — <strong>IoT</strong> ด้วย MicroPython บนบอร์ดขนาดเล็ก</p>
-                        <div class="note">💡 แม้จะชื่อเหมือนงูใหญ่ แต่แท้จริงแล้วชื่อ Python ได้แรงบันดาลใจมาจากคณะตลกสัญชาติอังกฤษที่ชื่อว่า "Monty Python's Flying Circus" 🐍</div>`
+                        content: "[pyUnit1_4_PythonTimeline]"
                     },
                     {
                         id: "1.5",
                         title: "1.5 การติดตั้ง Python และ IDE",
-                        content: `<h2>เตรียมเครื่องมือให้พร้อม!</h2>
-                        <p>การจะเขียนโปรแกรมได้ เราต้องมีเครื่องมือ 2 อย่าง: <br/>1. <strong>Python Interpreter</strong> (ตัวแปลภาษา) <br/>2. <strong>IDE หรือ Code Editor</strong> (โปรแกรมสำหรับพิมพ์โค้ด)</p>
-                        [pyUnit1_5_SetupGuide]
-                        <div class="note">💡 <strong>เตือนความจำ</strong>: สำหรับชาว Windows อย่าลืมติ๊ก <code>Add Python to PATH</code> ตอนติดตั้งเด็ดขาด ไม่งั้นจะรันคำสั่ง python ผ่าน Terminal ไม่ได้!</div>`
+                        content: "[pyUnit1_5_SetupGuide]"
                     }
                 ]
             },

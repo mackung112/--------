@@ -66,6 +66,15 @@ LMS-React/
 - [2026-05-18] **SQL Unit 6 (Functions & Dashboard) Explorer Refactor** *(by antigravity)*: อัปเกรดทั้ง 12 ไฟล์ของ Unit 6 ให้เป็น Explorer Pattern ครบ — L1-L6 แก้ terminal h-48, L7 CONCAT/CONCAT_WS/IFNULL Simulator, L8 DateTime (NOW/YEAR/DATE_ADD), L9 CASE/IF/IFNULL Grade Classifier, L10 Trend Analysis + Bar Chart (Monthly/YoY/Running Total), L11 Report Builder Studio ครอบ Explorer Shell + Quiz + Terminal, L12 Dashboard (KPI Cards/Top N/Category Breakdown)
 - [2026-05-18] **SQL Unit 4 (DQL) Explorer Refactor** *(by antigravity)*: อัปเกรดทั้ง 12 ไฟล์ของ Unit 4 ให้เป็น Explorer Pattern ครบ — L1 SELECT */columns/WHERE, L2 DISTINCT/multi-col/COUNT, L3 ORDER BY ASC/DESC/multi, L4 Comparison =/>/BETWEEN, L5 Logical AND/OR/NOT, L6 LIKE S%/%a%/____, L7 INNER JOIN + mini Venn, L8 LEFT/RIGHT JOIN, L9 GROUP BY COUNT/SUM/AVG + bar chart, L10 HAVING COUNT/SUM/WHERE→HAVING pipeline, L11 UNION/UNION ALL, L12 Report Design 4-step flow
 - [2026-05-25] **Design Pivot**: ปรับเปลี่ยนทิศทางการออกแบบระบบจาก Explorer Pattern สู่ **Immersive Full-Page Pattern** ตามตัวอย่างใน `RAW DATA` (เริ่มใช้ตั้งแต่ Python Unit 4 เป็นต้นไป)
+- [2026-05-26] **1.1 Introduction to Computer Languages Page**: สร้างหน้าเว็บบทเรียน 1.1 "แนะนำภาษาคอมพิวเตอร์และโปรแกรม" ขึ้นใหม่ทั้งหมดจากศูนย์ (From Scratch) ลงใน `pyUnit1_1_ProgramMeaning.jsx` ตามมาตรฐาน Immersive Full-Page Standard (Layer 1-4) โดยลบไฟล์เดโมและไฟล์คอมโพเนนต์เดิมทิ้งทั้งหมด และเชื่อมโยงเข้าฐานข้อมูลวิชาจริง (`[pyUnit1_1_ProgramMeaning]` ใน `data.js`) ผ่านการทดสอบคอมไพล์ Build สำเร็จ 100% เรียบร้อยสวยงามปราศจากบั๊กค้างคา
+- [2026-05-26] **1.2 - 1.5 Immersive Full-Page Overhaul**:
+  - อัปเกรด `pyUnit1_2_LanguageLevels.jsx`, `pyUnit1_3_TranslatorCompare.jsx`, `pyUnit1_4_PythonTimeline.jsx`, และ `pyUnit1_5_SetupGuide.jsx` ทั้งหมดให้เป็นโครงสร้าง **Immersive Full-Page Standard (Layer 1-4)**
+  - พัฒนา **Python Ecosystem Explorer & Code Studio** จำลองการทำงานภาพ (AI Neural Net SVG, Matplotlib bar chart, FastAPI browser mockup, Pygame retro screen)
+  - พัฒนา **Interactive Installer Studio** บน Windows (มี PATH validation และแจ้งเตือนเมื่อลืมเช็ค) และ macOS (Homebrew mockup)
+  - พัฒนา **Compiler vs Interpreter Studio** พร้อมจำลอง Runtime line-by-line และ Compile binary EXE
+  - กำจัดชุดโค้ด auto-scrolling ทั้งหมดเพื่อความลื่นไหลและเสถียรภาพสูงสุดของ UI/UX
+  - ทำความสะอาด mapping ใน `data.js` ให้รันตรงเข้า interactive components ทั้ง 5 หน้าทันที
+  - ดำเนินการทดสอบคำสั่ง `npm run build` ผ่านฉลุย 100% ปราศจากข้อผิดพลาด
 
 ## 🤔 5. ตรรกะการออกแบบ (Why we built it this way)
 - **ทำไมใช้ `data.js` เก็บ HTML + [MARKER]?**: เพื่อแยกข้อมูลเนื้อหาออกจากโค้ด UI เมื่อ `LessonViewer.jsx` อ่านเจอ `[MARKER]` จะทำการจับคู่กับไฟล์ใน `interactive/` ที่ชื่อตรงกันและเรนเดอร์แทนที่ทันที (ระบบ Auto-Registry ผ่าน Vite `import.meta.glob`)
