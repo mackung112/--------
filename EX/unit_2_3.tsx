@@ -286,13 +286,14 @@ export default function App() {
       </div>
 
       {/* Header Section */}
-      <header className="relative pt-16 pb-12 z-10">
+      <header className="relative pt-20 pb-12 z-10">
         <div className="max-w-5xl mx-auto px-6">
           <div className="border-b border-slate-200/60 pb-8">
-            <h2 className="text-sm font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-fuchsia-600 mb-4 uppercase">
-              หน่วยที่ 2 ขั้นตอนการเขียนโปรแกรม
+            <h2 className="text-sm font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-fuchsia-600 mb-4 uppercase flex items-center gap-2">
+              <span className="bg-white/80 backdrop-blur-sm border border-slate-200 px-4 py-1.5 rounded-full shadow-sm">Unit 2.3</span>
+              ขั้นตอนการเขียนโปรแกรม
             </h2>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight mb-4">
               สัญลักษณ์ผังงาน <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-amber-500">
                 (Flowchart Symbols)
@@ -417,7 +418,16 @@ export default function App() {
         {/* Teacher Task */}
         <TeacherTask title="กิจกรรมการเรียนรู้: Algorithm to Flowchart" taskText={teacherTaskContent} />
 
-
+        {/* Next Topic Suggestion */}
+        <div className="mt-16 text-center">
+          <p className="text-slate-500 mb-4 font-medium">เข้าใจสัญลักษณ์ทั้งหมดแล้วใช่ไหมครับ? ในหัวข้อหน้าเราจะมาเริ่มประกอบร่างสัญลักษณ์เหล่านี้ให้ทำงานแบบ "เรียงลำดับ" กัน</p>
+          <div className="inline-flex items-center gap-4 bg-white/90 backdrop-blur-md px-6 py-4 rounded-full shadow-lg border border-fuchsia-100 hover:scale-105 transition-transform cursor-pointer">
+            <span className="text-slate-600">หัวข้อถัดไป:</span>
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-fuchsia-500 text-lg">2.4 ผังงานแบบเรียงลำดับ</span>
+            <ArrowRight className="w-5 h-5 text-fuchsia-500" />
+          </div>
+          <p className="text-xs text-slate-400 mt-4">(พิมพ์ "2.4" เพื่อเข้าสู่เนื้อหาถัดไป)</p>
+        </div>
         
       </main>
 

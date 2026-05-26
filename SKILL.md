@@ -43,7 +43,11 @@
 ทุก Interactive Component ใช้ตัวอย่าง Unit 4 เป็นต้นไป ให้ใช้รูปแบบ **"Immersive Full-Page Pattern"** (อ้างอิงจาก RAW DATA):
 
 1. **Ambient Full-Page**: ใช้ `min-h-screen` และพื้นหลังฟุ้งๆ (blur) ไม่จำกัดความสูง
-2. **Gradient Header**: ส่วนหัวแสดงเนื้อหาวิชาพร้อมสีตัวอักษรแบบ Gradient ที่เข้ากับ Theme ของบทเรียน
+2. **Standardized Gradient Header**: ส่วนหัวต้องใช้โครงสร้าง `<header className="relative pt-16 pb-12 z-10">` เสมอ โดยมีโครงสร้างย่อยดังนี้:
+   - **Subhead**: ห้ามใช้ Pill badge (ห้ามมีคำว่า Unit 1.1) ให้ใช้รูปแบบ `หน่วยที่ X ชื่อหน่วย` เป็นข้อความล้วน ภายใต้ `<h2 className="text-sm font-bold tracking-widest text-{color} mb-4 uppercase">`
+   - **Main Title**: ใช้ `<h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">`
+   - **Subtitle (ใน h1)**: ใช้ `<span className="text-transparent bg-clip-text bg-gradient-to-r ...">`
+   - **Description**: ย่อหน้าอธิบายใต้หัวข้อต้องมีเส้นขอบด้านซ้าย `<div className="pt-6 border-l-4 border-{color} pl-6 mt-4">`
 3. **Interactive Simulator**: กล่องจำลองที่ครอบด้วย `backdrop-blur` และขอบมนขนาดใหญ่ `rounded-[2.5rem]` ไม่บังคับ split ซ้าย-ขวาตายตัว
 4. **Teacher Task (Instructor Task)**: มีกล่องแสดงใบงานผู้สอนพร้อมปุ่ม Copy เสมอที่ด้านล่างสุดของเนื้อหา
 5. **Gamification Elements**: แทรกอย่างน้อย 1 อย่าง (Mini Quiz, Simulator โต้ตอบ, หรือเกมเล็กๆ)

@@ -444,7 +444,13 @@ export default function App() {
           taskText={teacherTaskContent} 
         />
         
-
+        {/* Next Lesson Hint */}
+        <div className="mt-16 text-center">
+          <p className="text-slate-500 mb-2">เข้าใจกลไกการแปลภาษาแล้วใช่ไหม?</p>
+          <p className="text-lg font-medium text-slate-700">
+            หัวข้อถัดไป: ลองพิมพ์ <strong className="text-blue-600 cursor-pointer hover:underline">[1.4 จุดเด่นของภาษา Python]</strong> เพื่อทำความรู้จักภาษาพระเอกของเราในวิชานี้!
+          </p>
+        </div>
 
       </main>
     </div>

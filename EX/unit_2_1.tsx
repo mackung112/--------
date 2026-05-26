@@ -302,11 +302,12 @@ export default function App() {
       </div>
 
       {/* Header Section */}
-      <header className="relative pt-16 pb-12 z-10">
+      <header className="relative pt-20 pb-12 z-10">
         <div className="max-w-5xl mx-auto px-6">
           <div className="border-b border-slate-200/60 pb-8">
-            <h2 className="text-sm font-bold tracking-widest text-blue-600 mb-4 uppercase">
-              หน่วยที่ 2 ขั้นตอนการเขียนโปรแกรม
+            <h2 className="text-sm font-bold tracking-widest text-blue-600 mb-4 uppercase flex items-center gap-2">
+              <span className="bg-blue-100 px-3 py-1 rounded-full text-blue-700">Unit 2.1</span>
+              ขั้นตอนการเขียนโปรแกรม
             </h2>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">
               แนวคิดและอัลกอริทึม <br className="hidden md:block" />
@@ -468,7 +469,16 @@ export default function App() {
         {/* Teacher Task */}
         <TeacherTask title="แบบฝึกหัดท้ายบท" taskText={teacherTaskContent} />
 
-
+        {/* Next Topic Suggestion */}
+        <div className="mt-16 text-center">
+          <p className="text-slate-500 mb-4 font-medium">เข้าใจแนวคิดและลำดับขั้นตอนแล้วใช่ไหม?</p>
+          <div className="inline-flex items-center gap-4 bg-white px-6 py-4 rounded-full shadow-md border border-slate-200">
+            <span className="text-slate-600">หัวข้อถัดไป:</span>
+            <span className="font-bold text-blue-600 text-lg">2.2 วงจรการพัฒนาซอฟต์แวร์ (SDLC)</span>
+            <ArrowRight className="w-5 h-5 text-blue-500" />
+          </div>
+          <p className="text-xs text-slate-400 mt-4">(พิมพ์ "2.2" เพื่อเข้าสู่เนื้อหาถัดไป)</p>
+        </div>
         
       </main>
     </div>

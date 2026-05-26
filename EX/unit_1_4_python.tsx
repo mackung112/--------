@@ -336,7 +336,13 @@ export default function App() {
           taskText={teacherTaskContent} 
         />
 
-
+        {/* Next Lesson Hint */}
+        <div className="mt-16 text-center">
+          <p className="text-slate-500 mb-2">ตื่นเต้นที่จะเขียนโค้ดแรกหรือยังครับ?</p>
+          <p className="text-lg font-medium text-slate-700">
+            หัวข้อถัดไป: ลองพิมพ์ <strong className="text-amber-500 cursor-pointer hover:underline">[1.5 การติดตั้ง Python และ IDE]</strong> เพื่อเตรียมคอมพิวเตอร์ของคุณให้พร้อมสำหรับการเขียนโปรแกรม!
+          </p>
+        </div>
         
       </main>
     </div>

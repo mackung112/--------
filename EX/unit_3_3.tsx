@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {
-  Hash,
-  Copy,
-  CheckCircle2,
-  BookOpen,
+import { 
+  Hash, 
+  Copy, 
+  CheckCircle2, 
+  BookOpen, 
   AlertTriangle,
   ArrowRight,
   Calculator,
@@ -26,7 +26,7 @@ const TeacherTask = ({ title, taskText }) => {
   return (
     <div className="relative mt-24 rounded-3xl p-[1px] overflow-hidden group">
       <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 opacity-40 group-hover:opacity-100 transition-opacity duration-500"></div>
-
+      
       <div className="relative bg-white/90 backdrop-blur-xl p-8 md:p-10 rounded-3xl h-full flex flex-col shadow-xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
           <div className="flex items-center gap-5">
@@ -40,10 +40,11 @@ const TeacherTask = ({ title, taskText }) => {
           </div>
           <button
             onClick={handleCopy}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 ${copied
-                ? 'bg-emerald-100 text-emerald-600 border border-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 ${
+              copied 
+                ? 'bg-emerald-100 text-emerald-600 border border-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.4)]' 
                 : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-300 hover:text-emerald-600 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-              }`}
+            }`}
           >
             {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? 'คัดลอกแล้ว' : 'คัดลอกโจทย์'}
@@ -118,7 +119,7 @@ const TypeCastingSimulator = () => {
   return (
     <div className="my-16 bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-slate-200 p-8 md:p-12 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-100/50 rounded-bl-full blur-3xl z-0 pointer-events-none opacity-60"></div>
-
+      
       <div className="relative z-10 text-center mb-10">
         <h3 className="text-2xl font-bold text-slate-800 flex items-center justify-center gap-3">
           <Settings className="w-6 h-6 text-emerald-500 animate-spin-slow" />
@@ -128,7 +129,7 @@ const TypeCastingSimulator = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
-
+        
         {/* Selector Panel */}
         <div className="lg:col-span-4 flex flex-col gap-3">
           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 pl-2">เลือกวัตถุดิบ (Input Data)</h4>
@@ -136,10 +137,11 @@ const TypeCastingSimulator = () => {
             <button
               key={tc.id}
               onClick={() => setActiveCase(tc.id)}
-              className={`p-4 rounded-2xl text-left border-2 transition-all duration-300 flex justify-between items-center ${activeCase === tc.id
-                  ? 'bg-emerald-50 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]'
+              className={`p-4 rounded-2xl text-left border-2 transition-all duration-300 flex justify-between items-center ${
+                activeCase === tc.id 
+                  ? 'bg-emerald-50 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]' 
                   : 'bg-white border-slate-100 hover:border-emerald-200'
-                }`}
+              }`}
             >
               <div>
                 <div className={`font-mono font-bold text-lg ${activeCase === tc.id ? 'text-emerald-700' : 'text-slate-700'}`}>
@@ -147,9 +149,10 @@ const TypeCastingSimulator = () => {
                 </div>
                 <div className="text-xs text-slate-500 mt-1">{tc.label}</div>
               </div>
-              <span className={`text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider ${tc.inputType === 'str' ? 'bg-amber-100 text-amber-700' :
-                  tc.inputType === 'float' ? 'bg-sky-100 text-sky-700' : 'bg-purple-100 text-purple-700'
-                }`}>
+              <span className={`text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider ${
+                tc.inputType === 'str' ? 'bg-amber-100 text-amber-700' : 
+                tc.inputType === 'float' ? 'bg-sky-100 text-sky-700' : 'bg-purple-100 text-purple-700'
+              }`}>
                 {tc.inputType}
               </span>
             </button>
@@ -159,9 +162,9 @@ const TypeCastingSimulator = () => {
         {/* Factory Visualizer */}
         <div className="lg:col-span-8 bg-slate-900 rounded-[2rem] border border-slate-800 p-8 shadow-inner relative flex flex-col justify-center min-h-[300px]">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
+          
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-
+            
             {/* Input Node */}
             <div className="flex flex-col items-center">
               <span className="text-slate-400 font-mono text-sm mb-2">Input</span>
@@ -183,10 +186,11 @@ const TypeCastingSimulator = () => {
             {/* Output Node */}
             <div className="flex flex-col items-center">
               <span className="text-slate-400 font-mono text-sm mb-2">Output</span>
-              <div className={`border-2 rounded-xl p-4 w-32 h-24 flex items-center justify-center shadow-lg transition-colors ${currentCase.isError
-                  ? 'bg-rose-950/50 border-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.3)]'
+              <div className={`border-2 rounded-xl p-4 w-32 h-24 flex items-center justify-center shadow-lg transition-colors ${
+                currentCase.isError 
+                  ? 'bg-rose-950/50 border-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.3)]' 
                   : 'bg-emerald-950/50 border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
-                }`}>
+              }`}>
                 {currentCase.isError ? (
                   <XCircle className="w-8 h-8 text-rose-500" />
                 ) : (
@@ -194,19 +198,20 @@ const TypeCastingSimulator = () => {
                 )}
               </div>
               {!currentCase.isError && (
-                <span className="mt-2 text-[10px] bg-indigo-500/30 text-indigo-300 px-2 py-0.5 rounded font-mono border border-indigo-500/50">
-                  type: {currentCase.outputType}
-                </span>
+                 <span className="mt-2 text-[10px] bg-indigo-500/30 text-indigo-300 px-2 py-0.5 rounded font-mono border border-indigo-500/50">
+                   type: {currentCase.outputType}
+                 </span>
               )}
             </div>
           </div>
 
           {/* Explanation Box */}
-          <div className={`mt-8 relative z-10 p-4 rounded-xl border ${currentCase.isError ? 'bg-rose-900/20 border-rose-800/50 text-rose-200' : 'bg-emerald-900/20 border-emerald-800/50 text-emerald-200'
-            }`}>
+          <div className={`mt-8 relative z-10 p-4 rounded-xl border ${
+            currentCase.isError ? 'bg-rose-900/20 border-rose-800/50 text-rose-200' : 'bg-emerald-900/20 border-emerald-800/50 text-emerald-200'
+          }`}>
             <div className="flex items-start gap-3">
-              <Lightbulb className={`w-5 h-5 shrink-0 mt-0.5 ${currentCase.isError ? 'text-rose-400' : 'text-emerald-400'}`} />
-              <p className="text-sm leading-relaxed">{currentCase.explanation}</p>
+               <Lightbulb className={`w-5 h-5 shrink-0 mt-0.5 ${currentCase.isError ? 'text-rose-400' : 'text-emerald-400'}`} />
+               <p className="text-sm leading-relaxed">{currentCase.explanation}</p>
             </div>
           </div>
 
@@ -236,7 +241,7 @@ print(f"ปีนี้คุณอายุ {age} ปี")
 
   return (
     <div className="min-h-screen bg-[#f1f5f9] font-sans text-slate-800 pb-24 selection:bg-emerald-200 selection:text-emerald-900">
-
+      
       {/* Background Ambience */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[5%] right-[0%] w-[500px] h-[500px] rounded-full bg-emerald-200/40 blur-[120px]"></div>
@@ -255,9 +260,9 @@ print(f"ปีนี้คุณอายุ {age} ปี")
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">(Integer / int)</span>
             </h1>
           </div>
-
+          
           <div className="pt-6 border-l-4 border-emerald-500 pl-6 mt-4">
-            <p className="text-lg text-slate-600 max-w-3xl leading-relaxed">
+             <p className="text-lg text-slate-600 max-w-3xl leading-relaxed">
               ในโลกการเขียนโปรแกรม <strong className="text-emerald-700">ตัวเลขจำนวนเต็ม (Integer)</strong> ถูกใช้บ่อยที่สุด ทั้งการนับจำนวน การคำนวณอายุ หรือการระบุตำแหน่งข้อมูล โดยในภาษา Python ใช้ชื่อย่อว่า <code>int</code>
             </p>
           </div>
@@ -265,16 +270,16 @@ print(f"ปีนี้คุณอายุ {age} ปี")
       </header>
 
       <main className="max-w-5xl mx-auto px-6 relative z-10">
-
+        
         {/* Section 3.3.1 Characteristic */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
             <Hash className="w-6 h-6 text-emerald-500" />
             3.3.1 ลักษณะของข้อมูลประเภทจำนวนเต็ม
           </h2>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
+            
             {/* Card 1: Positive/Negative */}
             <div className="bg-white/90 backdrop-blur-xl p-8 rounded-[2rem] border border-slate-100 shadow-md hover:shadow-lg hover:border-emerald-200 transition-all group">
               <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
@@ -323,18 +328,18 @@ print(f"ปีนี้คุณอายุ {age} ปี")
 
         {/* Section 3.3.2 Type Casting */}
         <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl mb-12 border border-slate-200 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-bl-full pointer-events-none -z-0"></div>
-
+           <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-bl-full pointer-events-none -z-0"></div>
+          
           <div className="relative z-10">
             <h2 className="text-3xl font-bold mb-6 flex items-center gap-3 text-slate-800">
               <FileDigit className="w-8 h-8 text-emerald-500" />
               3.3.2 การแปลงชนิดข้อมูล (Type Casting)
             </h2>
-
+            
             <div className="flex flex-col md:flex-row gap-10 items-center">
               <div className="md:w-1/2">
                 <p className="text-slate-600 text-lg leading-relaxed mb-6">
-                  บ่อยครั้งที่เราได้รับข้อมูลมาในรูปแบบของ "ข้อความ (String)" โดยเฉพาะเวลาที่เราใช้คำสั่ง <code className="bg-slate-100 text-purple-600 px-1 rounded font-mono">input()</code> รับค่าจากคีย์บอร์ด
+                  บ่อยครั้งที่เราได้รับข้อมูลมาในรูปแบบของ "ข้อความ (String)" โดยเฉพาะเวลาที่เราใช้คำสั่ง <code className="bg-slate-100 text-purple-600 px-1 rounded font-mono">input()</code> รับค่าจากคีย์บอร์ด 
                 </p>
                 <div className="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl mb-6">
                   <h4 className="font-bold text-rose-800 mb-1 text-sm">ปัญหาที่พบบ่อย</h4>
@@ -351,14 +356,14 @@ print(f"ปีนี้คุณอายุ {age} ปี")
                     <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">การแก้ปัญหาด้วย int()</span>
                   </div>
                   <div className="p-6 font-mono text-sm leading-loose">
-                    <span className="text-slate-500"># 1. รับค่าเป็น String</span><br />
-                    <span className="text-blue-400">age_str</span> = <span className="text-green-400">"18"</span><br />
-                    <br />
-                    <span className="text-slate-500"># 2. แปลงเป็น Integer</span><br />
-                    <span className="text-blue-400">age_int</span> = <span className="text-emerald-400 font-bold">int</span>(<span className="text-blue-400">age_str</span>)<br />
-                    <br />
-                    <span className="text-slate-500"># 3. นำไปคำนวณได้แล้ว!</span><br />
-                    <span className="text-blue-400">next_year</span> = <span className="text-blue-400">age_int</span> + <span className="text-amber-400">1</span><br />
+                    <span className="text-slate-500"># 1. รับค่าเป็น String</span><br/>
+                    <span className="text-blue-400">age_str</span> = <span className="text-green-400">"18"</span><br/>
+                    <br/>
+                    <span className="text-slate-500"># 2. แปลงเป็น Integer</span><br/>
+                    <span className="text-blue-400">age_int</span> = <span className="text-emerald-400 font-bold">int</span>(<span className="text-blue-400">age_str</span>)<br/>
+                    <br/>
+                    <span className="text-slate-500"># 3. นำไปคำนวณได้แล้ว!</span><br/>
+                    <span className="text-blue-400">next_year</span> = <span className="text-blue-400">age_int</span> + <span className="text-amber-400">1</span><br/>
                     <span className="text-yellow-200">print</span>(<span className="text-blue-400">next_year</span>) <span className="text-slate-500"># Output: 19</span>
                   </div>
                 </div>
@@ -372,8 +377,19 @@ print(f"ปีนี้คุณอายุ {age} ปี")
 
         {/* Teacher Task */}
         <TeacherTask title="กิจกรรมปฏิบัติในห้องเรียน" taskText={teacherTaskContent} />
-
-
+        
+        {/* Next Unit Recommendation */}
+        <div className="mt-16 flex justify-end">
+          <div className="bg-emerald-50 border border-emerald-100 px-6 py-4 rounded-2xl flex items-center gap-4 hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group">
+            <div className="text-right">
+              <p className="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-1">หัวข้อถัดไป</p>
+              <h4 className="text-slate-800 font-bold group-hover:text-emerald-700 transition-colors">3.4 ข้อมูลทศนิยม (Float)</h4>
+            </div>
+            <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center group-hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-200">
+              <ArrowRight className="w-5 h-5" />
+            </div>
+          </div>
+        </div>
 
       </main>
     </div>
