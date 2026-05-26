@@ -1,306 +1,345 @@
-import TeacherTask from '../ui/TeacherTask';
-import React, { useState, useEffect, useRef } from 'react';
-import { Terminal, Cpu, ArrowRight, RefreshCw, Play, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Database,
+  Copy,
+  CheckCircle2,
+  BookOpen,
+  ArrowRight,
+  Trash2,
+  Box,
+  Link,
+  Cpu,
+  FileDigit
+} from 'lucide-react';
 
-const scenarios = [
-  {
-    id: 1,
-    title: "Immutable (int) — สร้าง Object ใหม่",
-    code: 'a = 10\nb = a\na = 20\nprint("a =", a)\nprint("b =", b)',
-    steps: [
-      { 
-        desc: 'สร้างตัวแปร a ชี้ไปที่ Object ที่มีค่า 10', 
-        memory: [{ name: 'a', value: 10, addr: '0x100', color: 'bg-blue-100 border-blue-400 text-blue-900', isNew: true }],
-        consoleOutput: [
-          { type: 'command', text: '>>> a = 10' }
-        ]
-      },
-      { 
-        desc: 'กำหนด b = a ทำให้ b ชี้ไปที่ Object เดียวกับ a', 
-        memory: [
-          { name: 'a', value: 10, addr: '0x100', color: 'bg-blue-100 border-blue-400 text-blue-900' }, 
-          { name: 'b', value: 10, addr: '0x100', color: 'bg-indigo-100 border-indigo-400 text-indigo-900', isNew: true }
-        ],
-        consoleOutput: [
-          { type: 'command', text: '>>> b = a' }
-        ]
-      },
-      { 
-        desc: 'เปลี่ยนค่า a = 20 ระบบสร้าง Object ใหม่ขึ้นมา เพราะ int แก้ไขค่าไม่ได้ (Immutable)', 
-        memory: [
-          { name: 'a', value: 20, addr: '0x200', color: 'bg-rose-100 border-rose-400 text-rose-900', changed: true }, 
-          { name: 'b', value: 10, addr: '0x100', color: 'bg-indigo-100 border-indigo-400 text-indigo-900' }
-        ],
-        consoleOutput: [
-          { type: 'command', text: '>>> a = 20' },
-          { type: 'command', text: '>>> print("a =", a)' },
-          { type: 'output', text: 'a = 20' },
-          { type: 'command', text: '>>> print("b =", b)' },
-          { type: 'output', text: 'b = 10' }
-        ]
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Mutable (list) — แก้ไขที่เดิม",
-    code: 'list_a = [1, 2, 3]\nlist_b = list_a\nlist_b.append(4)\nprint("list_a =", list_a)\nprint("list_b =", list_b)',
-    steps: [
-      { 
-        desc: 'สร้าง list_a ชี้ไปที่ List Object [1, 2, 3]', 
-        memory: [{ name: 'list_a', value: '[1, 2, 3]', addr: '0x300', color: 'bg-purple-100 border-purple-400 text-purple-900', isNew: true }],
-        consoleOutput: [
-          { type: 'command', text: '>>> list_a = [1, 2, 3]' }
-        ]
-      },
-      { 
-        desc: 'กำหนด list_b = list_a ทำให้ทั้งคู่ชี้ไปที่ List Object เดียวกันเป๊ะๆ', 
-        memory: [
-          { name: 'list_a', value: '[1, 2, 3]', addr: '0x300', color: 'bg-purple-100 border-purple-400 text-purple-900' }, 
-          { name: 'list_b', value: '[1, 2, 3]', addr: '0x300', color: 'bg-fuchsia-100 border-fuchsia-400 text-fuchsia-900', isNew: true }
-        ],
-        consoleOutput: [
-          { type: 'command', text: '>>> list_b = list_a' }
-        ]
-      },
-      { 
-        desc: 'เพิ่มเลข 4 เข้าไปใน list_b ค่าในตำแหน่งเดิมเปลี่ยน ส่งผลกระทบถึง list_a ด้วย!', 
-        memory: [
-          { name: 'list_a', value: '[1, 2, 3, 4]', addr: '0x300', color: 'bg-purple-100 border-purple-400 text-purple-900', changed: true }, 
-          { name: 'list_b', value: '[1, 2, 3, 4]', addr: '0x300', color: 'bg-fuchsia-100 border-fuchsia-400 text-fuchsia-900', changed: true }
-        ],
-        consoleOutput: [
-          { type: 'command', text: '>>> list_b.append(4)' },
-          { type: 'command', text: '>>> print("list_a =", list_a)' },
-          { type: 'output', text: 'list_a = [1, 2, 3, 4]' },
-          { type: 'command', text: '>>> print("list_b =", list_b)' },
-          { type: 'output', text: 'list_b = [1, 2, 3, 4]' }
-        ]
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "การ Copy List ที่ถูกต้อง (.copy())",
-    code: 'list_a = [1, 2, 3]\nlist_b = list_a.copy()\nlist_b.append(4)\nprint("list_a =", list_a)\nprint("list_b =", list_b)',
-    steps: [
-      { 
-        desc: 'สร้าง list_a', 
-        memory: [{ name: 'list_a', value: '[1, 2, 3]', addr: '0x300', color: 'bg-purple-100 border-purple-400 text-purple-900' }],
-        consoleOutput: [
-          { type: 'command', text: '>>> list_a = [1, 2, 3]' }
-        ]
-      },
-      { 
-        desc: 'สร้าง list_b โดยการ .copy() ระบบจะสร้าง Object ใหม่ที่มีข้อมูลเหมือนเดิม แต่คนละที่อยู่กัน', 
-        memory: [
-          { name: 'list_a', value: '[1, 2, 3]', addr: '0x300', color: 'bg-purple-100 border-purple-400 text-purple-900' }, 
-          { name: 'list_b', value: '[1, 2, 3]', addr: '0x400', color: 'bg-teal-100 border-teal-400 text-teal-900', isNew: true }
-        ],
-        consoleOutput: [
-          { type: 'command', text: '>>> list_b = list_a.copy()' }
-        ]
-      },
-      { 
-        desc: 'เพิ่มเลข 4 ใน list_b คราวนี้ list_a ไม่โดนผลกระทบแล้ว', 
-        memory: [
-          { name: 'list_a', value: '[1, 2, 3]', addr: '0x300', color: 'bg-purple-100 border-purple-400 text-purple-900' }, 
-          { name: 'list_b', value: '[1, 2, 3, 4]', addr: '0x400', color: 'bg-teal-100 border-teal-400 text-teal-900', changed: true }
-        ],
-        consoleOutput: [
-          { type: 'command', text: '>>> list_b.append(4)' },
-          { type: 'command', text: '>>> print("list_a =", list_a)' },
-          { type: 'output', text: 'list_a = [1, 2, 3]' },
-          { type: 'command', text: '>>> print("list_b =", list_b)' },
-          { type: 'output', text: 'list_b = [1, 2, 3, 4]' }
-        ]
-      },
-    ],
-  },
-];
+const TeacherTask = ({ title, taskText }) => {
+  const [copied, setCopied] = useState(false);
 
-
-
-
-export default function pyUnit3_8_MemoryVisualizer() {
-  const [activeScenario, setActiveScenario] = useState(0);
-  const [step, setStep] = useState(0);
-  const consoleRef = useRef(null);
-
-  const scenario = scenarios[activeScenario];
-  const currentStep = scenario.steps[step];
-
-  // Aggregate console output up to the current step
-  const getConsoleHistory = () => {
-    let history = [{ type: 'system', text: `--- Scenario: ${scenario.title} ---` }];
-    for (let i = 0; i <= step; i++) {
-      history = [...history, ...scenario.steps[i].consoleOutput];
-    }
-    return history;
+  const handleCopy = () => {
+    navigator.clipboard.writeText(taskText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const consoleHistory = getConsoleHistory();
+  return (
+    <div className="relative mt-24 rounded-3xl p-[1px] overflow-hidden group">
+      <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-400 to-slate-400 opacity-40 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="relative bg-white/90 backdrop-blur-xl p-8 md:p-10 rounded-3xl h-full flex flex-col shadow-xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+          <div className="flex items-center gap-5">
+            <div className="p-3 bg-emerald-100 rounded-2xl text-emerald-600 border border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-emerald-500 mb-1 tracking-widest uppercase">Instructor Task</p>
+              <h3 className="text-2xl font-bold text-slate-800">{title}</h3>
+            </div>
+          </div>
+          <button
+            onClick={handleCopy}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 ${copied
+                ? 'bg-emerald-100 text-emerald-600 border border-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
+                : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-300 hover:text-emerald-600 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+              }`}
+          >
+            {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? 'คัดลอกแล้ว' : 'คัดลอกโจทย์'}
+          </button>
+        </div>
+        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-slate-700 whitespace-pre-wrap leading-relaxed font-mono text-sm">
+          {taskText}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  useEffect(() => {
-    if (consoleRef.current) {
-      consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
-    }
-  }, [consoleHistory, step, activeScenario]);
+const MemoryXRaySimulator = () => {
+  const [step, setStep] = useState(0);
+
+  // States of memory based on steps
+  // Step 0: x = 10
+  // Step 1: y = x
+  // Step 2: x = 20 (Garbage collection simulation if 10 has no refs, but y points to 10)
+  // Step 3: y = 20 (10 is garbage collected)
+
+  const variables = [
+    { name: 'x', targetId: step < 2 ? 'mem-10' : 'mem-20' },
+    { name: 'y', targetId: step === 0 ? null : (step < 3 ? 'mem-10' : 'mem-20') }
+  ];
+
+  const objects = [
+    { id: 'mem-10', value: '10', type: 'int', address: '0x7ffd10' },
+    { id: 'mem-20', value: '20', type: 'int', address: '0x7ffd20' }
+  ];
+
+  const getRefsCount = (objId) => {
+    return variables.filter(v => v.targetId === objId).length;
+  };
+
+  const getCodeForStep = () => {
+    if (step === 0) return "x = 10";
+    if (step === 1) return "x = 10\ny = x";
+    if (step === 2) return "x = 10\ny = x\nx = 20";
+    if (step === 3) return "x = 10\ny = x\nx = 20\ny = 20";
+    return "";
+  };
+
+  const nextStep = () => {
+    if (step < 3) setStep(step + 1);
+  };
+
+  const resetStep = () => {
+    setStep(0);
+  };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-24">
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-gradient-to-br from-indigo-100/40 to-purple-100/40 blur-[100px] rounded-full mix-blend-multiply" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-gradient-to-br from-blue-100/40 to-cyan-100/40 blur-[100px] rounded-full mix-blend-multiply" />
-      </div>
-      <main className="max-w-5xl mx-auto px-6 relative z-10 pt-12">
-        <div className="flex flex-col gap-8 w-full">
-          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden mb-8 font-sans">
-      {/* Simulator Header */}
-      <div className="bg-slate-50 border-b border-slate-200 p-5">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
-            <Cpu size={20} className="stroke-2" />
-          </div>
-          <h3 className="font-display text-xl font-semibold text-slate-900">Memory Visualizer (หน่วยความจำ)</h3>
-        </div>
-        <p className="font-base text-sm leading-relaxed text-slate-700">
-          จำลองการทำงานของตัวแปรในหน่วยความจำ RAM และทำความเข้าใจความแตกต่างของ Immutable vs Mutable ใน Python
-        </p>
-      </div>
+    <div className="my-16 bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-800 relative overflow-hidden text-white">
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+      <div className="absolute -top-20 -right-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl z-0 pointer-events-none"></div>
 
-      {/* Interactive Container */}
-      <div className="flex flex-col min-h-[450px]">
-        
-        {/* Top 2-Column Split */}
-        <div className="flex flex-col lg:flex-row flex-1">
+      <div className="relative z-10">
+        <div className="flex justify-between items-end mb-8">
+          <div>
+            <h3 className="text-3xl font-bold mb-2 flex items-center gap-3 text-emerald-400">
+              <Cpu className="w-8 h-8" />
+              เครื่องเอ็กซเรย์หน่วยความจำ (Memory X-Ray)
+            </h3>
+            <p className="text-slate-400 text-lg">ดูการชี้ของตัวแปรไปยังออบเจกต์ในหน่วยความจำ RAM ทีละสเต็ป</p>
+          </div>
+          <div className="flex gap-2">
+            <button onClick={resetStep} className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">Reset</button>
+            <button onClick={nextStep} disabled={step >= 3} className={`px-4 py-2 rounded-xl font-bold transition-colors ${step >= 3 ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.4)]'}`}>
+              Next Step <ArrowRight className="inline w-4 h-4 ml-1" />
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* Left: Visual Explorer */}
-          <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col">
-            <div className="flex flex-wrap gap-2 mb-6">
-              {scenarios.map((s, idx) => (
-                <button 
-                  key={s.id} 
-                  onClick={() => { setActiveScenario(idx); setStep(0); }}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all active:scale-95 ${
-                    activeScenario === idx 
-                      ? 'bg-indigo-600 text-white shadow-md' 
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
-                  }`}
-                >
-                  {s.title}
-                </button>
+          {/* Code Execution */}
+          <div className="lg:col-span-4 flex flex-col">
+            <div className="bg-slate-950 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex-1 flex flex-col">
+              <div className="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">Python Script</span>
+                <span className="text-xs font-mono text-emerald-400">Step {step + 1}/4</span>
+              </div>
+              <div className="p-6 font-mono text-sm leading-loose whitespace-pre-wrap flex-1">
+                <span className="text-emerald-400 font-bold">{getCodeForStep()}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Memory Visualizer */}
+          <div className="lg:col-span-8 bg-slate-800/80 border border-slate-700 p-8 rounded-2xl relative flex flex-col md:flex-row justify-between items-center gap-12">
+            
+            {/* Variables (Names) */}
+            <div className="flex flex-col gap-8 w-1/3 z-10">
+              <div className="text-center text-xs font-bold text-slate-400 tracking-widest uppercase mb-2">Variables (Name)</div>
+              {variables.map(v => (
+                <div key={v.name} className={`h-16 flex items-center justify-center rounded-xl border-2 transition-all duration-500 ${v.targetId ? 'bg-slate-700 border-slate-500' : 'bg-slate-900 border-slate-800 border-dashed opacity-50'}`}>
+                  <span className="font-mono text-2xl font-bold text-white">{v.name}</span>
+                </div>
               ))}
             </div>
 
-            <div className="flex-1 flex flex-col items-center justify-center py-8">
-              <div className="flex flex-wrap justify-center gap-8 w-full max-w-2xl relative">
-                {currentStep.memory.map((mem, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`relative p-5 rounded-2xl border-2 ${mem.color} min-w-[160px] bg-white transition-all duration-500 shadow-sm ${mem.changed ? 'ring-4 ring-rose-300 ring-offset-2 scale-105' : ''} ${mem.isNew ? 'ring-4 ring-emerald-300 ring-offset-2 scale-105' : ''}`}
-                  >
-                    <div className="text-xs font-bold text-slate-600 mb-1">ตัวแปร</div>
-                    <div className="text-2xl font-extrabold text-slate-900 mb-2 font-mono">{mem.name}</div>
-                    <div className="text-xs text-slate-700 mb-1">ค่า:</div>
-                    <div className="font-mono text-lg font-bold text-slate-800">{mem.value}</div>
-                    <div className="text-[11px] text-slate-600 mt-3 font-mono bg-slate-50 p-1 rounded inline-block">addr: {mem.addr}</div>
+            {/* Links / Arrows (Simulated visually for now) */}
+            <div className="hidden md:flex flex-col justify-center gap-8 w-1/3 text-emerald-500/50 z-0 relative h-full">
+              {/* Very simplified visual representation of arrows since exact SVG drawing is complex without canvas */}
+              <div className="flex justify-center items-center h-full">
+                <ArrowRight className="w-12 h-12 text-emerald-500 animate-pulse" />
+              </div>
+            </div>
+
+            {/* Memory Objects */}
+            <div className="flex flex-col gap-8 w-1/3 z-10">
+              <div className="text-center text-xs font-bold text-slate-400 tracking-widest uppercase mb-2">RAM (Objects)</div>
+              {objects.map(obj => {
+                const refsCount = getRefsCount(obj.id);
+                const isGarbage = step > 0 && refsCount === 0;
+
+                return (
+                  <div key={obj.id} className={`p-4 rounded-xl border-2 transition-all duration-700 relative ${isGarbage ? 'bg-rose-950/30 border-rose-900/50 opacity-40 scale-95' : 'bg-emerald-950 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]'}`}>
                     
-                    {mem.changed && <div className="absolute -top-3 -right-3 bg-rose-500 text-white text-[10px] px-2 py-1 rounded-full font-bold shadow-sm animate-bounce">Changed!</div>}
-                    {mem.isNew && <div className="absolute -top-3 -right-3 bg-emerald-500 text-white text-[10px] px-2 py-1 rounded-full font-bold shadow-sm animate-pulse">New!</div>}
-                  </div>
-                ))}
+                    {isGarbage && (
+                      <div className="absolute inset-0 flex items-center justify-center z-20">
+                        <Trash2 className="w-10 h-10 text-rose-500 drop-shadow-[0_0_10px_rgba(244,63,94,0.8)]" />
+                      </div>
+                    )}
 
-                {currentStep.memory.filter(m => m.addr === currentStep.memory[0]?.addr).length > 1 && (
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm flex items-center gap-1 animate-in fade-in slide-in-from-top-2">
-                    <CheckCircle2 size={14} /> ชี้มาที่เดียวกันเป๊ะ! (Reference เดียวกัน)
+                    <div className="text-[10px] text-slate-500 font-mono mb-1 flex justify-between">
+                      <span>{obj.type}</span>
+                      <span>{obj.address}</span>
+                    </div>
+                    <div className="text-3xl font-black font-mono text-center text-white my-2">{obj.value}</div>
+                    
+                    <div className="mt-2 text-center">
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono ${refsCount > 0 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}`}>
+                        Refs: {refsCount}
+                      </span>
+                    </div>
                   </div>
-                )}
-              </div>
+                );
+              })}
             </div>
+
           </div>
 
-          {/* Right: Control / Gamification */}
-          <div className="w-full lg:w-80 bg-slate-50 p-6 flex flex-col">
-            <h4 className="font-base text-sm font-medium tracking-wide uppercase text-slate-700 mb-4">การทำงานปัจจุบัน</h4>
-            
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mb-6 flex-1 flex flex-col justify-center">
-              <div className="text-xs font-bold text-indigo-500 mb-2 uppercase tracking-wider flex items-center gap-2">
-                <Play size={14} /> Step {step + 1} of {scenario.steps.length}
-              </div>
-              <p className="text-slate-800 leading-relaxed font-medium">
-                {currentStep.desc}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 mt-auto">
-              <div className="flex justify-between gap-2">
-                <button 
-                  onClick={() => setStep(Math.max(0, step - 1))} 
-                  disabled={step === 0}
-                  className="flex-1 py-3 bg-white text-slate-700 rounded-xl font-semibold border border-slate-200 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95 text-sm"
-                >
-                  ย้อนกลับ
-                </button>
-                <button 
-                  onClick={() => setStep(Math.min(scenario.steps.length - 1, step + 1))} 
-                  disabled={step >= scenario.steps.length - 1}
-                  className="flex-[2] flex items-center justify-center gap-2 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 disabled:bg-slate-300 disabled:text-slate-700 disabled:cursor-not-allowed transition-all shadow-sm active:scale-95 text-sm"
-                >
-                  ขั้นตอนถัดไป <ArrowRight size={16} />
-                </button>
-              </div>
-              <button 
-                onClick={() => setStep(0)}
-                className="w-full py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-all flex items-center justify-center gap-2 active:scale-95 text-sm"
-              >
-                <RefreshCw size={16} /> เริ่มต้นใหม่
-              </button>
-            </div>
-          </div>
         </div>
-
-        {/* Bottom Full-width Console Output (VS Code Style) */}
-        <div className="h-48 bg-[#1e1e1e] font-mono text-[13px] overflow-y-auto flex flex-col relative w-full border-t border-slate-800">
-          <div className="sticky top-0 bg-[#2d2d2d] border-b border-slate-700 px-4 py-2 flex items-center justify-between shadow-sm z-10">
-            <div className="flex items-center gap-2">
-              <span className="text-slate-600 text-xs font-semibold tracking-wider">TERMINAL</span>
-              <span className="text-slate-700 text-xs">python memory_test.py</span>
-            </div>
-            <div className="flex gap-1 items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-            </div>
-          </div>
-          
-          <div className="p-4 space-y-1 flex-1" ref={consoleRef}>
-            {consoleHistory.map((line, idx) => (
-              <div key={idx} className="leading-relaxed">
-                {line.type === 'command' && (
-                  <div className="text-slate-600">
-                    <span className="text-green-400 mr-2">{line.text.startsWith('>>>') ? '' : '>>>'}</span>
-                    {line.text}
-                  </div>
-                )}
-                {line.type === 'output' && (
-                  <div className="text-cyan-300">{line.text}</div>
-                )}
-                {line.type === 'system' && (
-                  <div className="text-slate-700 mb-2 font-bold">{line.text}</div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
-              </div>
+    </div>
+  );
+};
+
+export default function pyUnit3_8_MemoryVisualizer() {
+  const teacherTaskContent = `กิจกรรมปฏิบัติ: "สายลับตามรอยหน่วยความจำ"
+
+ข้อที่ 1: การชี้ไปยังกล่องเดียวกัน
+ให้นักเรียนวิเคราะห์โค้ดต่อไปนี้:
+a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)
+คำถาม: ตัวแปร a จะพิมพ์อะไรออกมา? เพราะเหตุใด? (ใบ้: a และ b ชี้ไปที่กล่องข้อมูลเดียวกันหรือไม่?)
+
+ข้อที่ 2: หน้าที่ของคนเก็บขยะ (Garbage Collector)
+จงอธิบายด้วยคำพูดของตนเองว่า Garbage Collector ในภาษา Python ทำหน้าที่อะไร? และจะทำความสะอาดกล่องข้อมูลเมื่อใด?`;
+
+  return (
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 pb-24 selection:bg-emerald-200 selection:text-emerald-900">
+      
+      {/* Background Ambience */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[5%] right-[0%] w-[500px] h-[500px] rounded-full bg-emerald-200/40 blur-[120px]"></div>
+        <div className="absolute bottom-[10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-slate-200/50 blur-[120px]"></div>
+      </div>
+
+      {/* Header Section */}
+      <header className="relative pt-16 pb-12 z-10">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="border-b border-slate-200/60 pb-8">
+            <h2 className="text-sm font-bold tracking-widest text-emerald-600 mb-4 uppercase">
+              หน่วยที่ 3 โครงสร้างพื้นฐานของภาษา Python
+            </h2>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">
+              การจัดสรรหน่วยความจำ <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-slate-500">(Memory Allocation)</span>
+            </h1>
+          </div>
+
+          <div className="pt-6 border-l-4 border-emerald-500 pl-6 mt-4">
+            <p className="text-lg text-slate-600 max-w-3xl leading-relaxed">
+              ในภาษาโปรแกรมยุคเก่า นักพัฒนาต้องจองและคืนพื้นที่ RAM ด้วยตัวเอง แต่ใน Python ระบบจัดการทุกอย่างให้อัตโนมัติ! การเข้าใจว่า <strong>ตัวแปรเป็นเพียงแค่ "ป้ายชื่อ" ที่ชี้ไปยัง "กล่องข้อมูล"</strong> คือกุญแจสำคัญสู่การเขียนโค้ดไร้บั๊ก
+            </p>
+          </div>
         </div>
+      </header>
+
+      <main className="max-w-5xl mx-auto px-6 relative z-10">
+
+        {/* Section 3.8.1 หลักการเก็บข้อมูลในหน่วยความจำของตัวแปร */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+            <Database className="w-6 h-6 text-emerald-500" />
+            3.8.1 หลักการเก็บข้อมูลในหน่วยความจำของตัวแปร
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {/* Card 1: Name */}
+            <div className="bg-white/90 backdrop-blur-xl p-8 rounded-[2rem] border border-slate-100 shadow-md hover:shadow-lg hover:border-emerald-200 transition-all group">
+              <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <FileDigit className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-slate-800 text-lg mb-3">ชื่อตัวแปร (Name)</h3>
+              <p className="text-sm text-slate-600 mb-4">ตัวแปรใน Python ไม่ใช่กล่องใส่ของ แต่เป็นเหมือน <strong>"ป้ายแท็ก"</strong> ที่เอาไว้แปะเรียกสิ่งของนั้นๆ มากกว่า</p>
+            </div>
+
+            {/* Card 2: Object/Value */}
+            <div className="bg-white/90 backdrop-blur-xl p-8 rounded-[2rem] border border-slate-100 shadow-md hover:shadow-lg hover:border-teal-200 transition-all group">
+              <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Box className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-slate-800 text-lg mb-3">ออบเจกต์ (Object)</h3>
+              <p className="text-sm text-slate-600 mb-4">คือตัวข้อมูลจริงๆ (เช่น เลข 10, ข้อความ "Hello") ซึ่งถูกสร้างและจัดเก็บไว้ในพื้นที่หน่วยความจำ (RAM)</p>
+            </div>
+
+            {/* Card 3: Reference */}
+            <div className="bg-slate-900 backdrop-blur-xl p-8 rounded-[2rem] border border-slate-800 shadow-xl relative overflow-hidden group">
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl"></div>
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-emerald-900/50 text-emerald-400 border border-emerald-500/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <Link className="w-6 h-6" />
+                </div>
+                <h3 className="font-bold text-emerald-300 text-lg mb-3">การอ้างอิง (Reference)</h3>
+                <p className="text-sm text-slate-400 mb-4">ป้ายชื่อ (ตัวแปร) จะมีเส้นเชือกโยงไปหา ออบเจกต์ ซึ่งป้ายชื่อหลายอันสามารถโยงมาที่ออบเจกต์เดียวกันได้!</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Section 3.8.2 กระบวนการคืนพื้นที่หน่วยความจำ */}
+        <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl mb-12 border border-slate-200 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-bl-full pointer-events-none -z-0"></div>
+
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold mb-6 flex items-center gap-3 text-slate-800">
+              <FileDigit className="w-8 h-8 text-emerald-500" />
+              3.8.2 กระบวนการคืนพื้นที่หน่วยความจำ (Garbage Collection)
+            </h2>
+
+            <div className="flex flex-col md:flex-row gap-10 items-center">
+              <div className="md:w-1/2">
+                <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                  ถ้าเราสร้างออบเจกต์ขึ้นมาเยอะแยะ พื้นที่ RAM จะไม่เต็มหรือ? 
+                </p>
+                <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                  Python มีฮีโร่ลับที่ชื่อว่า <strong>Garbage Collector (คนเก็บขยะ)</strong> ซึ่งจะคอยนับจำนวนเส้นเชือก (Reference Count) ที่โยงมาหาแต่ละออบเจกต์
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl">
+                    <h4 className="font-bold text-rose-800 mb-1 flex items-center gap-2">
+                      <Trash2 className="w-4 h-4" /> ทำลายอัตโนมัติเมื่อค่า Reference = 0
+                    </h4>
+                    <p className="text-rose-700 text-sm">หากไม่มีตัวแปรใดๆ ชี้ไปที่ออบเจกต์นั้นแล้ว (เส้นเชือกขาดหมด) Garbage Collector จะลบข้อมูลนั้นทิ้งและคืนพื้นที่ให้ RAM ทันที!</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="md:w-1/2 w-full">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="flex bg-slate-800 px-4 py-2 border-b border-slate-700">
+                    <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">Reference Counting</span>
+                  </div>
+                  <div className="p-6 font-mono text-sm leading-loose">
+                    <span className="text-blue-400">a</span> = <span className="text-amber-400">100</span><br />
+                    <span className="text-slate-500"># เลข 100 ถูกสร้างขึ้น และมี a ชี้อยู่ (Ref = 1)</span><br />
+                    <br />
+                    <span className="text-blue-400">b</span> = <span className="text-blue-400">a</span><br />
+                    <span className="text-slate-500"># b ชี้ไปที่เลข 100 ด้วย (Ref = 2)</span><br />
+                    <br />
+                    <span className="text-blue-400">a</span> = <span className="text-amber-400">200</span><br />
+                    <span className="text-slate-500"># a เปลี่ยนไปชี้เลข 200 แทน (เลข 100 เหลือ Ref = 1)</span><br />
+                    <br />
+                    <span className="text-blue-400">b</span> = <span className="text-green-400">"Hello"</span><br />
+                    <span className="text-slate-500"># b เปลี่ยนไปชี้ข้อความแทน (เลข 100 เหลือ Ref = 0)</span><br />
+                    <span className="text-rose-400 font-bold"># 💣 เลข 100 ถูกทำลายทิ้งโดย Garbage Collector!</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Simulators */}
+        <MemoryXRaySimulator />
+
+        {/* Teacher Task */}
+        <TeacherTask title="กิจกรรมปฏิบัติในห้องเรียน" taskText={teacherTaskContent} />
+
       </main>
-      <div className="max-w-5xl mx-auto px-6 mt-12 relative z-10">
-        <TeacherTask title="งานที่ได้รับมอบหมาย" taskText="ทำความเข้าใจการทำงานจาก Simulator นี้" />
-      </div>
     </div>
   );
 }
