@@ -115,27 +115,7 @@ sentence = "Python is amazing"
         <div className="absolute bottom-[10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-blue-200/30 blur-[120px]"></div>
       </div>
 
-      {/* Header Section */}
-      <header className="relative pt-24 pb-16 z-10">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-200 bg-white/70 backdrop-blur-md shadow-sm mb-6">
-            <ListChecks className="w-4 h-4 text-purple-600" />
-            <span className="text-xs font-bold tracking-widest text-purple-700">UNIT 4.9</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight text-slate-800 tracking-tight">
-            ตัวดำเนินการ <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 font-mono">
-              สมาชิก (Membership)
-            </span>
-          </h1>
-          <p className="text-xl text-slate-600 max-w-2xl font-medium leading-relaxed">
-            เคยสงสัยไหมว่า ข้อมูลตัวนี้ <strong className="text-purple-600">มีอยู่จริงไหม</strong> ในรายการชุดข้อมูลขนาดใหญ่? <br/>
-            นี่คือเครื่องมือที่จะช่วยคุณค้นหาคำตอบในพริบตา!
-          </p>
-        </div>
-      </header>
-
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* 'in' Card */}

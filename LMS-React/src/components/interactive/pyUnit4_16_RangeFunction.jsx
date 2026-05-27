@@ -93,7 +93,7 @@ export default function pyUnit4_16_RangeFunction() {
         <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-100/60 blur-[120px]"></div>
       </div>
       <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="border-b border-slate-200/60 pb-8">
             <h2 className="text-sm font-bold tracking-widest text-cyan-600 mb-4 uppercase">หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม</h2>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">ฟังก์ชัน <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-500">range()</span></h1>
@@ -103,7 +103,7 @@ export default function pyUnit4_16_RangeFunction() {
           </div>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <RangeSimulator />
         <TeacherTask title="ใบงานกิจกรรม" taskText={teacherTaskContent} />
       </main>

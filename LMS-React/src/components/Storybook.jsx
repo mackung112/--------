@@ -1,18 +1,96 @@
 import { useState, useMemo } from 'react';
 import { Search, Package, ChevronRight, Layout, Code, ExternalLink, RotateCcw, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import LessonViewer from './LessonViewer';
+import StandardHeader from './StandardHeader';
 
 const interactiveModules = import.meta.glob('./interactive/*.jsx', { eager: true });
 
-const COMPONENT_LIST = Object.keys(interactiveModules).map(path => {
-  const name = path.split('/').pop().replace('.jsx', '');
-  return {
-    name,
-    marker: `[${name}]`,
-    Component: interactiveModules[path].default,
-    path
+function StandardHeaderPreview() {
+  return (
+    <div className="space-y-8 bg-slate-50 p-6 rounded-2xl border border-slate-100 font-sans">
+      <div>
+        <div className="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-wider">โหมดการ์ด (isCard = true)</div>
+        <div className="border border-slate-200 rounded-3xl overflow-hidden bg-white shadow-sm">
+          <StandardHeader 
+            chapterTitle="บทที่ 1: ตัวแปรและการเขียนโปรแกรม"
+            mainTitle="ความหมายของตัวแปร"
+            subTitle="(Variable Definition)"
+            description="เรียนรู้หลักการทำงานของตัวแปร วิธีการจองพื้นที่ในหน่วยความจำ และไวยากรณ์ในการประกาศตัวแปรเบื้องต้น"
+            isCard={true}
+            transparent={false}
+          />
+        </div>
+      </div>
+      
+      <div>
+        <div className="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-wider">โหมดโปร่งใสสำหรับ Immersive Page (isCard = false, transparent = true)</div>
+        <div className="border border-slate-200 rounded-3xl overflow-hidden bg-[#f1f5f9] p-2 shadow-sm">
+          <StandardHeader 
+            chapterTitle="บทที่ 2: Object-Oriented Programming"
+            mainTitle="คลาสและอ็อบเจกต์"
+            subTitle="(Class and Object)"
+            description="ทำความเข้าใจความสัมพันธ์ระหว่างคลาส (พิมพ์เขียว) และอ็อบเจกต์ (ชิ้นงานจริง) ในการโปรแกรมเชิงวัตถุ"
+            isCard={false}
+            transparent={true}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LessonViewerPreview() {
+  const mockLesson = {
+    title: "1.1 ทำความรู้จักกับตัวแปร",
+    content: `
+      <h2>ตัวแปรคืออะไร (What is a Variable?)</h2>
+      <p>ตัวแปรเปรียบเสมือน <strong>กล่องเก็บของ</strong> ที่เราสามารถนำข้อมูลไปใส่ไว้ แล้วแปะป้ายชื่อกล่องเพื่อนำมาใช้งานภายหลังได้อย่างสะดวกสบาย</p>
+      [pyUnit3_8_MemoryVisualizer]
+      <p>ในบทเรียนถัดไป เราจะเรียนรู้เกี่ยวกับชนิดข้อมูลพื้นฐานของตัวแปร...</p>
+    `
   };
-}).sort((a, b) => a.name.localeCompare(b.name));
+  const mockChapter = {
+    title: "บทที่ 1: พื้นฐานภาษา Python"
+  };
+  return (
+    <div className="border border-slate-200 rounded-3xl overflow-hidden bg-[#f1f5f9] max-h-[600px] overflow-y-auto shadow-inner">
+      <LessonViewer 
+        lesson={mockLesson}
+        chapter={mockChapter}
+        hasPrev={true}
+        hasNext={true}
+        onComplete={() => alert('กดทำเครื่องหมายเรียนรู้เสร็จสิ้น!')}
+        onNext={() => alert('กดบทถัดไป')}
+        onPrev={() => alert('กดบทก่อนหน้า')}
+      />
+    </div>
+  );
+}
+
+const COMPONENT_LIST = [
+  {
+    name: 'LessonViewer',
+    marker: '<LessonViewer />',
+    Component: LessonViewerPreview,
+    path: './LessonViewer.jsx'
+  },
+  {
+    name: 'StandardHeader',
+    marker: '<StandardHeader />',
+    Component: StandardHeaderPreview,
+    path: './StandardHeader.jsx'
+  },
+  ...Object.keys(interactiveModules).map(path => {
+    const name = path.split('/').pop().replace('.jsx', '');
+    return {
+      name,
+      marker: `[${name}]`,
+      Component: interactiveModules[path].default,
+      path
+    };
+  })
+].sort((a, b) => a.name.localeCompare(b.name));
 
 export default function Storybook() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -131,62 +209,19 @@ export default function Storybook() {
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-10">
-          <div className="max-w-5xl mx-auto">
-            {selectedComponent ? (
-              <div key={selectedComponent.name} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="mb-6 p-4 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-start gap-3">
-                  <div className="p-2 bg-white rounded-lg shadow-sm">
-                    <Code className="w-4 h-4 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-indigo-900">Usage Tip</h4>
-                    <p className="text-xs text-indigo-700 mt-1 leading-relaxed">
-                      To use this component in a lesson, add the marker <code className="font-bold text-indigo-900">{selectedComponent.marker}</code> into the <code>data.js</code> or <code>oopCourse.js</code> content string.
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Component Container */}
-                <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-200/60 overflow-hidden">
-                  <div className="p-1 bg-slate-50 border-b border-slate-100 flex gap-1.5 px-4 h-10 items-center">
-                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                    <span className="text-[10px] text-slate-400 font-medium ml-2 uppercase tracking-widest">Preview Mode</span>
-                  </div>
-                  <div className="p-6 md:p-8">
-                    <selectedComponent.Component />
-                  </div>
-                </div>
-
-                <div className="mt-10 pt-10 border-t border-slate-200">
-                  <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">File Info</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                      <div className="text-[10px] text-slate-400 font-bold uppercase mb-1">File Path</div>
-                      <div className="text-sm text-slate-700 font-mono break-all">{selectedComponent.path}</div>
-                    </div>
-                    <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                      <div className="text-[10px] text-slate-400 font-bold uppercase mb-1">Subject</div>
-                      <div className="text-sm text-slate-700">
-                        {selectedComponent.name.startsWith('PY') ? 'Python Basic' : 
-                         selectedComponent.name.startsWith('OOP') ? 'Object Oriented Programming' : 
-                         selectedComponent.name.startsWith('SQL') ? 'Database / SQL' : 'Other / Utility'}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <div className="flex-1 overflow-y-auto">
+          {selectedComponent ? (
+            <div key={selectedComponent.name} className="animate-in fade-in duration-300">
+              <selectedComponent.Component />
+            </div>
+          ) : (
+            <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-4 pt-20">
+              <div className="w-20 h-20 bg-slate-200 rounded-full flex items-center justify-center">
+                <Package className="w-10 h-10" />
               </div>
-            ) : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-4 pt-20">
-                <div className="w-20 h-20 bg-slate-200 rounded-full flex items-center justify-center">
-                  <Package className="w-10 h-10" />
-                </div>
-                <div className="text-xl font-medium">Select a component to preview</div>
-              </div>
-            )}
-          </div>
+              <div className="text-xl font-medium">Select a component to preview</div>
+            </div>
+          )}
         </div>
       </main>
     </div>

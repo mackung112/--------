@@ -187,28 +187,7 @@ export default function pyUnit4_2_InputDemo() {
         <div className="absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] rounded-full bg-teal-50/60 blur-[120px]"></div>
       </div>
 
-      {/* Header Section (Left-aligned as requested) */}
-      <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="border-b border-slate-200/60 pb-8">
-            <h2 className="text-sm font-bold tracking-widest text-emerald-600 mb-4 uppercase">
-              หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม
-            </h2>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">
-              การรับและแสดงผลข้อมูล <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">(Input & Print)</span>
-            </h1>
-          </div>
-          
-          <div className="pt-6 border-l-4 border-emerald-500 pl-6 mt-4">
-             <p className="text-lg text-slate-600 max-w-3xl leading-relaxed">
-              การสื่อสารระหว่างมนุษย์กับคอมพิวเตอร์ผ่านฟังก์ชันพื้นฐาน 2 ตัว คือ <strong>input()</strong> สำหรับถามและรับข้อมูลจากคีย์บอร์ด และ <strong>print()</strong> สำหรับแสดงผลลัพธ์ออกทางหน้าจอ
-            </p>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         
         {/* Core Concepts */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">

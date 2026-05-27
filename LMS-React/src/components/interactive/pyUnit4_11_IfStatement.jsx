@@ -70,7 +70,7 @@ export default function pyUnit4_11_IfStatement() {
         <div className="absolute bottom-[5%] left-[-5%] w-[400px] h-[400px] rounded-full bg-orange-100/60 blur-[100px]"></div>
       </div>
       <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="border-b border-slate-200/60 pb-8">
             <h2 className="text-sm font-bold tracking-widest text-orange-600 mb-4 uppercase">หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม</h2>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">การใช้งานเงื่อนไข <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500">if</span></h1>
@@ -80,7 +80,7 @@ export default function pyUnit4_11_IfStatement() {
           </div>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <IfSimulator />
         <TeacherTask title="ใบงานกิจกรรม" taskText={teacherTaskContent} />
       </main>

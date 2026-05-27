@@ -44,7 +44,7 @@ export default function pyUnit2_12_PseudocodeFormat() {
         <div className="absolute top-[-5%] right-[-5%] w-[500px] h-[500px] rounded-full bg-indigo-100/60 blur-[100px]"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-50/50 blur-[120px]"></div>
       </div>
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="w-full my-12">
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold mb-4">

@@ -303,7 +303,7 @@ export default function App() {
 
       {/* Header Section */}
       <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="border-b border-slate-200/60 pb-8">
             <h2 className="text-sm font-bold tracking-widest text-blue-600 mb-4 uppercase">
               หน่วยที่ 2 ขั้นตอนการเขียนโปรแกรม
@@ -322,7 +322,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         
         {/* 2.1.1 ความหมายของอัลกอริทึม */}
         <section className="mb-16">

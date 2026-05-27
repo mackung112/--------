@@ -1,13 +1,16 @@
 import React, { useMemo } from 'react';
 
 const GRADIENTS = [
-  'from-blue-600 to-indigo-500',
-  'from-emerald-500 to-teal-500',
-  'from-amber-500 to-orange-500',
-  'from-fuchsia-500 to-pink-500',
-  'from-violet-500 to-purple-500',
-  'from-cyan-500 to-blue-500',
-  'from-rose-500 to-red-500'
+  'from-teal-400 via-emerald-500 to-blue-600',
+  'from-indigo-500 via-purple-500 to-pink-500',
+  'from-orange-400 via-red-500 to-pink-600',
+  'from-fuchsia-500 via-pink-500 to-yellow-400',
+  'from-cyan-500 via-blue-600 to-indigo-700',
+  'from-amber-400 via-orange-500 to-rose-500',
+  'from-violet-600 via-fuchsia-500 to-indigo-500',
+  'from-green-400 via-teal-500 to-cyan-600',
+  'from-rose-500 via-pink-600 to-violet-600',
+  'from-sky-400 via-indigo-500 to-purple-600'
 ];
 
 export default function StandardHeader({ 
@@ -19,10 +22,15 @@ export default function StandardHeader({
   transparent = false 
 }) {
   const randomGradient = useMemo(() => {
-    // Generate a consistent gradient based on the title string length to avoid hydration mismatch
-    const hash = mainTitle ? mainTitle.length : 0;
-    return GRADIENTS[hash % GRADIENTS.length];
-  }, [mainTitle]);
+    // Generate a consistent deterministic gradient based on title hashing to avoid hydration mismatch
+    const textToHash = subTitle || mainTitle || '';
+    let hash = 0;
+    for (let i = 0; i < textToHash.length; i++) {
+      hash = textToHash.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % GRADIENTS.length;
+    return GRADIENTS[index];
+  }, [mainTitle, subTitle]);
 
   return (
     <header className={`${transparent ? '' : 'bg-gradient-to-br from-[#f0fdfa] via-white to-[#ecfeff]'} border-b ${transparent ? 'border-transparent' : 'border-gray-100'} relative z-20 ${isCard ? 'p-8 md:p-12' : 'pt-12 pb-8 md:pt-16 md:pb-12 w-full'} overflow-hidden`}>
@@ -30,19 +38,19 @@ export default function StandardHeader({
         <div className="w-64 h-64 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
       
-      <div className={`relative z-10 ${isCard ? '' : 'max-w-5xl mx-auto px-6'}`}>
+      <div className={`relative z-10 ${isCard ? '' : 'max-w-7xl mx-auto px-6 lg:px-12'}`}>
         {chapterTitle && (
-          <span className="text-teal-600 font-bold tracking-wider text-sm mb-3 block">
+          <span className="text-orange-500 font-bold tracking-widest text-sm md:text-base mb-3 block uppercase">
             {chapterTitle}
           </span>
         )}
         {mainTitle && (
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 leading-tight mb-2">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-slate-800 leading-tight mb-1 md:mb-2 tracking-tight">
             {mainTitle}
           </h1>
         )}
         {subTitle && (
-          <h2 className={`text-3xl md:text-5xl font-black mb-6 !border-none pb-2 leading-normal text-transparent bg-clip-text bg-gradient-to-r ${randomGradient}`}>
+          <h2 className={`text-3xl md:text-5xl lg:text-6xl font-black mb-6 !border-none pb-4 leading-tight text-transparent bg-clip-text bg-gradient-to-r ${randomGradient} tracking-tighter drop-shadow-sm`}>
             {subTitle}
           </h2>
         )}

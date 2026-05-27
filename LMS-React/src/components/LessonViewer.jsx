@@ -23,9 +23,10 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
 
   const renderContent = () => {
     // Extract header info and clean up content
-    let mainTitle = lesson.title.replace(/^\d+\.\d+\s+/, '');
-    let subTitle = '';
-    let description = '';
+    // รองรับการรับค่าตรงๆ จาก object (แบบใหม่) หรือดึงจาก HTML (แบบเก่า)
+    let mainTitle = lesson.mainTitle || lesson.title.replace(/^\d+\.\d+\s+/, '');
+    let subTitle = lesson.subTitle || '';
+    let description = lesson.description || '';
     let processedParts = [...parts];
 
     if (processedParts.length > 0 && typeof processedParts[0] === 'string') {
@@ -33,20 +34,26 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
       
       const h2Match = firstPart.match(/<h2>(.*?)<\/h2>/);
       if (h2Match) {
-        const h2Text = h2Match[1];
-        const splitMatch = h2Text.match(/^(.*?)(?:\s*\((.*?)\))?$/);
-        if (splitMatch && splitMatch[2]) {
-          mainTitle = splitMatch[1].trim();
-          subTitle = `(${splitMatch[2].trim()})`;
-        } else {
-          mainTitle = h2Text;
+        if (!lesson.mainTitle) {
+          const h2Text = h2Match[1];
+          const splitMatch = h2Text.match(/^(.*?)(?:\s*\((.*?)\))?$/);
+          if (splitMatch && splitMatch[2]) {
+            mainTitle = splitMatch[1].trim();
+            subTitle = `(${splitMatch[2].trim()})`;
+          } else {
+            mainTitle = h2Text;
+          }
         }
+        // ลบแท็ก h2 ออกเสมอไม่ว่าจะใช้ค่าจากไหน เพื่อไม่ให้รกหน้าจอ
         firstPart = firstPart.replace(/<h2>.*?<\/h2>/, '');
       }
 
       const pMatch = firstPart.match(/<p>(.*?)<\/p>/);
       if (pMatch) {
-        description = pMatch[1];
+        if (!lesson.description) {
+          description = pMatch[1];
+        }
+        // ลบแท็ก p แรกออกเสมอ
         firstPart = firstPart.replace(/<p>.*?<\/p>/, '');
       }
 
@@ -56,7 +63,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
     if (isImmersive) {
       const ImmersiveComponent = COMPONENT_MAP[immersivePart];
       return (
-        <div className="w-full immersive-page-wrapper bg-[#f1f5f9] min-h-screen">
+        <section className="w-full immersive-page-wrapper bg-[#f1f5f9] min-h-screen" aria-label="Immersive Lesson" id="immersive-lesson-wrapper">
           <StandardHeader 
             chapterTitle={chapter?.title}
             mainTitle={mainTitle}
@@ -68,13 +75,13 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
           <div className="immersive-content-block">
             <ImmersiveComponent />
           </div>
-        </div>
+        </section>
       );
     }
 
     return (
-      <div className="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto w-full">
-        <div className="lesson-content bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+      <section className="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto w-full" aria-label="Standard Lesson" id="standard-lesson-wrapper">
+        <article className="lesson-content bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden" id="lesson-card">
           <StandardHeader 
             chapterTitle={chapter?.title}
             mainTitle={mainTitle}
@@ -83,7 +90,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
             isCard={true}
             transparent={false}
           />
-          <div className="p-8 md:p-12">
+          <div className="p-8 md:p-12" id="lesson-body">
             {processedParts.map((part, idx) => {
               const Component = COMPONENT_MAP[part];
               if (Component) {
@@ -101,17 +108,17 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
               return null;
             })}
           </div>
-        </div>
-      </div>
+        </article>
+      </section>
     );
   };
 
   return (
-    <div className="pb-20 w-full">
+    <div className="pb-20 w-full" id="lesson-viewer-root">
       {renderContent()}
 
       {/* Navigation buttons: Previous / Next */}
-      <div className={`mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4 w-full px-6 max-w-5xl mx-auto`}>
+      <nav className={`mt-12 flex items-center justify-between border-t border-gray-200 pt-8 gap-4 w-full px-6 mx-auto ${isImmersive ? 'max-w-7xl lg:px-12' : 'max-w-5xl'}`} aria-label="Lesson Navigation">
         {hasPrev ? (
           <button
             onClick={onPrev}
@@ -130,7 +137,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
           {hasNext ? 'เนื้อหาถัดไป' : 'กลับหน้ารวมวิชา'}
           <ChevronRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
         </button>
-      </div>
+      </nav>
     </div>
   );
 }

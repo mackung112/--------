@@ -21,7 +21,7 @@ export default function pyUnit4_10_BitwiseOps() {
         <div className="absolute top-[10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-emerald-100/60 blur-[100px]"></div>
       </div>
       <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="border-b border-slate-200/60 pb-8">
             <h2 className="text-sm font-bold tracking-widest text-emerald-600 mb-4 uppercase">หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม</h2>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">ตัวดำเนินการระดับบิต<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-500">(Bitwise Operators)</span></h1>
@@ -31,7 +31,7 @@ export default function pyUnit4_10_BitwiseOps() {
           </div>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         
         <div className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-xl mb-12 flex flex-col md:flex-row gap-10 items-center overflow-hidden">
           <div className="w-full text-center">

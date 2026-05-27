@@ -85,7 +85,7 @@ export default function pyUnit4_12_ElifStatement() {
         <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-amber-100/60 blur-[120px]"></div>
       </div>
       <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="border-b border-slate-200/60 pb-8">
             <h2 className="text-sm font-bold tracking-widest text-amber-600 mb-4 uppercase">หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม</h2>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">เงื่อนไขทางเลือก <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-yellow-500">elif</span></h1>
@@ -95,7 +95,7 @@ export default function pyUnit4_12_ElifStatement() {
           </div>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <ElifSimulator />
         <TeacherTask title="ใบงานกิจกรรม" taskText={teacherTaskContent} />
       </main>

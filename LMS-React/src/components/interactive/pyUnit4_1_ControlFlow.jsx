@@ -145,7 +145,7 @@ export default function pyUnit4_1_ControlFlow() {
 
       {/* Header Section (Left-aligned as requested) */}
       <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="border-b border-slate-200/60 pb-8">
             <h2 className="text-sm font-bold tracking-widest text-blue-600 mb-4 uppercase">
               หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม
@@ -164,7 +164,7 @@ export default function pyUnit4_1_ControlFlow() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         
         {/* Core Data Types Section */}
         <div className="mb-12">

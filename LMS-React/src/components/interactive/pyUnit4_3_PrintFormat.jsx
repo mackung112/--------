@@ -74,18 +74,7 @@ export default function pyUnit4_3_PrintFormat() {
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-5%] right-[-5%] w-[400px] h-[400px] rounded-full bg-sky-100/60 blur-[100px]"></div>
       </div>
-      <header className="relative pt-16 pb-12 z-10">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="border-b border-slate-200/60 pb-8">
-            <h2 className="text-sm font-bold tracking-widest text-sky-600 mb-4 uppercase">หน่วยที่ 4 การเขียนโค้ดและโครงสร้างควบคุม</h2>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">การจัดรูปแบบด้วย print()<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-sky-500">(f-string Formatter)</span></h1>
-          </div>
-          <div className="pt-6 border-l-4 border-sky-500 pl-6 mt-4">
-             <p className="text-lg text-slate-600 max-w-3xl leading-relaxed">f-string คือฟีเจอร์ที่ช่วยให้การแทรกตัวแปรลงไปในข้อความง่ายและอ่านง่ายที่สุดใน Python เพียงแค่ใส่ตัว f ไว้หน้าข้อความ แล้วเอาตัวแปรใส่ในปีกกา {`{ }`}</p>
-          </div>
-        </div>
-      </header>
-      <main className="max-w-5xl mx-auto px-6 relative z-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <PrintFormatSimulator />
         <TeacherTask title="ใบงานกิจกรรม" taskText={teacherTaskContent} />
       </main>
