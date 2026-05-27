@@ -1,4 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import StandardHeader from './StandardHeader';
+
 const interactiveModules = import.meta.glob('./interactive/*.jsx', { eager: true });
 
 const COMPONENT_MAP = {};
@@ -20,39 +22,85 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
   const isImmersive = Boolean(immersivePart && COMPONENT_MAP[immersivePart]);
 
   const renderContent = () => {
+    // Extract header info and clean up content
+    let mainTitle = lesson.title.replace(/^\d+\.\d+\s+/, '');
+    let subTitle = '';
+    let description = '';
+    let processedParts = [...parts];
+
+    if (processedParts.length > 0 && typeof processedParts[0] === 'string') {
+      let firstPart = processedParts[0];
+      
+      const h2Match = firstPart.match(/<h2>(.*?)<\/h2>/);
+      if (h2Match) {
+        const h2Text = h2Match[1];
+        const splitMatch = h2Text.match(/^(.*?)(?:\s*\((.*?)\))?$/);
+        if (splitMatch && splitMatch[2]) {
+          mainTitle = splitMatch[1].trim();
+          subTitle = `(${splitMatch[2].trim()})`;
+        } else {
+          mainTitle = h2Text;
+        }
+        firstPart = firstPart.replace(/<h2>.*?<\/h2>/, '');
+      }
+
+      const pMatch = firstPart.match(/<p>(.*?)<\/p>/);
+      if (pMatch) {
+        description = pMatch[1];
+        firstPart = firstPart.replace(/<p>.*?<\/p>/, '');
+      }
+
+      processedParts[0] = firstPart;
+    }
+
     if (isImmersive) {
       const ImmersiveComponent = COMPONENT_MAP[immersivePart];
-      return <ImmersiveComponent />;
+      return (
+        <div className="w-full immersive-page-wrapper bg-[#f1f5f9] min-h-screen">
+          <StandardHeader 
+            chapterTitle={chapter?.title}
+            mainTitle={mainTitle}
+            subTitle={subTitle}
+            description={description}
+            isCard={false}
+            transparent={true}
+          />
+          <div className="immersive-content-block">
+            <ImmersiveComponent />
+          </div>
+        </div>
+      );
     }
 
     return (
       <div className="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto w-full">
-        <div className="lesson-content bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-100">
-          <header className="mb-8 border-b border-gray-100 pb-6">
-            <span className="text-indigo-600 font-bold tracking-wider text-sm uppercase mb-2 block">
-              {chapter?.title}
-            </span>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
-              {lesson.title}
-            </h1>
-          </header>
-
-          {parts.map((part, idx) => {
-            const Component = COMPONENT_MAP[part];
-            if (Component) {
-              return <Component key={idx} />;
-            }
-            if (part.trim()) {
-              return (
-                <div
-                  key={idx}
-                  className="prose prose-indigo max-w-none prose-lg text-gray-700"
-                  dangerouslySetInnerHTML={{ __html: part }}
-                />
-              );
-            }
-            return null;
-          })}
+        <div className="lesson-content bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+          <StandardHeader 
+            chapterTitle={chapter?.title}
+            mainTitle={mainTitle}
+            subTitle={subTitle}
+            description={description}
+            isCard={true}
+            transparent={false}
+          />
+          <div className="p-8 md:p-12">
+            {processedParts.map((part, idx) => {
+              const Component = COMPONENT_MAP[part];
+              if (Component) {
+                return <Component key={idx} />;
+              }
+              if (part && part.trim()) {
+                return (
+                  <div
+                    key={idx}
+                    className="prose prose-indigo max-w-none prose-lg text-gray-700"
+                    dangerouslySetInnerHTML={{ __html: part }}
+                  />
+                );
+              }
+              return null;
+            })}
+          </div>
         </div>
       </div>
     );

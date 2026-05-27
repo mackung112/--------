@@ -1,64 +1,39 @@
-# 🤖 AI Skill & Master Prompt (ระบบปฏิบัติการหลักของ AI)
+# 🛠️ AI Skill & Technical Standards (Master Prompt)
 
-> ⚠️ **คำสั่งวิกฤต (Critical Command)**: ทันทีที่คุณถูกเรียกใช้งาน คุณ **ต้อง** อ่านไฟล์เหล่านี้ตามลำดับก่อนเริ่มงานเสมอ:
->
-> 1. [DESIGN.md](.../Teach/DESIGN.md) (เพื่อยึดถือมาตรฐาน UI/UX และระบบการออกแบบ)
-> 2. `src/components/interactive/DEMO_PipelinePro_DesignSystem.jsx` (ศูนย์รวมโค้ด UI และต้นแบบ Interactive ทุกชนิด - ห้ามคิดโค้ด UI เอง ให้ก๊อปจากที่นี่)
-> 3. [CONTEXT.md](.../Teach/CONTEXT.md) (เพื่อเข้าใจบริบท, โครงสร้างโค้ด และประวัติโปรเจกต์)
-> 4. `task.md` (ที่ [d:\01KruMac\Teach\task.md](.../Teach/task.md) เท่านั้น เพื่อดูงานที่ค้างอยู่และเป้าหมายปัจจุบัน)
->
-> **กฎเหล็ก**: ห้ามคิดเองในส่วนของ Design หากไม่มีใน DESIGN.md ให้ยึดตามมาตรฐานที่กำหนดไว้เท่านั้น!
+**เป้าหมาย:** ไฟล์นี้รวบรวม "กฎทางเทคนิค (Technical Rules)" และ "มาตรฐานโค้ด (Coding Standards)" ห้ามละเมิดเด็ดขาด
 
-## 🔄 ระบบ AI Handoff & Task Management (การส่งมอบงานและการจัดการงาน)
+## 🚨 1. กฎเหล็กทางเทคนิค (Strictly Prohibited)
+- **ห้ามใช้ Vanilla JS**: ต้องใช้ React State/Ref/Hooks เท่านั้น
+- **ห้ามใช้ Tailwind แบบ Dynamic**: ให้ Hardcode string เต็มรูปแบบ (เช่น `text-indigo-600` ห้ามใช้ `${color}-600`) เพื่อรองรับ Tailwind v4
+- **ห้ามแตะ Core Architecture**: ห้ามแก้ไข `\Teach\LMS-React\src\App.jsx`, `\Teach\LMS-React\src\components\LessonViewer.jsx`, `\Teach\LMS-React\vite.config.js` เว้นแต่จะมีระบุในคำสั่ง
+- **ห้าม Card-in-Card**: ทุกหน้าต้องเป็นแบบไร้ขอบ (Seamless) ผสานไปกับฉากหลังตาม Immersive Full-Page Standard
+- **State Management**: ห้ามใช้ Global State สำหรับ Simulator เด็ดขาด ให้ใช้ Local State (`useState`, `useEffect`) เสมอเพื่อความเป็นอิสระ
 
-เพื่อให้โปรเจกต์นี้เดินหน้าได้โดยที่ผู้ใช้ไม่ต้องคอยสั่งการใหม่ และ AI ตัวต่อไปทำงานต่อได้ทันที:
+## 💻 2. มาตรฐานการเขียนโค้ด (Coding Standards)
+- **Component Format**: 
+  - ให้เขียนเป็น `export default function ComponentName() { ... }`
+  - การตั้งชื่อไฟล์: `COURSE_UX_LX_Description.jsx` (PascalCase)
+- **Interactive Component**: ทุกสื่อ Simulator ให้สร้างเก็บไว้ที่ `\Teach\LMS-React\src\components\interactive\` (ระบบจะโหลดและนำไปใช้งานอัตโนมัติผ่าน Auto-Registry)
+- **ภาษาและเนื้อหา**: โค้ดตัวอย่างในวิชาต้องใช้ **Python** หรือ **MySQL** และคำอธิบายเนื้อหาต้องเป็น **ภาษาไทย** เสมอ
+- **JSX Gotchas**: หากมีสัญลักษณ์ `>>>` ในโค้ด ให้ห่อด้วย `{">>>"}` เสมอ
 
-1. **Single Source of Task**: ห้ามสร้างไฟล์ Task ใหม่ (เช่น `.md` ใน brain folder) ให้ใช้ [d:\01KruMac\Teach\task.md](.../Teach/task.md) เป็นที่เดียวในการบันทึกงาน
-2. **ทำงานแบบ Self-Directed**: เมื่ออ่านเป้าหมายจาก `task.md` แล้ว ให้เริ่มทำงานทันทีโดยอิงจาก "Phase" ที่ระบุไว้
-3. **การวางแผนงาน (Planning)**: หากมีงานใหม่เข้ามา ให้เขียนเพิ่มเข้าไปในแผนงานเดิมใน `task.md` (ห้ามลบแผนเก่าที่ยังไม่เสร็จ) เพื่อให้ AI ตัวอื่นเห็นภาพรวมทั้งหมด
-4. **อัปเดตสถานะตลอดเวลา**: ทุกครั้งที่ทำแต่ละ Step ย่อยเสร็จ ต้องอัปเดต `[ ]` เป็น `[x]` ใน `task.md` ทันที
-5. **🚨 กฎเหล็ก: บันทึกประวัติและสรุปงาน (MANDATORY)**: ก่อนจบเซสชัน ต้องบันทึกประวัติการเปลี่ยนแปลงใน `CONTEXT.md` และสรุปงานที่ทำเสร็จ/ค้างไว้ใน `task.md` (ส่วนที่ 3. โน้ตส่งมอบงาน) เสมอ
+## 🎮 3. แนวทาง Game-Based Learning & Interaction
+- **Ultimate Gamification**: ห้ามทำเนื้อหาแบบ Flashcard นิ่งๆ หรือหน้าต่างพื้นฐาน ต้องเป็น "มินิเกม" หรือ "Simulator ขั้นสูง" ที่มีลูกเล่นแพรวพราวเสมอ
+- **Flowcharts**: ใช้ SVG บริสุทธิ์ แทน Unicode หรือ CSS ให้วาดสวยงามระดับเดียวกับ draw.io
+- **Micro-Interactions**: ปุ่มและการ์ดที่โต้ตอบได้ต้องใส่ `active:scale-98 transition-all` เสมอ
+- **Controls**: ทุก Simulator ที่จำลองการทำงานต้องมีปุ่ม Play, Pause, และ Reset (ปุ่ม Reset ให้ใช้ไอคอน `RotateCcw` จาก `lucide-react`)
 
-## 🛑 1. กฎข้อห้ามเด็ดขาด (STRICTLY PROHIBITED)
+## 📚 4. หลักสูตรและการจัดการข้อมูล
+- **โครงสร้างเนื้อหา**: อ้างอิงโฟลเดอร์ `\Teach\LMS-React\docs\curriculum\`
+  - Unit = บทหลัก
+  - ลำดับที่ 1 (เช่น 1.1) = จำนวนหน้าเว็บ (Lessons) 
+  - ลำดับที่ 2 (เช่น 1.1.1) = หัวข้อบังคับที่ต้องมีในหน้านั้น
+- **การเพิ่มเนื้อหาเข้าสู่ระบบ**: ให้นำชื่อไฟล์ Component ไปใส่ในรูปแบบ `[Marker]` ในไฟล์ `\Teach\LMS-React\src\data.js` หรือโฟลเดอร์ `\Teach\LMS-React\src\data\` เพื่อให้ระบบนำไปแสดงผล
 
-- **ห้ามใช้ Vanilla JS**: ต้องใช้ React State/Ref/Hooks เสมอ
-- **ห้าม Component ซ้อนกรอบ (No Card-in-Card)**: สื่อ Interactive ต้องแนบเนียนไปกับบทเรียน (Seamless) ตามมาตรฐานใน [DESIGN.md](.../Teach/DESIGN.md)
-- **ห้ามแตะโครงสร้าง Architecture**: ห้ามแก้ไขระบบ Routing หรือไฟล์ Core เว้นแต่ระบุใน `task.md`
-- **ห้ามลืมใส่ Interactive Component**: ทุกบทเรียนย่อย (Lesson) ต้องมีสื่อที่โต้ตอบได้อย่างน้อย 1 ตัว
+## 🧠 5. Continuous Training (การอัปเดตนิสัยการเขียนโค้ด)
+- **ปรับตัวตามผู้ใช้**: สังเกตและจดจำรูปแบบการเขียนโค้ดหรือตรรกะที่ผู้ใช้พึงพอใจ หากผู้ใช้สั่งให้หลีกเลี่ยงการเขียนแบบใด หรือให้แก้การทำงานซ้ำๆ ให้คุณถือเป็น "บรรทัดฐานใหม่ (New Standard)" และเขียนทับลงในหมวดหมู่นี้ได้ทันที เพื่อผลิตผลงานให้ตรงใจมากที่สุด
+- **New UI Fix (27 May 2026)**: ทุกครั้งที่ใช้ `text-transparent bg-clip-text` กับข้อความภาษาอังกฤษ/ไทยขนาดใหญ่ **ต้องใส่คลาส `pb-2 leading-normal` เสมอ** เพื่อแก้บัก Tailwind ตัดหางตัวอักษร (Descender Clipping) ที่ทำให้หางตัว p, y, j ขาดหายไป
 
-## ✅ 2. พฤติกรรมที่ต้องทำเสมอ (MANDATORY ACTIONS)
-
-- **ภาษาและเนื้อหา**: โค้ดตัวอย่างในวิชาต้องใช้ **Python** (สำหรับวิชาเขียนโปรแกรม) และ **MySQL** (สำหรับวิชาฐานข้อมูล) โดยคำอธิบายต้องเป็น **ภาษาไทย** เสมอ
-- **Tailwind CSS v4 Rules**: ห้ามใช้ class แบบ dynamic ให้ hardcode string เต็มรูปแบบเสมอ
-- **Ultimate Gamification Requirement**: สื่อ Interactive **ห้าม** ทำแค่ Flashcard พื้นๆ ต้องเป็น "มินิเกม" หรือ "เครื่องมือจำลอง (Deep Simulators)" ที่มีลูกเล่นแพรวพราว
-- **Strict UI/UX Compliance**: ปฏิบัติตาม Design System ใน [DESIGN.md](.../Teach/DESIGN.md) อย่างเคร่งครัด 100% (Colors, Typography, Spacing, Buttons, Inputs)
-
-## 🛠️ 3. มาตรฐานการเขียนโค้ด (Coding Standards)
-
-- **Component Format**: ต้องเขียนเป็น `export default function ComponentName() { ... }`
-- **JSX Gotchas**: หากมี `>>>` ในโค้ด JSX ต้องห่อด้วย `{">>>"}`
-- **Component Auto-Registry**: เมื่อสร้าง Component ใหม่ ให้บันทึกใน `src/components/interactive/` ระบบจะโหลดให้อัตโนมัติ สามารถเรียกใช้ใน `data.js` ด้วย `[ComponentName]`
-
-## 🎮 4. รูปแบบการออกแบบ Component หลัก (Immersive Full-Page Standard)
-
-ทุกบทเรียนแบบ Interactive/Simulator ต้องพัฒนาขึ้นตามโครงสร้าง **"Immersive Full-Page Standard"** เสมอ โดยศึกษาและคัดลอกโค้ดสเปกที่ถูกต้องสมบูรณ์ได้จากหัวข้อ [DESIGN.md: ## 4. Immersive Full-Page Standard](.../Teach/DESIGN.md)
-
-โครงสร้างหลักจะถูกแบ่งความรับผิดชอบออกเป็น 4 เลเยอร์ย่อย:
-1. **Layer 1: Ambient Backdrop**: เซ็ตฉากหลังเรืองแสงฟุ้งข้ามขอบเฟรม (Cyan, Fuchsia, Amber Blurs) ที่เลเวล 0 เพื่อสร้างมิติตื้นลึก
-2. **Layer 2: Standardized Hero Header (จุดภาพแรก)**: บังคับใช้ส่วนหัวบทเรียนมาตรฐาน ประกอบด้วยชื่อวิชา/หัวข้อย่อยสีเด่นของบทเรียน, ชื่อบทภาษาไทยตัวหนา, ส่วนขยายภาษาอังกฤษสไลต์ Gradient และกล่องคำอธิบายแนวคิดขอบหนาแนวดิ่งด้านซ้าย **โดยเปิดกว้างให้ AI ปรับสีสัน Accent/Gradient ตามธีมสีของหน่วยการเรียนรู้ได้อิสระ ไม่ได้ล็อคไว้เพียงเฉดเดียว**
-3. **Layer 3: Flexible Subtopics & Interactives (พื้นที่อิสระ)**: สื่อจำลอง, มินิเกม หรือเนื้อหาย่อยตรงกลางนี้ **ให้ AI ออกแบบและสร้างสรรค์โครงสร้างได้อย่างอิสระเต็มที่** เพื่อความยืดหยุ่นและตอบโจทย์ผลสัมฤทธิ์การเรียนรู้สูงสุด โดยยึดมาตรฐานความคลีนและหรูหราแบบ Genesis
-4. **Layer 4: Standardized TeacherTask Footer (กิจกรรมปฏิบัติในห้องเรียน)**: ล็อคการใช้กล่องกิจกรรมปฏิบัติในห้องเรียนมาตรฐานที่มาพร้อมกับฟังก์ชันคัดลอกโจทย์ (`TeacherTask` Component) ห้ามลบ ห้ามแก้ไข หรือดัดแปลงสไตล์ใดๆ ด้านล่างสุดเด็ดขาด
-
-## 🕹️ 5. แนวทาง Game-Based Learning
-
-- **SVG Flowcharts**: ใช้ SVG สำหรับผังงาน แทน Unicode/CSS ให้ดูเหมือน draw.io
-- **Animation**: ทุกการตอบสนองต้องใช้ `active:scale-95 transition-all` ตาม [DESIGN.md](.../Teach/DESIGN.md)
-- **Interactive Loops**: จำลองการทำงานทีละขั้น มีปุ่ม Play/Pause/Reset (Reset ใช้ `lucide/RotateCcw`)
-
-## 📄 6. มาตรฐานการกำหนดเนื้อหารายวิชา (Course Curriculum Standards)
-
-เมื่อสร้างหรือปรับปรุงเนื้อหาของแต่ละวิชา ให้ยึดโยงกับไฟล์หลักสูตรในโฟลเดอร์ [LMS-React/docs/curriculum/](.../Teach/LMS-React/docs/curriculum/) เสมอ โดยมีกฎการตีความโครงสร้างดังนี้:
-- **ไฟล์บอกเนื้อหารายวิชา**: ไฟล์ทั้งหมดภายใต้โฟลเดอร์ `docs/curriculum/` (เช่น `py_curriculum.md`, `sql_curriculum.md`) คือตัวกำหนดว่าแต่ละวิชาจะเรียนเรื่องใดบ้าง
-- **Unit (เช่น Unit 1, Unit 2)**: คือตัวบอกว่าเป็น **"บทหลัก"** หรือบทเรียนหน่วยใด
-- **List ลำดับที่ 1 (เช่น 1.1, 1.2, 1.3)**: คือตัวกำหนดว่าวิชานั้นๆ **จะมีกี่หน้าเว็บ (Lessons)** และเรียนเกี่ยวกับเรื่องอะไร (1 รายการ = 1 หน้าเว็บ)
-- **List ลำดับที่ 2 (เช่น 1.1.1, 1.1.2, 1.1.3)**: คือ **หัวข้อบังคับที่ต้องปรากฏในหน้านั้นๆ** โดยผู้พัฒนา (AI) สามารถเพิ่มเติมหัวข้อย่อยอื่นๆ หรือใส่รายละเอียดที่เหมาะสมเพิ่มเติมเข้าในเนื้อหาได้ตามความเหมาะสม
+## ☁️ 6. Git & Cloud Sync (การเปลี่ยนเครื่องทำงาน)
+- **Repository หลัก**: `https://github.com/mackung112/Teach.git`
+- **คำสั่ง "ดึงข้อมูลล่าสุด"**: หากผู้ใช้พิมพ์คำสั่งนี้ ให้คุณใช้ Terminal รันคำสั่งบังคับดึงข้อมูลล่าสุดมาทับ Local ทันที เช่น `git fetch origin` ตามด้วย `git reset --hard origin/main` (หรือ master) เพื่อให้ผู้ใช้สามารถทำงานต่อจากเครื่องอื่นได้อย่างไร้รอยต่อ
