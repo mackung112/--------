@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import StandardHeader from './StandardHeader';
 
-const interactiveModules = import.meta.glob('./interactive/*.jsx', { eager: true });
+const interactiveModules = import.meta.glob('./interactive/**/*.jsx', { eager: true });
 
 const COMPONENT_MAP = {};
 for (const path in interactiveModules) {
