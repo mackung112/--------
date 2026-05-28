@@ -25,8 +25,8 @@
 - **สถานะล่าสุด**: 
   - ซ่อมแซมบั๊ก import icon ใน `py2_3.jsx` สำเร็จ
   - เขียนหน้าบทเรียน 2.5 ถึง 2.12 ใหม่ทั้งหมด 100% (Overwrite Policy) สำเร็จสมบูรณ์! ตอนนี้ Unit 2 ของหลักสูตรเสร็จสมบูรณ์แล้ว
-  - **py2_8**: สร้าง Flowchart Symbols แบบ Interactive พร้อมโหมด Quiz ทบทวนความจำ (ถูกเขียนใหม่ทับของเดิม 100% ตามคำสั่งล่าสุด)
-  - **py2_9**: สร้างเปรียบเทียบหลักการเขียน Flowchart ที่ดี (Good vs Bad Practice)
+  - **py2_8**: สร้างระบบเรียนรู้สัญลักษณ์มาตรฐานแบบจัดเต็ม 3 ส่วน: 1) Interactive Symbol Explorer เทียบคำสั่งไวยากรณ์ Python และรัน Output คอนโซล พร้อมการจำลองเสียงด้วย Web Audio Synth, 2) Flowchart Constructor Game ต่อรูปทรงตรวจสอบคะแนนเกรดและจำลองการไหล, และ 3) draw.io Sandbox Simulator ลากวางรูปทรงเพื่อประกอบแผนภูมิ
+  - **py2_9**: สร้างระบบเรียนรู้แบบโต้ตอบ 2 ส่วนหลัก: 1) Interactive Rules Explorer พร้อมตัวจำลองระบบตรวจจับเซนเซอร์แสงและลูกศรไหลตามลำดับแบบไดนามิก และ 2) Flowchart Audit Studio มินิเกมจำลองการแก้ไขบั๊กระบบตู้ ATM จำนวน 4 จุดใหญ่ให้ได้มาตรฐาน ANSI 100%
   - **py2_10**: สร้าง Flowchart Simulator แบบ Sequential อธิบายการคำนวณ BMI 
   - **py2_11**: สร้าง Decision Flowchart อธิบายโครงสร้าง If-Else แบบเส้นทางแยกซ้ายขวาตามการเปลี่ยนอายุ (Age slider)
   - **py2_12**: สร้าง Looping Flowchart สร้างภาพลูกศรชี้กลับไปวนลูป (Loop Back) พร้อมตัวควบคุมความเร็ว (Speed Control)
