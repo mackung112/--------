@@ -25,7 +25,7 @@
 - **สถานะล่าสุด**: 
   - ซ่อมแซมบั๊ก import icon ใน `py2_3.jsx` สำเร็จ
   - เขียนหน้าบทเรียน 2.5 ถึง 2.12 ใหม่ทั้งหมด 100% (Overwrite Policy) สำเร็จสมบูรณ์! ตอนนี้ Unit 2 ของหลักสูตรเสร็จสมบูรณ์แล้ว
-  - **py2_8**: สร้าง Flowchart Symbols แบบ Interactive พร้อมโหมด Quiz ทบทวนความจำ
+  - **py2_8**: สร้าง Flowchart Symbols แบบ Interactive พร้อมโหมด Quiz ทบทวนความจำ (ถูกเขียนใหม่ทับของเดิม 100% ตามคำสั่งล่าสุด)
   - **py2_9**: สร้างเปรียบเทียบหลักการเขียน Flowchart ที่ดี (Good vs Bad Practice)
   - **py2_10**: สร้าง Flowchart Simulator แบบ Sequential อธิบายการคำนวณ BMI 
   - **py2_11**: สร้าง Decision Flowchart อธิบายโครงสร้าง If-Else แบบเส้นทางแยกซ้ายขวาตามการเปลี่ยนอายุ (Age slider)
