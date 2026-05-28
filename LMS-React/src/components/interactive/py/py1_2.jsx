@@ -1,293 +1,339 @@
 import React, { useState } from 'react';
-import TeacherTask from '../../ui/TeacherTask';
 import { 
-  Layers, 
-  Cpu, 
-  Database, 
-  BrainCircuit, 
-  Code2, 
-  Binary,
-  ArrowUpRight,
-  TrendingUp,
-  Sparkles,
-  ArrowRight
+    Cpu, 
+    Code, 
+    Database, 
+    Brain, 
+    Layers, 
+    ArrowRight,
+    Activity,
+    Server,
+    Network,
+    Sparkles,
+    TerminalSquare,
+    Globe
 } from 'lucide-react';
+import TeacherTask from '../../ui/TeacherTask';
 
-const LanguageGenerationSimulator = () => {
-  const [activeGen, setActiveGen] = useState(2); // Default 3GL (index 2)
+export default function py1_2() {
+    // States for interactives
+    const [activeGen, setActiveGen] = useState(0);
+    const [activeTrend, setActiveTrend] = useState(null);
+    const [compareStep, setCompareStep] = useState(1); // 1 = Machine, 2 = Assembly, 3 = High-level
 
-  const generations = [
-    {
-      id: "1GL",
-      name: "First Generation (1GL)",
-      thaiName: "ภาษาเครื่อง (Machine Language)",
-      icon: <Binary className="w-6 h-6" />,
-      color: "from-slate-700 to-slate-900",
-      accent: "border-slate-500",
-      desc: "คุยกับเครื่องจักรโดยตรงด้วยเลข 0 และ 1 ประมวลผลเร็วที่สุด แต่เขียนและแก้ไขยากมาก",
-      example: "10110000 01100001\n00000100 00000001",
-      usage: "ไม่ค่อยมีใครเขียนโดยตรงแล้วในปัจจุบัน ยกเว้นการออกแบบชิป"
-    },
-    {
-      id: "2GL",
-      name: "Second Generation (2GL)",
-      thaiName: "ภาษาแอสเซมบลี (Assembly)",
-      icon: <Cpu className="w-6 h-6" />,
-      color: "from-blue-600 to-blue-800",
-      accent: "border-blue-400",
-      desc: "ใช้สัญลักษณ์ (Mnemonic) หรือตัวย่อภาษาอังกฤษแทนเลข 0, 1 ต้องใช้ Assembler แปลงเป็นภาษาเครื่อง",
-      example: "MOV AL, 61h\nADD AL, 1\nINT 21h",
-      usage: "เขียนไดรเวอร์ (Driver) หรือระบบฝังตัวที่ต้องการคุมฮาร์ดแวร์"
-    },
-    {
-      id: "3GL",
-      name: "Third Generation (3GL)",
-      thaiName: "ภาษาระดับสูง (High-Level)",
-      icon: <Code2 className="w-6 h-6" />,
-      color: "from-indigo-500 to-purple-600",
-      accent: "border-indigo-400",
-      desc: "ใช้คำสั่งภาษาอังกฤษที่มนุษย์เข้าใจง่าย โครงสร้างเป็นระบบ ต้องใช้ Compiler หรือ Interpreter แปลภาษา",
-      example: "int age = 18;\nif (age >= 18) {\n  print(\"Adult\");\n}",
-      usage: "C, Java, Python, JavaScript (การพัฒนาซอฟต์แวร์ทั่วไปในปัจจุบัน)"
-    },
-    {
-      id: "4GL",
-      name: "Fourth Generation (4GL)",
-      thaiName: "ภาษาเฉพาะทาง (Very High-Level)",
-      icon: <Database className="w-6 h-6" />,
-      color: "from-emerald-500 to-teal-600",
-      accent: "border-emerald-400",
-      desc: "เน้น 'ต้องการผลลัพธ์อะไร' มากกว่า 'ทำอย่างไร' เขียนสั้นกว่า 3GL มาก มักใช้กับการจัดการฐานข้อมูล",
-      example: "SELECT name, age\nFROM Users\nWHERE age >= 18;",
-      usage: "SQL, MATLAB, ภาษาจัดการฐานข้อมูลและสถิติ"
-    },
-    {
-      id: "5GL",
-      name: "Fifth Generation (5GL)",
-      thaiName: "ภาษาธรรมชาติ / AI (Natural Language)",
-      icon: <BrainCircuit className="w-6 h-6" />,
-      color: "from-rose-500 to-orange-500",
-      accent: "border-rose-400",
-      desc: "ใช้ภาษาแบบที่มนุษย์คุยกัน หรือใช้ AI สร้างโค้ดให้ เน้นการแก้ปัญหาด้วยตรรกะและปัญญาประดิษฐ์",
-      example: "Prompt: \"สร้างฟังก์ชันคำนวณอายุจากปีเกิดให้หน่อย\"",
-      usage: "Prolog, LISP หรือการใช้ ChatGPT/Copilot สร้างซอฟต์แวร์"
-    }
-  ];
+    const generations = [
+        {
+            id: 'gen1',
+            name: 'ภาษาเครื่อง (Machine Language)',
+            level: 'ต่ำ (Low-Level)',
+            desc: 'ภาษารุ่นที่ 1 (1GL) สื่อสารด้วยเลขฐานสอง (0 และ 1) คอมพิวเตอร์เข้าใจทันที แต่มนุษย์เข้าใจยากมากและทำงานช้า',
+            icon: <Activity className="w-8 h-8" />,
+            color: 'text-red-500',
+            bg: 'bg-red-100',
+            borderColor: 'border-red-500',
+            glowColor: 'bg-red-500/20'
+        },
+        {
+            id: 'gen2',
+            name: 'ภาษาแอสเซมบลี (Assembly Language)',
+            level: 'ต่ำ (Low-Level)',
+            desc: 'ภาษารุ่นที่ 2 (2GL) ใช้สัญลักษณ์ตัวอักษรภาษาอังกฤษ (Mnemonic Code) แทนเลข 0 และ 1 ต้องใช้ตัวแปลภาษา Assembler',
+            icon: <Cpu className="w-8 h-8" />,
+            color: 'text-orange-500',
+            bg: 'bg-orange-100',
+            borderColor: 'border-orange-500',
+            glowColor: 'bg-orange-500/20'
+        },
+        {
+            id: 'gen3',
+            name: 'ภาษาระดับสูง (High-Level Language)',
+            level: 'สูง (High-Level)',
+            desc: 'ภาษารุ่นที่ 3 (3GL) ไวยากรณ์คล้ายภาษาอังกฤษ (เช่น C, Java, Python) มนุษย์อ่านเข้าใจง่าย เขียนโค้ดได้รวดเร็ว',
+            icon: <Code className="w-8 h-8" />,
+            color: 'text-indigo-500',
+            bg: 'bg-indigo-100',
+            borderColor: 'border-indigo-500',
+            glowColor: 'bg-indigo-500/20'
+        },
+        {
+            id: 'gen4',
+            name: 'ภาษาเฉพาะทาง (4GL)',
+            level: 'สูงมาก (Very High-Level)',
+            desc: 'ภาษารุ่นที่ 4 (4GL) ออกแบบมาเพื่องานเฉพาะด้าน เช่น SQL สำหรับจัดการฐานข้อมูล หรือเครื่องมือสร้างหน้าจออัตโนมัติ',
+            icon: <Database className="w-8 h-8" />,
+            color: 'text-cyan-500',
+            bg: 'bg-cyan-100',
+            borderColor: 'border-cyan-500',
+            glowColor: 'bg-cyan-500/20'
+        },
+        {
+            id: 'gen5',
+            name: 'ภาษาปัญญาประดิษฐ์ (5GL)',
+            level: 'ภาษาธรรมชาติ (Natural)',
+            desc: 'ภาษารุ่นที่ 5 (5GL) สั่งการด้วยภาษาธรรมชาติที่มนุษย์ใช้พูดกัน เน้นแก้ปัญหาด้วย AI และระบบผู้เชี่ยวชาญ (Expert Systems)',
+            icon: <Brain className="w-8 h-8" />,
+            color: 'text-fuchsia-500',
+            bg: 'bg-fuchsia-100',
+            borderColor: 'border-fuchsia-500',
+            glowColor: 'bg-fuchsia-500/20'
+        }
+    ];
 
-  return (
-    <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-slate-200 p-8 md:p-10 mb-16 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-100/50 rounded-bl-full blur-3xl z-0 pointer-events-none opacity-60"></div>
-      
-      <div className="relative z-10 text-center mb-10">
-        <div className="inline-flex items-center justify-center p-3 bg-blue-100 text-blue-600 rounded-2xl mb-4 shadow-sm">
-          <Layers className="w-8 h-8" />
-        </div>
-        <h3 className="text-3xl font-bold text-slate-800 mb-2">
-          Simulator: ระดับของภาษาคอมพิวเตอร์ (1GL - 5GL)
-        </h3>
-        <p className="text-slate-500 text-lg">
-          วิวัฒนาการจากภาษาที่ "เครื่องจักรชอบ" สู่ภาษาที่ "มนุษย์ชอบ"
-        </p>
-      </div>
+    const futureTrends = [
+        {
+            title: 'Low-Code / No-Code',
+            desc: 'การพัฒนาแอปพลิเคชันโดยเขียนโค้ดให้น้อยที่สุด หรือไม่ต้องเขียนโค้ดเลย ใช้การลากวาง (Drag & Drop) แทน',
+            icon: <Layers className="w-6 h-6" />,
+            theme: 'from-blue-500 to-cyan-400'
+        },
+        {
+            title: 'AI-Assisted Coding',
+            desc: 'AI ช่วยเขียนโค้ด ตรวจจับข้อผิดพลาด และแนะนำโครงสร้างที่ดีที่สุด (เช่น GitHub Copilot)',
+            icon: <Sparkles className="w-6 h-6" />,
+            theme: 'from-purple-500 to-pink-500'
+        },
+        {
+            title: 'Quantum Computing',
+            desc: 'ภาษาโปรแกรมรูปแบบใหม่ที่ออกแบบมาเพื่อทำงานกับควอนตัมคอมพิวเตอร์ (เช่น Q#)',
+            icon: <Network className="w-6 h-6" />,
+            theme: 'from-amber-500 to-orange-500'
+        }
+    ];
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Generational Staircase */}
-        <div className="lg:col-span-5 flex flex-col gap-3">
-          {generations.map((gen, idx) => (
-            <button
-              key={gen.id}
-              onClick={() => setActiveGen(idx)}
-              className={`relative p-4 rounded-2xl transition-all duration-300 text-left border-2 flex items-center gap-4 group hover:-translate-y-1 ${
-                activeGen === idx 
-                  ? `bg-gradient-to-r ${gen.color} text-white shadow-lg border-transparent scale-[1.02]` 
-                  : 'bg-white border-slate-100 hover:border-indigo-200 text-slate-600'
-              }`}
-            >
-              <div className={`p-3 rounded-xl transition-colors ${
-                activeGen === idx ? 'bg-white/20' : 'bg-slate-100 text-slate-500 group-hover:bg-indigo-50 group-hover:text-indigo-500'
-              }`}>
-                {gen.icon}
-              </div>
-              <div className="flex-1">
-                <div className={`text-sm font-bold ${activeGen === idx ? 'text-white/80' : 'text-slate-400'}`}>
-                  {gen.id}
-                </div>
-                <div className={`font-bold text-lg ${activeGen === idx ? 'text-white' : 'text-slate-800'}`}>
-                  {gen.thaiName}
-                </div>
-              </div>
-              {activeGen === idx && <ArrowRight className="w-5 h-5 text-white/70" />}
-            </button>
-          ))}
-        </div>
-
-        {/* Info Panel */}
-        <div className="lg:col-span-7">
-          <div className={`h-full rounded-3xl p-1 bg-gradient-to-br ${generations[activeGen].color} shadow-2xl transition-all duration-500`}>
-            <div className="h-full bg-white rounded-[1.4rem] p-8 flex flex-col relative overflow-hidden">
-              <div className={`absolute top-0 right-0 w-40 h-40 opacity-10 rounded-bl-full bg-gradient-to-br ${generations[activeGen].color}`}></div>
-              
-              <div className="mb-6 flex-grow relative z-10">
-                <h4 className="text-2xl font-bold text-slate-800 mb-2">{generations[activeGen].name}</h4>
-                <div className="inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-sm font-semibold mb-4 border border-slate-200">
-                  {generations[activeGen].usage}
-                </div>
-                <p className="text-slate-600 leading-loose text-lg mb-6">
-                  {generations[activeGen].desc}
-                </p>
-
-                <div className="bg-[#0f172a] rounded-2xl overflow-hidden border border-slate-800 shadow-inner">
-                  <div className="bg-[#020617] px-4 py-2 flex items-center justify-between border-b border-slate-800">
-                    <span className="text-slate-400 font-mono text-xs flex items-center gap-2">
-                      <Code2 className="w-4 h-4" /> Code Example
-                    </span>
-                  </div>
-                  <div className="p-6 font-mono text-emerald-400 text-base whitespace-pre-line leading-loose overflow-x-auto">
-                    {generations[activeGen].example}
-                  </div>
-                </div>
-              </div>
+    return (
+        <div className="w-full mx-auto space-y-8 font-['Inter',_'Noto_Sans_Thai'] pb-12">
+            {/* Layer 1: Ambient Backdrop */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[0%] left-[20%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[140px]"></div>
+                <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]"></div>
             </div>
-          </div>
-        </div>
 
-      </div>
-    </div>
-  );
-};
+            <main className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-10 space-y-12">
+                
+                {/* วิวัฒนาการและระดับของภาษาคอมพิวเตอร์ (Interactive Timeline) */}
+                <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zinc-200/60 overflow-hidden">
+                    <div className="p-8">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                                <Layers className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-[28px] font-bold text-zinc-900 leading-relaxed tracking-tight">
+                                ระดับของภาษาคอมพิวเตอร์และวิวัฒนาการ
+                            </h3>
+                        </div>
 
-export default function pyUnit1_2_LanguageLevels() {
-  const teacherTaskContent = `คำถามทบทวนความเข้าใจ (1.2):
-1. ภาษาระดับต่ำ (Low-level Language) และ ภาษาระดับสูง (High-level Language) มีความแตกต่างกันอย่างไร?
-2. ทำไมโปรแกรมเมอร์ส่วนใหญ่ในปัจจุบันจึงเลือกใช้ "ภาษาระดับสูง" ในการพัฒนาซอฟต์แวร์ แทนที่จะเขียนด้วยภาษาเครื่องโดยตรง?
-3. ยกตัวอย่างภาษาคอมพิวเตอร์ในระดับ 4GL มา 1 ภาษา และอธิบายว่ามันถูกนำไปใช้งานด้านใดเป็นหลัก
-4. นักเรียนคิดว่า AI (5GL) จะมาแทนที่โปรแกรมเมอร์ที่เขียนโค้ดแบบ 3GL (เช่น Python, Java) ได้ทั้งหมดหรือไม่? เพราะเหตุใด?`;
+                        <p className="text-[16px] text-zinc-600 leading-relaxed mb-8">
+                            ภาษาคอมพิวเตอร์ถูกแบ่งออกเป็นระดับต่างๆ ตามความใกล้เคียงกับภาษาเครื่อง (ที่คอมพิวเตอร์เข้าใจ) และความใกล้เคียงกับภาษามนุษย์ ยิ่งภาษามีระดับสูงเท่าไหร่ มนุษย์ยิ่งเข้าใจง่ายขึ้นเท่านั้น <strong>คลิกเลือกเพื่อดูรายละเอียดแต่ละรุ่น (Generation)</strong>
+                        </p>
 
-  return (
-    <div className="font-sans text-slate-800 relative pb-20">
-      {/* Background Ambience */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-blue-100/40 blur-[120px]"></div>
-        <div className="absolute bottom-[20%] right-[5%] w-[500px] h-[500px] rounded-full bg-emerald-50/50 blur-[100px]"></div>
-      </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                            {generations.map((gen, idx) => (
+                                <button
+                                    key={gen.id}
+                                    onClick={() => setActiveGen(idx)}
+                                    className={`relative p-5 rounded-2xl text-left transition-all duration-300 active:scale-95 group overflow-hidden ${
+                                        activeGen === idx 
+                                        ? `bg-white shadow-xl ring-2 ${gen.borderColor} scale-[1.02]` 
+                                        : 'bg-zinc-50 border border-zinc-200 hover:bg-zinc-100'
+                                    }`}
+                                >
+                                    {activeGen === idx && (
+                                        <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl ${gen.glowColor}`}></div>
+                                    )}
+                                    
+                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors relative z-10 ${
+                                        activeGen === idx ? gen.bg + ' ' + gen.color : 'bg-zinc-200 text-zinc-500 group-hover:bg-zinc-300'
+                                    }`}>
+                                        {gen.icon}
+                                    </div>
+                                    <div className="relative z-10">
+                                        <div className="text-xs font-bold text-zinc-400 mb-1 uppercase tracking-wider">Gen {idx + 1}</div>
+                                        <h4 className={`font-bold mb-1 leading-tight ${activeGen === idx ? 'text-zinc-900' : 'text-zinc-700'}`}>
+                                            {gen.name}
+                                        </h4>
+                                        <div className={`text-sm font-semibold mb-3 ${activeGen === idx ? gen.color : 'text-zinc-500'}`}>
+                                            {gen.level}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Mobile/Tablet indicator */}
+                                    <div className={`lg:hidden mt-2 overflow-hidden transition-all duration-300 ${activeGen === idx ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                        <p className="text-[14px] text-zinc-600 leading-relaxed border-t border-zinc-100 pt-3">
+                                            {gen.desc}
+                                        </p>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
 
-      <main className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12">
-        
-        {/* Hero Section removed (Handled by LessonViewer) */}
-
-        {/* 1.2.1 & 1.2.2 Low vs High Level */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          
-          <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg hover:border-slate-300 transition-colors relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-slate-100 text-slate-600 rounded-xl">
-                  <Binary className="w-6 h-6" />
+                        {/* Detail Panel (Desktop mostly) */}
+                        <div className="hidden lg:block mt-6 p-8 rounded-2xl bg-zinc-900 text-white relative overflow-hidden shadow-2xl animate-fade-in-up">
+                            <div className={`absolute top-0 right-0 w-64 h-64 blur-[80px] rounded-full transition-colors duration-700 ${generations[activeGen].glowColor}`}></div>
+                            
+                            <div className="relative z-10 flex gap-8 items-center">
+                                <div className={`w-24 h-24 rounded-2xl flex items-center justify-center shrink-0 bg-white/10 backdrop-blur-md ${generations[activeGen].color}`}>
+                                    {React.cloneElement(generations[activeGen].icon, { className: "w-12 h-12" })}
+                                </div>
+                                <div>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/80 text-sm font-semibold mb-3">
+                                        Generation {activeGen + 1}
+                                    </div>
+                                    <h4 className="text-[28px] font-bold text-white mb-3">{generations[activeGen].name}</h4>
+                                    <p className="text-[16px] text-zinc-300 leading-relaxed max-w-3xl">
+                                        {generations[activeGen].desc}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
 
-                  <h3 className="text-2xl font-bold text-slate-800">ภาษาระดับต่ำ (Low-level)</h3>
+                {/* ภาษาระดับต่ำ vs ภาษาระดับสูง (Code Simulator) */}
+                <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zinc-200/60 overflow-hidden">
+                    <div className="p-8">
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
+                                <TerminalSquare className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-[28px] font-bold text-zinc-900 leading-relaxed tracking-tight">
+                                เปรียบเทียบความเข้าใจ (มนุษย์ vs เครื่องจักร)
+                            </h3>
+                        </div>
+
+                        <p className="text-[16px] text-zinc-600 leading-relaxed mb-8">
+                            ลองกดปุ่มด้านซ้ายเพื่อดูวิวัฒนาการในการสั่งให้คอมพิวเตอร์แสดงคำว่า <strong>"Hello"</strong> ในแต่ละระดับภาษา
+                        </p>
+
+                        <div className="flex flex-col md:flex-row gap-6">
+                            <div className="w-full md:w-1/3 flex flex-col gap-3">
+                                <button 
+                                    onClick={() => setCompareStep(1)}
+                                    className={`p-4 rounded-xl font-semibold text-left transition-all active:scale-95 flex items-center justify-between ${
+                                        compareStep === 1 
+                                        ? 'bg-zinc-900 text-white shadow-lg' 
+                                        : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                                    }`}
+                                >
+                                    <span>ภาษาเครื่อง (Machine)</span>
+                                    {compareStep === 1 && <ArrowRight className="w-5 h-5" />}
+                                </button>
+                                <button 
+                                    onClick={() => setCompareStep(2)}
+                                    className={`p-4 rounded-xl font-semibold text-left transition-all active:scale-95 flex items-center justify-between ${
+                                        compareStep === 2 
+                                        ? 'bg-zinc-900 text-white shadow-lg' 
+                                        : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                                    }`}
+                                >
+                                    <span>ภาษาแอสเซมบลี (Assembly)</span>
+                                    {compareStep === 2 && <ArrowRight className="w-5 h-5" />}
+                                </button>
+                                <button 
+                                    onClick={() => setCompareStep(3)}
+                                    className={`p-4 rounded-xl font-semibold text-left transition-all active:scale-95 flex items-center justify-between ${
+                                        compareStep === 3 
+                                        ? 'bg-indigo-600 text-white shadow-lg' 
+                                        : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                                    }`}
+                                >
+                                    <span>ภาษาระดับสูง (Python)</span>
+                                    {compareStep === 3 && <ArrowRight className="w-5 h-5" />}
+                                </button>
+                            </div>
+
+                            <div className="w-full md:w-2/3 bg-[#0D1117] rounded-xl border border-zinc-800 p-6 flex items-center justify-center min-h-[200px] relative overflow-hidden font-mono text-sm sm:text-base shadow-inner">
+                                {/* Code window decorations */}
+                                <div className="absolute top-0 left-0 w-full h-8 bg-[#161B22] border-b border-zinc-800 flex items-center px-4 gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <div className="ml-4 text-xs text-zinc-500">example.code</div>
+                                </div>
+                                
+                                <div className="mt-6 w-full text-left" key={compareStep}>
+                                    {compareStep === 1 && (
+                                        <div className="text-green-400 animate-fade-in break-all tracking-widest opacity-80 leading-loose">
+                                            01001000 01100101 01101100 01101100 01101111<br/>
+                                            <span className="text-zinc-500 text-xs font-sans mt-4 block">/* เครื่องเข้าใจทันที แต่มนุษย์แทบอ่านไม่ออก */</span>
+                                        </div>
+                                    )}
+                                    {compareStep === 2 && (
+                                        <div className="text-orange-300 animate-fade-in leading-relaxed">
+                                            MOV AH, 09h<br/>
+                                            LEA DX, msg<br/>
+                                            INT 21h<br/>
+                                            <span className="text-zinc-500 text-xs font-sans mt-4 block">/* เริ่มใช้คำย่อภาษาอังกฤษ ต้องแปลเป็นภาษาเครื่องก่อน */</span>
+                                        </div>
+                                    )}
+                                    {compareStep === 3 && (
+                                        <div className="text-indigo-300 animate-fade-in leading-relaxed text-xl">
+                                            <span className="text-pink-400">print</span>(<span className="text-green-300">"Hello"</span>)<br/>
+                                            <span className="text-zinc-500 text-xs font-sans mt-4 block">/* อ่านออกเสียงได้เหมือนภาษาอังกฤษ มนุษย์เข้าใจได้ทันที */</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <p className="text-slate-600 leading-loose text-lg mb-4">
-                เป็นภาษาที่มีความใกล้เคียงกับฮาร์ดแวร์มากที่สุด คอมพิวเตอร์สามารถเข้าใจและทำงานได้ทันที (หรือแปลเพียงเล็กน้อย)
-              </p>
-              <ul className="space-y-3 text-slate-600 leading-loose">
-                <li className="flex gap-2 items-start">
-                  <ArrowUpRight className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
-                  <span><strong>ข้อดี:</strong> ทำงานได้รวดเร็วที่สุด และสามารถควบคุมฮาร์ดแวร์ได้ในระดับลึก</span>
-                </li>
-                <li className="flex gap-2 items-start">
-                  <ArrowUpRight className="w-5 h-5 text-red-500 flex-shrink-0 mt-1 transform rotate-90" />
-                  <span><strong>ข้อเสีย:</strong> เขียนยาก โค้ดยาว มนุษย์อ่านเข้าใจยาก และต้องเขียนใหม่หากเปลี่ยนชนิดของ CPU</span>
-                </li>
-              </ul>
-              <div className="mt-6 px-4 py-2 bg-slate-50 rounded-lg text-sm text-slate-500 border border-slate-100">
-                ตัวอย่าง: ภาษาเครื่อง (1GL) และ ภาษาแอสเซมบลี (2GL)
-              </div>
-            </div>
-          </div>
 
-          <div className="bg-white rounded-3xl p-8 border border-indigo-100 shadow-lg hover:border-indigo-300 transition-colors relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-indigo-100 text-indigo-600 rounded-xl">
-                  <Code2 className="w-6 h-6" />
+                {/* แนวโน้มในอนาคต */}
+                <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zinc-200/60 overflow-hidden">
+                    <div className="p-8">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-white shadow-lg shadow-fuchsia-500/30">
+                                <Globe className="w-6 h-6" />
+                            </div>
+                            <h3 className="text-[28px] font-bold text-zinc-900 leading-relaxed tracking-tight">
+                                แนวโน้มภาษาโปรแกรมคอมพิวเตอร์ในอนาคต
+                            </h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {futureTrends.map((trend, idx) => (
+                                <div 
+                                    key={idx}
+                                    onMouseEnter={() => setActiveTrend(idx)}
+                                    onMouseLeave={() => setActiveTrend(null)}
+                                    className="relative group p-6 rounded-2xl border border-zinc-200 bg-white hover:border-transparent transition-all duration-300 hover:shadow-[0_12px_24px_-4px_rgba(0,0,0,0.1)] hover:-translate-y-1"
+                                >
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${trend.theme} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`}></div>
+                                    <div className={`w-14 h-14 rounded-xl mb-5 flex items-center justify-center text-white bg-gradient-to-br ${trend.theme} shadow-lg shadow-zinc-200 group-hover:scale-110 transition-transform duration-300`}>
+                                        {trend.icon}
+                                    </div>
+                                    <h4 className="text-[20px] font-bold text-zinc-900 mb-3">{trend.title}</h4>
+                                    <p className="text-[15px] text-zinc-600 leading-relaxed">{trend.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-                <div>
 
-                  <h3 className="text-2xl font-bold text-slate-800">ภาษาระดับสูง (High-level)</h3>
-                </div>
-              </div>
-              <p className="text-slate-600 leading-loose text-lg mb-4">
-                เป็นภาษาที่มีรูปแบบและไวยากรณ์ใกล้เคียงกับภาษาอังกฤษที่มนุษย์ใช้ ทำให้ง่ายต่อการเรียนรู้และเขียนโปรแกรม
-              </p>
-              <ul className="space-y-3 text-slate-600 leading-loose">
-                <li className="flex gap-2 items-start">
-                  <ArrowUpRight className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
-                  <span><strong>ข้อดี:</strong> เขียนง่าย แก้ไขง่าย นำโค้ดไปรันในเครื่องต่างระบบกันได้ง่ายกว่า (Portability)</span>
-                </li>
-                <li className="flex gap-2 items-start">
-                  <ArrowUpRight className="w-5 h-5 text-amber-500 flex-shrink-0 mt-1 transform rotate-90" />
-                  <span><strong>ข้อเสีย:</strong> ต้องมีตัวแปลภาษา (Compiler/Interpreter) ทำให้ทำงานช้ากว่าภาษาระดับต่ำเล็กน้อย</span>
-                </li>
-              </ul>
-              <div className="mt-6 px-4 py-2 bg-indigo-50 rounded-lg text-sm text-indigo-600 border border-indigo-100">
-                ตัวอย่าง: Python, Java, C++, JavaScript (3GL)
-              </div>
-            </div>
-          </div>
+                <TeacherTask 
+                    title="ภารกิจประจำหัวข้อ"
+                    description="ให้นักเรียนเปรียบเทียบความแตกต่างระหว่าง ภาษาระดับต่ำ (Low-Level) และ ภาษาระดับสูง (High-Level) มาอย่างน้อย 2 ประเด็น พร้อมยกตัวอย่างชื่อภาษามาประกอบ"
+                    code={`# ตัวอย่างรูปแบบการตอบ
+ความแตกต่างที่ 1: ......
+ความแตกต่างที่ 2: ......
 
+ตัวอย่างภาษาระดับต่ำ: ......
+ตัวอย่างภาษาระดับสูง: ......
+`}
+                />
+            </main>
+
+            <style jsx="true">{`
+                @keyframes fade-in-up {
+                    0% { opacity: 0; transform: translateY(10px); }
+                    100% { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in-up {
+                    animation: fade-in-up 0.4s ease-out forwards;
+                }
+                .animate-fade-in {
+                    animation: fade-in-up 0.5s ease-out forwards;
+                }
+            `}</style>
         </div>
-
-        {/* Generational Simulator */}
-        <LanguageGenerationSimulator />
-
-        {/* 1.2.6 Future Trends */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-[2.5rem] p-10 md:p-14 border border-slate-700 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-indigo-500/20 to-purple-500/20 blur-[80px] rounded-full mix-blend-screen pointer-events-none"></div>
-          
-          <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="p-4 bg-white/10 text-emerald-400 rounded-2xl backdrop-blur-sm shadow-inner">
-                <TrendingUp className="w-8 h-8" />
-              </div>
-              <div>
-
-                <h3 className="text-3xl font-bold text-white">แนวโน้มภาษาโปรแกรมคอมพิวเตอร์ในอนาคต</h3>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
-                <h4 className="text-xl font-bold text-emerald-300 flex items-center gap-2 mb-3">
-                  <Sparkles className="w-5 h-5" /> Low-Code / No-Code
-                </h4>
-                <p className="text-slate-300 leading-loose">
-                  แพลตฟอร์มที่ช่วยให้คนทั่วไปที่ไม่ได้เรียนจบไอทีสามารถสร้างแอปพลิเคชันได้ ด้วยการลากวาง (Drag & Drop) และตั้งค่าเงื่อนไขโดยไม่ต้องเขียนโค้ด (หรือเขียนน้อยมาก) 
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
-                <h4 className="text-xl font-bold text-emerald-300 flex items-center gap-2 mb-3">
-                  <BrainCircuit className="w-5 h-5" /> AI-Assisted Programming
-                </h4>
-                <p className="text-slate-300 leading-loose">
-                  การใช้ AI เช่น GitHub Copilot หรือ ChatGPT เข้ามาช่วยเขียนและตรวจสอบโค้ด (5GL) ทำให้โปรแกรมเมอร์ทำงานได้เร็วขึ้นหลายเท่าตัว แต่อย่างไรก็ตาม โปรแกรมเมอร์ยังต้องมีความเข้าใจใน 3GL (เช่น Python) เพื่อตรวจสอบว่า AI เขียนโค้ดมาถูกต้องและปลอดภัยหรือไม่
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Teacher Task */}
-        <div className="mt-16">
-          <TeacherTask title="ใบงานกิจกรรม (ทบทวนความรู้ 1.2)" taskText={teacherTaskContent} />
-        </div>
-        
-      </main>
-    </div>
-  );
+    );
 }

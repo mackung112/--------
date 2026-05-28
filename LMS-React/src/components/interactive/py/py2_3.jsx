@@ -18,7 +18,11 @@ import {
   BrainCircuit, 
   Check, 
   X, 
-  Bug
+  Bug,
+  RefreshCw,
+  Play,
+  RotateCcw,
+  ChevronRight
 } from 'lucide-react';
 
 // ============================================================================
