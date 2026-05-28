@@ -39,7 +39,6 @@
 - **Auto-Registry**: สถาปัตยกรรมนี้ใช้ `import.meta.glob` ใน `\Teach\LMS-React\src\components\LessonViewer.jsx` เพื่อดึง Component ในโฟลเดอร์ `\Teach\LMS-React\src\components\interactive\` มาแมปกับ `[MARKER]` ใน `\Teach\LMS-React\src\data.js` โดยอัตโนมัติ
 - **UI Evolution**: โปรเจกต์นี้เคยใช้ Explorer Pattern ในอดีต แต่ปัจจุบัน **ได้ปรับมาใช้ "Immersive Full-Page Standard (Layer 1-4)"** ทั่วทั้งแพลตฟอร์ม เพื่อความสวยงามพรีเมียม
 - **อัปเดตล่าสุด (พ.ค. 2026)**: 
-  - ยกระดับบทเรียน Python 1.1 - 1.5 ด้วยระบบ Immersive Full-Page สำเร็จ
   - ยกเลิก Auto-scroll เพื่อให้ UI นิ่งและเสถียรที่สุด
   - ปรับสถาปัตยกรรมฐานข้อมูล (`src/data/`) เป็นแบบ Explicit Props แยก `mainTitle`, `subTitle`, `description` แทนการฝัง HTML ใน `content`
 

@@ -14,7 +14,7 @@ const pyCourse = {
                     mainTitle: "แนะนำภาษาคอมพิวเตอร์และโปรแกรม",
                     description: "ครอบคลุมหัวข้อ: ความหมายและองค์ประกอบของภาษาคอมพิวเตอร์, ประวัติและวิวัฒนาการของภาษาคอมพิวเตอร์ | ทำความรู้จักกับภาษาคอมพิวเตอร์ โปรแกรมคืออะไร และทำไมเราถึงต้องเขียนโปรแกรมเพื่อสั่งงานคอมพิวเตอร์",
                     subTitle: "(Introduction to Programming)",
-                    content: "[pyUnit1_1_ProgramMeaning]" 
+                    content: "[py1_1]" 
                 },
                 { 
                     id: "1.2", 
@@ -22,7 +22,7 @@ const pyCourse = {
                     mainTitle: "ระดับของภาษาคอมพิวเตอร์",
                     description: "ครอบคลุมหัวข้อ: ภาษาระดับต่ำ, ภาษาระดับสูง, 4GL, 5GL | เรียนรู้วิวัฒนาการและความแตกต่างระหว่างภาษาเครื่อง (Machine Language) ไปจนถึงภาษาธรรมชาติ (Natural Language)",
                     subTitle: "(Levels of Programming Languages)",
-                    content: "[pyUnit1_2_LanguageLevels]" 
+                    content: "[py1_2]" 
                 },
                 { 
                     id: "1.3", 
@@ -30,7 +30,7 @@ const pyCourse = {
                     mainTitle: "Interpreter vs Compiler",
                     subTitle: "(Interpreter vs Compiler)",
                     description: "ครอบคลุมหัวข้อ: หลักการทำงานและข้อดีข้อเสียของ Interpreter และ Compiler | เปรียบเทียบการทำงานของตัวแปลภาษาแบบ Interpreter ที่แปลทีละบรรทัด และ Compiler ที่แปลรวดเดียวทั้งโปรแกรม",
-                    content: "[pyUnit1_3_TranslatorCompare]" 
+                    content: "[py1_3]" 
                 },
                 { 
                     id: "1.4", 
@@ -38,7 +38,7 @@ const pyCourse = {
                     mainTitle: "จุดเด่นของภาษา Python",
                     description: "ครอบคลุมหัวข้อ: ลักษณะเด่น, ความสำคัญ, และการประยุกต์ใช้งาน | ค้นหาคำตอบว่าทำไมภาษา Python ถึงได้รับความนิยมสูงสุดในปัจจุบัน และถูกนำไปใช้งานในด้านใดบ้าง",
                     subTitle: "(Features of Python)",
-                    content: "[pyUnit1_4_PythonFeatures]" 
+                    content: "[py1_4]" 
                 },
                 { 
                     id: "1.5", 
@@ -46,7 +46,7 @@ const pyCourse = {
                     mainTitle: "การติดตั้ง Python และ IDE",
                     subTitle: "(Python & IDE Setup)",
                     description: "ครอบคลุมหัวข้อ: การดาวน์โหลดและติดตั้งตัวแปลภาษา Python, การติดตั้งและใช้งาน IDE | ขั้นตอนการเตรียมเครื่องมือให้พร้อมก่อนเริ่มเขียนโปรแกรมจริง ด้วยการติดตั้ง Python และโปรแกรมเขียนโค้ด (IDE)",
-                    content: "[pyUnit1_5_SetupGuide]" 
+                    content: "[py1_5]" 
                 }
             ]
         },
@@ -60,7 +60,7 @@ const pyCourse = {
                     mainTitle: "แนวคิดและอัลกอริทึม",
                     subTitle: "(Concept & Algorithm)",
                     description: "ครอบคลุมหัวข้อ: ความหมายของอัลกอริทึม ขั้นตอนและกระบวนการแก้ปัญหา และหลักการออกแบบอัลกอริทึม",
-                    content: "[pyUnit2_1_AlgorithmConcept]" 
+                    content: "[py2_1]" 
                 },
                 { 
                     id: "2.2", 
@@ -68,7 +68,7 @@ const pyCourse = {
                     mainTitle: "วงจรการพัฒนาซอฟต์แวร์ (SDLC)",
                     subTitle: "(Software Development Life Cycle)",
                     description: "ครอบคลุมหัวข้อ: ความหมาย ความสำคัญ ระยะต่างๆ ในวงจรการพัฒนาซอฟต์แวร์ และตัวอย่างการใช้งาน",
-                    content: "[pyUnit2_2_SDLC]" 
+                    content: "[py2_2]" 
                 },
                 { 
                     id: "2.3", 
@@ -76,7 +76,7 @@ const pyCourse = {
                     mainTitle: "การเขียนรหัสเทียม (Pseudocode)",
                     subTitle: "(Introduction to Pseudocode)",
                     description: "ครอบคลุมหัวข้อ: ความหมาย ประโยชน์ หลักการเบื้องต้น และความสัมพันธ์ระหว่างรหัสเทียมกับผังงาน",
-                    content: "[pyUnit2_3_PseudocodeIntro]" 
+                    content: "[py2_3]" 
                 },
                 { 
                     id: "2.4", 
@@ -84,7 +84,7 @@ const pyCourse = {
                     mainTitle: "คำสั่งพื้นฐานในรหัสเทียม",
                     subTitle: "(Basic Pseudocode Commands)",
                     description: "ครอบคลุมหัวข้อ: คำสั่งรับข้อมูล (INPUT) คำสั่งแสดงผล (PRINT) และคำสั่งคำนวณกำหนดค่า (PROCESS)",
-                    content: "[pyUnit2_4_PseudoCommands]" 
+                    content: "[py2_4]" 
                 },
                 { 
                     id: "2.5", 
@@ -92,7 +92,7 @@ const pyCourse = {
                     mainTitle: "รหัสเทียมแบบมีเงื่อนไข",
                     subTitle: "(Conditional Pseudocode)",
                     description: "ครอบคลุมหัวข้อ: เงื่อนไขแบบ IF, IF-ELSE, IF-ELIF-ELSE และการเขียนเงื่อนไขซ้อนทับ (NESTED IF)",
-                    content: "[pyUnit2_5_PseudoCondition]" 
+                    content: "[py2_5]" 
                 },
                 { 
                     id: "2.6", 
@@ -100,7 +100,7 @@ const pyCourse = {
                     mainTitle: "รหัสเทียมแบบวนซ้ำ",
                     subTitle: "(Looping Pseudocode)",
                     description: "ครอบคลุมหัวข้อ: การวนซ้ำแบบ WHILE LOOP, FOR LOOP และการกำหนดจุดสิ้นสุดการวนซ้ำ",
-                    content: "[pyUnit2_6_PseudoLoop]" 
+                    content: "[py2_6]" 
                 },
                 { 
                     id: "2.7", 
@@ -108,7 +108,7 @@ const pyCourse = {
                     mainTitle: "การจัดโครงสร้างรหัสเทียม",
                     subTitle: "(Pseudocode Structure)",
                     description: "ครอบคลุมหัวข้อ: การย่อหน้า (Indentation) เพื่อความชัดเจน และการเขียนหมายเหตุ (Comment)",
-                    content: "[pyUnit2_7_PseudoStructure]" 
+                    content: "[py2_7]" 
                 },
                 { 
                     id: "2.8", 
@@ -116,7 +116,7 @@ const pyCourse = {
                     mainTitle: "สัญลักษณ์ผังงาน (Flowchart)",
                     subTitle: "(Flowchart Symbols)",
                     description: "ครอบคลุมหัวข้อ: สัญลักษณ์มาตรฐานสากล (ANSI) ความหมาย การนำไปใช้งาน และการใช้ draw.io",
-                    content: "[pyUnit2_8_FlowchartSymbols]" 
+                    content: "[py2_8]" 
                 },
                 { 
                     id: "2.9", 
@@ -124,7 +124,7 @@ const pyCourse = {
                     mainTitle: "หลักการเขียนผังงานที่ดี",
                     subTitle: "(Good Flowchart Practices)",
                     description: "ครอบคลุมหัวข้อ: กฎเกณฑ์ข้อกำหนดในการเขียน และข้อควรระวังข้อผิดพลาดที่พบบ่อย",
-                    content: "[pyUnit2_9_FlowchartRules]" 
+                    content: "[py2_9]" 
                 },
                 { 
                     id: "2.10", 
@@ -132,7 +132,7 @@ const pyCourse = {
                     mainTitle: "ผังงานแบบเรียงลำดับ",
                     subTitle: "(Sequential Flowchart)",
                     description: "ครอบคลุมหัวข้อ: แนวคิดการทำงานแบบลำดับจากบนลงล่าง และตัวอย่างการเขียนผังงานแบบเรียงลำดับ",
-                    content: "[pyUnit2_10_FlowSeq]" 
+                    content: "[py2_10]" 
                 },
                 { 
                     id: "2.11", 
@@ -140,7 +140,7 @@ const pyCourse = {
                     mainTitle: "ผังงานแบบเลือกทำ",
                     subTitle: "(Decision Flowchart)",
                     description: "ครอบคลุมหัวข้อ: แนวคิดการตัดสินใจ เงื่อนไขแบบ if, if-else, if-elif-else และ nested if",
-                    content: "[pyUnit2_11_FlowCondition]" 
+                    content: "[py2_11]" 
                 },
                 { 
                     id: "2.12", 
@@ -148,7 +148,7 @@ const pyCourse = {
                     mainTitle: "ผังงานแบบวนซ้ำ",
                     subTitle: "(Looping Flowchart)",
                     description: "ครอบคลุมหัวข้อ: แนวคิดการทำงานซ้ำตามเงื่อนไข ตัวอย่างผังงานแบบ while และ for",
-                    content: "[pyUnit2_12_FlowLoop]" 
+                    content: "[py2_12]" 
                 }
             ]
         },
@@ -162,7 +162,7 @@ const pyCourse = {
                     mainTitle: "โครงสร้างโค้ด Python",
                     subTitle: "(Python Code Structure)",
                     description: "ครอบคลุมหัวข้อ: การ comment, รูปแบบคำสั่งและไวยากรณ์เบื้องต้น และการเว้นวรรคและย่อหน้า (Indentation)",
-                    content: "[pyUnit3_1_PyStructure]" 
+                    content: "[py3_1]" 
                 },
                 { 
                     id: "3.2", 
@@ -170,7 +170,7 @@ const pyCourse = {
                     mainTitle: "กฎการตั้งชื่อตัวแปร",
                     subTitle: "(Variable Naming Rules)",
                     description: "ครอบคลุมหัวข้อ: หลักเกณฑ์และข้อห้ามในการตั้งชื่อ และคำสงวน (Reserved words) ในภาษา Python",
-                    content: "[pyUnit3_2_NamingRules]" 
+                    content: "[py3_2]" 
                 },
                 { 
                     id: "3.3", 
@@ -178,7 +178,7 @@ const pyCourse = {
                     mainTitle: "ข้อมูลจำนวนเต็ม (Integer)",
                     subTitle: "(Integer Data Type)",
                     description: "ครอบคลุมหัวข้อ: ลักษณะของข้อมูลประเภทจำนวนเต็ม และการแปลงชนิดข้อมูลจำนวนเต็ม",
-                    content: "[pyUnit3_3_Integer]" 
+                    content: "[py3_3]" 
                 },
                 { 
                     id: "3.4", 
@@ -186,7 +186,7 @@ const pyCourse = {
                     mainTitle: "ข้อมูลทศนิยม (Float)",
                     subTitle: "(Float Data Type)",
                     description: "ครอบคลุมหัวข้อ: ลักษณะของข้อมูลประเภททศนิยม และความแม่นยำและการปัดเศษทศนิยม",
-                    content: "[pyUnit3_4_Float]" 
+                    content: "[py3_4]" 
                 },
                 { 
                     id: "3.5", 
@@ -194,7 +194,7 @@ const pyCourse = {
                     mainTitle: "ข้อมูลข้อความ (String)",
                     subTitle: "(String Data Type)",
                     description: "ครอบคลุมหัวข้อ: การประกาศตัวแปรและกำหนดค่าข้อความ และการเชื่อมต่อและการคัดลอกข้อความ",
-                    content: "[pyUnit3_5_String]" 
+                    content: "[py3_5]" 
                 },
                 { 
                     id: "3.6", 
@@ -202,7 +202,7 @@ const pyCourse = {
                     mainTitle: "ข้อมูลตรรกะ (Boolean)",
                     subTitle: "(Boolean Data Type)",
                     description: "ครอบคลุมหัวข้อ: ค่าความจริง (True) และเท็จ (False) และการประเมินค่าทางตรรกศาสตร์เบื้องต้น",
-                    content: "[pyUnit3_6_Boolean]" 
+                    content: "[py3_6]" 
                 },
                 { 
                     id: "3.7", 
@@ -210,7 +210,7 @@ const pyCourse = {
                     mainTitle: "การนำเข้าโมดูล (import)",
                     subTitle: "(Importing Modules)",
                     description: "ครอบคลุมหัวข้อ: ความหมายและประโยชน์ของโมดูล และรูปแบบการเรียกใช้งาน (import / from...import)",
-                    content: "[pyUnit3_7_Import]" 
+                    content: "[py3_7]" 
                 },
                 { 
                     id: "3.8", 
@@ -218,7 +218,7 @@ const pyCourse = {
                     mainTitle: "การจัดสรรหน่วยความจำ",
                     subTitle: "(Memory Allocation)",
                     description: "ครอบคลุมหัวข้อ: หลักการเก็บข้อมูลในหน่วยความจำของตัวแปร และกระบวนการคืนพื้นที่หน่วยความจำ (Garbage Collection)",
-                    content: "[pyUnit3_8_Memory]" 
+                    content: "[py3_8]" 
                 }
             ]
         },
@@ -230,17 +230,17 @@ const pyCourse = {
                     id: "4.1",
                     title: "4.1 การแสดงผลด้วย print()",
                     mainTitle: "การจัดรูปแบบแสดงผลด้วย print()",
-                    description: "ครอบคลุมหัวข้อ: รูปแบบการใช้งานฟังก์ชัน print(), การจัดรูปแบบสตริง (String Formatting และ f-string) | ฟังก์ชัน <code>print()</code> ใช้เพื่อสั่งให้คอมพิวเตอร์แสดงข้อความหรือค่าของตัวแปรออกทางหน้าจอ โดยมีรูปแบบที่ทรงประสิทธิภาพที่สุดคือ f-string (Formatted String Literals)",
+                    description: "ครอบคลุมหัวข้อ: รูปแบบการใช้งานฟังก์ชัน print(), f-string, escape characters, และ sep/end parameters | ฟังก์ชัน print() ใช้เพื่อสั่งให้คอมพิวเตอร์แสดงข้อความหรือค่าของตัวแปรออกทางหน้าจออย่างเป็นระบบและปรับแต่งรูปแบบการจัดเรียงได้ตามต้องการ",
                     subTitle: "(Print Function)",
-                    content: `[pyUnit4_3_PrintFormat]<div class="note">💡 f-string (มีตัว f นำหน้าเครื่องหมายคำพูด) คือวิธีแทรกตัวแปรลงในข้อความที่ง่ายและนิยมที่สุดในภาษา Python ปัจจุบัน</div>`
+                    content: "[py4_1]"
                 },
                 {
                     id: "4.2",
                     title: "4.2 การรับข้อมูลด้วย input()",
                     mainTitle: "การรับข้อมูลด้วยฟังก์ชัน input()",
-                    description: "ครอบคลุมหัวข้อ: รูปแบบการใช้งานฟังก์ชัน input(), การแปลงชนิดข้อมูลที่รับเข้ามา (Type Casting) | การสื่อสารระหว่างมนุษย์กับคอมพิวเตอร์ผ่านฟังก์ชัน <code>input()</code> เพื่อหยุดรอให้ผู้ใช้พิมพ์ข้อมูลทางคีย์บอร์ดแล้วกด Enter เพื่อเก็บข้อมูลเข้าสู่ตัวแปร",
+                    description: "ครอบคลุมหัวข้อ: รูปแบบการใช้งานฟังก์ชัน input(), การแปลงชนิดข้อมูลที่รับเข้ามา (Type Casting) | เรียนรู้วิธีการหยุดรอรับข้อมูลจากผู้ใช้งานผ่านแป้นพิมพ์คอมพิวเตอร์ และทำความเข้าใจประเภทข้อมูลที่ได้พร้อมหลักการแคสต์ค่าที่ถูกต้องสำหรับการคำนวณ",
                     subTitle: "(Input Function)",
-                    content: `[pyUnit4_2_InputDemo]<div class="note">💡 ข้อควรจำ: ข้อมูลที่ได้รับจาก <code>input()</code> จะมีชนิดข้อมูลเป็นข้อความ (String) เสมอ หากต้องการนำไปคำนวณจะต้องทำการแปลงชนิดข้อมูล (Type Casting) เช่น ครอบด้วย <code>int()</code> หรือ <code>float()</code> ก่อน</div>`
+                    content: "[py4_2]"
                 },
                 {
                     id: "4.3",
@@ -248,7 +248,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการคณิตศาสตร์",
                     subTitle: "(Arithmetic Operators)",
                     description: "ครอบคลุมหัวข้อ: เครื่องหมายคณิตศาสตร์พื้นฐาน (+, -, *, /, //, %, **), ลำดับความสำคัญของเครื่องหมายทางคณิตศาสตร์ | การสั่งให้คอมพิวเตอร์คำนวณตัวเลข ใน Python มีเครื่องหมายพิเศษสำหรับการหารปัดเศษทิ้ง (//) และการหารเอาเศษ (Modulo %)",
-                    content: `[pyUnit4_4_ArithmeticOps]<div class="note">💡 <code>//</code> คือการหารปัดเศษทิ้ง ส่วน <code>%</code> คือการหารเอาเศษ ซึ่งมีความสำคัญมากในการเขียนโปรแกรม เช่น ตรวจสอบเลขคู่/คี่ หรือแบ่งรอบการทำงาน</div>`
+                    content: `[py4_3]<div class="note">💡 <code>//</code> คือการหารปัดเศษทิ้ง ส่วน <code>%</code> คือการหารเอาเศษ ซึ่งมีความสำคัญมากในการเขียนโปรแกรม เช่น ตรวจสอบเลขคู่/คี่ หรือแบ่งรอบการทำงาน</div>`
                 },
                 {
                     id: "4.4",
@@ -256,7 +256,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการกำหนดค่า",
                     subTitle: "(Assignment Operators)",
                     description: "ครอบคลุมหัวข้อ: การใช้เครื่องหมายเท่ากับ (=), การกำหนดค่าแบบย่อ (+=, -=, *=, /=) | เครื่องหมาย <code>=</code> ในทางการเขียนโปรแกรม หมายถึง \"การนำค่าจากทางขวา ไปเก็บไว้ในตัวแปรทางซ้าย\" และยังมีตัวดำเนินการกำหนดค่าแบบย่อ (เช่น <code>+=</code>, <code>-=</code>)",
-                    content: `[pyUnit4_5_AssignmentOps]<div class="note">💡 <code>x += 1</code> เป็นการเขียนย่อของ <code>x = x + 1</code> เพื่อความรวดเร็วและสะอาดตาของโค้ด</div>`
+                    content: `[py4_4]<div class="note">💡 <code>x += 1</code> เป็นการเขียนย่อของ <code>x = x + 1</code> เพื่อความรวดเร็วและสะอาดตาของโค้ด</div>`
                 },
                 {
                     id: "4.5",
@@ -264,7 +264,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการเปรียบเทียบ",
                     subTitle: "(Comparison Operators)",
                     description: "ครอบคลุมหัวข้อ: เครื่องหมายเปรียบเทียบ (==, !=, >, <, >=, <=), ผลลัพธ์จากการเปรียบเทียบ (Boolean) | ใช้สำหรับเปรียบเทียบค่าสองค่าเพื่อหาคำตอบว่าประโยคนั้นเป็นจริงหรือเท็จ ผลลัพธ์ที่ได้จะเป็นข้อมูลตรรกะ (Boolean) คือ True หรือ False เสมอ",
-                    content: `[pyUnit4_6_ComparisonOps]<div class="note">💡 ข้อควรระวังสูงสุด: เครื่องหมาย <code>=</code> ใช้กำหนดค่าตัวแปร ส่วนเครื่องหมาย <code>==</code> ใช้สำหรับทดสอบว่าค่าเท่ากันหรือไม่</div>`
+                    content: `[py4_5]<div class="note">💡 ข้อควรระวังสูงสุด: เครื่องหมาย <code>=</code> ใช้กำหนดค่าตัวแปร ส่วนเครื่องหมาย <code>==</code> ใช้สำหรับทดสอบว่าค่าเท่ากันหรือไม่</div>`
                 },
                 {
                     id: "4.6",
@@ -272,7 +272,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการทางตรรกะ",
                     subTitle: "(Logical Operators)",
                     description: "ครอบคลุมหัวข้อ: การใช้งาน and, or, not, ลำดับการทำงานของตัวดำเนินการทางตรรกะ | ใช้เพื่อเชื่อมเงื่อนไขหลายข้อเข้าด้วยกัน ประกอบด้วย <code>and</code> (และ), <code>or</code> (หรือ) และ <code>not</code> (ไม่)",
-                    content: `[pyUnit4_7_LogicalOps]<div class="note">💡 <code>and</code> เป็นจริงเมื่อเงื่อนไขทั้งหมดเป็นจริง / <code>or</code> เป็นจริงเพียงแค่มีเงื่อนไขใดเงื่อนไขหนึ่งเป็นจริง / <code>not</code> ใช้กลับค่าความจริง</div>`
+                    content: `[py4_6]<div class="note">💡 <code>and</code> เป็นจริงเมื่อเงื่อนไขทั้งหมดเป็นจริง / <code>or</code> เป็นจริงเพียงแค่มีเงื่อนไขใดเงื่อนไขหนึ่งเป็นจริง / <code>not</code> ใช้กลับค่าความจริง</div>`
                 },
                 {
                     id: "4.7",
@@ -280,7 +280,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการเอกลักษณ์",
                     subTitle: "(Identity Operators)",
                     description: "ครอบคลุมหัวข้อ: การใช้งาน is และ is not, ความแตกต่างระหว่าง is กับ == | ตัวดำเนินการ <code>is</code> และ <code>is not</code> ใช้สำหรับตรวจสอบว่าตัวแปรสองตัวอ้างอิงไปยังตำแหน่งหน่วยความจำเดียวกัน (Object เดียวกัน) หรือมีค่าเท่ากันแต่เป็นคนละอ็อบเจกต์",
-                    content: `[pyUnit4_8_IdentityOps]<div class="note">💡 ตัวดำเนินการ <code>==</code> ใช้เปรียบเทียบว่า "ค่าเท่ากันหรือไม่" แต่ตัวดำเนินการ <code>is</code> ใช้ตรวจสอบว่า "เป็นอ็อบเจกต์เดียวกันในหน่วยความจำหรือไม่"</div>`
+                    content: `[py4_7]<div class="note">💡 ตัวดำเนินการ <code>==</code> ใช้เปรียบเทียบว่า "ค่าเท่ากันหรือไม่" แต่ตัวดำเนินการ <code>is</code> ใช้ตรวจสอบว่า "เป็นอ็อบเจกต์เดียวกันในหน่วยความจำหรือไม่"</div>`
                 },
                 {
                     id: "4.8",
@@ -288,7 +288,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการสมาชิก",
                     subTitle: "(Membership Operators)",
                     description: "ครอบคลุมหัวข้อ: การใช้งาน in และ not in, การตรวจสอบสมาชิกในชุดข้อมูลหรือข้อความ | ใช้ตรวจว่ามีข้อมูลที่ระบุอยู่ภายในข้อมูลแบบชุด (เช่น List, String, หรือ Tuple) หรือไม่ ด้วยตัวดำเนินการ <code>in</code> และ <code>not in</code>",
-                    content: `[pyUnit4_9_MembershipOps]<div class="note">💡 ทรงพลังมากในการค้นหาคำหรือตรวจสอบสถานะของสมาชิกในกลุ่มข้อมูลโดยไม่ต้องเขียนลูปไล่ตรวจเอง</div>`
+                    content: `[py4_8]<div class="note">💡 ทรงพลังมากในการค้นหาคำหรือตรวจสอบสถานะของสมาชิกในกลุ่มข้อมูลโดยไม่ต้องเขียนลูปไล่ตรวจเอง</div>`
                 },
                 {
                     id: "4.9",
@@ -296,7 +296,7 @@ const pyCourse = {
                     mainTitle: "ตัวดำเนินการบิต (Bitwise)",
                     subTitle: "(Bitwise Operators)",
                     description: "ครอบคลุมหัวข้อ: เครื่องหมายระดับบิตเบื้องต้น (&, |, ^, ~), การเลื่อนบิต (Shift left, Shift right) | จัดการข้อมูลในระดับบิต (0 และ 1) ซึ่งมีประโยชน์มากในการประมวลผลระดับต่ำหรือการเข้ารหัส",
-                    content: `[pyUnit4_9_BitwiseOps]`
+                    content: `[py4_9]`
                 },
                 {
                     id: "4.10",
@@ -304,7 +304,7 @@ const pyCourse = {
                     mainTitle: "เงื่อนไข if",
                     subTitle: "(If Condition)",
                     description: "ครอบคลุมหัวข้อ: โครงสร้างคำสั่ง if เชิงเดี่ยว, การเขียนบล็อกคำสั่งภายใต้เงื่อนไข if | คำสั่ง if เป็นพื้นฐานที่สุดของการตัดสินใจในโปรแกรม โดยโปรแกรมจะทำคำสั่งภายในบล็อกก็ต่อเมื่อเงื่อนไขเป็นจริง (True) เท่านั้น",
-                    content: `[pyUnit4_10_IfCondition]`
+                    content: `[py4_10]`
                 },
                 {
                     id: "4.11",
@@ -312,7 +312,7 @@ const pyCourse = {
                     mainTitle: "เงื่อนไข elif",
                     subTitle: "(Elif Condition)",
                     description: "ครอบคลุมหัวข้อ: โครงสร้างคำสั่ง elif สำหรับหลายเงื่อนไข, การจัดลำดับความสำคัญของเงื่อนไข | ใช้ตรวจสอบเงื่อนไขทางเลือกเพิ่มเติมเมื่อเงื่อนไขก่อนหน้าเป็นเท็จ ช่วยให้ตรวจสอบได้หลายๆ กรณีต่อเนื่องกัน",
-                    content: `[pyUnit4_11_ElifCondition]`
+                    content: `[py4_11]`
                 },
                 {
                     id: "4.12",
@@ -320,7 +320,7 @@ const pyCourse = {
                     mainTitle: "เงื่อนไข else",
                     subTitle: "(Else Condition)",
                     description: "ครอบคลุมหัวข้อ: โครงสร้างคำสั่ง else, การจัดการเมื่อไม่ตรงเงื่อนไขใดเลย | บล็อกสุดท้ายของโครงสร้างเงื่อนไข จะทำงานก็ต่อเมื่อเงื่อนไข if และ elif ทั้งหมดก่อนหน้าเป็นเท็จ",
-                    content: `[pyUnit4_12_ElseCondition]`
+                    content: `[py4_12]`
                 },
                 {
                     id: "4.13",
@@ -328,7 +328,7 @@ const pyCourse = {
                     mainTitle: "ลูปทำงานซ้ำ while",
                     subTitle: "(While Loop)",
                     description: "ครอบคลุมหัวข้อ: โครงสร้างคำสั่ง while loop, การควบคุมลูปด้วย break และ continue | ใช้สำหรับสั่งให้โปรแกรมทำงานซ้ำๆ ไปเรื่อยๆ ตราบใดที่เงื่อนไขยังคงเป็นจริง (True)",
-                    content: `[pyUnit4_13_WhileLoop]`
+                    content: `[py4_13]`
                 },
                 {
                     id: "4.14",
@@ -336,7 +336,7 @@ const pyCourse = {
                     mainTitle: "ลูปทำงานซ้ำ for",
                     subTitle: "(For Loop)",
                     description: "ครอบคลุมหัวข้อ: โครงสร้างคำสั่ง for loop, การดึงข้อมูลจากลิสต์หรือชุดข้อมูลมาใช้งาน | ใช้สำหรับวนลูปดึงข้อมูลออกจากชุดข้อมูล (เช่น List, String) ทีละตัวจนครบจำนวนสมาชิก",
-                    content: `[pyUnit4_14_ForLoop]`
+                    content: `[py4_14]`
                 },
                 {
                     id: "4.15",
@@ -344,7 +344,7 @@ const pyCourse = {
                     mainTitle: "การใช้ range() ในลูป for",
                     subTitle: "(Range Function)",
                     description: "ครอบคลุมหัวข้อ: รูปแบบพารามิเตอร์ของฟังก์ชัน range(), การกำหนดจุดเริ่มต้น จุดสิ้นสุด และระยะก้าวเดิน (Step) | ฟังก์ชันสำคัญที่ใช้คู่กับ for loop เพื่อสร้างชุดตัวเลขลำดับขึ้นมาใช้งานตามจำนวนรอบที่ต้องการ",
-                    content: `[pyUnit4_15_RangeFunction]`
+                    content: `[py4_15]`
                 }
             ]
         }

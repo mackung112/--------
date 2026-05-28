@@ -46,6 +46,7 @@
 
 **3️⃣ Layer 3: Flexible Subtopics & Interactives**
 - พื้นที่อิสระตรงกลางสำหรับ Simulator หรือมินิเกม
+- **ข้อกำหนดเพิ่มเติม (Alignment Standard):** ต้องห่อหุ้มเนื้อหาทั้งหมดใน Layer 3 ด้วยแท็ก `<main>` ที่มีคลาสระยะขอบพื้นฐาน (Default Margin) คือ `max-w-7xl mx-auto px-6 lg:px-12 pt-10 space-y-8` (หรือ `space-y-16` ตามความเหมาะสม) เสมอ เพื่อให้เส้นขอบซ้าย-ขวา (Alignment) ตรงกับกล่องข้อความของ StandardHeader ด้านบนอย่างสมบูรณ์แบบ
 - ต้องรักษาความหรูหราแบบ Genesis (Clean, ฟอนต์ Outfit/Inter, มีการเคลื่อนไหวตอบสนองนุ่มนวล)
 
 **4️⃣ Layer 4: Standardized TeacherTask Footer**

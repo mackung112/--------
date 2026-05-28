@@ -17,9 +17,9 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
   const markerPattern = escapedKeys.length > 0 ? new RegExp(`(${escapedKeys.join('|')})`) : /(?!)/;
   const parts = lesson.content.split(markerPattern);
 
-  // ตรวจสอบว่าเป็น Component แบบ Immersive หรือไม่
-  const immersivePart = parts.find(part => part.includes('[pyUnit') || part.includes('[SQL'));
-  const isImmersive = Boolean(immersivePart && COMPONENT_MAP[immersivePart]);
+  // ตรวจสอบว่าในบทเรียนมี Interactive Component อยู่หรือไม่ (ถ้ามีให้แสดงผลแบบ Immersive เสมอ)
+  const immersivePart = parts.find(part => COMPONENT_MAP[part]);
+  const isImmersive = Boolean(immersivePart);
 
   const renderContent = () => {
     // Extract header info and clean up content

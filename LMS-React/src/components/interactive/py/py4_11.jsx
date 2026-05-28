@@ -255,12 +255,12 @@ const PrioritySim = () => {
             )}
             {hasPlayed && isWrongOrder && (
               <div className="mt-4 text-sm text-rose-300/80 leading-snug">
-                🚨 ผิดพลาด! แม้ว่า 85 จะมากกว่า 80 แต่โปรแกรมทำงานบรรทัด `score >= 50` ก่อน ซึ่งเป็น True เลยออกจากการเช็คไปเลย!
+                🚨 ผิดพลาด! แม้ว่า 85 จะมากกว่า 80 แต่โปรแกรมทำงานบรรทัด `score &gt;= 50` ก่อน ซึ่งเป็น True เลยออกจากการเช็คไปเลย!
               </div>
             )}
             {hasPlayed && !isWrongOrder && (
               <div className="mt-4 text-sm text-emerald-300/80 leading-snug">
-                ✅ ถูกต้อง! โปรแกรมเช็ค `score >= 80` เป็น True จึงได้เกรด A และไม่ไปเช็คบรรทัดอื่นต่อ
+                ✅ ถูกต้อง! โปรแกรมเช็ค `score &gt;= 80` เป็น True จึงได้เกรด A และไม่ไปเช็คบรรทัดอื่นต่อ
               </div>
             )}
          </div>
