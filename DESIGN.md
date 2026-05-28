@@ -5,7 +5,7 @@
 ---
 
 ## 🎨 1. Design Tokens (อ้างอิง PipelinePro)
-- **Primary**: `#4F46E5` (`indigo-600`) - Actions หลัก, สถานะ Active, ปุ่ม CTA
+- **Primary**: `#4F46E5` (`indigo-600`) - Actions หลัก, สถานะ Active, ปุ่ม CTA (💡 **Auto-Theme**: AI ต้องเปลี่ยนสี Primary และ Secondary อัตโนมัติให้เข้ากับรายวิชา เช่น วิชาวิทยาการข้อมูลอาจใช้สีฟ้า, OOP อาจใช้สีส้ม)
 - **Secondary**: `#06B6D4` (`cyan-500`) - ลิงก์, จุดเน้น
 - **Tertiary**: `#F97316` (`orange-500`) - แจ้งเตือนด่วน หรือความเร่งด่วน
 - **Background**: `#FAFAFA` (`[#FAFAFA]`) - พื้นหลังของแพลตฟอร์ม

@@ -4,7 +4,7 @@
 
 ## 🚨 1. กฎเหล็กทางเทคนิค (Strictly Prohibited)
 
-- **ห้ามใช้ Vanilla JS**: ต้องใช้ React State/Ref/Hooks เท่านั้น
+- **ห้ามใช้ Vanilla JS**: ต้องใช้ React State/Ref/Hooks เท่านั้น (เว้นแต่เป็นส่วนรับ/รันโค้ด อนุญาตให้ใช้ Plugin หรือแพ็กเกจที่คนอื่นสร้างไว้มาใช้แทนได้)
 - **ห้ามใช้ Tailwind แบบ Dynamic**: ให้ Hardcode string เต็มรูปแบบ (เช่น `text-indigo-600` ห้ามใช้ `${color}-600`) เพื่อรองรับ Tailwind v4
 - **ห้ามแตะ Core Architecture**: ห้ามแก้ไข `\Teach\LMS-React\src\App.jsx`, `\Teach\LMS-React\src\components\LessonViewer.jsx`, `\Teach\LMS-React\vite.config.js` เว้นแต่จะมีระบุในคำสั่ง
 - **ห้าม Card-in-Card**: ทุกหน้าต้องเป็นแบบไร้ขอบ (Seamless) ผสานไปกับฉากหลังตาม Immersive Full-Page Standard
@@ -21,10 +21,10 @@
 
 ## 🎮 3. แนวทาง Game-Based Learning & Interaction
 
-- **Ultimate Gamification**: ห้ามทำเนื้อหาแบบ Flashcard นิ่งๆ หรือหน้าต่างพื้นฐาน ต้องเป็น "มินิเกม" หรือ "Simulator ขั้นสูง" ที่มีลูกเล่นแพรวพราวเสมอ
+- **Visual Interactive**: เน้นการสร้าง "Interactive ที่อธิบายภาพและทำงานได้จริง" ให้เห็นชัดเจน ไม่จำเป็นต้องทำระบบสะสมคะแนนที่ซับซ้อน (หมายเหตุ: ถ้าเนื้อหาใน list ระดับที่ 2 ของโฟลเดอร์ `\Teach\LMS-React\docs\curriculum\` สำหรับวิชาต่างๆ เช่น 1.1.1, 1.1.3, 4.5.6, 1.3.8 ไหนสามารถสร้างได้ ให้พยายามสร้างให้ครอบคลุมทุกหัวข้อยิ่งดี)
 - **Flowcharts**: ใช้ SVG บริสุทธิ์ แทน Unicode หรือ CSS ให้วาดสวยงามระดับเดียวกับ draw.io
 - **Micro-Interactions**: ปุ่มและการ์ดที่โต้ตอบได้ต้องใส่ `active:scale-98 transition-all` เสมอ
-- **Controls**: ทุก Simulator ที่จำลองการทำงานต้องมีปุ่ม Play, Pause, และ Reset (ปุ่ม Reset ให้ใช้ไอคอน `RotateCcw` จาก `lucide-react`)
+- **Controls**: ปุ่ม Play, Pause, และ Reset (ไอคอน `RotateCcw`) ให้พิจารณาใส่ตามความเหมาะสมของสถานการณ์ ไม่จำเป็นต้องบังคับใส่ทุกครั้ง
 
 ## 📚 4. หลักสูตรและการจัดการข้อมูล
 
