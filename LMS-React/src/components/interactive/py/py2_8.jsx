@@ -23,47 +23,8 @@ import {
 } from 'lucide-react';
 
 export default function pyUnit2_8_FlowchartSymbols() {
-  // Audio Synthesizer sound generator for premium micro-interactions
-  const playSound = (type) => {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      
-      if (type === 'click') {
-        osc.frequency.setValueAtTime(450, ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.08);
-      } else if (type === 'success') {
-        osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1046.5, ctx.currentTime + 0.3); // C6
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.3);
-      } else if (type === 'fail') {
-        osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        osc.frequency.linearRampToValueAtTime(146.83, ctx.currentTime + 0.25); // D3
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.25);
-      } else if (type === 'match') {
-        osc.frequency.setValueAtTime(392, ctx.currentTime); // G4
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        osc.frequency.setValueAtTime(523.25, ctx.currentTime + 0.1); // C5
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.25);
-      }
-    } catch (e) {
-      // Browser blocks AudioContext before interaction
-    }
-  };
+  // Audio Synthesizer sound generator disabled as per user request
+  const playSound = (type) => {};
 
   // State 1: ANSI Symbol Explorer
   const [selectedShape, setSelectedShape] = useState("terminal");

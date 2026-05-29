@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import LessonViewer from './LessonViewer';
 import StandardHeader from './StandardHeader';
 
-const interactiveModules = import.meta.glob('./interactive/*.jsx', { eager: true });
+const interactiveModules = import.meta.glob('./interactive/**/*.jsx', { eager: true });
 
 function StandardHeaderPreview() {
   return (

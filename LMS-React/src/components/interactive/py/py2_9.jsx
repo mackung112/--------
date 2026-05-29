@@ -1,1246 +1,1158 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
 import TeacherTask from '../../ui/TeacherTask';
-import {
-  Sparkles,
-  BookOpen,
-  AlertTriangle,
-  CheckCircle2,
-  XCircle,
-  Play,
-  RotateCcw,
-  ArrowRight,
-  Info,
-  Cpu,
-  Award,
-  HelpCircle,
-  ListChecks,
-  Check,
-  Zap,
-  TrendingDown,
-  Monitor,
-  Plus,
-  Trash2,
-  Edit2,
-  ChevronRight,
-  ListPlus,
-  FileCode,
-  LayoutGrid,
-  Wand2,
-  Terminal
+import { 
+  AlertCircle, 
+  AlertTriangle, 
+  ArrowDown, 
+  ArrowRight, 
+  BookOpen, 
+  Check, 
+  CheckCircle2, 
+  ChevronRight, 
+  Code2, 
+  HelpCircle, 
+  Info, 
+  Play, 
+  RefreshCw, 
+  RotateCcw, 
+  Sparkles, 
+  Terminal, 
+  Sliders, 
+  Activity, 
+  ShieldCheck, 
+  X, 
+  Compass, 
+  Zap
 } from 'lucide-react';
 
-export default function py2_9() {
-  // --- Section 1: Rules Explorer State ---
-  const [activeRule, setActiveRule] = useState(0);
-  const [ruleToggleState, setRuleToggleState] = useState(false);
+// ============================================================================
+// SOUND SYNTH FUNCTIONS (Web Audio API)
+// ============================================================================
+const playSound = (type, isMuted) => {};
 
-  // --- Section 2: Workspace Selection ---
-  const [workspaceTab, setWorkspaceTab] = useState('drawio'); // 'drawio' or 'code'
+// ============================================================================
+// 1. CARD 1: กฎเกณฑ์และข้อกำหนดในการเขียนผังงานที่ดี (Flow Direction & Routing Simulator)
+// ============================================================================
+const FlowDirectionCard = ({ isMuted }) => {
+  const [isChaotic, setIsChaotic] = useState(false);
+  const [flowSpeed, setFlowSpeed] = useState(1); // 0.5x, 1x, 2x
+  const [isRunning, setIsRunning] = useState(true);
 
-  // --- Section 3: Diagram as Code Editor States ---
-  const [codeText, setCodeText] = useState(
-`START
-input: "รับค่าน้ำหนัก (W) และ ส่วนสูง (H)"
-process: "คำนวณ BMI = W / (H/100)^2"
-if "ดัชนีมวลกาย BMI >= 25.0?":
-    display: "แสดงผล: น้ำหนักเกินมาตรฐาน (อ้วน)"
-else:
-    display: "แสดงผล: น้ำหนักปกติสมส่วน"
-display: "พิมพ์ใบวิเคราะห์สุขภาพและให้คำปรึกษา"
-END`
+  // Map speed to animation duration
+  const getDuration = () => {
+    if (flowSpeed === 0.5) return '2.5s';
+    if (flowSpeed === 2) return '0.5s';
+    return '1.2s';
+  };
+
+  const handleToggle = () => {
+    playSound('click', isMuted);
+    setIsChaotic(!isChaotic);
+  };
+
+  return (
+    <div className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg relative overflow-hidden transition-all hover:shadow-xl hover:-translate-y-0.5">
+      <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-50 rounded-bl-full z-0 pointer-events-none"></div>
+
+      <style>{`
+        @keyframes flowDash {
+          to {
+            stroke-dashoffset: -20;
+          }
+        }
+        .flow-line-animate {
+          stroke-dasharray: 6, 4;
+          animation: flowDash ${getDuration()} linear infinite;
+        }
+        .flow-line-static {
+          stroke-dasharray: none;
+        }
+      `}</style>
+
+      <div className="relative z-10">
+        {/* Title without sub-level numbers */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-3 bg-indigo-100 rounded-2xl text-indigo-600">
+            <Compass className="w-7 h-7" />
+          </div>
+          <div>
+            <h4 className="text-2xl font-bold text-slate-800 leading-tight">
+              หลักการจัดวางรูปทรงและทิศทางผังงานสากล
+            </h4>
+            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mt-0.5">Flow Direction & Layout Standards</p>
+          </div>
+        </div>
+
+        <p className="text-slate-600 text-[15px] leading-relaxed mb-8 max-w-4xl">
+          ผังงานที่ดีเปรียบเสมือนแผนที่นำทางระบบโปรแกรมมิ่ง การออกแบบโครงสร้างและลายเส้นลูกศรต้องเป็นระเบียบและมีความสม่ำเสมอ เพื่อให้อ่านเข้าใจง่าย ไร้ความคลุมเครือ โดยยึดหลักเกณฑ์สำคัญ 3 ประการดังนี้:
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Left Column: Rules & Controls */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6 bg-slate-50 p-6 rounded-3xl border border-slate-200">
+            <div className="space-y-4">
+              <span className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">กฎเหล็กการจัดวางทิศทาง:</span>
+              
+              <div className="space-y-3">
+                <div className="flex gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/60 shadow-sm">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                  <div className="text-[13.5px] text-slate-600 leading-relaxed">
+                    <strong className="text-slate-800 block mb-0.5">ไหลจากบนลงล่าง และ ซ้ายไปขวา</strong>
+                    เป็นทิศทางสากลในการอ่านที่สอดคล้องกับพฤติกรรมสายตาของมนุษย์และลำดับประมวลผลโค้ดคอมพิวเตอร์
+                  </div>
+                </div>
+
+                <div className="flex gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/60 shadow-sm">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                  <div className="text-[13.5px] text-slate-600 leading-relaxed">
+                    <strong className="text-slate-800 block mb-0.5">มีจุดเริ่มต้นและจุดสิ้นสุดเพียงจุดเดียว</strong>
+                    ทุกฟังก์ชันหลักต้องเริ่มต้นที่จุดเดียว (Single Entry) และสิ้นสุดจุดเดียว (Single Exit) ป้องกันข้อมูลค้างระบบ
+                  </div>
+                </div>
+
+                <div className="flex gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/60 shadow-sm">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                  <div className="text-[13.5px] text-slate-600 leading-relaxed">
+                    <strong className="text-slate-800 block mb-0.5">เส้นทางเชื่อมต่อตรงกึ่งกลาง</strong>
+                    ปลายหัวลูกศรต้องต่อเข้าตรงกลางรูปทรงถัดไปพอดี ห้ามลากเส้นเอียง โยงทะลุโครงสร้าง หรือไขว้ตัดกันอย่างไร้ระเบียบ
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Controls */}
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-4">
+              <div>
+                <label className="flex justify-between items-center text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">
+                  <span>เปรียบเทียบรูปแบบผังงาน:</span>
+                  <span className={`px-2 py-0.5 rounded text-[10px] ${isChaotic ? 'bg-rose-100 text-rose-700 font-bold' : 'bg-emerald-100 text-emerald-700 font-bold'}`}>
+                    {isChaotic ? 'ยุ่งเหยิงผิดกฎเกณฑ์' : 'จัดระเบียบสากล'}
+                  </span>
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { if (isChaotic) handleToggle(); }}
+                    className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold transition-all active:scale-95 ${
+                      !isChaotic 
+                        ? 'bg-indigo-600 border-indigo-600 text-white shadow-md' 
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    ระเบียบสากล (Good)
+                  </button>
+                  <button
+                    onClick={() => { if (!isChaotic) handleToggle(); }}
+                    className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold transition-all active:scale-95 ${
+                      isChaotic 
+                        ? 'bg-rose-600 border-rose-600 text-white shadow-md' 
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    ยุ่งเหยิง (Bad Practice)
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
+                  <span>ความเร็วจำลองสัญญาณไฟ (Flow Speed):</span>
+                  <span className="font-mono text-indigo-600 font-bold">{flowSpeed}x</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Sliders className="w-4 h-4 text-slate-400" />
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="2"
+                    step="0.75"
+                    value={flowSpeed}
+                    onChange={(e) => {
+                      playSound('click', isMuted);
+                      setFlowSpeed(parseFloat(e.target.value));
+                    }}
+                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  playSound('click', isMuted);
+                  setIsRunning(!isRunning);
+                }}
+                className={`w-full py-2.5 rounded-xl font-bold transition-all active:scale-98 flex items-center justify-center gap-2 border text-xs ${
+                  isRunning 
+                    ? 'bg-slate-800 text-white border-slate-800 hover:bg-slate-900' 
+                    : 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100'
+                }`}
+              >
+                {isRunning ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" /> หยุดจำลองสัญญาณการประมวลผล
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-3.5 h-3.5" /> เริ่มจำลองสัญญาณการประมวลผล
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Blueprint Canvas */}
+          <div className="lg:col-span-7 bg-slate-950 rounded-3xl p-6 border border-slate-800 shadow-2xl flex flex-col justify-between min-h-[460px] relative overflow-hidden group">
+            {/* Grid overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:24px_24px] opacity-35 pointer-events-none"></div>
+
+            <div className="relative z-10 flex justify-between items-center text-[10px] font-mono border-b border-slate-800 pb-2 mb-4">
+              <span className="text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
+                <Activity className="w-3.5 h-3.5 text-indigo-400" /> interactive flow system
+              </span>
+              <span className={isChaotic ? 'text-rose-400 animate-pulse' : 'text-emerald-400'}>
+                {isChaotic ? '⚠️ warning: complex path' : '✓ optimal route active'}
+              </span>
+            </div>
+
+            {/* SVG Visualizer Container */}
+            <div className="relative z-10 flex-1 flex items-center justify-center py-2">
+              {!isChaotic ? (
+                // GOOD FLOWCHART SVG (Clean, Top-to-bottom)
+                <svg width="100%" height="340" viewBox="0 0 380 340" className="max-w-[380px] drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                  <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#818cf8" />
+                    </marker>
+                    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
+                    </marker>
+                  </defs>
+
+                  {/* START OVAL */}
+                  <rect x="140" y="10" width="100" height="30" rx="15" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="2" className="transition-all duration-300" />
+                  <text x="190" y="29" fill="#c7d2fe" fontFamily="monospace" fontSize="11" fontWeight="bold" textAnchor="middle">START</text>
+
+                  {/* LINE 1 */}
+                  <path d="M 190,40 L 190,75" stroke={isRunning ? "#818cf8" : "#475569"} strokeWidth="2" markerEnd="url(#arrow)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* INPUT PARALLELOGRAM */}
+                  <polygon points="135,75 255,75 235,115 115,115" fill="#082f49" stroke="#0ea5e9" strokeWidth="2" />
+                  <text x="185" y="99" fill="#bae6fd" fontFamily="sans-serif" fontSize="11" fontWeight="bold" textAnchor="middle">รับค่าคะแนนสอบ</text>
+
+                  {/* LINE 2 */}
+                  <path d="M 185,115 L 185,150" stroke={isRunning ? "#818cf8" : "#475569"} strokeWidth="2" markerEnd="url(#arrow)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* DECISION DIAMOND */}
+                  <polygon points="185,150 240,185 185,220 130,185" fill="#1c1917" stroke="#d97706" strokeWidth="2" />
+                  <text x="185" y="189" fill="#fde68a" fontFamily="sans-serif" fontSize="11" fontWeight="bold" textAnchor="middle">คะแนน &gt;= 50?</text>
+
+                  {/* TRUE LINE (YES - RIGHT) */}
+                  <path d="M 240,185 L 305,185 L 305,230" stroke={isRunning ? "#10b981" : "#475569"} strokeWidth="2" markerEnd="url(#arrow-green)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+                  <text x="270" y="177" fill="#10b981" fontFamily="sans-serif" fontSize="10" fontWeight="bold" textAnchor="middle">จริง (Yes)</text>
+
+                  {/* FALSE LINE (NO - LEFT) */}
+                  <path d="M 130,185 L 65,185 L 65,230" stroke={isRunning ? "#ef4444" : "#475569"} strokeWidth="2" markerEnd="url(#arrow)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+                  <text x="95" y="177" fill="#ef4444" fontFamily="sans-serif" fontSize="10" fontWeight="bold" textAnchor="middle">เท็จ (No)</text>
+
+                  {/* TRUE PROCESS (PASS) */}
+                  <rect x="255" y="230" width="100" height="35" rx="6" fill="#064e3b" stroke="#10b981" strokeWidth="2" />
+                  <text x="305" y="252" fill="#d1fae5" fontFamily="sans-serif" fontSize="11" fontWeight="bold" textAnchor="middle">แสดงผล "ผ่าน"</text>
+
+                  {/* FALSE PROCESS (FAIL) */}
+                  <rect x="15" y="230" width="100" height="35" rx="6" fill="#4c0519" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="65" y="252" fill="#ffe4e6" fontFamily="sans-serif" fontSize="11" fontWeight="bold" textAnchor="middle">แสดงผล "ตก"</text>
+
+                  {/* TRUE EXIT LINE */}
+                  <path d="M 305,265 L 305,295 L 185,295" stroke={isRunning ? "#10b981" : "#475569"} strokeWidth="2" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* FALSE EXIT LINE */}
+                  <path d="M 65,265 L 65,295 L 185,295" stroke={isRunning ? "#818cf8" : "#475569"} strokeWidth="2" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* FINAL LINE */}
+                  <path d="M 185,295 L 185,310" stroke={isRunning ? "#818cf8" : "#475569"} strokeWidth="2" markerEnd="url(#arrow)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* END OVAL */}
+                  <rect x="135" y="310" width="100" height="28" rx="14" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="2" />
+                  <text x="185" y="327" fill="#c7d2fe" fontFamily="monospace" fontSize="11" fontWeight="bold" textAnchor="middle">END</text>
+                </svg>
+              ) : (
+                // BAD FLOWCHART SVG (Chaotic, Intersecting, Crossed layout)
+                <svg width="100%" height="340" viewBox="0 0 380 340" className="max-w-[380px] drop-shadow-[0_4px_12px_rgba(244,63,94,0.15)] animate-shake">
+                  <defs>
+                    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f43f5e" strokeWidth="1" />
+                    </marker>
+                  </defs>
+
+                  {/* SCRAMBLED BLOCKS */}
+                  {/* START OVAL is strangely placed on the left middle */}
+                  <rect x="15" y="80" width="90" height="30" rx="15" fill="#2d0612" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="60" y="99" fill="#fecdd3" fontFamily="monospace" fontSize="10" fontWeight="bold" textAnchor="middle">START</text>
+
+                  {/* INPUT is in the middle top */}
+                  <polygon points="150,15 250,15 235,50 135,50" fill="#2d0612" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="190" y="36" fill="#fecdd3" fontFamily="sans-serif" fontSize="10" textAnchor="middle">รับค่าคะแนน</text>
+
+                  {/* DECISION is in the far bottom left */}
+                  <polygon points="75,250 125,280 75,310 25,280" fill="#2d0612" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="75" y="283" fill="#fecdd3" fontFamily="sans-serif" fontSize="9" textAnchor="middle">คะแนน &gt;= 50?</text>
+
+                  {/* YES PROCESS is on top right */}
+                  <rect x="260" y="80" width="100" height="35" rx="6" fill="#2d0612" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="310" y="102" fill="#fecdd3" fontFamily="sans-serif" fontSize="10" textAnchor="middle">แสดงผล "ผ่าน"</text>
+
+                  {/* NO PROCESS is in the center right */}
+                  <rect x="250" y="190" width="100" height="35" rx="6" fill="#2d0612" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="300" y="212" fill="#fecdd3" fontFamily="sans-serif" fontSize="10" textAnchor="middle">แสดงผล "ตก"</text>
+
+                  {/* END OVAL is in the far bottom right */}
+                  <rect x="260" y="290" width="100" height="30" rx="15" fill="#2d0612" stroke="#f43f5e" strokeWidth="2" />
+                  <text x="310" y="309" fill="#fecdd3" fontFamily="monospace" fontSize="10" fontWeight="bold" textAnchor="middle">END</text>
+
+                  {/* CRISS-CROSS ARROWS (CHAOTIC COUPLING) */}
+                  {/* Start -> Input (Crossed diagonally upward right) */}
+                  <path d="M 60,80 L 60,35 L 135,35" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-red)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+                  
+                  {/* Input -> Decision (Looong diagonal arrow crossing right through the center) */}
+                  <path d="M 185,50 L 185,150 L 75,150 L 75,250" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-red)" 
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+                  <text x="135" y="142" fill="#f43f5e" fontSize="9" fontWeight="bold" textAnchor="middle">เส้นลากโยงข้ามผัง</text>
+
+                  {/* Decision YES -> YES Process (Crosses bottom to top right) */}
+                  <path d="M 125,280 L 220,280 L 220,98 L 260,98" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-red)"
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+                  <text x="195" y="270" fill="#fecdd3" fontSize="9" textAnchor="middle">Yes</text>
+
+                  {/* Decision NO -> NO Process (Crosses diangonally right) */}
+                  <path d="M 75,310 L 75,325 L 230,325 L 230,208 L 250,208" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-red)"
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+                  <text x="135" y="320" fill="#fecdd3" fontSize="9" textAnchor="middle">No</text>
+
+                  {/* YES Process -> END */}
+                  <path d="M 310,115 L 310,290" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-red)"
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* NO Process -> END (Crosses with YES Exit arrow) */}
+                  <path d="M 300,225 L 300,290" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-red)"
+                    className={isRunning ? "flow-line-animate" : "flow-line-static"} />
+
+                  {/* BAD GRAPH INDICATOR - red highlight box */}
+                  <rect x="125" y="110" width="130" height="90" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="4,4" className="animate-pulse" />
+                  <text x="190" y="165" fill="#f43f5e" fontSize="9.5" fontWeight="bold" textAnchor="middle" className="animate-pulse">เส้นลูกศรตัดกันพัลวัน!</text>
+                </svg>
+              )}
+            </div>
+
+            {/* Bottom info text */}
+            <div className="relative z-10 pt-3 border-t border-slate-900 text-[12.5px] leading-relaxed text-slate-400">
+              {isChaotic ? (
+                <span className="text-rose-400 flex gap-2 items-center">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+                  ผังงานยุ่งเหยิงจัดองค์ประกอบแบบไร้ทิศทาง ทำให้ผู้แกะโค้ดตรวจสอบเงื่อนไขได้ช้าและเสี่ยงเกิดตรรกะตกหล่นสูงมาก
+                </span>
+              ) : (
+                <span className="text-emerald-400 flex gap-2 items-center">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+                  ผังงานมาตรฐานไหลไปทิศทางเดียวกันอย่างสวยงาม ปราศจากเส้นลากตัดสลับ ช่วยให้แปลงโครงสร้างรหัสได้ง่ายไร้ที่ติ
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
+};
 
-  const [compiledBlocks, setCompiledBlocks] = useState([]);
-  const [compileErrors, setCompileErrors] = useState([]);
-  const [isCompiling, setIsCompiling] = useState(false);
-  const [highlightLine, setHighlightLine] = useState(null);
+// ============================================================================
+// 2. CARD 2: ข้อควรระวังและข้อผิดพลาดในการเขียนผังงาน (Flowchart Fault Debugger & Fixer)
+// ============================================================================
+const ErrorVisualizerCard = ({ isMuted }) => {
+  const [activeTab, setActiveTab] = useState('inf'); // inf, dangling, symbol, crossed
+  const [isFixedMap, setIsFixedMap] = useState({
+    inf: false,
+    dangling: false,
+    symbol: false,
+    crossed: false
+  });
 
-  // Preset Code Templates for Diagram as Code
-  const loadCodeTemplate = (templateType) => {
-    if (templateType === 'bmi') {
-      setCodeText(
-`START
-input: "รับค่าน้ำหนัก (W) และ ส่วนสูง (H)"
-process: "คำนวณ BMI = W / (H/100)^2"
-if "ดัชนีมวลกาย BMI >= 25.0?":
-    display: "แสดงผล: น้ำหนักเกินมาตรฐาน (อ้วน)"
-else:
-    display: "แสดงผล: น้ำหนักปกติสมส่วน"
-display: "พิมพ์ใบวิเคราะห์สุขภาพและให้คำปรึกษา"
-END`
-      );
-    } else if (templateType === 'atm') {
-      setCodeText(
-`START
-input: "ตรวจสอบบัตร ATM และป้อนรหัส 4 หลัก"
-if "รหัสผ่านถูกต้องสมบูรณ์?":
-    input: "ระบุจำนวนเงินที่ต้องการถอนสด"
-    process: "ระบบตัดยอดบัญชีสะสมธนาคาร"
-    display: "จ่ายธนบัตรออกทางหน้าตู้"
-else:
-    display: "แจ้งเตือนรหัสผ่านผิดพลาดและคืนบัตร"
-END`
-      );
-    } else if (templateType === 'grade') {
-      setCodeText(
-`START
-input: "รับคะแนนสะสมวิชา Python"
-if "คะแนนสอบผ่านเกณฑ์ >= 50?":
-    display: "แสดงคำชมเชย: สอบผ่าน (PASS)"
-else:
-    display: "แสดงคำแนะนำ: สอบแก้ตัวใหม่ (FAIL)"
-END`
-      );
+  const handleTabChange = (tabId) => {
+    playSound('click', isMuted);
+    setActiveTab(tabId);
+  };
+
+  const handleFix = (tabId) => {
+    playSound('repair', isMuted);
+    setIsFixedMap(prev => ({
+      ...prev,
+      [tabId]: true
+    }));
+  };
+
+  const handleReset = (tabId) => {
+    playSound('click', isMuted);
+    setIsFixedMap(prev => ({
+      ...prev,
+      [tabId]: false
+    }));
+  };
+
+  const errorSpecs = {
+    inf: {
+      title: 'Infinite Loop (ลูปวนซ้ำอนันต์ไม่มีทางออก)',
+      desc: 'เกิดจากการที่ข้อมูลภายในตัวแปรเงื่อนไขไม่เคยถูกเปลี่ยนค่าหรือแก้ไข (Update) ภายในบล็อกลูป ส่งผลให้การทดสอบตรรกะในกล่องการตัดสินใจ (Decision) เป็นจริงตลอดเวลา โปรแกรมจึงค้างและล่มในที่สุด',
+      faultDesc: 'ผังงานวนลูปกลับไปทดสอบเงื่อนไข Count < 5 โดยลืมแก้ไขค่า Count (ไม่มีกล่อง Count = Count + 1) ทำให้กระแสไหลไม่สิ้นสุด',
+      fixDesc: 'เพิ่มกล่องการประมวลผล (Process) เพื่อทำการเพิ่มค่าตัวนับ Count = Count + 1 ในช่วงท้ายลูป ทำให้ลูปมีโอกาสจบลงเมื่อมีค่าถึง 5',
+      codeErr: 'count = 0\nwhile count < 5:\n    print("วนซ้ำทำกิ๊ฟต์")\n    # บั๊ก: ลืมเขียนเพิ่มค่าตัวแปร count!',
+      codeFix: 'count = 0\nwhile count < 5:\n    print("วนซ้ำทำกิ๊ฟต์")\n    count += 1 # แก้ไข: ค่า count เพิ่มขึ้นทุกรอบจนจบเงื่อนไข'
+    },
+    dangling: {
+      title: 'Dangling End (ลูกศรปลายเปิดสาบสูญ)',
+      desc: 'เกิดจากสัญลักษณ์การประมวลผลหรือสัญลักษณ์อื่นๆ ลอยอยู่ตรงขอบแผนภูมิกระแสการทำงาน โดยไม่มีเส้นเชื่อมลูกศรชี้ต่อไปยังจุดสิ้นสุด (End) หรือเชื่อมกลับขึ้นไปในระบบ ส่งผลให้ตรรกะหยุดชะงักและระบบค้างกลางคัน',
+      faultDesc: 'กรณีผลการตรวจสอบ "ฝนไม่ตก" ทางเดินฝั่ง False ลากมาถึงกล่องประมวลผล "ออกไปเล่นฟุตบอล" แล้วเส้นขาดหายลอยเคว้ง ไม่สิ้นสุด',
+      fixDesc: 'ลากเส้นหัวลูกศรจากกล่อง "ออกไปเล่นฟุตบอล" นำลงมาเชื่อมต่อสมทบสู่จุดปิดท้าย END เป็นการปิดวงจรอย่างถูกต้องสมบูรณ์',
+      codeErr: 'def weather_check(is_rainy):\n    if is_rainy:\n        print("เปิดร่มกันฝน")\n        return "เสร็จสิ้น"\n    else:\n        print("ออกไปเล่นฟุตบอล")\n        # บั๊ก: เส้นตรรกะหลุดหาย ไม่ส่งค่าคืนและไม่มีทิศทางหยุด',
+      codeFix: 'def weather_check(is_rainy):\n    if is_rainy:\n        print("เปิดร่มกันฝน")\n    else:\n        print("ออกไปเล่นฟุตบอล")\n    return "เสร็จสิ้น" # แก้ไข: ทุกทิศทางหลอมรวมมาสิ้นสุดคำสั่งร่วมกัน'
+    },
+    symbol: {
+      title: 'Incorrect Symbol (ใช้รูปทรงสัญลักษณ์ผิดประเภท)',
+      desc: 'การนำสัญลักษณ์มาตรฐาน ANSI ไปใช้งานผิดบทบาทหน้าที่ เช่น ใช้กล่องประมวลผล (Process) เพื่อประเมินผลเงื่อนไขแทนรูป Diamond หรือใช้ Parallelogram ในการคำนวณภายใน ซึ่งสร้างความเข้าใจผิดให้แก่ทีมพัฒนาในการนำไปสลักโค้ด',
+      faultDesc: 'ใช้กล่องสี่เหลี่ยมผืนผ้าประมวลผลธรรมดา (Process) บรรจุเงื่อนไข "Age >= 18?" และใช้สี่เหลี่ยมด้านขนาน (Input/Output) คำนวณคณิตศาสตร์',
+      fixDesc: 'ปรับสัญลักษณ์เงื่อนไขเป็นสี่เหลี่ยมขนมเปียกปูน (Decision Diamond) และการคำนวณปรับเป็นสี่เหลี่ยมผืนผ้า (Process) ตามแบบสเปกสากล พร้อมแสดงผลลัพธ์ผ่านรูปทรง pointed Display ดั้งเดิม',
+      codeErr: '# บั๊กการแปลความหมาย:\n# หากใช้ Process เป็น Decision และใช้ IO เป็น Process\n# นักเขียนโปรแกรมจะสับสนระดับตัวแปรและการจัดการเมมโมรี่',
+      codeFix: '# สเปกถูกต้อง:\n# Diamond -> if/else\n# Rectangle -> Process (=)\n# Parallelogram/Display -> input()/print()'
+    },
+    crossed: {
+      title: 'Crossed Flow Lines (เส้นเชื่อมไขว้ตัดซับซ้อน)',
+      desc: 'การลากเส้นลูกศรข้ามผ่านตัดสลับกันไปมาในแผนผังอย่างไร้สไตล์ ซึ่งมีผลทำให้ผู้ประเมินแผนภาพหลุดมิติและเข้าใจทิศทางการไหลผิดเพี้ยนไปอีกด้านหนึ่ง',
+      faultDesc: 'เส้นเดินทางฝั่ง True และ False ถูกลากลักตัดกึ่งกลางไขว้กันเป็นรูปกากบาท เพื่ออ้อมไปหากล่องกระบวนการอีกฟากหนึ่ง',
+      fixDesc: 'จัดเส้นทางการเดินสายและกล่องเป้าหมายซ้ายขวาให้สมดุลเพื่อคลายเส้นทางไม่ให้มีจุดทับซ้อน ปราศจากการข้ามสายเส้นเชื่อมร้อยเปอร์เซ็นต์',
+      codeErr: '# ปัญหาทางวิศวกรรม:\n# ไหลข้ามตรรกะสลับซ้ายขวาในส่วนควบคุมเดียวกัน\n# เสี่ยงเขียนตรรกะผิดฝั่ง (False path สลับกับ True)',
+      codeFix: '# การจัดระเบียบโครงข่าย:\n# เงื่อนไขซ้ายคุมกระแสซ้าย เงื่อนไขขวาคุมกระแสขวา\n# ชัดเจน ตรวจสอบง่าย 100%'
     }
   };
 
-  // Compiler logic: Parsed Line-by-Line to Flowchart Blocks
-  useEffect(() => {
-    setIsCompiling(true);
-    const timer = setTimeout(() => {
-      const lines = codeText.split('\n');
-      const blocks = [];
-      const errors = [];
-      
-      let currentDecision = null;
-      let currentBranch = null; // 'yes' or 'no'
-
-      let hasStart = false;
-      let hasEnd = false;
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const trimmed = line.trim();
-        const lineNum = i + 1;
-
-        if (trimmed === '' || trimmed.startsWith('#')) continue;
-
-        const upperTrimmed = trimmed.toUpperCase();
-        if (upperTrimmed === 'START') hasStart = true;
-        if (upperTrimmed === 'END') hasEnd = true;
-
-        // Check indentation
-        const isIndented = line.startsWith(' ') || line.startsWith('\t');
-
-        if (!isIndented) {
-          // Reset branch context when we hit a non-indented line
-          currentDecision = null;
-          currentBranch = null;
-        }
-
-        if (trimmed.startsWith('if ') && trimmed.endsWith(':')) {
-          const text = trimmed.substring(3, trimmed.length - 1).replace(/^["']|["']$/g, '').trim();
-          const newBlock = {
-            id: `line-${lineNum}`,
-            type: 'decision',
-            text: text || 'ตรวจสอบเงื่อนไข?',
-            lineNum,
-            yesBranch: [],
-            noBranch: []
-          };
-          blocks.push(newBlock);
-          currentDecision = newBlock;
-          currentBranch = 'yes';
-        } else if (trimmed === 'else:') {
-          if (currentDecision) {
-            currentBranch = 'no';
-          } else {
-            errors.push(`บรรทัดที่ ${lineNum}: พบคำสั่ง 'else:' โดยไม่มี 'if' นำหน้าก่อนหน้า`);
-          }
-        } else {
-          // Parse basic statements
-          let blockType = '';
-          let content = '';
-
-          if (upperTrimmed === 'START') {
-            blockType = 'start';
-            content = 'START';
-          } else if (upperTrimmed === 'END') {
-            blockType = 'end';
-            content = 'END';
-          } else if (trimmed.startsWith('input:')) {
-            blockType = 'input';
-            content = trimmed.substring(6).replace(/^["']|["']$/g, '').trim();
-          } else if (trimmed.startsWith('process:')) {
-            blockType = 'process';
-            content = trimmed.substring(8).replace(/^["']|["']$/g, '').trim();
-          } else if (trimmed.startsWith('display:')) {
-            blockType = 'display';
-            content = trimmed.substring(8).replace(/^["']|["']$/g, '').trim();
-          } else {
-            // Default parse warning for non-matching statements
-            blockType = 'process';
-            content = trimmed;
-            if (upperTrimmed !== 'START' && upperTrimmed !== 'END') {
-              errors.push(`บรรทัดที่ ${lineNum}: รูปแบบไวยากรณ์ไม่ถูกต้อง แนะนำให้ระบุนำหน้าด้วย input:, process:, หรือ display:`);
-            }
-          }
-
-          const blockNode = {
-            id: `line-${lineNum}`,
-            type: blockType,
-            text: content,
-            lineNum
-          };
-
-          if (isIndented && currentDecision && currentBranch) {
-            if (currentBranch === 'yes') {
-              currentDecision.yesBranch.push(blockNode);
-            } else {
-              currentDecision.noBranch.push(blockNode);
-            }
-          } else {
-            blocks.push(blockNode);
-          }
-        }
-      }
-
-      if (!hasStart) {
-        errors.unshift("⚠️ ไม่พบจุดเริ่มต้นแผนภูมิ 'START' บนหัวโค้ด");
-      }
-      if (!hasEnd) {
-        errors.push("⚠️ ไม่พบจุดสิ้นสุดแผนภูมิ 'END' ที่ท้ายโค้ด");
-      }
-
-      setCompiledBlocks(blocks);
-      setCompileErrors(errors);
-      setIsCompiling(false);
-    }, 250);
-
-    return () => clearTimeout(timer);
-  }, [codeText]);
-
-  // --- Data structures for Rules Explorer ---
-  const flowchartRules = [
-    {
-      title: "ทิศทางการไหลที่ชัดเจน",
-      subtitle: "Clear Flow Direction",
-      icon: <ArrowRight className="w-6 h-6 text-indigo-500" />,
-      desc: "ทิศทางการทำงานของผังงานจะต้องมีความเป็นระเบียบ เรียงลำดับสายธารกระบวนการจาก บนลงล่าง (Top-to-Bottom) หรือจาก ซ้ายไปขวา (Left-to-Right) เป็นหลักเท่านั้น เพื่อหลีกเลี่ยงการสับสน เส้นเชื่อมโยงต้องไม่คดเคี้ยวไปมาอย่างไร้เป้าหมาย",
-      incorrectDesc: "เส้นทางลูกศรวนไปวนมา ทิศทางชี้ขึ้นและชี้ลงสลับกันอย่างไร้ทิศทาง ทำให้สมองประมวลผลลำดับขั้นตอนได้ยากมาก",
-      correctDesc: "เส้นทางโปรแกรมไหลจากบนลงล่างเป็นแนวตรงที่ชัดเจน จุดสิ้นสุดปลายทางอยู่ด้านล่างสุดเสมอ เข้าใจขั้นตอนการทำงานได้ใน 3 วินาที",
-      tips: [
-        "หลีกเลี่ยงการโยงลูกศรย้อนกลับขึ้นไปข้างบน เว้นแต่จะเป็นการวนซ้ำ (Loop) ที่ผ่านการตรวจสอบเงื่อนไขแล้ว",
-        "ควรรักษาแนวเส้นเชื่อมโยง (Flowlines) ให้เป็นแนวตั้งหรือแนวนอนขนานกัน และไม่ทำมุมเฉียงสะเปะสะปะ"
-      ]
-    },
-    {
-      title: "จุดเริ่มต้นและจุดสิ้นสุดมีเพียงจุดเดียว",
-      subtitle: "Single Entry & Single Exit",
-      icon: <CheckCircle2 className="w-6 h-6 text-indigo-500" />,
-      desc: "ผังงานที่ดีต้องมีสัญลักษณ์ START (จุดเริ่มต้น) และ END (จุดสิ้นสุด) เพียงอย่างละ 1 จุดในแผนผังทั้งหมดเท่านั้น เพื่อป้องกันไม่ให้เกิดความสับสนว่าโปรแกรมสามารถเข้าทำงานหรือสิ้นสุดจากทางไหนได้บ้าง",
-      incorrectDesc: "มีสัญลักษณ์จุดสิ้นสุด (END) กระจัดกระจายอยู่ตามทางแยกเงื่อนไขต่างๆ ทำให้ยากต่อการติดตามว่าโครงสร้างหน่วยความจำถูกทำลายหรือปิดการทำงานเรียบร้อยครบทุกจุดหรือไม่",
-      correctDesc: "ใช้การรวบรวมทางแยกการทำงาน (Branches) ทั้งหมดกลับเข้ามาบรรจบกันที่สัญลักษณ์จุดเชื่อมต่อ (Connector) ก่อนจะส่งต่อเข้าสู่จุดสิ้นสุด (END) เพียงจุดเดียวด้านล่างสุด",
-      tips: [
-        "หากโปรแกรมมีเงื่อนไขและต้องการออกจากโปรแกรมทันที ให้ลากเส้นรวมคำสั่งเหล่านั้นมาผสานที่จุดเชื่อมต่อหลักเดียวกันก่อนเชื่อมเข้าหา END",
-        "จุดเริ่มต้น (START) จะต้องไม่มีลูกศรชี้เข้าหาตัวมันเองเด็ดขาด"
-      ]
-    },
-    {
-      title: "การเลือกใช้สัญลักษณ์ที่ถูกต้อง",
-      subtitle: "Standardized ANSI Symbols",
-      icon: <Cpu className="w-6 h-6 text-indigo-500" />,
-      desc: "สัญลักษณ์ที่นำมาใช้วาดผังงานต้องเป็นไปตามมาตรฐานสากลที่กำหนดโดยสถาบัน ANSI (American National Standards Institute) เพื่อให้ผู้พัฒนาโปรแกรมหรือบุคคลอื่นที่มาอ่านเข้าใจความหมายตรงกันโดยไม่ต้องแปลไทยเป็นไทยซ้ำอีกรอบ",
-      incorrectDesc: "ใช้กล่องสี่เหลี่ยมผืนผ้าทั่วไป (Process) ในการเขียนขั้นตอนรับค่าจากแป้นพิมพ์ หรือวาดรูปทรงแปลกประหลาดที่ไม่อยู่ในสารบบวิศวกรรมซอฟต์แวร์",
-      correctDesc: "ใช้รูปสี่เหลี่ยมด้านขนาน (Parallelogram) สำหรับการรับข้อมูลนำเข้าและแสดงผลทั่วไป และใช้รูปทรงจอภาพแบบปีกหัวแหลมปลายเว้าของสากลในการแสดงผลหน้าจออย่างแม่นยำ",
-      tips: [
-        "จำหลักการง่ายๆ: สี่เหลี่ยมผืนผ้า = ประมวลผลคำนวณภายในระบบ, สี่เหลี่ยมด้านขนาน = นำเข้าหรือส่งออกข้อมูล (I/O) โดยไม่ได้ระบุประเภทสื่อ",
-        "สัญลักษณ์การแสดงผลออกทางหน้าจอ (Display) จะต้องใช้ทรง ANSI แท้ คือ ด้านขวาแหลมมนและด้านซ้ายเว้าโค้งเข้าด้านใน"
-      ]
-    },
-    {
-      title: "เส้นเชื่อมโยงห้ามตัดกันเด็ดขาด",
-      subtitle: "No Crossing Connection Lines",
-      icon: <ListChecks className="w-6 h-6 text-indigo-500" />,
-      desc: "เส้นไหลข้อมูล (Flowlines) ที่มีลูกศรกำกับห้ามลากทับตัดกันเด็ดขาด เพราะจะทำให้ผู้อ่านสับสนว่าเส้นทางเดินไหนเชื่อมต่อไปยังรูปทรงใด หากหลีกเลี่ยงไม่ได้จริงๆ ต้องใช้สัญลักษณ์ จุดเชื่อมต่อหน้าเดียวกัน (On-page Connector) แทน",
-      incorrectDesc: "ลากเส้นพาดผ่านแนวลูกศรอื่นโดยไม่มีตัวเชื่อม ทำให้แผนภาพดูพันกันเป็นตารางตาข่าย เกิดโอกาสในการอ่านเงื่อนไขผิดพลาดสูง",
-      correctDesc: "ใช้จุดเชื่อมต่อเป็นรูปวงกลมขนาดเล็กพร้อมใส่ตัวอักษรระบุกำกับ (เช่น A, B) เพื่อเป็นสะพานวาร์ปข้ามเส้นเชื่อมต่ออย่างเป็นระบบระเบียบ",
-      tips: [
-        "จุดเชื่อมต่อ (Connector) ในหน้าเดียวกันจะใช้สัญลักษณ์ วงกลมขนาดเล็ก และมักระบุตัวอักษรภาษาอังกฤษภายใน",
-        "หากต้องโยงไปคนละหน้ากระดาษ ให้ใช้สัญลักษณ์รูปห้าเหลี่ยมคว่ำชี้ลง (Off-page Connector)"
-      ]
-    },
-    {
-      title: "ข้อความสั้น กระชับ ชัดเจน",
-      subtitle: "Concise Statements",
-      icon: <Sparkles className="w-6 h-6 text-indigo-500" />,
-      desc: "ข้อความที่เขียนบรรยายในสัญลักษณ์แต่ละรูปทรง ควรเป็นภาษาคนทั่วไปที่กระชับ สั้น และเข้าใจง่ายที่สุด ไม่ควรนำซอร์สโค้ดดิบ (Source Code) ยาวๆ ของภาษาคอมพิวเตอร์ไปยัดไว้ข้างใน เพราะผังงานคือเครื่องมือสำหรับสื่อสารเชิงตรรกะ ไม่ใช่ตัวรันโค้ด",
-      incorrectDesc: "นำโค้ด Python ดิบยัดเข้าไป เช่น score = float(input('Enter Score: ')) ซึ่งอ่านยากและยาวเกินกรอบสัญลักษณ์",
-      correctDesc: "เขียนข้อความสั้นๆ ได้ใจความชัดเจน เช่น รับคะแนนดิบ หรือ คำนวณเกรดเฉลี่ย ช่วยให้คนที่ไม่เป็นโปรแกรมเมอร์ก็อ่านเข้าใจได้ทันที",
-      tips: [
-        "ควรรักษาความยาวของข้อความให้อยู่ในกรอบรูปทรง และหลีกเลี่ยงการใช้ศัพท์เฉพาะทางที่ซับซ้อนเกินจำเป็น",
-        "หลีกเลี่ยงการใช้คำกริยาซ้ำซ้อน เช่น 'ทำการรับเอาค่าตัวแปรเข้ามา' ให้เขียนสั้นๆ ว่า 'รับค่าตัวแปร' พอ"
-      ]
-    }
-  ];
+  const spec = errorSpecs[activeTab];
+  const isFixed = isFixedMap[activeTab];
 
   return (
-    <div className="text-zinc-950 pb-24 font-sans select-none relative animate-fade-in">
-      {/* 1️⃣ Layer 1: Ambient Backdrop */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[-15%] w-[600px] h-[600px] rounded-full bg-indigo-600/10 blur-[130px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[20%] right-[-15%] w-[700px] h-[700px] rounded-full bg-cyan-500/10 blur-[140px]"></div>
+    <div className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg relative overflow-hidden transition-all hover:shadow-xl hover:-translate-y-0.5">
+      <div className="absolute top-0 right-0 w-40 h-40 bg-rose-50/50 rounded-bl-full z-0 pointer-events-none"></div>
+
+      <div className="relative z-10">
+        {/* Title without sub-level numbers */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-3 bg-rose-100 rounded-2xl text-rose-600">
+            <AlertTriangle className="w-7 h-7" />
+          </div>
+          <div>
+            <h4 className="text-2xl font-bold text-slate-800 leading-tight">
+              จุดอันตรายและข้อผิดพลาดทางผังงานที่พบบ่อย
+            </h4>
+            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mt-0.5">Flowchart Errors & Live Debugger</p>
+          </div>
+        </div>
+
+        <p className="text-slate-600 text-[15px] leading-relaxed mb-6 max-w-4xl">
+          ในการทำงานร่วมกันเป็นทีม การปล่อยให้เกิดข้อผิดพลาดในการวาดผังภาพจะสร้างบั๊กมหาศาลเมื่อระบบถูกส่งไปเขียนโค้ดจริง มาเรียนรู้วิธีการสแกนตรวจบั๊กและกดปุ่ม **🔧 ซ่อมแซมระบบผังงาน** เพื่อเรียนรู้วิธีการปรับปรุงที่ถูกต้องผ่านชุดตัวจำลองออฟไลน์ด้านล่างนี้:
+        </p>
+
+        {/* Tab Selection buttons */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          {Object.keys(errorSpecs).map((id) => (
+            <button
+              key={id}
+              onClick={() => handleTabChange(id)}
+              className={`p-3 rounded-2xl border text-center transition-all active:scale-95 flex flex-col justify-center items-center gap-1.5 ${
+                activeTab === id 
+                  ? 'bg-rose-600 border-rose-600 text-white shadow-md font-bold' 
+                  : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              <div className="text-[10px] opacity-75 font-mono">
+                {id === 'inf' ? 'INFINITE LOOP' : id === 'dangling' ? 'DANGLING END' : id === 'symbol' ? 'INCORRECT ANSI' : 'CROSSED LINE'}
+              </div>
+              <div className="text-xs truncate font-bold">{id === 'inf' ? 'ลูปอนันต์' : id === 'dangling' ? 'จุดสายปลายเปิด' : id === 'symbol' ? 'สัญลักษณ์ผิดประเภท' : 'เส้นตัดไขว้กัน'}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Dynamic content wrapper */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Details and Controller */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6 bg-slate-50 p-6 rounded-3xl border border-slate-200">
+            <div>
+              <span className="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold inline-block mb-3">
+                {isFixed ? '🔧 ซ่อมแซมตรรกะเสร็จสิ้น' : '⚠️ ตรวจพบข้อผิดพลาดในระบบ'}
+              </span>
+              <h5 className="text-lg font-bold text-slate-800 mb-2 leading-snug">{spec.title}</h5>
+              <p className="text-slate-500 text-[13.5px] leading-relaxed mb-4">{spec.desc}</p>
+              
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 text-[13px] leading-relaxed text-slate-600">
+                <strong className="text-slate-800 flex items-center gap-2 mb-1.5">
+                  <Info className="w-4 h-4 text-indigo-500 shrink-0" />
+                  {isFixed ? 'การปรับแก้ทางผังงาน (Corrective Action):' : 'คำอธิบายจุดบกพร่อง (Bug Description):'}
+                </strong>
+                <span>{isFixed ? spec.fixDesc : spec.faultDesc}</span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="space-y-3">
+              {!isFixed ? (
+                <button
+                  onClick={() => handleFix(activeTab)}
+                  className="w-full bg-[#4F46E5] text-white hover:bg-[#4338CA] active:scale-98 rounded-xl font-bold py-3.5 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-100 text-xs tracking-wider uppercase"
+                >
+                  🔧 ซ่อมแซมระบบผังงาน (Fix Error)
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleReset(activeTab)}
+                  className="w-full bg-slate-800 text-slate-300 hover:bg-slate-900 active:scale-98 rounded-xl font-bold py-3 transition-all flex items-center justify-center gap-2 border border-slate-800 text-xs"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" /> รีเซ็ตจำลองข้อผิดพลาดอีกครั้ง
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Canvas SVG and Python Code Panel */}
+          <div className="lg:col-span-7 flex flex-col gap-4">
+            
+            {/* SVG Visual Display */}
+            <div className="bg-slate-950 rounded-3xl p-5 border border-slate-800 shadow-2xl flex-1 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:20px_20px] opacity-25 pointer-events-none"></div>
+
+              <div className="relative z-10 flex justify-between text-[10px] font-mono text-slate-500 border-b border-slate-800/80 pb-2 mb-3">
+                <span># diagnostic monitor blueprint</span>
+                <span className={isFixed ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold animate-pulse'}>
+                  {isFixed ? 'system status: normal' : 'system status: compile error'}
+                </span>
+              </div>
+
+              {/* Dynamic SVG Rendering */}
+              <div className="relative z-10 flex-1 flex items-center justify-center py-1">
+                
+                {/* 1. INFINITE LOOP DIAGRAMS */}
+                {activeTab === 'inf' && (!isFixed ? (
+                  // INF - BROKEN (No Count Increment)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-r" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f43f5e" />
+                      </marker>
+                    </defs>
+
+                    {/* Start */}
+                    <rect x="135" y="10" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="2" />
+                    <text x="180" y="27" fill="#c7d2fe" fontFamily="monospace" fontSize="9" fontWeight="bold" textAnchor="middle">START</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#f43f5e" strokeWidth="1.5" markerEnd="url(#arrow-r)" />
+
+                    {/* Decision Count < 5 */}
+                    <polygon points="180,60 230,85 180,110 130,85" fill="#2d0612" stroke="#ef4444" strokeWidth="2" className="animate-pulse" />
+                    <text x="180" y="88" fill="#fca5a5" fontFamily="sans-serif" fontSize="10" fontWeight="bold" textAnchor="middle">Count &lt; 5?</text>
+
+                    {/* YES line down */}
+                    <path d="M 180,110 L 180,140" stroke="#f43f5e" strokeWidth="1.5" markerEnd="url(#arrow-r)" />
+                    <text x="195" y="125" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Yes</text>
+
+                    {/* Process block (Print "Hello") */}
+                    <rect x="125" y="140" width="110" height="30" rx="5" fill="#1c1917" stroke="#d97706" strokeWidth="2" />
+                    <text x="180" y="159" fill="#fde68a" fontFamily="sans-serif" fontSize="9.5" textAnchor="middle">แสดงผล "Hello"</text>
+
+                    {/* LOOP BACK TO DECISION (No increment!) */}
+                    <path d="M 125,155 L 80,155 L 80,85 L 130,85" stroke="#ef4444" strokeWidth="2" strokeDasharray="3,3" markerEnd="url(#arrow-r)" className="animate-pulse" />
+                    <text x="70" y="125" fill="#ef4444" fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" transform="rotate(-90 70 125)">INFINITE LOOP</text>
+                  </svg>
+                ) : (
+                  // INF - FIXED (Has Increment)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-g" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
+                      </marker>
+                    </defs>
+
+                    {/* Start */}
+                    <rect x="135" y="5" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="21" fill="#c7d2fe" fontFamily="monospace" fontSize="9" fontWeight="bold" textAnchor="middle">START</text>
+
+                    <path d="M 180,30 L 180,50" stroke="#818cf8" strokeWidth="1.5" markerEnd="url(#arrow-g)" />
+
+                    {/* Decision */}
+                    <polygon points="180,50 230,75 180,100 130,75" fill="#1c1917" stroke="#d97706" strokeWidth="1.5" />
+                    <text x="180" y="78" fill="#fde68a" fontFamily="sans-serif" fontSize="10" fontWeight="bold" textAnchor="middle">Count &lt; 5?</text>
+
+                    {/* YES down */}
+                    <path d="M 180,100 L 180,120" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-g)" />
+                    <text x="195" y="112" fill="#10b981" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Yes</text>
+
+                    {/* Process (Print "Hello") */}
+                    <rect x="125" y="120" width="110" height="25" rx="4" fill="#082f49" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <text x="180" y="136" fill="#bae6fd" fontFamily="sans-serif" fontSize="9" textAnchor="middle">แสดงผล "Hello"</text>
+
+                    <path d="M 180,145 L 180,165" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-g)" />
+
+                    {/* FIXED PROCESS: Count = Count + 1 */}
+                    <rect x="115" y="165" width="130" height="28" rx="5" fill="#064e3b" stroke="#10b981" strokeWidth="2" className="drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]" />
+                    <text x="180" y="182" fill="#d1fae5" fontFamily="monospace" fontSize="9" fontWeight="bold" textAnchor="middle">Count = Count + 1</text>
+
+                    {/* LOOP BACK TO DECISION (Corrected flow) */}
+                    <path d="M 115,179 L 60,179 L 60,75 L 130,75" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-g)" />
+                  </svg>
+                ))}
+
+                {/* 2. DANGLING END DIAGRAMS */}
+                {activeTab === 'dangling' && (!isFixed ? (
+                  // DANGLING - BROKEN (No connection to end on False path)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-danger" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ef4444" />
+                      </marker>
+                    </defs>
+
+                    {/* Start */}
+                    <rect x="135" y="10" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="26" fill="#c7d2fe" fontFamily="monospace" fontSize="9" textAnchor="middle">START</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#818cf8" strokeWidth="1.5" markerEnd="url(#arrow-danger)" />
+
+                    {/* Decision Rainy? */}
+                    <polygon points="180,60 230,85 180,110 130,85" fill="#1c1917" stroke="#d97706" strokeWidth="1.5" />
+                    <text x="180" y="88" fill="#fde68a" fontFamily="sans-serif" fontSize="10" textAnchor="middle">ฝนตกไหม?</text>
+
+                    {/* YES (Right) to End */}
+                    <path d="M 230,85 L 290,85 L 290,130" stroke="#818cf8" strokeWidth="1.5" markerEnd="url(#arrow-danger)" />
+                    <text x="255" y="77" fill="#818cf8" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Yes</text>
+
+                    <rect x="240" y="130" width="100" height="30" rx="5" fill="#082f49" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <text x="290" y="149" fill="#bae6fd" fontFamily="sans-serif" fontSize="9" textAnchor="middle">กางร่มกันฝน</text>
+
+                    <path d="M 290,160 L 290,185 L 225,185" stroke="#818cf8" strokeWidth="1.5" markerEnd="url(#arrow-danger)" />
+
+                    {/* NO (Left) DANGLING (No Arrow to End!) */}
+                    <path d="M 130,85 L 70,85 L 70,130" stroke="#ef4444" strokeWidth="2" strokeDasharray="3,3" markerEnd="url(#arrow-danger)" />
+                    <text x="100" y="77" fill="#ef4444" fontFamily="sans-serif" fontSize="9" fontWeight="bold" textAnchor="middle">No</text>
+
+                    <rect x="20" y="130" width="100" height="30" rx="5" fill="#2d0612" stroke="#ef4444" strokeWidth="2" className="animate-pulse" />
+                    <text x="70" y="149" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">ไปเตะฟุตบอล</text>
+
+                    {/* Dangling visual indicator (arrow points to nowhere) */}
+                    <path d="M 70,160 L 70,180" stroke="#ef4444" strokeWidth="2" strokeDasharray="3,3" markerEnd="url(#arrow-danger)" className="animate-bounce" />
+                    <circle cx="70" cy="180" r="4" fill="#ef4444" className="animate-ping" />
+
+                    {/* END */}
+                    <rect x="135" y="172" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="188" fill="#c7d2fe" fontFamily="monospace" fontSize="9" textAnchor="middle">END</text>
+                  </svg>
+                ) : (
+                  // DANGLING - FIXED (Correct connections)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-fixed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
+                      </marker>
+                    </defs>
+
+                    {/* Start */}
+                    <rect x="135" y="10" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="26" fill="#c7d2fe" fontFamily="monospace" fontSize="9" textAnchor="middle">START</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-fixed)" />
+
+                    {/* Decision Rainy? */}
+                    <polygon points="180,60 230,85 180,110 130,85" fill="#1c1917" stroke="#d97706" strokeWidth="1.5" />
+                    <text x="180" y="88" fill="#fde68a" fontFamily="sans-serif" fontSize="10" textAnchor="middle">ฝนตกไหม?</text>
+
+                    {/* YES (Right) to End */}
+                    <path d="M 230,85 L 290,85 L 290,130" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-fixed)" />
+                    <text x="255" y="77" fill="#10b981" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Yes</text>
+
+                    <rect x="240" y="130" width="100" height="30" rx="5" fill="#082f49" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <text x="290" y="149" fill="#bae6fd" fontFamily="sans-serif" fontSize="9" textAnchor="middle">กางร่มกันฝน</text>
+
+                    <path d="M 290,160 L 290,185 L 225,185" stroke="#10b981" strokeWidth="1.5" />
+
+                    {/* NO (Left) CONNECTED TO END */}
+                    <path d="M 130,85 L 70,85 L 70,130" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-fixed)" />
+                    <text x="100" y="77" fill="#10b981" fontFamily="sans-serif" fontSize="9" textAnchor="middle">No</text>
+
+                    <rect x="20" y="130" width="100" height="30" rx="5" fill="#064e3b" stroke="#10b981" strokeWidth="1.5" />
+                    <text x="70" y="149" fill="#d1fae5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">ไปเตะฟุตบอล</text>
+
+                    {/* Fixed connection line */}
+                    <path d="M 70,160 L 70,185 L 135,185" stroke="#10b981" strokeWidth="2" className="drop-shadow-[0_0_6px_rgba(16,185,129,0.4)]" markerEnd="url(#arrow-fixed)" />
+
+                    {/* END */}
+                    <rect x="135" y="172" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="188" fill="#c7d2fe" fontFamily="monospace" fontSize="9" textAnchor="middle">END</text>
+                  </svg>
+                ))}
+
+                {/* 3. INCORRECT SYMBOL DIAGRAMS */}
+                {activeTab === 'symbol' && (!isFixed ? (
+                  // SYMBOL - BROKEN (Wrong Shapes)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-err" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ef4444" />
+                      </marker>
+                    </defs>
+
+                    {/* Start is rectangle (Error!) */}
+                    <rect x="135" y="10" width="90" height="25" fill="#2d0612" stroke="#ef4444" strokeWidth="2" className="animate-pulse" />
+                    <text x="180" y="26" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">START (รูปสี่เหลี่ยมผิด!)</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#f43f5e" strokeWidth="1.5" markerEnd="url(#arrow-err)" />
+
+                    {/* Decision is process rectangle (Error!) */}
+                    <rect x="125" y="60" width="110" height="30" rx="2" fill="#2d0612" stroke="#ef4444" strokeWidth="2" className="animate-pulse" />
+                    <text x="180" y="79" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">ตรวจสอบ Age &gt;= 18? (ผิด!)</text>
+
+                    <path d="M 180,90 L 180,120" stroke="#f43f5e" strokeWidth="1.5" markerEnd="url(#arrow-err)" />
+
+                    {/* Process calculation is diamond (Error!) */}
+                    <polygon points="180,120 230,140 180,160 130,140" fill="#2d0612" stroke="#ef4444" strokeWidth="2" className="animate-pulse" />
+                    <text x="180" y="144" fill="#fca5a5" fontFamily="sans-serif" fontSize="8" textAnchor="middle">ผลรวม = A + B (ผิด!)</text>
+
+                    <path d="M 180,160 L 180,180" stroke="#f43f5e" strokeWidth="1.5" markerEnd="url(#arrow-err)" />
+
+                    {/* End is triangle (Error!) */}
+                    <polygon points="180,180 220,205 140,205" fill="#2d0612" stroke="#ef4444" strokeWidth="2" className="animate-pulse" />
+                    <text x="180" y="200" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">END (สามเหลี่ยมผิด!)</text>
+                  </svg>
+                ) : (
+                  // SYMBOL - FIXED (Correct ANSI Shapes including Display symbol path)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-sym-ok" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
+                      </marker>
+                    </defs>
+
+                    {/* Correct Start: Capsule Oval */}
+                    <rect x="135" y="10" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="26" fill="#c7d2fe" fontFamily="monospace" fontSize="9.5" fontWeight="bold" textAnchor="middle">START</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-sym-ok)" />
+
+                    {/* Correct Decision: Diamond */}
+                    <polygon points="180,60 230,80 180,100 130,80" fill="#1c1917" stroke="#d97706" strokeWidth="1.5" />
+                    <text x="180" y="84" fill="#fde68a" fontFamily="sans-serif" fontSize="9" fontWeight="bold" textAnchor="middle">Age &gt;= 18?</text>
+
+                    <path d="M 180,100 L 180,125" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-sym-ok)" />
+
+                    {/* Correct Process Calculation: Rectangle */}
+                    <rect x="125" y="125" width="110" height="28" rx="4" fill="#082f49" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <text x="180" y="142" fill="#bae6fd" fontFamily="sans-serif" fontSize="9.5" fontWeight="bold" textAnchor="middle">ผลรวม = A + B</text>
+
+                    <path d="M 180,153 L 180,175" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-sym-ok)" />
+
+                    {/* Correct Output Display Symbol using pointed path scaled and offset:
+                        path d="M 25,5 Q 10,25 25,45 L 75,45 L 95,25 L 75,5 Z" 
+                        Let's scale it to fit nicely around center 180, 187:
+                        We map coordinates: x-offset=120, y-offset=165, scaling factor 1.2
+                    */}
+                    <g transform="translate(132, 168) scale(1.1 0.7)">
+                      <path d="M 25,5 Q 10,25 25,45 L 75,45 L 95,25 L 75,5 Z" fill="#064e3b" stroke="#10b981" strokeWidth="2" />
+                    </g>
+                    <text x="182" y="187" fill="#d1fae5" fontFamily="sans-serif" fontSize="8" fontWeight="bold" textAnchor="middle">แสดงผลหน้าจอ</text>
+
+                    <path d="M 180,200 L 180,205" stroke="#10b981" strokeWidth="1" />
+                  </svg>
+                ))}
+
+                {/* 4. CROSSED LINES DIAGRAMS */}
+                {activeTab === 'crossed' && (!isFixed ? (
+                  // CROSSED - BROKEN (Intersecting lines)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-cr-err" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ef4444" />
+                      </marker>
+                    </defs>
+
+                    {/* Start */}
+                    <rect x="135" y="10" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="26" fill="#c7d2fe" fontFamily="monospace" fontSize="9" textAnchor="middle">START</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#818cf8" strokeWidth="1.5" markerEnd="url(#arrow-cr-err)" />
+
+                    {/* Decision X > Y? */}
+                    <polygon points="180,60 230,85 180,110 130,85" fill="#1c1917" stroke="#d97706" strokeWidth="1.5" />
+                    <text x="180" y="88" fill="#fde68a" fontFamily="sans-serif" fontSize="10" textAnchor="middle">X &gt; Y?</text>
+
+                    {/* YES (Right box but path goes to LEFT) CROSSES FALSE path */}
+                    {/* YES line starts right, goes left-diagonally down */}
+                    <path d="M 230,85 L 260,85 L 110,135 L 75,135" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-cr-err)" className="animate-pulse" />
+                    <text x="245" y="77" fill="#ef4444" fontFamily="sans-serif" fontSize="9.5" textAnchor="middle">Yes</text>
+
+                    {/* FALSE line starts left, goes right-diagonally down */}
+                    <path d="M 130,85 L 100,85 L 250,135 L 285,135" stroke="#ef4444" strokeWidth="2" strokeDasharray="3,3" />
+                    <text x="115" y="77" fill="#ef4444" fontFamily="sans-serif" fontSize="9.5" textAnchor="middle">No</text>
+
+                    {/* Process blocks (Left and Right) */}
+                    <rect x="15" y="125" width="80" height="30" rx="5" fill="#2d0612" stroke="#ef4444" strokeWidth="1.5" />
+                    <text x="55" y="144" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Max = X</text>
+
+                    <rect x="265" y="125" width="80" height="30" rx="5" fill="#2d0612" stroke="#ef4444" strokeWidth="1.5" />
+                    <text x="305" y="144" fill="#fca5a5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Max = Y</text>
+
+                    {/* Red warning ring in the crossing center (180, 110) */}
+                    <circle cx="180" cy="110" r="10" fill="none" stroke="#ef4444" strokeWidth="1.5" className="animate-ping" />
+                    <text x="180" y="123" fill="#ef4444" fontSize="8" fontWeight="bold" textAnchor="middle">จุดทับไขว้ข้ามเลน!</text>
+                  </svg>
+                ) : (
+                  // CROSSED - FIXED (Neat, parallel paths)
+                  <svg width="100%" height="210" viewBox="0 0 360 210" className="max-w-[360px]">
+                    <defs>
+                      <marker id="arrow-cr-ok" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
+                      </marker>
+                    </defs>
+
+                    {/* Start */}
+                    <rect x="135" y="10" width="90" height="25" rx="12.5" fill="#1e1b4b" stroke="#4f46e5" strokeWidth="1.5" />
+                    <text x="180" y="26" fill="#c7d2fe" fontFamily="monospace" fontSize="9" textAnchor="middle">START</text>
+
+                    <path d="M 180,35 L 180,60" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-cr-ok)" />
+
+                    {/* Decision X > Y? */}
+                    <polygon points="180,60 230,85 180,110 130,85" fill="#1c1917" stroke="#d97706" strokeWidth="1.5" />
+                    <text x="180" y="88" fill="#fde68a" fontFamily="sans-serif" fontSize="10" textAnchor="middle">X &gt; Y?</text>
+
+                    {/* Neat Parallel YES to Right Process */}
+                    <path d="M 230,85 L 305,85 L 305,125" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-cr-ok)" />
+                    <text x="255" y="77" fill="#10b981" fontFamily="sans-serif" fontSize="9.5" textAnchor="middle">Yes</text>
+
+                    {/* Neat Parallel NO to Left Process */}
+                    <path d="M 130,85 L 55,85 L 55,125" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-cr-ok)" />
+                    <text x="105" y="77" fill="#10b981" fontFamily="sans-serif" fontSize="9.5" textAnchor="middle">No</text>
+
+                    {/* Process blocks (Left and Right) */}
+                    <rect x="15" y="125" width="80" height="30" rx="5" fill="#064e3b" stroke="#10b981" strokeWidth="1.5" />
+                    <text x="55" y="144" fill="#d1fae5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Max = Y</text>
+
+                    <rect x="265" y="125" width="80" height="30" rx="5" fill="#064e3b" stroke="#10b981" strokeWidth="1.5" />
+                    <text x="305" y="144" fill="#d1fae5" fontFamily="sans-serif" fontSize="9" textAnchor="middle">Max = X</text>
+                  </svg>
+                ))}
+
+              </div>
+            </div>
+
+            {/* Code Panel Display comparing Python logic */}
+            <div className="bg-slate-900 rounded-3xl border border-slate-800 p-5 overflow-hidden shadow-inner flex flex-col justify-between">
+              <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 border-b border-slate-800 pb-2 mb-3">
+                <span className="flex items-center gap-1"><Code2 className="w-3.5 h-3.5" /> Python Code Alignment</span>
+                <span className={isFixed ? 'text-emerald-500' : 'text-amber-500'}>
+                  {isFixed ? '✓ logic compiled' : '⚠ warning: loop warning'}
+                </span>
+              </div>
+
+              <pre className="font-mono text-[12.5px] text-yellow-300 leading-relaxed whitespace-pre overflow-x-auto py-2">
+                <code>{isFixed ? spec.codeFix : spec.codeErr}</code>
+              </pre>
+
+              <div className="bg-black/50 p-2.5 rounded-xl border border-slate-950/80 text-[11px] text-slate-400 font-mono flex items-center gap-2 mt-2">
+                <Terminal className="w-4 h-4 text-slate-500 shrink-0" />
+                <span>Status: {isFixed ? 'ตรรกะรันผ่าน ครบรอบเงื่อนไขเรียบร้อย' : 'คอมพิวเตอร์พังหรือหยุดชะงักเนื่องจากสัญญาณบล็อก'}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============================================================================
+// 3. CARD 3: มินิเกม: ผู้ประเมินความถูกต้องทางผังงาน (Flowchart Auditor Game)
+// ============================================================================
+const FlowchartAuditorGame = ({ isMuted }) => {
+  const [level, setLevel] = useState(1);
+  const [selectedOpt, setSelectedOpt] = useState(null);
+  const [gameState, setGameState] = useState('playing'); // playing, success, fail
+  const [score, setScore] = useState(0);
+
+  const cases = {
+    1: {
+      title: 'เคสตรวจวินิจฉัยที่ 1: ระบบเก็บเงินเครื่องซักผ้าอัจฉริยะ',
+      desc: 'ต้องการป้อนตรวจสอบเงื่อนไข "ยอดเหรียญ >= 40 บาท?" แต่ในแผนภูมิ แผนผังกลับนำกล่องรูปสี่เหลี่ยมด้านขนาน (Input/Output) บรรจุข้อความเงื่อนไขตรวจสอบซะงั้น!',
+      question: 'ในฐานะ AI Auditor คุณคิดว่าแผนภูมินี้ละเมิดกฎเกณฑ์ ANSI ข้อใด?',
+      options: [
+        { key: 'A', text: 'เกิดลูปอนันต์ (Infinite Loop) ทำงานค้าง', isCorrect: false },
+        { key: 'B', text: 'ใช้รูปทรงสัญลักษณ์ผิดประเภท (นำ IO มาใช้เป็น Decision)', isCorrect: true, feedback: 'ถูกต้อง! สัญลักษณ์ตรวจสอบเงื่อนไขทางเลือกต้องใช้รูป Diamond (ขนมเปียกปูน) เท่านั้น ห้ามใช้สี่เหลี่ยมด้านขนาน!' },
+        { key: 'C', text: 'มีจุดเริ่มต้น 2 จุดขนานกัน', isCorrect: false },
+        { key: 'D', text: 'จุดสายปลายเปิด (Dangling End) ไม่มี End', isCorrect: false }
+      ],
+      tip: 'สังเกตรูปสี่เหลี่ยมด้านขนาน (Parallelogram) มีไว้สำหรับรับเข้าหรือรายงานค่า (Input/Output) เท่านั้น ไม่ได้มีไว้สำหรับสับรางสายตรรกะแยก'
+    },
+    2: {
+      title: 'เคสตรวจวินิจฉัยที่ 2: เครื่องนับจำนวนรอบชงกาแฟอัตโนมัติ',
+      desc: 'ระบบสั่งกาแฟจำลอง มีการวนลูปทำซ้ำเงื่อนไข "แก้วน้ำกาแฟ < 3" โดยในลูปมีกระบวนการ Process บดเม็ดเมล็ดกาแฟและหยดน้ำ แต่กระแสไหลลูกศรท้ายลูปพุ่งวนหลุดย้อนศรชี้กลับเข้ากล่องประเมิน Count โดยไม่มีการหยอดค่าตัวเพิ่มแก้ว',
+      question: 'หากนำผังงานนี้ไปแปลงสลักโค้ด Python จะเกิดวิกฤตการณ์ข้อใดในโปรแกรม?',
+      options: [
+        { key: 'A', text: 'เกิดการข้ามบรรทัดคำสั่งทำให้ผลลัพธ์เพี้ยน', isCorrect: false },
+        { key: 'B', text: 'เกิดลูปอนันต์ทำงานไม่สิ้นสุด (Infinite Loop) เพราะค่าแก้วไม่เคยขยับ', isCorrect: true, feedback: 'แม่นยำ! เมื่อไม่มีกล่องกระบวนการบวกค่าตัวแปรแก้ว เงื่อนไขจะยังเป็นจริงและรันบดเม็ดกาแฟจนเมโมรี่ล้นเครื่องคอม!' },
+        { key: 'C', text: 'ข้อความภาษาไทยตัดตัวหางขาด', isCorrect: false },
+        { key: 'D', text: 'เกิดสายปลายลอย Dangling End ข้อมูลระเบิด', isCorrect: false }
+      ],
+      tip: 'เมื่อมีการเขียนระบบลูปวนซ้ำ (Iteration) ต้องมั่นใจว่ามีกล่องประมวลผลตัวแปรกระตุ้นให้เงื่อนไขเป็นเท็จในรอบถัดๆ ไปเสมอ'
+    },
+    3: {
+      title: 'เคสตรวจวินิจฉัยที่ 3: ระบบคัดกรองวัคซีนโควิดตามอายุ',
+      desc: 'ผังงานตรวจสอบอายุประชากร มีการตั้งค่า Diamond "Age >= 60?" ถ้าจริงให้ไป "รับสิทธิ์ช่องพิเศษ" แล้วเข้าหา END แต่ถ้าเท็จ (False) ลูกศรลากจากรูป Diamond ชี้ตกค้างคาไว้กลางอากาศเฉยๆ โดยไม่เชื่อมไปไหนเลย',
+      question: 'แผนผังนี้เกิดปัญหาโครงสร้างด้านใด ซึ่งจะทำให้วิศวกรซอฟต์แวร์สับสนสูงสุด?',
+      options: [
+        { key: 'A', text: 'เกิดสายการไหลปลายเปิดลอยเคว้ง (Dangling End) ในเงื่อนไขทางเลือกเท็จ', isCorrect: true, feedback: 'สุดยอด! เส้นทางการไหลในทางตรรกะเท็จลอยค้าง ไร้เส้นเชื่อมเข้า END หรือเชื่อมต่อจุดอื่น ระบบจึงหาทางจบไม่พบ' },
+        { key: 'B', text: 'ใช้สัญลักษณ์จุดรวมสาย Connector ผิด ANSI', isCorrect: false },
+        { key: 'C', text: 'รูปทรง Start มีมุมเหลี่ยมแหลม', isCorrect: false },
+        { key: 'D', text: 'เส้นโยงเดินทางไขว้กันเป็นกากบาทชำรุด', isCorrect: false }
+      ],
+      tip: 'ทุกๆ เส้นแยกออกของสัญลักษณ์การตัดสินใจ (Decision) ไม่ว่าจะออกทาง Yes หรือ No ต้องมีการนำทางกลับเข้าวงจรระบบเสมอ'
+    }
+  };
+
+  const handleAnswer = (option) => {
+    if (gameState !== 'playing') return;
+    setSelectedOpt(option);
+    if (option.isCorrect) {
+      playSound('success', isMuted);
+      setGameState('success');
+      setScore(prev => prev + 10);
+    } else {
+      playSound('fail', isMuted);
+      setGameState('fail');
+    }
+  };
+
+  const handleNext = () => {
+    playSound('click', isMuted);
+    setLevel(prev => prev + 1);
+    setSelectedOpt(null);
+    setGameState('playing');
+  };
+
+  const handleResetGame = () => {
+    playSound('click', isMuted);
+    setLevel(1);
+    setSelectedOpt(null);
+    setGameState('playing');
+    setScore(0);
+  };
+
+  const currentCase = cases[level];
+
+  return (
+    <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 border border-slate-800 shadow-2xl relative overflow-hidden group">
+      {/* Background glow */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#4F46E5]/10 to-[#06B6D4]/10 rounded-bl-full blur-3xl -z-0 transition-all duration-700 group-hover:scale-110"></div>
+
+      <div className="relative z-10 text-center mb-10">
+        <span className="bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 rounded-full px-4.5 py-1.5 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2 mb-4">
+          <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" /> gamified evaluation zone
+        </span>
+        <h3 className="text-3xl font-bold text-white mb-3 flex items-center justify-center gap-3">
+          มินิเกม: ผู้ประเมินความถูกต้องทางผังงาน (Flowchart Auditor)
+        </h3>
+        <p className="text-slate-400 max-w-xl mx-auto leading-relaxed text-[14.5px]">
+          สวมวิญญาณเป็นวิศวกรวิเคราะห์คุณภาพระบบ สแกนและตรวจจับหาจุดพังทลายของผังงานเพื่อเก็บระดับคะแนนและผ่านใบประกาศนียบัตร!
+        </p>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 0.9; transform: scale(1.05); }
-        }
-        @keyframes flow-dash {
-          to { stroke-dashoffset: -40; }
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 5s infinite ease-in-out;
-        }
-        .flow-line-anim {
-          stroke-dasharray: 8;
-          animation: flow-dash 1.5s infinite linear;
-        }
-      `}} />
-
-      {/* 3️⃣ Layer 3: Flexible Subtopics & Interactives */}
-      <main className="max-w-7xl mx-auto px-6 lg:px-12 pt-10 space-y-16 relative z-10">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Intro Banner */}
-        <div className="bg-gradient-to-r from-indigo-900 to-indigo-950 text-white rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden border border-indigo-950">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(99,102,241,0.2),transparent_60%)]"></div>
+        {/* Play Area */}
+        <div className="lg:col-span-7 bg-slate-800/60 backdrop-blur rounded-3xl p-6 md:p-8 border border-slate-700 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-center mb-5">
+              <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest">ด่านตรวจสอบที่ {level} / 3</span>
+              <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-900/50 px-3 py-1 rounded-full">SCORE: {score} XP</span>
+            </div>
+
+            {/* Level indicator rings */}
+            <div className="flex gap-1.5 mb-6">
+              {[1, 2, 3].map((idx) => (
+                <div 
+                  key={idx} 
+                  className={`flex-1 h-2 rounded-full transition-all duration-500 ${
+                    idx === level ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]' : idx < level ? 'bg-emerald-500' : 'bg-slate-700/60'
+                  }`}
+                ></div>
+              ))}
+            </div>
+
+            <h4 className="text-xl font-bold text-white mb-3">{currentCase.title}</h4>
+            <p className="text-slate-300 text-[13.5px] leading-relaxed mb-6 bg-slate-900/60 p-4 rounded-2xl border border-slate-900/80">{currentCase.desc}</p>
+            
+            <div className="mb-4">
+              <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">คำแนะนำการตรวจสอบ:</span>
+              <div className="bg-indigo-950/30 border border-indigo-900/40 p-4 rounded-xl text-indigo-300 text-xs leading-relaxed flex gap-2">
+                <Info className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                <span>{currentCase.tip}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Result Messages */}
+          {gameState === 'success' && (
+            <div className="mt-4 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 p-4 rounded-2xl flex items-start gap-3 animate-fade-in">
+              <Check className="w-5 h-5 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold">ผลการตรวจจับผ่าน! (+10 XP)</p>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">{selectedOpt.feedback}</p>
+              </div>
+            </div>
+          )}
+
+          {gameState === 'fail' && (
+            <div className="mt-4 bg-rose-500/10 border border-rose-500/40 text-rose-400 p-4 rounded-2xl flex items-center gap-3 animate-shake">
+              <X className="w-5 h-5 shrink-0" />
+              <div>
+                <p className="text-sm font-bold">วิเคราะห์ผิดพลาด!</p>
+                <p className="text-xs text-slate-300 mt-0.5">พิกัดความเสียหายที่วิเคราะห์ยังไม่ตรงจุด ลองสังเกตคำใบ้อีกครั้ง</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Answers and Actions Column */}
+        <div className="lg:col-span-5 flex flex-col justify-between gap-6">
           
-          <div className="relative z-10 flex flex-col lg:flex-row gap-8 items-center justify-between">
-            <div className="max-w-3xl space-y-4 text-center lg:text-left">
-              <span className="inline-flex items-center gap-2 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wider uppercase">
-                <Sparkles className="w-4 h-4 animate-spin" /> คัมภีร์โปรแกรมเมอร์
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold pb-2 leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-100 to-cyan-300">
-                ทำไมผังงานที่สะอาดยิ่งใหญ่ <br className="hidden md:inline" /> ถึงสร้างโปรเจกต์ระดับล้านได้จริง?
-              </h2>
-              <p className="text-[16px] text-indigo-200/90 leading-relaxed font-normal">
-                ผังงาน (Flowchart) เปรียบเสมือนแบบแปลนพิมพ์เขียนของวิศวกรโครงสร้าง หากแบบแปลนบิดเบี้ยว มีรูรั่ว หรือโยงเส้นผิดหลักการ
-                ถึงคุณจะมีช่างปูนชั้นยอด ตึกที่สร้างขึ้นก็ย่อมพังทลายลงมา เช่นเดียวกับการเขียนโค้ดคอมพิวเตอร์
-                การมีตรรกะและความเข้าใจใน <strong>"หลักการเขียนผังงานที่ดี"</strong> จึงเป็นเกราะป้องกันข้อผิดพลาดที่เหนียวแน่นที่สุดของโปรแกรมเมอร์มืออาชีพ
-              </p>
+          {/* Options Panel */}
+          <div className="bg-slate-800/30 rounded-3xl p-6 border border-slate-700/60 flex-1 flex flex-col justify-center">
+            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 text-center">
+              {currentCase.question}
+            </span>
+            <div className="grid grid-cols-1 gap-3">
+              {currentCase.options.map((option) => (
+                <button
+                  key={option.key}
+                  onClick={() => handleAnswer(option)}
+                  disabled={gameState !== 'playing'}
+                  className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3.5 active:scale-98 ${
+                    selectedOpt?.key === option.key
+                      ? option.isCorrect
+                        ? 'bg-emerald-500/25 border-emerald-500 text-white font-bold'
+                        : 'bg-rose-500/25 border-rose-500 text-white font-bold'
+                      : 'bg-slate-950 border-slate-900 text-slate-300 hover:bg-slate-800 hover:border-slate-700 disabled:opacity-50'
+                  }`}
+                >
+                  <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors ${
+                    selectedOpt?.key === option.key
+                      ? option.isCorrect
+                        ? 'bg-emerald-500 text-white'
+                        : 'bg-rose-500 text-white'
+                      : 'bg-slate-800 text-slate-400'
+                  }`}>
+                    {option.key}
+                  </span>
+                  <span className="text-[13px] leading-relaxed">{option.text}</span>
+                </button>
+              ))}
             </div>
-            
-            <div className="flex gap-4 shrink-0">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 text-center flex flex-col justify-center items-center w-36 shadow-lg">
-                <CheckCircle2 className="w-8 h-8 text-cyan-400 mb-2" />
-                <span className="text-2xl font-bold font-mono">100%</span>
-                <span className="text-xs text-indigo-200 font-medium mt-1">ถูกต้องตาม ANSI</span>
+          </div>
+
+          {/* Action buttons */}
+          <div>
+            {gameState === 'success' && level < 3 && (
+              <button
+                onClick={handleNext}
+                className="w-full bg-emerald-500 hover:bg-emerald-400 text-white px-6 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] text-xs tracking-wider uppercase"
+              >
+                ลุยการตรวจจับเคสถัดไป <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
+
+            {gameState === 'success' && level === 3 && (
+              <div className="w-full text-center animate-fade-in">
+                <div className="bg-emerald-500/10 border border-emerald-500 text-emerald-400 p-4.5 rounded-2xl mb-4 font-bold text-xs leading-relaxed flex items-center gap-2.5 justify-center">
+                  <ShieldCheck className="w-5 h-5" />
+                  คุณตรวจผ่านครบ 3 เคสใหญ่ ได้รับเกียรตินิยมผู้ตรวจวินิจฉัยตรรกะดีเยี่ยม!
+                </div>
+                <button
+                  onClick={handleResetGame}
+                  className="w-full bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-2xl font-bold transition-all text-xs"
+                >
+                  <RefreshCw className="w-4 h-4 inline mr-2" /> ล้างข้อมูลเริ่มฝึกฝนใหม่
+                </button>
               </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 text-center flex flex-col justify-center items-center w-36 shadow-lg">
-                <TrendingDown className="w-8 h-8 text-red-400 mb-2" />
-                <span className="text-2xl font-bold font-mono">90%</span>
-                <span className="text-xs text-indigo-200 font-medium mt-1">ลดโอกาสเกิดบั๊ก</span>
-              </div>
-            </div>
+            )}
+
+            {gameState === 'fail' && (
+              <button
+                onClick={() => { setSelectedOpt(null); setGameState('playing'); }}
+                className="w-full bg-slate-700 hover:bg-slate-600 text-white px-6 py-3.5 rounded-2xl font-bold transition-all text-xs"
+              >
+                ย้อนคิดพิจารณาตรรกะใหม่
+              </button>
+            )}
           </div>
         </div>
 
-        {/* SECTION 1: กฎเกณฑ์และข้อกำหนดในการเขียน */}
-        <section className="space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-zinc-200 pb-6 gap-4">
-            <div className="space-y-2">
-              <span className="text-indigo-600 font-semibold tracking-wider text-sm uppercase flex items-center gap-1.5">
-                <BookOpen className="w-4 h-4" /> บทเรียนส่วนแรก
-              </span>
-              <h3 className="text-3xl font-extrabold text-zinc-900 tracking-tight">
-                กฎเกณฑ์และข้อกำหนดในการเขียน
-              </h3>
-            </div>
-            <p className="text-zinc-500 max-w-md text-sm md:text-right leading-relaxed">
-              ศึกษา 5 กฎทองข้อกำหนดมาตรฐานสากลเพื่อการเขียนแผนภูมิการไหลที่มีประสิทธิภาพ พร้อมเปรียบเทียบตรรกะแบบโต้ตอบได้
-            </p>
-          </div>
+      </div>
+    </div>
+  );
+};
 
-          {/* Interactive Rules Explorer layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Side: Rule Cards Menu */}
-            <div className="lg:col-span-5 space-y-4">
-              {flowchartRules.map((rule, idx) => {
-                const isActive = activeRule === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setActiveRule(idx);
-                      setRuleToggleState(false);
-                    }}
-                    className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-center gap-4 group relative overflow-hidden active:scale-98 ${
-                      isActive 
-                        ? 'bg-white border-indigo-600 shadow-[0_12px_24px_-4px_rgba(79,70,229,0.1)]' 
-                        : 'bg-white/60 border-zinc-200/80 hover:bg-white hover:border-indigo-300 hover:shadow-md'
-                    }`}
-                  >
-                    {isActive && (
-                      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-600"></div>
-                    )}
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
-                      isActive ? 'bg-indigo-100/80 text-indigo-600 scale-105' : 'bg-zinc-100 text-zinc-500 group-hover:bg-indigo-50 group-hover:text-indigo-500'
-                    }`}>
-                      {rule.icon}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className={`font-bold transition-colors text-[16px] ${isActive ? 'text-indigo-900' : 'text-zinc-800'}`}>
-                        {rule.title}
-                      </h4>
-                      <p className="text-xs text-zinc-400 font-mono tracking-wide uppercase mt-0.5">{rule.subtitle}</p>
-                    </div>
-                    <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
-                      isActive ? 'text-indigo-600 translate-x-1' : 'text-zinc-300 group-hover:text-zinc-500'
-                    }`} />
-                  </button>
-                );
-              })}
-            </div>
+// ============================================================================
+// 4. MAIN PAGE COMPONENT (Vertical Stack Layout & Ambient Backdrop Layer 1)
+// ============================================================================
+export default function pyUnit2_9_GoodFlowchartPractices() {
+  const [isMuted, setIsMuted] = useState(false);
 
-            {/* Right Side: Interactive Panel */}
-            <div className="lg:col-span-7 bg-white rounded-3xl border border-zinc-200 shadow-xl overflow-hidden min-h-[580px] flex flex-col">
-              
-              {/* Header Panel */}
-              <div className="p-6 md:p-8 bg-gradient-to-b from-indigo-50/50 to-transparent border-b border-zinc-100 relative">
-                <div className="absolute top-6 right-6 font-mono text-zinc-200 text-6xl font-extrabold select-none opacity-30">
-                  {`0${activeRule + 1}`}
-                </div>
-                <div className="flex items-center gap-2 text-indigo-600 text-xs font-bold tracking-widest uppercase mb-1">
-                  <Zap className="w-3.5 h-3.5 fill-current" /> กฎเกณฑ์ที่ได้รับการยอมรับสากล
-                </div>
-                <h3 className="text-2xl font-extrabold text-zinc-900">
-                  {flowchartRules[activeRule].title}
-                </h3>
-                <p className="text-zinc-500 font-mono text-sm mt-0.5">{flowchartRules[activeRule].subtitle}</p>
-                <p className="text-zinc-600 text-[15px] leading-relaxed mt-4">
-                  {flowchartRules[activeRule].desc}
-                </p>
-              </div>
+  const teacherTaskContent = `ใบงานกิจกรรมปฏิบัติ: วิศวกรตรวจคุณภาพแผนภูมิภาพระบบสากล
+ให้นักเรียนวิเคราะห์แผนงานและปฏิบัติงานสร้างผังงานที่ดีโดยมีภารกิจดังนี้:
 
-              {/* Visual Interactive Sandbox */}
-              <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-6">
-                
-                <div className="space-y-4">
-                  {/* Toggle button bad vs good */}
-                  <div className="flex justify-between items-center bg-zinc-100 p-1.5 rounded-xl border border-zinc-200/80 max-w-sm mx-auto">
-                    <button
-                      onClick={() => setRuleToggleState(false)}
-                      className={`flex-1 py-2 px-4 rounded-lg font-bold text-sm flex items-center justify-center gap-1.5 transition-all ${
-                        !ruleToggleState 
-                          ? 'bg-red-500 text-white shadow-md' 
-                          : 'text-zinc-500 hover:text-zinc-800'
-                      }`}
-                    >
-                      <XCircle className="w-4 h-4" /> ผิดระเบียบ (Bad)
-                    </button>
-                    <button
-                      onClick={() => setRuleToggleState(true)}
-                      className={`flex-1 py-2 px-4 rounded-lg font-bold text-sm flex items-center justify-center gap-1.5 transition-all ${
-                        ruleToggleState 
-                          ? 'bg-emerald-500 text-white shadow-md' 
-                          : 'text-zinc-500 hover:text-zinc-800'
-                      }`}
-                    >
-                      <CheckCircle2 className="w-4 h-4" /> ถูกระเบียบ (Good)
-                    </button>
-                  </div>
+1. ให้นักเรียนจำลองการวิเคราะห์และออกแบบผังงาน "ระบบจำหน่ายเครื่องดื่มอัตโนมัติ" ในสมุดจดบันทึก หรือโปรแกรม draw.io โดยต้องมีส่วนประกอบดังนี้:
+   - จุดเริ่มต้น (START) และจุดสิ้นสุด (END) เพียงแค่อย่างละจุดเดียวเท่านั้น
+   - มีการจัดระบบลูกศรเชื่อมทิศทางจากบนลงล่าง และจากซ้ายไปขวาอย่างสะอาดเรียบร้อย ปราศจากลายเส้นที่ตัดหรือข้ามหัวกัน
+   - ใช้สัญลักษณ์ ANSI ตรงตามประเภท 100% (รูป Diamond สำหรับตัวเลือก และ Rectangle สำหรับขั้นตอน)
+   - ป้องกันไม่ให้เกิดลูปอนันต์ (Infinite Loop) และปิดปลายสาย (Dangling) ทั้งหมด
 
-                  {/* Simulator Screen */}
-                  <div className="border border-zinc-200 rounded-2xl bg-zinc-50/70 p-6 min-h-[220px] flex items-center justify-center relative overflow-hidden">
-                    
-                    {/* Background Grid Pattern */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:16px_16px] opacity-30"></div>
-                    
-                    {/* Interactive Content Switcher */}
-                    <div className="relative z-10 w-full flex justify-center">
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={`${activeRule}-${ruleToggleState}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.25 }}
-                          className="w-full flex flex-col items-center"
-                        >
-                          
-                          {/* Rule 1: Flow Direction */}
-                          {activeRule === 0 && (
-                            <div className="flex flex-col items-center gap-2">
-                              {!ruleToggleState ? (
-                                /* Bad: Chaos flow */
-                                <div className="flex flex-col items-center gap-2 bg-white/80 p-4 rounded-xl shadow-sm border border-red-200">
-                                  <span className="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">สับสับสนวุ่นวาย</span>
-                                  <svg width="240" height="110" viewBox="0 0 240 110" className="stroke-red-400 fill-none stroke-[2]">
-                                    <rect x="10" y="35" width="60" height="30" rx="4" fill="#fee2e2" stroke="#ef4444" />
-                                    <text x="40" y="53" textAnchor="middle" fill="#991b1b" fontSize="9" fontWeight="bold" stroke="none">START</text>
-                                    <path d="M 70,50 L 100,50 A 20,20 0 0,0 120,70 L 120,90 A 20,20 0 0,1 100,110 L 40,110 L 40,80" markerEnd="url(#arrow-red)" />
-                                    <rect x="130" y="20" width="70" height="30" rx="4" fill="#fee2e2" stroke="#ef4444" />
-                                    <text x="165" y="38" textAnchor="middle" fill="#991b1b" fontSize="8" fontWeight="bold" stroke="none">PROCESS</text>
-                                    <path d="M 130,35 L 70,35" markerEnd="url(#arrow-red)" />
-                                    <path d="M 165,50 L 165,80 A 10,10 0 0,0 175,90 L 210,90" markerEnd="url(#arrow-red)" />
-                                    <defs>
-                                      <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                        <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
-                                      </marker>
-                                    </defs>
-                                  </svg>
-                                </div>
-                              ) : (
-                                /* Good: Neat top-down flow */
-                                <div className="flex flex-col items-center gap-1.5 bg-white/80 p-4 rounded-xl shadow-sm border border-emerald-200">
-                                  <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">ลื่นไหลชัดเจน</span>
-                                  <svg width="240" height="120" viewBox="0 0 240 120" className="stroke-emerald-500 fill-none stroke-[2]">
-                                    <rect x="90" y="5" width="60" height="22" rx="11" fill="#ecfdf5" stroke="#10b981" />
-                                    <text x="120" y="19" textAnchor="middle" fill="#065f46" fontSize="9" fontWeight="bold" stroke="none">START</text>
-                                    
-                                    <path d="M 120,27 L 120,43" markerEnd="url(#arrow-green)" className="flow-line-anim" />
-                                    
-                                    <rect x="85" y="45" width="70" height="25" rx="4" fill="#ecfdf5" stroke="#10b981" />
-                                    <text x="120" y="60" textAnchor="middle" fill="#065f46" fontSize="9" fontWeight="bold" stroke="none">ประมวลผล</text>
-                                    
-                                    <path d="M 120,70 L 120,88" markerEnd="url(#arrow-green)" className="flow-line-anim" />
-                                    
-                                    <rect x="90" y="90" width="60" height="22" rx="11" fill="#ecfdf5" stroke="#10b981" />
-                                    <text x="120" y="104" textAnchor="middle" fill="#065f46" fontSize="9" fontWeight="bold" stroke="none">END</text>
-                                    <defs>
-                                      <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                        <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
-                                      </marker>
-                                    </defs>
-                                  </svg>
-                                </div>
-                              )}
-                            </div>
-                          )}
+2. เขียนเปรียบเทียบตรรกะของผังงานดังกล่าวให้ออกมาเป็นโค้ด Python ในรูปแบบของเงื่อนไข if-else หรือโครงสร้างลูป while loop สั้นๆ ในช่องโจทย์ปฏิบัติเพื่อทดลองความพร้อมใช้งานของระบบ`;
 
-                          {/* Rule 2: Single Start/End */}
-                          {activeRule === 1 && (
-                            <div className="w-full max-w-md">
-                              {!ruleToggleState ? (
-                                <div className="bg-white/80 p-4 rounded-xl border border-red-200 text-center space-y-3">
-                                  <span className="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">END โผล่ทุกหนทุกแห่ง</span>
-                                  <div className="flex justify-center items-center gap-6">
-                                    <div className="flex flex-col items-center">
-                                      <div className="w-20 h-10 border-2 border-red-500 bg-red-50 rounded-full flex items-center justify-center text-xs font-bold text-red-900">START</div>
-                                      <div className="w-0.5 h-4 bg-red-300"></div>
-                                      <div className="w-24 h-10 border-2 border-red-500 bg-red-50 flex items-center justify-center text-xs font-bold text-red-900 text-center px-1">พบข้อผิดพลาด?</div>
-                                      <div className="flex justify-between w-32 mt-1">
-                                        <div className="flex flex-col items-center">
-                                          <span className="text-[9px] text-red-500 font-bold">ใช่</span>
-                                          <div className="w-0.5 h-4 bg-red-300"></div>
-                                          <div className="w-14 h-8 border-2 border-red-500 bg-red-100/50 rounded-full flex items-center justify-center text-[10px] font-bold text-red-700">END (1)</div>
-                                        </div>
-                                        <div className="flex flex-col items-center">
-                                          <span className="text-[9px] text-red-500 font-bold">ไม่ใช่</span>
-                                          <div className="w-0.5 h-4 bg-red-300"></div>
-                                          <div className="w-14 h-8 border-2 border-red-500 bg-red-100/50 rounded-full flex items-center justify-center text-[10px] font-bold text-red-700">END (2)</div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="bg-white/80 p-4 rounded-xl border border-emerald-200 text-center space-y-3">
-                                  <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">รวมศูนย์สู่สากลจุดเดียว</span>
-                                  <div className="flex flex-col items-center">
-                                    <div className="w-20 h-8 border-2 border-emerald-500 bg-emerald-50 rounded-full flex items-center justify-center text-[10px] font-bold text-emerald-800">START</div>
-                                    <div className="w-0.5 h-3 bg-emerald-300"></div>
-                                    <div className="w-24 h-8 border-2 border-emerald-500 bg-emerald-50 flex items-center justify-center text-[10px] font-bold text-emerald-800 text-center">พบข้อผิดพลาด?</div>
-                                    <div className="w-32 h-6 flex justify-between relative mt-1">
-                                      <div className="w-0.5 h-6 bg-emerald-300 absolute left-4"></div>
-                                      <span className="text-[8px] text-emerald-600 font-bold absolute left-5 -top-1">ใช่</span>
-                                      <div className="w-0.5 h-6 bg-emerald-300 absolute right-4"></div>
-                                      <span className="text-[8px] text-emerald-600 font-bold absolute right-7 -top-1">ไม่ใช่</span>
-                                    </div>
-                                    <div className="w-[66px] h-0.5 bg-emerald-300 mt-0"></div>
-                                    <div className="w-0.5 h-3 bg-emerald-300"></div>
-                                    <div className="w-4 h-4 border-2 border-emerald-500 bg-emerald-100/80 rounded-full flex items-center justify-center text-[8px] font-bold text-emerald-700"></div>
-                                    <div className="w-0.5 h-3 bg-emerald-300"></div>
-                                    <div className="w-20 h-8 border-2 border-emerald-500 bg-emerald-100 rounded-full flex items-center justify-center text-[10px] font-bold text-emerald-800">END</div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
+  return (
+    <div className="font-sans text-slate-800 pb-24 selection:bg-indigo-200 selection:text-indigo-900 relative">
+      
+      {/* LAYER 1: Ambient Backdrop (Glowing blur rings) */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[8%] right-[12%] w-[420px] h-[420px] rounded-full bg-indigo-100/40 blur-[130px] animate-pulse"></div>
+        <div className="absolute bottom-[18%] left-[6%] w-[460px] h-[460px] rounded-full bg-cyan-100/50 blur-[140px]"></div>
+      </div>
 
-                          {/* Rule 3: Correct Symbols */}
-                          {activeRule === 2 && (
-                            <div className="w-full max-w-md">
-                              {!ruleToggleState ? (
-                                <div className="bg-white/80 p-4 rounded-xl border border-red-200 text-center space-y-3">
-                                  <span className="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">ใช้กล่อง Process พร่ำเพรื่อ</span>
-                                  <div className="flex justify-center items-center gap-4">
-                                    <div className="border-2 border-red-500 bg-red-50/50 p-2.5 rounded text-center w-28 shadow-sm">
-                                      <div className="w-full h-8 bg-red-100 border border-red-300 flex items-center justify-center text-[10px] font-mono font-bold text-red-800 uppercase">Rectangle</div>
-                                      <span className="text-[9px] text-red-600 font-bold block mt-1.5">รับค่าน้ำหนัก</span>
-                                    </div>
-                                    <div className="border-2 border-red-500 bg-red-50/50 p-2.5 rounded text-center w-28 shadow-sm">
-                                      <div className="w-full h-8 bg-red-100 border border-red-300 flex items-center justify-center text-[10px] font-mono font-bold text-red-800 uppercase">Rectangle</div>
-                                      <span className="text-[9px] text-red-600 font-bold block mt-1.5">แสดงคำตอบ</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="bg-white/80 p-4 rounded-xl border border-emerald-200 text-center space-y-3">
-                                  <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">สัญลักษณ์สากล ANSI ถูกฟังก์ชัน</span>
-                                  <div className="flex justify-center items-center gap-4">
-                                    <div className="border-2 border-emerald-500 bg-emerald-50/50 p-2.5 rounded text-center w-28 shadow-sm">
-                                      {/* Parallelogram */}
-                                      <div className="w-full h-8 bg-emerald-100 border border-emerald-300 flex items-center justify-center -skew-x-[15deg]">
-                                        <span className="text-[8px] font-mono font-bold text-emerald-800 uppercase skew-x-[15deg]">INPUT Shape</span>
-                                      </div>
-                                      <span className="text-[9px] text-emerald-700 font-bold block mt-1.5">รับค่าน้ำหนัก</span>
-                                    </div>
-                                    <div className="border-2 border-emerald-500 bg-emerald-50/50 p-2.5 rounded text-center w-32 shadow-sm">
-                                      {/* ANSI Display shape */}
-                                      <div className="w-full h-8 flex justify-center items-center">
-                                        <svg width="80" height="28" viewBox="0 0 100 35" className="fill-emerald-100 stroke-emerald-400 stroke-[2.5]">
-                                          <path d="M 20,2 Q 5,17.5 20,33 L 80,33 L 95,17.5 L 80,2 Z" />
-                                          <text x="50" y="21" textAnchor="middle" fill="#065f46" fontSize="10" fontWeight="bold" stroke="none">DISPLAY</text>
-                                        </svg>
-                                      </div>
-                                      <span className="text-[9px] text-emerald-700 font-bold block mt-1.5">แสดงทางหน้าจอ</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
+      {/* LAYER 3: Vertically Stacked Components */}
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 pt-4 space-y-16">
+        
+        {/* CARD 1: Flow Direction & Routing Simulator */}
+        <FlowDirectionCard isMuted={isMuted} />
 
-                          {/* Rule 4: No Crossing lines */}
-                          {activeRule === 3 && (
-                            <div className="w-full max-w-md">
-                              {!ruleToggleState ? (
-                                <div className="bg-white/80 p-4 rounded-xl border border-red-200 text-center space-y-3">
-                                  <span className="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">สายไฟพันกันระโยงระยาง</span>
-                                  <svg width="260" height="100" viewBox="0 0 260 100" className="stroke-red-400 stroke-[2] fill-none">
-                                    <rect x="5" y="35" width="55" height="30" rx="4" fill="#fee2e2" stroke="#ef4444" />
-                                    <text x="32.5" y="53" textAnchor="middle" fill="#991b1b" fontSize="8" fontWeight="bold" stroke="none">ตรรกะ 1</text>
-                                    
-                                    <rect x="200" y="35" width="55" height="30" rx="4" fill="#fee2e2" stroke="#ef4444" />
-                                    <text x="227.5" y="53" textAnchor="middle" fill="#991b1b" fontSize="8" fontWeight="bold" stroke="none">ตรรกะ 2</text>
-                                    
-                                    <path d="M 60,40 L 200,60" markerEnd="url(#arrow-red)" />
-                                    <path d="M 60,60 L 200,40" markerEnd="url(#arrow-red)" className="stroke-[3] stroke-red-600" />
-                                  </svg>
-                                </div>
-                              ) : (
-                                <div className="bg-white/80 p-4 rounded-xl border border-emerald-200 text-center space-y-3">
-                                  <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">ตัดขาดสัญญาณด้วย Connector วงกลม</span>
-                                  <div className="flex justify-center items-center gap-6 bg-emerald-50/20 p-2.5 rounded-xl border border-emerald-100">
-                                    <div className="flex items-center gap-2">
-                                      <div className="w-12 h-8 border border-emerald-300 bg-emerald-50/50 rounded flex items-center justify-center text-[10px] font-bold text-emerald-800">บล็อก 1</div>
-                                      <span className="text-zinc-400">➡️</span>
-                                      <div className="w-6 h-6 border-2 border-emerald-500 bg-emerald-100 rounded-full flex items-center justify-center text-[9px] font-bold text-emerald-700">A</div>
-                                    </div>
-                                    <div className="w-px h-8 bg-zinc-200"></div>
-                                    <div className="flex items-center gap-2">
-                                      <div className="w-6 h-6 border-2 border-emerald-500 bg-emerald-100 rounded-full flex items-center justify-center text-[9px] font-bold text-emerald-700">A</div>
-                                      <span className="text-zinc-400">➡️</span>
-                                      <div className="w-12 h-8 border border-emerald-300 bg-emerald-50/50 rounded flex items-center justify-center text-[10px] font-bold text-emerald-800">บล็อก 2</div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
+        {/* CARD 2: Flowchart Error Debugger & Fixer */}
+        <ErrorVisualizerCard isMuted={isMuted} />
 
-                          {/* Rule 5: Concise Statements */}
-                          {activeRule === 4 && (
-                            <div className="w-full max-w-md">
-                              {!ruleToggleState ? (
-                                <div className="bg-white/80 p-4 rounded-xl border border-red-200 text-center space-y-2">
-                                  <span className="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">เขียนโค้ดยาวล้นสัญญาลักษณ์</span>
-                                  <div className="mx-auto w-64 p-4 border-2 border-red-400 bg-red-50 text-red-900 rounded font-mono text-[9px] text-left leading-relaxed">
-                                    {`while player_hp > 0 and enemy_hp > 0:`}<br />
-                                    {`  dmg = random.randint(10, 20)`}<br />
-                                    {`  enemy_hp -= dmg`}
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="bg-white/80 p-4 rounded-xl border border-emerald-200 text-center space-y-2">
-                                  <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">ไทยกระชับ อ่านจบปุ๊บรู้เรื่องปั๊บ</span>
-                                  <div className="mx-auto w-48 p-4 border-2 border-emerald-500 bg-emerald-50 text-emerald-900 rounded-lg text-sm font-bold shadow-sm">
-                                    ลูปต่อสู้ <br />
-                                    ลดพลังชีวิตศัตรู
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
+        {/* CARD 3: Flowchart Auditor Mini-Game */}
+        <FlowchartAuditorGame isMuted={isMuted} />
 
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
-
-                  </div>
-                </div>
-
-                {/* Compare text explanation */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-red-50/50 border border-red-100 flex items-start gap-2.5">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <div>
-                      <h5 className="font-bold text-red-800 text-xs tracking-wider uppercase mb-1">ผลกระทบแบบผิดระเบียบ</h5>
-                      <p className="text-zinc-600 text-xs leading-relaxed">{flowchartRules[activeRule].incorrectDesc}</p>
-                    </div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-emerald-50/50 border border-emerald-100 flex items-start gap-2.5">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <h5 className="font-bold text-emerald-800 text-xs tracking-wider uppercase mb-1">ประโยชน์แบบถูกระเบียบ</h5>
-                      <p className="text-zinc-600 text-xs leading-relaxed">{flowchartRules[activeRule].correctDesc}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Rules Checklist tips */}
-                <div className="bg-indigo-50/30 rounded-2xl border border-indigo-100/50 p-5 mt-4">
-                  <h4 className="font-bold text-indigo-950 text-[14px] flex items-center gap-2 mb-2">
-                    <Info className="w-4 h-4 text-indigo-600" /> เคล็ดลับจากครูแม็ค (Pro Tips)
-                  </h4>
-                  <ul className="space-y-1.5 text-xs text-zinc-600 leading-relaxed pl-5 list-disc">
-                    {flowchartRules[activeRule].tips.map((tip, tIdx) => (
-                      <li key={tIdx}>{tip}</li>
-                    ))}
-                  </ul>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* SECTION 2: พื้นที่ปฏิบัติการสร้างผังงานจริง (Flowchart Workspace) */}
-        <section className="space-y-8 animate-fade-in">
-          <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-zinc-200 pb-6 gap-4">
-            <div className="space-y-2">
-              <span className="text-cyan-600 font-semibold tracking-wider text-sm uppercase flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4" /> บทเรียนส่วนที่สอง
-              </span>
-              <h3 className="text-3xl font-extrabold text-zinc-900 tracking-tight">
-                พื้นที่ปฏิบัติการสร้างผังงานจริง
-              </h3>
-            </div>
-            
-            {/* Tab Controller */}
-            <div className="flex bg-zinc-100 p-1.5 rounded-xl border border-zinc-200">
-              <button
-                onClick={() => setWorkspaceTab('drawio')}
-                className={`py-1.5 px-4 rounded-lg font-bold text-xs flex items-center gap-1.5 transition-all ${
-                  workspaceTab === 'drawio' 
-                    ? 'bg-indigo-600 text-white shadow' 
-                    : 'text-zinc-500 hover:text-zinc-800'
-                }`}
-              >
-                <Monitor className="w-3.5 h-3.5" /> draw.io ของแท้ (Embedded)
-              </button>
-              <button
-                onClick={() => setWorkspaceTab('code')}
-                className={`py-1.5 px-4 rounded-lg font-bold text-xs flex items-center gap-1.5 transition-all ${
-                  workspaceTab === 'code' 
-                    ? 'bg-indigo-600 text-white shadow' 
-                    : 'text-zinc-500 hover:text-zinc-800'
-                }`}
-              >
-                <Terminal className="w-3.5 h-3.5 animate-pulse" /> Diagram as Code (เครื่องมือวาดด้วยรหัส)
-              </button>
-            </div>
-          </div>
-
-          <AnimatePresence mode="wait">
-            
-            {/* TAB 1: DRAW.IO EMBEDDED WORKSPACE */}
-            {workspaceTab === 'drawio' && (
-              <motion.div
-                key="drawio-tab"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-6"
-              >
-                <div className="bg-white rounded-3xl border border-zinc-200 overflow-hidden shadow-xl">
-                  
-                  {/* Browser-like window header */}
-                  <div className="bg-zinc-900 px-6 py-4 flex items-center justify-between border-b border-zinc-800">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                      <span className="text-xs text-zinc-400 font-mono ml-4 tracking-wider uppercase">Diagrams.net (draw.io) Integration API</span>
-                    </div>
-                    <span className="text-[11px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2.5 py-0.5 rounded-full font-bold">
-                      PRO WORKSPACE
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-12">
-                    
-                    {/* Embedded Editor Iframe */}
-                    <div className="lg:col-span-9 h-[620px] bg-zinc-100 relative">
-                      <iframe
-                        src="https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json"
-                        className="w-full h-full border-0 absolute inset-0"
-                        title="draw.io workspace"
-                      ></iframe>
-                    </div>
-
-                    {/* Pro Instructions Sidebar */}
-                    <div className="lg:col-span-3 bg-zinc-50 border-l border-zinc-200 p-6 flex flex-col justify-between h-[620px] overflow-y-auto">
-                      <div className="space-y-6">
-                        <div className="space-y-2">
-                          <h4 className="font-extrabold text-zinc-900 text-sm flex items-center gap-1.5">
-                            <Info className="w-4 h-4 text-indigo-600" /> คำแนะนำการใช้งาน
-                          </h4>
-                          <p className="text-xs text-zinc-600 leading-relaxed">
-                            นี่คือโปรแกรมเขียนผังงานและไดอะแกรมระดับโลก **draw.io (ของแท้)** ที่ถูกผสานการทำงานเข้าสู่ระบบห้องเรียนของครูแม็คโดยตรงผ่าน API
-                          </p>
-                        </div>
-
-                        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 space-y-2.5">
-                          <h5 className="font-bold text-indigo-950 text-xs flex items-center gap-1.5">
-                            <Sparkles className="w-3.5 h-3.5 text-indigo-600" /> โจทย์กิจกรรมท้าทาย
-                          </h5>
-                          <p className="text-[11px] text-zinc-700 leading-relaxed">
-                            จงออกแบบผังงาน **"ระบบตรวจสอบสิทธิ์เข้าสู่ระบบ (Login Security)"** โดยมีขั้นตอน:
-                          </p>
-                          <ul className="list-decimal pl-4 text-[10px] text-zinc-600 space-y-1 leading-normal">
-                            <li>รับค่าชื่อผู้ใช้และรหัสผ่าน</li>
-                            <li>ถ้าถูก ให้เข้าหน้าระบบหลัก แล้วจบ</li>
-                            <li>ถ้าผิด เกิน 3 ครั้ง ให้ล็อกไอดี</li>
-                          </ul>
-                        </div>
-
-                        <div className="space-y-2.5">
-                          <h5 className="font-bold text-zinc-800 text-xs">🛠️ วิธีดึงสัญลักษณ์ ANSI ใน draw.io</h5>
-                          <ul className="text-[11px] text-zinc-500 space-y-1.5 list-disc pl-4 leading-normal">
-                            <li>สัญลักษณ์กระบวนการ: เลือกทรง **Rectangle** (สี่เหลี่ยมผืนผ้า)</li>
-                            <li>สัญลักษณ์ตัดสินใจ: เลือกทรง **Rhombus** (สี่เหลี่ยมขนมเปียกปูน)</li>
-                            <li>สัญลักษณ์รับข้อมูล (I/O): เลือกทรง **Parallelogram** (สี่เหลี่ยมด้านขนาน)</li>
-                            <li>สัญลักษณ์หน้าจอ: ค้นหาด้วยคำว่า **Display**</li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="border-t border-zinc-200 pt-4 mt-6">
-                        <span className="text-[10px] text-zinc-400 leading-normal block">
-                          * เมื่อทำการเขียนเสร็จสิ้น สามารถกดเมนู **File &rarr; Export as &rarr; PNG/SVG** ในหน้าต่าง draw.io เพื่อเซฟรูปผังงานลงเครื่องส่งครูได้ทันที
-                        </span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* TAB 2: DIAGRAM AS CODE STUDIO */}
-            {workspaceTab === 'code' && (
-              <motion.div
-                key="code-tab"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
-              >
-                
-                {/* 💻 DIAGRAM AS CODE WRITER (LEFT SIDE) */}
-                <div className="lg:col-span-5 bg-zinc-950 border border-zinc-850 rounded-[2.5rem] p-6 shadow-2xl flex flex-col justify-between relative overflow-hidden min-h-[640px]">
-                  
-                  {/* Backdrop glowing grid */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#334155_1px,transparent_1px),linear-gradient(to_bottom,#334155_1px,transparent_1px)] bg-[size:24px_24px] opacity-10 pointer-events-none"></div>
-
-                  <div className="relative z-10 space-y-4 flex-1 flex flex-col justify-start">
-                    
-                    {/* Header of Editor */}
-                    <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                        <span className="font-mono text-xs text-zinc-400">flowchart_compiler.py</span>
-                      </div>
-
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => loadCodeTemplate('bmi')}
-                          className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wider transition-all"
-                        >
-                          สูตร BMI
-                        </button>
-                        <button
-                          onClick={() => loadCodeTemplate('atm')}
-                          className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wider transition-all"
-                        >
-                          ตู้ ATM
-                        </button>
-                        <button
-                          onClick={() => loadCodeTemplate('grade')}
-                          className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wider transition-all"
-                        >
-                          ตัดเกรด
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Instruction Cheat-sheet banner */}
-                    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-3 flex items-start gap-2 text-[10px] leading-relaxed text-zinc-400">
-                      <Info className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5 animate-bounce" />
-                      <div>
-                        <strong>วิธีเขียน Diagram as Code:</strong> ระบุคำสั่งนำหน้าด้วย <code className="text-cyan-300 font-mono">input:</code> (รับข้อมูล), <code className="text-indigo-300 font-mono">process:</code> (คำนวณ), หรือ <code className="text-purple-300 font-mono">display:</code> (แสดงผล) และใช้เว้นวรรค 4 ช่อง (Indent) ใต้เงื่อนไข <code className="text-amber-300 font-mono">if:</code> และ <code className="text-amber-300 font-mono">else:</code> เพื่อแยกเส้นทางเดินเงื่อนไข
-                      </div>
-                    </div>
-
-                    {/* Main Code Editor Box */}
-                    <div className="flex-1 min-h-[320px] bg-zinc-900 rounded-2xl border border-zinc-800 relative font-mono text-xs text-indigo-100 flex p-3 overflow-hidden">
-                      {/* Gutter Line Numbers */}
-                      <div className="text-zinc-600 text-right pr-3 select-none border-r border-zinc-800 flex flex-col pt-1.5 gap-[18px]">
-                        {codeText.split('\n').map((_, idx) => (
-                          <div key={idx} className={`h-4 leading-none text-[10px] ${highlightLine === idx + 1 ? 'text-indigo-400 font-bold' : ''}`}>
-                            {idx + 1}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Textarea Input area */}
-                      <textarea
-                        value={codeText}
-                        onChange={(e) => setCodeText(e.target.value)}
-                        className="flex-1 bg-transparent border-0 focus:ring-0 outline-none text-zinc-200 px-3 py-1 font-mono text-xs leading-[34px] resize-none overflow-y-auto min-h-full whitespace-pre"
-                        placeholder="เริ่มต้นเขียนโค้ดที่นี่..."
-                        spellCheck="false"
-                      />
-                    </div>
-
-                  </div>
-
-                  {/* Compiler Console Status (Bottom) */}
-                  <div className="relative z-10 border-t border-zinc-800 pt-4 mt-4 space-y-2">
-                    <div className="flex justify-between items-center text-xs font-mono text-zinc-400">
-                      <span className="flex items-center gap-1.5">
-                        {isCompiling ? (
-                          <>
-                            <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-ping"></span>
-                            <span>กำลังแปลงโค้ดเป็นบล็อกตรรกะ...</span>
-                          </>
-                        ) : compileErrors.length > 0 ? (
-                          <>
-                            <span className="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
-                            <span className="text-red-400 font-bold">🔴 พบคอนฟลิกตรรกะผังงาน</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full"></span>
-                            <span className="text-emerald-400 font-bold">🟢 ผ่านการคอมไพล์ตรรกะสากล</span>
-                          </>
-                        )}
-                      </span>
-                      <span className="text-[10px]">ANSI COMPILER v1.0.3</span>
-                    </div>
-
-                    {compileErrors.length > 0 && (
-                      <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-3 text-[10px] text-red-300 font-mono space-y-1 max-h-[100px] overflow-y-auto">
-                        {compileErrors.map((err, idx) => (
-                          <div key={idx} className="leading-relaxed">{err}</div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                </div>
-
-                {/* 📊 LIVE INTERACTIVE FLOWCHART CANVAS (RIGHT SIDE) */}
-                <div className="lg:col-span-7 bg-zinc-950 border border-zinc-850 rounded-[2.5rem] p-6 md:p-8 shadow-2xl flex flex-col justify-between min-h-[640px] relative overflow-hidden">
-                  
-                  {/* Technology backdrop pattern */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#334155_1px,transparent_1px),linear-gradient(to_bottom,#334155_1px,transparent_1px)] bg-[size:24px_24px] opacity-10 pointer-events-none"></div>
-
-                  {/* Header title */}
-                  <div className="relative z-10 flex justify-between items-center border-b border-zinc-900 pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="bg-zinc-900 p-2 rounded-xl border border-zinc-800">
-                        <LayoutGrid className="w-4 h-4 text-indigo-400" />
-                      </div>
-                      <div>
-                        <h4 className="text-[9px] font-mono tracking-widest text-zinc-400 uppercase">Live Compiler Preview</h4>
-                        <h3 className="font-extrabold text-sm text-zinc-200">แบบจำลองสัญลักษณ์ ANSI อัจฉริยะ</h3>
-                      </div>
-                    </div>
-
-                    <span className="text-[10px] text-zinc-500">
-                      อัปเดตแบบเรียลไทม์ตามรหัสโค้ด
-                    </span>
-                  </div>
-
-                  {/* Central Flow Stack renderer */}
-                  <div className="relative z-10 flex-1 flex flex-col items-center justify-start py-8 space-y-0 max-h-[460px] overflow-y-auto my-4 px-2">
-                    <AnimatePresence>
-                      {compiledBlocks.length === 0 ? (
-                        <div className="text-zinc-600 italic text-center py-24 flex flex-col justify-center items-center gap-3">
-                          <HelpCircle className="w-10 h-10 text-zinc-700 animate-bounce" />
-                          <span>กรุณาพิมพ์หรือเลือกแม่แบบคำสั่งเพื่อสร้างสากลผังงาน</span>
-                        </div>
-                      ) : (
-                        compiledBlocks.map((block, idx) => {
-                          const isHovered = highlightLine === block.lineNum;
-
-                          return (
-                            <React.Fragment key={block.id}>
-                              
-                              {/* Standard shape rendering */}
-                              {block.type !== 'decision' ? (
-                                <motion.div
-                                  initial={{ opacity: 0, scale: 0.95 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  exit={{ opacity: 0 }}
-                                  onMouseEnter={() => setHighlightLine(block.lineNum)}
-                                  onMouseLeave={() => setHighlightLine(null)}
-                                  className={`w-full max-w-[260px] h-[48px] flex items-center justify-center font-bold text-xs cursor-help transition-all duration-200 z-10 ${
-                                    isHovered 
-                                      ? 'scale-105 ring-2 ring-indigo-500 ring-offset-2 ring-offset-zinc-950 z-20' 
-                                      : 'opacity-90 hover:opacity-100'
-                                  }`}
-                                >
-                                  {block.type === 'start' && (
-                                    <div className="w-full h-full rounded-full border border-emerald-500 bg-emerald-950/40 text-emerald-300 flex items-center justify-center shadow-lg uppercase tracking-wider">
-                                      {block.text}
-                                    </div>
-                                  )}
-
-                                  {block.type === 'end' && (
-                                    <div className="w-full h-full rounded-full border border-red-500 bg-red-950/40 text-red-300 flex items-center justify-center shadow-lg uppercase tracking-wider">
-                                      {block.text}
-                                    </div>
-                                  )}
-
-                                  {block.type === 'input' && (
-                                    <div className="w-full h-full flex items-center justify-center -skew-x-[15deg] border border-sky-500 bg-sky-950/30 text-sky-300 shadow-md">
-                                      <span className="skew-x-[15deg] block truncate text-center px-4 font-bold">{block.text}</span>
-                                    </div>
-                                  )}
-
-                                  {block.type === 'process' && (
-                                    <div className="w-full h-full rounded-lg border border-indigo-500 bg-indigo-950/30 text-indigo-300 flex items-center justify-center shadow-md px-4 text-center">
-                                      <span className="block truncate">{block.text}</span>
-                                    </div>
-                                  )}
-
-                                  {block.type === 'display' && (
-                                    <div className="w-full h-full relative flex items-center justify-center">
-                                      <svg width="100%" height="100%" viewBox="0 0 260 48" preserveAspectRatio="none" className="absolute inset-0 fill-purple-950/30 stroke-purple-500 stroke-[1.5] drop-shadow-md">
-                                        <path d="M 22,0 Q 2,24 22,48 L 238,48 L 255,24 L 238,0 Z" />
-                                      </svg>
-                                      <div className="relative z-10 w-full text-center px-8 text-purple-300 text-[10px] leading-normal font-extrabold truncate">
-                                        {block.text}
-                                      </div>
-                                    </div>
-                                  )}
-                                </motion.div>
-                              ) : (
-                                /* Nested Decision Node UI (Selection Structure) */
-                                <div className="w-full flex flex-col items-center z-10">
-                                  {/* Decision Diamond shape */}
-                                  <motion.div
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    onMouseEnter={() => setHighlightLine(block.lineNum)}
-                                    onMouseLeave={() => setHighlightLine(null)}
-                                    className={`w-full max-w-[260px] h-[52px] relative flex items-center justify-center cursor-help transition-all duration-200 z-10 ${
-                                      isHovered ? 'scale-105 z-20' : ''
-                                    }`}
-                                  >
-                                    <svg width="100%" height="100%" viewBox="0 0 260 52" preserveAspectRatio="none" className={`absolute inset-0 fill-amber-950/30 stroke-[1.5] drop-shadow-md ${isHovered ? 'stroke-indigo-500' : 'stroke-amber-500'}`}>
-                                      <polygon points="130,0 260,26 130,52 0,26" />
-                                    </svg>
-                                    <div className="relative z-10 w-full text-center px-8 text-amber-300 text-[10px] leading-normal font-extrabold truncate">
-                                      {block.text}
-                                    </div>
-                                  </motion.div>
-
-                                  {/* Forking connection arrows */}
-                                  <div className="w-full max-w-lg flex justify-between px-10 relative">
-                                    {/* Yes Branch Arrow Left */}
-                                    <div className="flex flex-col items-center flex-1">
-                                      <span className="text-[9px] text-emerald-400 font-mono font-bold mb-1">ใช่ (Yes)</span>
-                                      <svg width="40" height="24" viewBox="0 0 40 24" className="stroke-emerald-500 stroke-[1.5] fill-none">
-                                        <path d="M 35,0 Q 20,20 5,20 L 5,24" markerEnd="url(#arrow-emerald)" />
-                                      </svg>
-                                    </div>
-
-                                    {/* No Branch Arrow Right */}
-                                    <div className="flex flex-col items-center flex-1">
-                                      <span className="text-[9px] text-red-400 font-mono font-bold mb-1">ไม่ใช่ (No)</span>
-                                      <svg width="40" height="24" viewBox="0 0 40 24" className="stroke-red-500 stroke-[1.5] fill-none">
-                                        <path d="M 5,0 Q 20,20 35,20 L 35,24" markerEnd="url(#arrow-red)" />
-                                      </svg>
-                                    </div>
-                                  </div>
-
-                                  {/* Forking Side-by-Side Content Columns */}
-                                  <div className="w-full max-w-xl grid grid-cols-2 gap-4 items-stretch px-2 my-2 z-10">
-                                    
-                                    {/* YES column path stack */}
-                                    <div className="border border-emerald-900/30 bg-emerald-950/5 rounded-2xl p-4 flex flex-col items-center space-y-4">
-                                      {block.yesBranch.length === 0 ? (
-                                        <span className="text-[9px] text-zinc-600 italic">ข้ามผ่านตรรกะนี้</span>
-                                      ) : (
-                                        block.yesBranch.map((subBlock, sIdx) => (
-                                          <React.Fragment key={subBlock.id}>
-                                            <div 
-                                              onMouseEnter={() => setHighlightLine(subBlock.lineNum)}
-                                              onMouseLeave={() => setHighlightLine(null)}
-                                              className={`w-full max-w-[180px] h-[40px] flex items-center justify-center font-bold text-[10px] cursor-help transition-all duration-150 rounded-lg ${
-                                                highlightLine === subBlock.lineNum 
-                                                  ? 'scale-105 ring-1 ring-emerald-400 bg-emerald-900/40 text-emerald-300' 
-                                                  : 'bg-emerald-950/20 border border-emerald-800/40 text-emerald-400'
-                                              }`}
-                                            >
-                                              {subBlock.type === 'process' && <div className="truncate px-2">{subBlock.text}</div>}
-                                              {subBlock.type === 'input' && <div className="truncate px-2 -skew-x-[10deg]"><span className="skew-x-[10deg] block">{subBlock.text}</span></div>}
-                                              {subBlock.type === 'display' && <div className="truncate px-2 italic">{subBlock.text}</div>}
-                                            </div>
-                                            {sIdx < block.yesBranch.length - 1 && (
-                                              <svg width="20" height="12" viewBox="0 0 20 12" className="stroke-emerald-600/50 stroke-[1.5] fill-none">
-                                                <line x1="10" y1="0" x2="10" y2="8" />
-                                                <path d="M 7,5 L 10,8 L 13,5" />
-                                              </svg>
-                                            )}
-                                          </React.Fragment>
-                                        ))
-                                      )}
-                                    </div>
-
-                                    {/* NO column path stack */}
-                                    <div className="border border-red-900/30 bg-red-950/5 rounded-2xl p-4 flex flex-col items-center space-y-4">
-                                      {block.noBranch.length === 0 ? (
-                                        <span className="text-[9px] text-zinc-600 italic">ข้ามผ่านตรรกะนี้</span>
-                                      ) : (
-                                        block.noBranch.map((subBlock, sIdx) => (
-                                          <React.Fragment key={subBlock.id}>
-                                            <div 
-                                              onMouseEnter={() => setHighlightLine(subBlock.lineNum)}
-                                              onMouseLeave={() => setHighlightLine(null)}
-                                              className={`w-full max-w-[180px] h-[40px] flex items-center justify-center font-bold text-[10px] cursor-help transition-all duration-150 rounded-lg ${
-                                                highlightLine === subBlock.lineNum 
-                                                  ? 'scale-105 ring-1 ring-red-400 bg-red-900/40 text-red-300' 
-                                                  : 'bg-red-950/20 border border-red-800/40 text-red-400'
-                                              }`}
-                                            >
-                                              {subBlock.type === 'process' && <div className="truncate px-2">{subBlock.text}</div>}
-                                              {subBlock.type === 'input' && <div className="truncate px-2 -skew-x-[10deg]"><span className="skew-x-[10deg] block">{subBlock.text}</span></div>}
-                                              {subBlock.type === 'display' && <div className="truncate px-2 italic">{subBlock.text}</div>}
-                                            </div>
-                                            {sIdx < block.noBranch.length - 1 && (
-                                              <svg width="20" height="12" viewBox="0 0 20 12" className="stroke-red-600/50 stroke-[1.5] fill-none">
-                                                <line x1="10" y1="0" x2="10" y2="8" />
-                                                <path d="M 7,5 L 10,8 L 13,5" />
-                                              </svg>
-                                            )}
-                                          </React.Fragment>
-                                        ))
-                                      )}
-                                    </div>
-
-                                  </div>
-
-                                  {/* Merging arrows flow down from branches */}
-                                  <div className="w-full max-w-lg flex justify-between px-10 relative">
-                                    <div className="flex-1 flex justify-center">
-                                      <svg width="40" height="24" viewBox="0 0 40 24" className="stroke-emerald-500 stroke-[1.5] fill-none">
-                                        <path d="M 5,0 L 5,10 Q 20,20 35,20" />
-                                      </svg>
-                                    </div>
-                                    <div className="flex-1 flex justify-center">
-                                      <svg width="40" height="24" viewBox="0 0 40 24" className="stroke-red-500 stroke-[1.5] fill-none">
-                                        <path d="M 35,0 L 35,10 Q 20,20 5,20" />
-                                      </svg>
-                                    </div>
-                                  </div>
-
-                                  {/* Merge node dot */}
-                                  <div className="w-3 h-3 rounded-full bg-zinc-800 border border-zinc-700 z-20 -mt-1 shadow"></div>
-                                </div>
-                              )}
-
-                              {/* Connective Arrow pointing down to the next block */}
-                              {idx < compiledBlocks.length - 1 && (
-                                <div className="w-[30px] h-[24px] flex items-center justify-center">
-                                  <svg width="30" height="24" viewBox="0 0 30 24" className="stroke-zinc-800 stroke-[2] fill-none">
-                                    <line x1="15" y1="0" x2="15" y2="18" />
-                                    <path d="M 11,13 L 15,18 L 19,13" />
-                                  </svg>
-                                </div>
-                              )}
-
-                            </React.Fragment>
-                          );
-                        })
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Standard compilation definitions footer */}
-                  <div className="relative z-10 bg-zinc-900/60 border border-zinc-900 p-4 rounded-2xl text-[11px] text-zinc-500 text-center leading-relaxed">
-                    💡 **เคล็ดลับความเร็วสูง:** นำเมาส์ไปชี้ที่บล็อกใดๆ บนแคนวาสฝังขวา เพื่อไฮไลท์ตรวจสอบความสอดคล้องของบรรทัดโค้ดฝั่งซ้ายแบบมีมิติสมดุล!
-                  </div>
-
-                </div>
-
-                {/* SVG Definitions for arrows */}
-                <svg width="0" height="0" className="absolute invisible pointer-events-none">
-                  <defs>
-                    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
-                    </marker>
-                    <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
-                    </marker>
-                  </defs>
-                </svg>
-
-              </motion.div>
-            )}
-
-          </AnimatePresence>
-        </section>
-
-        {/* Dynamic Interactive Conclusion Banner */}
-        <div className="bg-white rounded-3xl border border-zinc-200 p-8 shadow-lg relative overflow-hidden hover:shadow-xl transition-all">
-          <div className="absolute top-0 left-0 w-3 h-full bg-gradient-to-b from-indigo-500 to-cyan-500"></div>
-          <div className="flex flex-col md:flex-row gap-6 items-center">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-500 text-white flex items-center justify-center shrink-0 shadow-md">
-              <Award className="w-7 h-7" />
-            </div>
-            <div className="space-y-2 text-center md:text-left">
-              <h4 className="text-lg font-bold text-zinc-950">สรุปแนวทางการเขียนผังงานเพื่อไปเขียนโค้ดจริง</h4>
-              <p className="text-zinc-600 text-sm leading-relaxed max-w-4xl">
-                การปฏิบัติตามกฎเกณฑ์มาตรฐานไม่เพียงแต่ช่วยให้ผังงานของคุณดูสวยงามเป็นมืออาชีพเท่านั้น แต่ยังมีผลโดยตรงกับโครงสร้างของภาษาคอมพิวเตอร์ 
-                เมื่อคุณเขียนรหัสความต้องการในแบบจำลอง **Diagram as Code** สังเกตว่าโค้ดบรรทัดตัดสินใจที่ผ่านเงื่อนไขจะสร้างทางแยกอย่างถูกต้อง 
-                ซึ่งสอดคล้องกับคีย์เวิร์ดโครงสร้างการทำงานในภาษา Python เช่น `if` และ `else` การแบ่งส่วนการทำงานย่อยช่วยป้องกันการเกิดข้อผิดพลาดในการเขียนโปรแกรมจริงได้สูงสุด
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* LAYER 4: Standardized TeacherTask Footer */}
+        <TeacherTask 
+          title="ใบงานปฏิบัติ 2.9" 
+          taskText={teacherTaskContent} 
+        />
 
       </main>
-
-      {/* 4️⃣ Layer 4: Standardized TeacherTask Footer */}
-      <TeacherTask 
-        title="ใบงานกิจกรรมสร้างสรรค์ (ทบทวนความรู้ 2.9)" 
-        taskText={`ใบงานฝึกทักษะ: "ตู้เอทีเอ็มออมสินหรรษา"
-
-คำอธิบายภารกิจสำหรับผู้เรียน:
-1. ให้นักเรียนสังเกตและทบทวนความรู้กฎเกณฑ์ผังงานที่ดี 5 ประการจากหน้าจอจำลองด้านบน
-2. ให้ใช้เครื่องมือ "Diagram as Code" ทางด้านขวาในการเขียนรหัสจำลองระบบการทำธุรกรรมของ "ตู้เอทีเอ็ม (ATM) สำหรับถอนเงินสด" โดยมีข้อกำหนด:
-   - รับรหัสและตรวจสอบเงื่อนไข (input -> if)
-   - หากรหัสผ่านถูกต้อง ให้รับยอดเงินสดที่ต้องการถอน และตัดยอดบัญชีเพื่อจ่ายธนบัตรออก (process -> display)
-   - หากรหัสผ่านผิดพลาด ให้ทำกานแสดงข้อผิดพลาดบนจอภาพและคืนบัตร (display)
-3. ⚠️ ข้อห้ามสำคัญตามมาตรฐานความปลอดภัย ANSI:
-   - ห้ามมีสัญลักษณ์ END มากกว่า 1 จุด
-   - สัญลักษณ์การทำงานที่รับเข้าทางแป้นพิมพ์ต้องใช้ Parallelogram ห้ามชุ่ยใช้สี่เหลี่ยมผืนผ้า
-   - เส้นทางไหลของเงื่อนไขการหักเงินในบัญชี ต้องกำกับป้าย "ใช่" และ "ไม่ใช่" ให้ชัดเจน
-4. เมื่อนักเรียนแปลงโค้ดออกมาเป็นแผนผังสำเร็จเรียบร้อย สามารถทำการส่งแคปเจอร์หน้าจอและสัญลักษณ์ความถูกต้อง ANSI ไปยังช่องทางของคุณครูแม็คในชั่วโมงเรียนคอมพิวเตอร์`} 
-      />
     </div>
   );
 }

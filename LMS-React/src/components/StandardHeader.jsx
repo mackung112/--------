@@ -33,14 +33,14 @@ export default function StandardHeader({
   }, [mainTitle, subTitle]);
 
   return (
-    <header className={`${transparent ? '' : 'bg-gradient-to-br from-[#f0fdfa] via-white to-[#ecfeff]'} border-b ${transparent ? 'border-transparent' : 'border-gray-100'} relative z-20 ${isCard ? 'p-8 md:p-12' : 'pt-12 pb-8 md:pt-16 md:pb-12 w-full'} overflow-hidden`}>
+    <header className={`${transparent ? '' : 'bg-gradient-to-br from-[#f0fdfa] via-white to-[#ecfeff]'} border-b ${transparent ? 'border-transparent' : 'border-gray-100'} relative z-20 ${isCard ? 'p-6 md:p-8' : 'pt-8 pb-4 md:pt-10 md:pb-5 w-full'} overflow-hidden`}>
       <div className="absolute top-0 right-0 p-12 opacity-40 pointer-events-none">
         <div className="w-64 h-64 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
       
       <div className={`relative z-10 ${isCard ? '' : 'max-w-7xl mx-auto px-6 lg:px-12'}`}>
         {chapterTitle && (
-          <span className="text-orange-500 font-bold tracking-widest text-sm md:text-base mb-3 block uppercase">
+          <span className="text-orange-500 font-bold tracking-widest text-sm md:text-base mb-2 block uppercase">
             {chapterTitle}
           </span>
         )}
@@ -50,16 +50,16 @@ export default function StandardHeader({
           </h1>
         )}
         {subTitle && (
-          <h2 className={`text-3xl md:text-5xl lg:text-6xl font-black mb-6 !border-none pb-4 leading-tight text-transparent bg-clip-text bg-gradient-to-r ${randomGradient} tracking-tighter drop-shadow-sm`}>
+          <h2 className={`text-3xl md:text-5xl lg:text-6xl font-black mb-3 !border-none pb-2 leading-normal text-transparent bg-clip-text bg-gradient-to-r ${randomGradient} tracking-tighter drop-shadow-sm`}>
             {subTitle}
           </h2>
         )}
         
         {description && (
           <>
-            <div className="w-full h-px bg-gray-200 my-6"></div>
-            <div className="border-l-4 border-teal-500 pl-5 py-2">
-              <p className="text-gray-600 text-lg leading-relaxed !m-0" dangerouslySetInnerHTML={{ __html: description }} />
+            <div className="w-full h-px bg-gray-200/80 my-3"></div>
+            <div className="border-l-[3px] border-teal-500/80 pl-3.5 py-0.5">
+              <p className="text-slate-500 text-[15px] md:text-base leading-relaxed !m-0" dangerouslySetInnerHTML={{ __html: description }} />
             </div>
           </>
         )}
