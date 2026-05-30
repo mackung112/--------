@@ -36,7 +36,8 @@ import {
   OptionSelector,
   ConsoleScreen,
   ConceptCard,
-  SectionBlock
+  SectionBlock,
+  QuizEngine
 } from '../shared';
 import TeacherTask from '../../ui/TeacherTask';
 
@@ -67,6 +68,20 @@ export default function IT1_3() {
   // --- 1.3.4: Intranet, Extranet, Internet (Perimeter Security) ---
   const [selectedPacketType, setSelectedPacketType] = useState('internal');
   const [packetFlowStep, setPacketFlowStep] = useState(0); // 0 = ready, 1 = gateway, 2 = destination/block
+
+  // --- LATENCY HEATMAP SIMULATOR (NEW FEATURE) ---
+  const [pingTarget, setPingTarget] = useState('lan');
+  const [pinging, setPinging] = useState(false);
+  const [pingHistory, setPingHistory] = useState([]);
+  const [pingStats, setPingStats] = useState({ min: null, max: null, avg: null, loss: 0 });
+
+  // --- SECURITY ATTACK SIMULATOR (NEW FEATURE) ---
+  const [attackType, setAttackType] = useState('ddos');
+  const [attackRunning, setAttackRunning] = useState(false);
+  const [defenseEnabled, setDefenseEnabled] = useState(true);
+  const [attackProgress, setAttackProgress] = useState(0);
+  const [attackLog, setAttackLog] = useState(['ระบบพร้อมทำงาน เลือกประเภทการโจมตีและกด ▶ เพื่อจำลองสถานการณ์']);
+  const [systemHealth, setSystemHealth] = useState(100);
 
   // ────────────────────────────────────────────────────────────────────────
   // DATA CONFIGURATIONS
@@ -858,6 +873,379 @@ export default function IT1_3() {
             </div>
           </div>
 
+        </section>
+
+        {/* ====================================================================
+            NEW SECTION A: Network Latency Heatmap Ping Simulator
+            ==================================================================== */}
+        <section id="section-latency-heatmap" className="space-y-10">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-1.5 h-7 bg-rose-600 rounded-full" />
+              <h2 className="text-[26px] font-bold text-zinc-900 font-sans tracking-tight">
+                เครื่องวัดความหน่วงเร็วเครือข่าย: Network Latency Ping Simulator
+              </h2>
+            </div>
+            <p className="text-[16px] md:text-[17px] text-zinc-600 leading-relaxed max-w-4xl">
+              จำลองการทดสอบความหน่วง (Latency/Ping) ของเครือข่ายแต่ละประเภท พร้อมวิเคราะห์สถิติแบบเรียลไทม์
+            </p>
+          </div>
+
+          <div className="bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 md:p-8 shadow-md">
+            {/* Target selector */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              {[
+                { id: 'pan', label: 'PAN (Bluetooth)', baseMs: 3, jitter: 2, lossRate: 5, color: 'emerald' },
+                { id: 'lan', label: 'LAN (สายแลน)', baseMs: 0.5, jitter: 0.3, lossRate: 0, color: 'indigo' },
+                { id: 'wifi', label: 'Wi-Fi LAN', baseMs: 5, jitter: 8, lossRate: 2, color: 'sky' },
+                { id: 'man', label: 'MAN (Fiber)', baseMs: 20, jitter: 5, lossRate: 0, color: 'amber' },
+                { id: 'wan', label: 'WAN (Internet)', baseMs: 120, jitter: 40, lossRate: 3, color: 'rose' },
+                { id: 'satellite', label: 'Satellite LEO', baseMs: 35, jitter: 15, lossRate: 1, color: 'purple' }
+              ].map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => { setPingTarget(t.id); setPingHistory([]); setPingStats({ min: null, max: null, avg: null, loss: 0 }); }}
+                  className={`px-4 py-2 rounded-xl border-2 text-[13px] font-semibold transition-all duration-200 active:scale-[0.97] ${
+                    pingTarget === t.id
+                      ? `border-${t.color}-500 bg-${t.color}-50 text-${t.color}-700`
+                      : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Ping Buttons */}
+            <div className="flex gap-3 mb-6">
+              <button
+                onClick={() => {
+                  if (pinging) return;
+                  const targets = {
+                    pan: { baseMs: 3, jitter: 2, lossRate: 5 },
+                    lan: { baseMs: 0.5, jitter: 0.3, lossRate: 0 },
+                    wifi: { baseMs: 5, jitter: 8, lossRate: 2 },
+                    man: { baseMs: 20, jitter: 5, lossRate: 0 },
+                    wan: { baseMs: 120, jitter: 40, lossRate: 3 },
+                    satellite: { baseMs: 35, jitter: 15, lossRate: 1 }
+                  };
+                  const cfg = targets[pingTarget];
+                  setPinging(true);
+                  const results = [];
+                  let lossCount = 0;
+                  let i = 0;
+                  const interval = setInterval(() => {
+                    const isLost = Math.random() * 100 < cfg.lossRate;
+                    const ms = isLost ? null : Math.max(0.1, cfg.baseMs + (Math.random() - 0.5) * cfg.jitter * 2);
+                    if (isLost) lossCount++;
+                    results.push({ id: i + 1, ms, lost: isLost });
+                    setPingHistory([...results]);
+                    i++;
+                    if (i >= 10) {
+                      clearInterval(interval);
+                      setPinging(false);
+                      const validMs = results.filter(r => !r.lost).map(r => r.ms);
+                      if (validMs.length > 0) {
+                        setPingStats({
+                          min: Math.min(...validMs).toFixed(2),
+                          max: Math.max(...validMs).toFixed(2),
+                          avg: (validMs.reduce((a, b) => a + b, 0) / validMs.length).toFixed(2),
+                          loss: ((lossCount / 10) * 100).toFixed(0)
+                        });
+                      }
+                    }
+                  }, 300);
+                }}
+                disabled={pinging}
+                className="px-5 py-2.5 rounded-xl bg-rose-600 text-white text-[13px] font-bold hover:bg-rose-700 disabled:opacity-50 transition-all active:scale-[0.97]"
+              >
+                {pinging ? '⏳ Pinging...' : '📶 Ping 10 ครั้ง'}
+              </button>
+              <button
+                onClick={() => { setPingHistory([]); setPingStats({ min: null, max: null, avg: null, loss: 0 }); }}
+                className="px-5 py-2.5 rounded-xl bg-slate-200 text-slate-700 text-[13px] font-bold hover:bg-slate-300 transition-all active:scale-[0.97]"
+              >
+                ↺ ล้างผล
+              </button>
+            </div>
+
+            {/* Ping Result Bars */}
+            {pingHistory.length > 0 && (
+              <div className="space-y-3">
+                <p className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">ผลการวัด Ping</p>
+                <div className="space-y-1.5">
+                  {pingHistory.map(r => {
+                    const maxMs = { pan: 10, lan: 2, wifi: 30, man: 60, wan: 300, satellite: 100 }[pingTarget] || 200;
+                    const pct = r.lost ? 0 : Math.min(100, (r.ms / maxMs) * 100);
+                    const colorClass = r.lost ? 'bg-red-500' :
+                      r.ms < 5 ? 'bg-emerald-500' :
+                      r.ms < 30 ? 'bg-indigo-500' :
+                      r.ms < 100 ? 'bg-amber-500' : 'bg-rose-500';
+                    return (
+                      <div key={r.id} className="flex items-center gap-3">
+                        <span className="text-[11px] font-mono text-slate-400 w-12 shrink-0">Seq {r.id}</span>
+                        <div className="flex-1 h-6 bg-slate-100 rounded-lg overflow-hidden">
+                          <div
+                            className={`h-full rounded-lg transition-all duration-300 ${colorClass}`}
+                            style={{ width: r.lost ? '100%' : `${pct}%`, opacity: r.lost ? 0.3 : 1 }}
+                          />
+                        </div>
+                        <span className={`text-[12px] font-mono font-bold w-20 shrink-0 text-right ${
+                          r.lost ? 'text-red-600' :
+                          r.ms < 5 ? 'text-emerald-600' :
+                          r.ms < 30 ? 'text-indigo-600' :
+                          r.ms < 100 ? 'text-amber-600' : 'text-rose-600'
+                        }`}>
+                          {r.lost ? 'Request Timeout' : `${r.ms.toFixed(2)} ms`}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Stats Summary */}
+                {pingStats.min !== null && (
+                  <div className="grid grid-cols-4 gap-3 mt-4">
+                    {[
+                      { label: 'Min', value: `${pingStats.min} ms`, color: 'emerald' },
+                      { label: 'Max', value: `${pingStats.max} ms`, color: 'rose' },
+                      { label: 'Avg', value: `${pingStats.avg} ms`, color: 'indigo' },
+                      { label: 'Packet Loss', value: `${pingStats.loss}%`, color: pingStats.loss > 0 ? 'red' : 'green' }
+                    ].map(s => (
+                      <div key={s.label} className={`p-3 rounded-xl bg-${s.color}-50 border border-${s.color}-100 text-center`}>
+                        <p className={`text-[18px] font-black text-${s.color}-700`}>{s.value}</p>
+                        <p className={`text-[11px] font-bold text-${s.color}-500 uppercase`}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Latency Quality Legend */}
+                <div className="flex flex-wrap gap-3 mt-2">
+                  {[
+                    { color: 'bg-emerald-500', label: '< 5 ms — เยี่ยม (Gaming/Real-time)' },
+                    { color: 'bg-indigo-500', label: '5–30 ms — ดีมาก (Video Call)' },
+                    { color: 'bg-amber-500', label: '30–100 ms — พอใช้ (Web browsing)' },
+                    { color: 'bg-rose-500', label: '> 100 ms — สูงมาก (มีปัญหา)' }
+                  ].map(l => (
+                    <div key={l.label} className="flex items-center gap-1.5">
+                      <div className={`w-3 h-3 rounded-full ${l.color}`} />
+                      <span className="text-[12px] text-slate-600">{l.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ====================================================================
+            NEW SECTION B: Cyber Attack & Defense Simulator
+            ==================================================================== */}
+        <section id="section-security-attack" className="space-y-10">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-1.5 h-7 bg-red-600 rounded-full animate-pulse" />
+              <h2 className="text-[26px] font-bold text-zinc-900 font-sans tracking-tight">
+                เครื่องจำลองการโจมตีและป้องกันระบบ: Cyber Attack & Defense Simulator
+              </h2>
+            </div>
+            <p className="text-[16px] md:text-[17px] text-zinc-600 leading-relaxed max-w-4xl">
+              ทดสอบสถานการณ์การโจมตีเครือข่ายรูปแบบต่างๆ และเปรียบเทียบผลลัพธ์ระหว่าง การเปิด/ปิดระบบป้องกัน (Firewall/IDS)
+            </p>
+          </div>
+
+          <div className="bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 md:p-8 shadow-md space-y-6">
+            {/* System Health Bar */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[13px] font-bold text-slate-600">🖥️ สุขภาพระบบ (System Health)</span>
+                <span className={`text-[20px] font-black ${
+                  systemHealth > 70 ? 'text-emerald-600' :
+                  systemHealth > 40 ? 'text-amber-600' : 'text-red-600'
+                }`}>{systemHealth}%</span>
+              </div>
+              <div className="h-5 bg-slate-100 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    systemHealth > 70 ? 'bg-gradient-to-r from-emerald-400 to-green-500' :
+                    systemHealth > 40 ? 'bg-gradient-to-r from-amber-400 to-yellow-500' :
+                    'bg-gradient-to-r from-red-500 to-rose-600 animate-pulse'
+                  }`}
+                  style={{ width: `${systemHealth}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Controls Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Attack Type */}
+              <div className="space-y-3">
+                <p className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">ประเภทการโจมตี</p>
+                <div className="grid grid-cols-1 gap-2">
+                  {[
+                    { id: 'ddos', label: '🟥 DDoS Attack', desc: 'ส่งทราฟฟิกปริมาณมหาศาลเพื่อทำให้เซิร์ฟเวอร์ล้มเหลว (Bandwidth Exhaustion)' },
+                    { id: 'mitm', label: '👁️ MITM Attack', desc: 'ดักฟังการสื่อสารกลางทาง (Man-in-the-Middle Eavesdropping)' },
+                    { id: 'phishing', label: '🎣 Phishing', desc: 'หลอลวงเพื่อให้ผู้ใช้กรอกข้อมูลเข้าสู่เว็บปลอมแปลง' },
+                    { id: 'ransomware', label: '🔒 Ransomware', desc: 'เข้าเชื่อมต่อและเข้ารหัสไฟล์ในระบบ LAN เพื่อเรียกค่าไถ่ถอน' }
+                  ].map(a => (
+                    <button
+                      key={a.id}
+                      onClick={() => setAttackType(a.id)}
+                      disabled={attackRunning}
+                      className={`px-4 py-3 rounded-xl border-2 text-left transition-all duration-200 active:scale-[0.98] disabled:opacity-60 ${
+                        attackType === a.id
+                          ? 'border-red-400 bg-red-50'
+                          : 'border-slate-200 bg-white/50 hover:border-slate-300'
+                      }`}
+                    >
+                      <p className="text-[13px] font-bold text-slate-800">{a.label}</p>
+                      <p className="text-[11px] text-slate-500">{a.desc}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Defense Toggle + Console */}
+              <div className="space-y-3">
+                <p className="text-[13px] font-bold text-slate-500 uppercase tracking-wider">การป้องกันระบบ</p>
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <button
+                    onClick={() => setDefenseEnabled(d => !d)}
+                    disabled={attackRunning}
+                    className={`relative w-14 h-7 rounded-full transition-all duration-300 ${
+                      defenseEnabled ? 'bg-emerald-500' : 'bg-slate-300'
+                    }`}
+                  >
+                    <span className={`absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-all duration-300 ${
+                      defenseEnabled ? 'left-7' : 'left-0.5'
+                    }`} />
+                  </button>
+                  <div>
+                    <p className="text-[13px] font-bold text-slate-800">
+                      {defenseEnabled ? '✅ Firewall + IDS/IPS เปิดใช้งาน' : '❌ ระบบป้องกันถูกปิดใช้งาน'}
+                    </p>
+                    <p className="text-[11px] text-slate-500">
+                      {defenseEnabled ? 'ระบบจะตรวจจับการโจมตีและป้องกันความเสียหาย' : 'เสี่ยง! ระบบไม่มีการป้องกันใดๆ'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Attack progress */}
+                <div className="space-y-2">
+                  <p className="text-[12px] font-bold text-slate-500">ความคืบหน้าการโจมตี</p>
+                  <div className="h-4 bg-slate-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-red-500 to-rose-600 rounded-full transition-all duration-200"
+                      style={{ width: `${attackProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-[11px] text-right font-mono text-slate-400">{attackProgress.toFixed(0)}%</p>
+                </div>
+
+                {/* Console Log */}
+                <div className="h-40 bg-zinc-900 rounded-xl p-3 overflow-y-auto font-mono text-[11px] leading-relaxed">
+                  {attackLog.map((line, i) => (
+                    <p key={i} className={`${
+                      line.includes('[BLOCKED]') || line.includes('ป้องกัน') ? 'text-emerald-400' :
+                      line.includes('[ATTACK]') || line.includes('โจมตี') ? 'text-red-400' :
+                      line.includes('[ALERT]') ? 'text-yellow-400' :
+                      'text-zinc-400'
+                    }`}>{line}</p>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      if (attackRunning) return;
+                      setAttackRunning(true);
+                      setAttackProgress(0);
+                      setSystemHealth(100);
+                      const attackNames = { ddos: 'DDoS', mitm: 'MITM', phishing: 'Phishing', ransomware: 'Ransomware' };
+                      const name = attackNames[attackType];
+                      const logs = [
+                        `[⏱] การโจมตี ${name} เริ่มต้น... จำเป้าหมายเซิร์ฟเวอร์สุขภาพ`,
+                        `[ATTACK] ${name === 'DDoS' ? 'ส่งอานวิธี HTTP Flood 50,000 req/s เข้า IP เป้าหมาย...' : name === 'MITM' ? 'ดักฟังการเชื่อมต่อ ARP Spoofing บน LAN...' : name === 'Phishing' ? 'ส่ง Email แอบอ้างสิทธิ์รับประกาศการ (Spear Phishing)...' : 'แอบเข้าระบบผ่านช่องโหว่ประตูพอร์ต 445 (SMB)...'}`,
+                        defenseEnabled
+                          ? `[ALERT] IDS ตรวจพบรูปแบบการโจมตี! กำลังปี้กัน IP แหล่งที่มา...`
+                          : `[ALERT] ไม่พบระบบป้องกัน! การโจมตีกำลังต่อเนื่องโดยไม่มีอุปสรรค...`
+                      ];
+                      setAttackLog(logs);
+
+                      let progress = 0;
+                      let health = 100;
+                      const interval = setInterval(() => {
+                        progress = Math.min(100, progress + (defenseEnabled ? 1.2 : 3.5));
+                        if (!defenseEnabled) health = Math.max(0, health - 2.5);
+                        setAttackProgress(progress);
+                        setSystemHealth(Math.round(health));
+
+                        if (progress >= 100) {
+                          clearInterval(interval);
+                          setAttackRunning(false);
+                          if (defenseEnabled) {
+                            setAttackLog(prev => [...prev,
+                              `[BLOCKED] 🛡️ Firewall บล็อกการโจมตีสำเร็จ! ระบบยังทำงานปกติสุข Health: ${Math.round(health)}%`,
+                              `[สรุป] ระบบความปลอดภัยทำงานได้อย่างมีประสิทธิภาพ - นี่คือความสำคัญของ Firewall + IDS ในเครือข่ายองค์กร`
+                            ]);
+                          } else {
+                            setAttackLog(prev => [...prev,
+                              `[CRITICAL] ⚠️ ระบบถูกเจาะเข้าสำเร็จ! สุขภาพระบบเหลือ ${Math.round(health)}%`,
+                              `[บทเรียน] ฟาร์วอลและ IDS คือระบบนิรภัยที่ขาดไม่ได้ เปิดการป้องกันเพื่อป้องกันการสูญเสียข้อมูล!`
+                            ]);
+                          }
+                        }
+                      }, 80);
+                    }}
+                    disabled={attackRunning}
+                    className="flex-1 py-2.5 rounded-xl bg-red-600 text-white text-[13px] font-bold hover:bg-red-700 disabled:opacity-50 transition-all active:scale-[0.97]"
+                  >
+                    {attackRunning ? '⏳ กำลังโจมตี...' : '▶ เริ่มจำลองการโจมตี'}
+                  </button>
+                  <button
+                    onClick={() => { setAttackProgress(0); setSystemHealth(100); setAttackLog(['ระบบรีเซ็ตแล้ว พร้อมสำหรับการทดสอบใหม่']); setAttackRunning(false); }}
+                    className="px-4 py-2.5 rounded-xl bg-slate-200 text-slate-700 text-[13px] font-bold hover:bg-slate-300 transition-all active:scale-[0.97]"
+                  >
+                    ↺ Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Attack Summary Table */}
+            <div className="border-t border-slate-100 pt-6 overflow-x-auto">
+              <p className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-3">สรุปประเภทการโจมตีและวิธีป้องกัน</p>
+              <table className="w-full text-[13px] text-left">
+                <thead>
+                  <tr className="bg-slate-800 text-white">
+                    <th className="px-4 py-3 font-bold">ประเภทการโจมตี</th>
+                    <th className="px-4 py-3 font-bold">เป้าหมาย</th>
+                    <th className="px-4 py-3 font-bold">ช่องโหว่</th>
+                    <th className="px-4 py-3 font-bold">วิธีป้องกันหลัก</th>
+                    <th className="px-4 py-3 font-bold">ระดับอันตราย</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {[
+                    { name: 'DDoS', target: 'Bandwidth/Server', vuln: 'Open Port, No Rate Limit', defense: 'CDN, Rate Limiting, DDoS Scrubbing', level: '🟥 สูงมาก' },
+                    { name: 'MITM', target: 'Data in Transit', vuln: 'Unencrypted HTTP, ARP Cache', defense: 'HTTPS/TLS, VPN, HSTS', level: '🟠 สูง' },
+                    { name: 'Phishing', target: 'ผู้ใช้งาน (Human Layer)', vuln: 'User Awareness ต่ำ', defense: 'Email Filter, 2FA, Training', level: '🟡 กลาง' },
+                    { name: 'Ransomware', target: 'File System, Network Share', vuln: 'SMB Vulnerability, No Backup', defense: 'Antivirus, Network Segmentation, Backup', level: '🟥 สูงมาก' }
+                  ].map((row, i) => (
+                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}>
+                      <td className="px-4 py-3 font-bold text-slate-800">{row.name}</td>
+                      <td className="px-4 py-3 text-slate-600">{row.target}</td>
+                      <td className="px-4 py-3 text-rose-600 text-[12px]">{row.vuln}</td>
+                      <td className="px-4 py-3 text-emerald-700 text-[12px]">{row.defense}</td>
+                      <td className="px-4 py-3">{row.level}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </section>
 
         {/* ====================================================================

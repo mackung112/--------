@@ -64,6 +64,14 @@ export default function IT1_2() {
     '[ระบบ] เครือข่ายพร้อมสื่อสาร เลือกทิศทาง/โหมดส่งสัญญาณ และกด PLAY เพื่อเริ่มต้นจำลองกระบวนการ'
   ]);
 
+  // --- PROTOCOL BENCHMARK RACE LAB (NEW FEATURE) ---
+  const [benchRunning, setBenchRunning] = useState(false);
+  const [benchProgress, setBenchProgress] = useState({ http: 0, tcp: 0, udp: 0, quic: 0 });
+  const [benchFinished, setBenchFinished] = useState(false);
+  const [benchWinner, setBenchWinner] = useState('');
+  const [selectedMedium, setSelectedMedium] = useState('fiber');
+  const [packetSize, setPacketSize] = useState(1024); // KB
+
   // ────────────────────────────────────────────────────────────────────────
   // DATA CONFIGURATIONS
   // ────────────────────────────────────────────────────────────────────────
@@ -777,7 +785,285 @@ export default function IT1_2() {
         </section>
 
         {/* ====================================================================
-            SECTION 4: ใบงานและการประเมินท้ายบทเรียน (TeacherTask)
+            SECTION 4 (NEW): Protocol Benchmark Race Lab + Medium Explorer
+            ==================================================================== */}
+        <section id="section-protocol-benchmark" className="space-y-10">
+
+          {/* Header */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-1.5 h-7 bg-violet-600 rounded-full" />
+              <h2 className="text-[26px] font-bold text-zinc-900 font-sans tracking-tight">
+                แล็บเปรียบเทียบโปรโตคอล: Protocol Benchmark Race
+              </h2>
+            </div>
+            <p className="text-[16px] md:text-[17px] text-zinc-600 leading-relaxed max-w-4xl">
+              จำลองการแข่งขันส่งข้อมูลของโปรโตคอลชั้นนำ 4 ตัว (HTTP/1.1, TCP, UDP, QUIC/HTTP3) 
+              บนสื่อกลางและขนาดแพ็กเก็ตที่กำหนด เพื่อสังเกตพฤติกรรมและลำดับความเร็ว
+            </p>
+          </div>
+
+          {/* Controls */}
+          <div className="bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 md:p-8 shadow-md">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              {/* Medium Selector */}
+              <div className="space-y-3">
+                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wider block">สื่อกลาง (Transmission Medium)</label>
+                <div className="grid grid-cols-1 gap-2">
+                  {[
+                    { id: 'fiber', label: 'ใยแก้วนำแสง (Fiber)', bw: 10000, color: 'cyan' },
+                    { id: 'utp', label: 'สายทองแดง UTP Cat6', bw: 1000, color: 'amber' },
+                    { id: 'wifi', label: 'Wi-Fi 6 (802.11ax)', bw: 600, color: 'emerald' },
+                    { id: 'cellular', label: '5G Cellular Network', bw: 300, color: 'rose' }
+                  ].map(m => (
+                    <button
+                      key={m.id}
+                      onClick={() => { setSelectedMedium(m.id); setBenchProgress({ http: 0, tcp: 0, udp: 0, quic: 0 }); setBenchFinished(false); setBenchWinner(''); }}
+                      className={`px-3 py-2.5 rounded-xl border-2 text-left text-[13px] font-semibold transition-all duration-200 active:scale-[0.98] ${
+                        selectedMedium === m.id
+                          ? `border-${m.color}-400 bg-${m.color}-50 text-${m.color}-700`
+                          : 'border-slate-200 bg-white/50 text-slate-600 hover:border-slate-300'
+                      }`}
+                    >
+                      {m.label}
+                      <span className="block text-[11px] font-normal text-slate-400 mt-0.5">Max {m.bw >= 1000 ? (m.bw/1000)+'Gbps' : m.bw+'Mbps'}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Packet Size Slider */}
+              <div className="space-y-3">
+                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wider block">
+                  ขนาดแพ็กเก็ต (Packet Size)
+                </label>
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <span className="text-4xl font-black text-violet-600">{packetSize}</span>
+                    <span className="text-lg text-slate-500 ml-1">KB</span>
+                  </div>
+                  <input
+                    type="range" min="64" max="8192" step="64"
+                    value={packetSize}
+                    onChange={e => { setPacketSize(Number(e.target.value)); setBenchProgress({ http: 0, tcp: 0, udp: 0, quic: 0 }); setBenchFinished(false); setBenchWinner(''); }}
+                    className="w-full accent-violet-500"
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-400">
+                    <span>64 KB (เล็ก)</span><span>4096 KB</span><span>8192 KB (ใหญ่)</span>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-violet-50 rounded-xl border border-violet-100 space-y-1">
+                  <p className="text-[12px] font-bold text-violet-700">ลักษณะแพ็กเก็ต</p>
+                  <p className="text-[12px] text-violet-600">
+                    {packetSize <= 512 ? '🔹 ขนาดเล็ก: เหมาะกับ Telemetry, IoT sensor data' :
+                     packetSize <= 2048 ? '🔷 ขนาดกลาง: เหมาะกับ Web content, Email, API response' :
+                     '🔶 ขนาดใหญ่: เหมาะกับ File Transfer, Video stream, Backup'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Protocol Info Panel */}
+              <div className="space-y-3">
+                <label className="text-[13px] font-bold text-slate-500 uppercase tracking-wider block">คุณสมบัติโปรโตคอล</label>
+                <div className="space-y-2">
+                  {[
+                    { name: 'HTTP/1.1', overhead: 'สูง', reliable: '✓', stream: '✗', color: 'blue', desc: 'Request-Response แบบ Sequential' },
+                    { name: 'TCP/IP', overhead: 'กลาง', reliable: '✓', stream: '✗', color: 'indigo', desc: 'Connection-oriented มี Handshake' },
+                    { name: 'UDP', overhead: 'ต่ำ', reliable: '✗', stream: '✓', color: 'orange', desc: 'Connectionless ไร้การยืนยัน' },
+                    { name: 'QUIC/HTTP3', overhead: 'ต่ำมาก', reliable: '✓', stream: '✓', color: 'purple', desc: 'Multiplexed ผ่าน UDP พร้อม TLS' }
+                  ].map(p => (
+                    <div key={p.name} className={`flex items-center gap-2 p-2 rounded-lg bg-${p.color}-50 border border-${p.color}-100`}>
+                      <div className={`w-2 h-2 rounded-full bg-${p.color}-500 shrink-0`} />
+                      <div className="flex-1 min-w-0">
+                        <span className={`text-[12px] font-bold text-${p.color}-700`}>{p.name}</span>
+                        <span className="text-[11px] text-slate-500 block truncate">{p.desc}</span>
+                      </div>
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-${p.color}-100 text-${p.color}-600 shrink-0`}>{p.overhead}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Race Track */}
+            <div className="border-t border-slate-100 pt-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-[15px] font-bold text-slate-700">🏁 สนามแข่งขันส่งข้อมูล</h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      if (benchRunning) return;
+                      setBenchFinished(false);
+                      setBenchWinner('');
+                      setBenchProgress({ http: 0, tcp: 0, udp: 0, quic: 0 });
+                      setBenchRunning(true);
+
+                      const mediumSpeeds = { fiber: 1.0, utp: 0.75, wifi: 0.55, cellular: 0.35 };
+                      const mediumFactor = mediumSpeeds[selectedMedium] || 1.0;
+                      const sizeOverhead = 1 - (packetSize / 16384); // ยิ่งใหญ่ยิ่งช้า (แตกต่างกัน)
+
+                      // base speeds per protocol (normalized 0-100 increments per tick)
+                      const baseRates = {
+                        http: (0.55 + sizeOverhead * 0.1) * mediumFactor,
+                        tcp:  (0.70 + sizeOverhead * 0.12) * mediumFactor,
+                        udp:  (0.90 + sizeOverhead * 0.05) * mediumFactor,
+                        quic: (0.85 + sizeOverhead * 0.14) * mediumFactor
+                      };
+
+                      const current = { http: 0, tcp: 0, udp: 0, quic: 0 };
+                      let winner = '';
+
+                      const interval = setInterval(() => {
+                        const randomJitter = () => (Math.random() - 0.5) * 4;
+                        current.http  = Math.min(100, current.http  + baseRates.http  * 3.5 + randomJitter());
+                        current.tcp   = Math.min(100, current.tcp   + baseRates.tcp   * 3.5 + randomJitter());
+                        current.udp   = Math.min(100, current.udp   + baseRates.udp   * 3.5 + randomJitter());
+                        current.quic  = Math.min(100, current.quic  + baseRates.quic  * 3.5 + randomJitter());
+
+                        setBenchProgress({ ...current });
+
+                        // Check winner
+                        const entries = Object.entries(current);
+                        const allDone = entries.every(([, v]) => v >= 100);
+                        if (!winner) {
+                          const firstDone = entries.find(([, v]) => v >= 100);
+                          if (firstDone) winner = firstDone[0];
+                        }
+
+                        if (allDone) {
+                          clearInterval(interval);
+                          setBenchRunning(false);
+                          setBenchFinished(true);
+                          setBenchWinner(winner);
+                        }
+                      }, 80);
+                    }}
+                    disabled={benchRunning}
+                    className="px-4 py-2 rounded-xl bg-violet-600 text-white text-[13px] font-bold hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.97]"
+                  >
+                    {benchRunning ? '⏳ กำลังแข่ง...' : '▶ เริ่มแข่งขัน'}
+                  </button>
+                  <button
+                    onClick={() => { setBenchProgress({ http: 0, tcp: 0, udp: 0, quic: 0 }); setBenchFinished(false); setBenchWinner(''); setBenchRunning(false); }}
+                    className="px-4 py-2 rounded-xl bg-slate-200 text-slate-700 text-[13px] font-bold hover:bg-slate-300 transition-all active:scale-[0.97]"
+                  >
+                    ↺ รีเซ็ต
+                  </button>
+                </div>
+              </div>
+
+              {/* Progress bars */}
+              <div className="space-y-3">
+                {[
+                  { key: 'http', label: 'HTTP/1.1', color: 'blue', emoji: '🌐' },
+                  { key: 'tcp', label: 'TCP/IP', color: 'indigo', emoji: '🔗' },
+                  { key: 'udp', label: 'UDP', color: 'orange', emoji: '⚡' },
+                  { key: 'quic', label: 'QUIC / HTTP3', color: 'purple', emoji: '🚀' }
+                ].map(p => (
+                  <div key={p.key} className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[13px] font-bold text-slate-700">{p.emoji} {p.label}</span>
+                      <div className="flex items-center gap-2">
+                        {benchFinished && benchWinner === p.key && (
+                          <span className="text-[11px] font-bold text-yellow-600 bg-yellow-100 px-2 py-0.5 rounded-full animate-bounce">🏆 ชนะ!</span>
+                        )}
+                        <span className="text-[13px] font-mono font-bold text-slate-500">{Math.min(100, Math.round(benchProgress[p.key]))}%</span>
+                      </div>
+                    </div>
+                    <div className="h-8 bg-slate-100 rounded-xl overflow-hidden relative">
+                      <div
+                        className={`h-full rounded-xl transition-all duration-75 relative overflow-hidden ${
+                          p.color === 'blue' ? 'bg-blue-500' :
+                          p.color === 'indigo' ? 'bg-indigo-500' :
+                          p.color === 'orange' ? 'bg-orange-500' :
+                          'bg-purple-500'
+                        }`}
+                        style={{ width: `${Math.min(100, benchProgress[p.key])}%` }}
+                      >
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
+                      </div>
+                      {/* Finish line */}
+                      <div className="absolute right-0 top-0 h-full w-1 bg-zinc-400/30" />
+                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">🏁</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Result Banner */}
+              {benchFinished && (
+                <div className="mt-4 p-4 rounded-2xl bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200 animate-fadeIn">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">🏆</span>
+                    <div>
+                      <p className="text-[15px] font-black text-violet-800">
+                        ผู้ชนะ: {{ http: 'HTTP/1.1', tcp: 'TCP/IP', udp: 'UDP', quic: 'QUIC/HTTP3' }[benchWinner]}
+                      </p>
+                      <p className="text-[13px] text-violet-600">
+                        {{ 
+                          http: 'HTTP/1.1 ช้าที่สุดเพราะมี Header Overhead สูงและต้องรอ Response ทีละ Request', 
+                          tcp: 'TCP/IP มีความน่าเชื่อถือสูง แต่ช้ากว่า UDP เพราะมีกลไก Handshake และ ACK', 
+                          udp: 'UDP เร็วที่สุดในแพ็กเก็ตขนาดเล็ก เพราะไม่มี Connection Overhead แต่ไม่รับประกันการส่งถึง', 
+                          quic: 'QUIC/HTTP3 ชนะด้วยการรวม TLS + Multiplexing ใน 1 รอบ ไม่มี Head-of-line Blocking!'
+                        }[benchWinner]}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Medium Comparison Table */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-1.5 h-7 bg-cyan-600 rounded-full" />
+              <h2 className="text-[26px] font-bold text-zinc-900 font-sans tracking-tight">
+                ตารางเปรียบเทียบประสิทธิภาพสื่อกลางนำสัญญาณ
+              </h2>
+            </div>
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+              <table className="w-full text-[14px] text-left">
+                <thead>
+                  <tr className="bg-gradient-to-r from-cyan-600 to-blue-700 text-white">
+                    <th className="px-5 py-4 font-bold">สื่อกลาง</th>
+                    <th className="px-5 py-4 font-bold">แบนด์วิดท์สูงสุด</th>
+                    <th className="px-5 py-4 font-bold">Latency (ms)</th>
+                    <th className="px-5 py-4 font-bold">ต้านทาน EMI</th>
+                    <th className="px-5 py-4 font-bold">ระยะทางสูงสุด</th>
+                    <th className="px-5 py-4 font-bold">ต้นทุนต่อเมตร</th>
+                    <th className="px-5 py-4 font-bold">การใช้งานหลัก</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {[
+                    { name: '🔵 UTP Cat6 (Copper)', bw: '1 Gbps', lat: '< 1 ms', emi: '⚠️ ต่ำ', dist: '100 ม.', cost: '8–15 บ.', use: 'LAN ในอาคาร' },
+                    { name: '🟡 UTP Cat6A', bw: '10 Gbps', lat: '< 0.5 ms', emi: '⚠️ ต่ำ', dist: '100 ม.', cost: '18–30 บ.', use: 'Data Center LAN' },
+                    { name: '🔴 Coaxial Cable', bw: '500 Mbps', lat: '1–2 ms', emi: '✅ กลาง', dist: '500 ม.', cost: '20–35 บ.', use: 'สายเคเบิล/CCTV' },
+                    { name: '🟢 Fiber Optic (SM)', bw: '100 Gbps+', lat: '< 0.1 ms', emi: '✅✅ สูงมาก', dist: '100 กม.', cost: '50–120 บ.', use: 'MAN/WAN Backbone' },
+                    { name: '🟣 Wi-Fi 6 (5GHz)', bw: '9.6 Gbps', lat: '5–20 ms', emi: '✅ ปานกลาง', dist: '150 ม.', cost: 'ค่า AP', use: 'WLAN ทั่วไป' },
+                    { name: '⚫ 5G mmWave', bw: '10 Gbps', lat: '1–5 ms', emi: '✅ สูง', dist: '300 ม.', cost: 'ค่า SIM', use: 'Mobile Broadband' }
+                  ].map((row, i) => (
+                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
+                      <td className="px-5 py-3.5 font-bold text-slate-800">{row.name}</td>
+                      <td className="px-5 py-3.5 font-mono text-cyan-700 font-semibold">{row.bw}</td>
+                      <td className="px-5 py-3.5 font-mono text-green-700">{row.lat}</td>
+                      <td className="px-5 py-3.5">{row.emi}</td>
+                      <td className="px-5 py-3.5 text-slate-600">{row.dist}</td>
+                      <td className="px-5 py-3.5 text-slate-600">{row.cost}</td>
+                      <td className="px-5 py-3.5 text-slate-500 text-[13px]">{row.use}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        {/* ====================================================================
+            SECTION 5: ใบงานและการประเมินท้ายบทเรียน (TeacherTask)
             ==================================================================== */}
         <SectionBlock>
           <div className="space-y-6">

@@ -36,7 +36,8 @@ import {
   OptionSelector,
   ConsoleScreen,
   ConceptCard,
-  SectionBlock
+  SectionBlock,
+  QuizEngine
 } from '../shared';
 import TeacherTask from '../../ui/TeacherTask';
 
@@ -68,6 +69,12 @@ export default function IT1_4() {
     '[ระบบ] แบบจำลองโทโพโลยีพร้อมทำงาน เลือกโหมดด้านบนเพื่อตรวจสอบกลไกการรับส่งข้อมูล'
   ]);
   const [simSpeed, setSimSpeed] = useState(1500); // ms
+
+  // --- 1.4.6: เครื่องคำนวณและวิเคราะห์ต้นทุนการติดตั้งเครือข่าย ---
+  const [numNodes, setNumNodes] = useState(6);
+  const [avgDistance, setAvgDistance] = useState(25);
+  const [cableType, setCableType] = useState('utp');
+  const [switchType, setSwitchType] = useState('basic');
 
   // ────────────────────────────────────────────────────────────────────────
   // DATA CONFIGURATIONS
@@ -303,28 +310,144 @@ export default function IT1_4() {
             </p>
           </div>
 
-          {/* Selector Grid of Topologies */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {Object.keys(topologiesInfo).map((key) => {
+          {/* Selector Row of Topologies — แนวนอนเรียงกัน */}
+          <div className="flex flex-row gap-3 overflow-x-auto pb-2">
+            {[
+              {
+                key: 'bus',
+                label: 'บัส',
+                labelEn: 'Bus',
+                accent: 'amber',
+                svg: (
+                  <svg viewBox="0 0 90 48" className="w-full h-full">
+                    {/* Backbone cable */}
+                    <line x1="8" y1="24" x2="82" y2="24" stroke="#D97706" strokeWidth="3" strokeLinecap="round"/>
+                    {/* Terminators */}
+                    <rect x="4" y="20" width="5" height="8" rx="1" fill="#92400E"/>
+                    <rect x="81" y="20" width="5" height="8" rx="1" fill="#92400E"/>
+                    {/* Nodes drop lines */}
+                    {[20, 38, 56, 72].map((x, i) => (
+                      <g key={i}>
+                        <line x1={x} y1="24" x2={x} y2="10" stroke="#D97706" strokeWidth="1.5"/>
+                        <rect x={x-6} y="4" width="12" height="8" rx="2" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.2"/>
+                      </g>
+                    ))}
+                  </svg>
+                )
+              },
+              {
+                key: 'star',
+                label: 'ดาว',
+                labelEn: 'Star',
+                accent: 'indigo',
+                svg: (
+                  <svg viewBox="0 0 90 48" className="w-full h-full">
+                    {/* Switch center */}
+                    <rect x="36" y="18" width="18" height="12" rx="3" fill="#E0E7FF" stroke="#4F46E5" strokeWidth="1.5"/>
+                    {/* Spokes to nodes */}
+                    {[
+                      [8, 8, 36, 22], [44, 4, 45, 18], [78, 8, 54, 22],
+                      [8, 40, 36, 28], [44, 44, 45, 30], [78, 40, 54, 28]
+                    ].map(([x1,y1,x2,y2], i) => (
+                      <g key={i}>
+                        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#818CF8" strokeWidth="1.5"/>
+                        <circle cx={x1} cy={y1} r="5" fill="#EEF2FF" stroke="#4F46E5" strokeWidth="1.2"/>
+                      </g>
+                    ))}
+                  </svg>
+                )
+              },
+              {
+                key: 'ring',
+                label: 'วงแหวน',
+                labelEn: 'Ring',
+                accent: 'emerald',
+                svg: (
+                  <svg viewBox="0 0 90 48" className="w-full h-full">
+                    {/* Ring circle */}
+                    <circle cx="45" cy="24" r="16" fill="none" stroke="#10B981" strokeWidth="2" strokeDasharray="none"/>
+                    {/* 4 nodes on ring */}
+                    {[0, 90, 180, 270].map((deg, i) => {
+                      const r = 16;
+                      const rad = (deg - 90) * Math.PI / 180;
+                      const cx = 45 + r * Math.cos(rad);
+                      const cy = 24 + r * Math.sin(rad);
+                      return <rect key={i} x={cx-5} y={cy-4} width="10" height="8" rx="2" fill="#D1FAE5" stroke="#10B981" strokeWidth="1.2"/>;
+                    })}
+                  </svg>
+                )
+              },
+              {
+                key: 'mesh',
+                label: 'เมช',
+                labelEn: 'Mesh',
+                accent: 'rose',
+                svg: (
+                  <svg viewBox="0 0 90 48" className="w-full h-full">
+                    {/* 4 nodes */}
+                    {[[16,10],[74,10],[16,38],[74,38]].map(([x,y],i) => (
+                      <rect key={i} x={x-7} y={y-6} width="14" height="12" rx="2.5" fill="#FFF1F2" stroke="#F43F5E" strokeWidth="1.3"/>
+                    ))}
+                    {/* All-to-all connections */}
+                    {[[16,10,74,10],[16,10,16,38],[16,10,74,38],
+                      [74,10,16,38],[74,10,74,38],[16,38,74,38]].map(([x1,y1,x2,y2],i) => (
+                      <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#FB7185" strokeWidth="1.2" opacity="0.8"/>
+                    ))}
+                  </svg>
+                )
+              },
+              {
+                key: 'hybrid',
+                label: 'ผสม',
+                labelEn: 'Hybrid',
+                accent: 'purple',
+                svg: (
+                  <svg viewBox="0 0 90 48" className="w-full h-full">
+                    {/* Star cluster left */}
+                    <rect x="14" y="20" width="10" height="8" rx="2" fill="#F3E8FF" stroke="#9333EA" strokeWidth="1.3"/>
+                    {[[6,10],[6,30],[24,10],[24,30]].map(([x,y],i) => (
+                      <g key={i}>
+                        <line x1="19" y1="24" x2={x} y2={y} stroke="#C084FC" strokeWidth="1.2"/>
+                        <circle cx={x} cy={y} r="4" fill="#FAF5FF" stroke="#9333EA" strokeWidth="1"/>
+                      </g>
+                    ))}
+                    {/* Bus backbone right */}
+                    <line x1="44" y1="24" x2="84" y2="24" stroke="#9333EA" strokeWidth="2"/>
+                    {[52,64,76].map((x,i) => (
+                      <g key={i}>
+                        <line x1={x} y1="24" x2={x} y2="12" stroke="#C084FC" strokeWidth="1.2"/>
+                        <rect x={x-5} y="6" width="10" height="8" rx="1.5" fill="#F3E8FF" stroke="#9333EA" strokeWidth="1"/>
+                      </g>
+                    ))}
+                    {/* Bridge link */}
+                    <line x1="24" y1="24" x2="44" y2="24" stroke="#9333EA" strokeWidth="1.5" strokeDasharray="3 2"/>
+                  </svg>
+                )
+              }
+            ].map(({ key, label, labelEn, accent, svg }) => {
               const active = selectedTopology === key;
-              const info = topologiesInfo[key];
               return (
-                <div
+                <button
                   key={key}
                   onClick={() => setSelectedTopology(key)}
-                  className={`bg-white/60 backdrop-blur-xl border rounded-2xl p-5 text-center cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
+                  className={`flex-1 min-w-[130px] bg-white/70 backdrop-blur-xl border rounded-2xl px-4 pt-4 pb-3 text-center cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] ${
                     active
-                      ? `border-${info.accent}-500/50 ring-2 ring-${info.accent}-300 ring-offset-2 shadow-sm bg-white`
-                      : 'border-slate-200 hover:border-indigo-500/20'
+                      ? `border-${accent}-400 ring-2 ring-${accent}-300 ring-offset-2 shadow-md bg-white`
+                      : 'border-slate-200 hover:border-slate-300'
                   }`}
                 >
-                  <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm mx-auto mb-2 bg-${info.accent}-50 text-${info.accent}-600 border border-${info.accent}-100`}>
-                    {key.toUpperCase().substring(0, 2)}
-                  </span>
-                  <h4 className="text-[13.5px] font-bold text-slate-800 leading-tight">
-                    {info.title.split(' (')[0].replace('การเชื่อมต่อแบบ', '')}
-                  </h4>
-                </div>
+                  {/* Mini SVG Diagram */}
+                  <div className={`w-full h-12 mb-3 rounded-xl p-1 ${active ? `bg-${accent}-50` : 'bg-slate-50'} transition-colors duration-200`}>
+                    {svg}
+                  </div>
+                  {/* Labels */}
+                  <p className={`text-[14px] font-black leading-tight ${active ? `text-${accent}-700` : 'text-slate-700'}`}>
+                    {label}
+                  </p>
+                  <p className={`text-[11px] font-semibold mt-0.5 ${active ? `text-${accent}-500` : 'text-slate-400'}`}>
+                    {labelEn}
+                  </p>
+                </button>
               );
             })}
           </div>
@@ -888,6 +1011,227 @@ export default function IT1_4() {
                 </tbody>
               </table>
             </div>
+          </div>
+
+          {/* 1.4.6: เครื่องคำนวณและวิเคราะห์ต้นทุนการติดตั้งเครือข่าย (Deployment Cost & Cable Calculator) */}
+          <div className="bg-white/60 backdrop-blur-xl border border-white/40 rounded-[2rem] p-6 md:p-8 shadow-xl space-y-6">
+            <div>
+              <span className="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                1.4.6 สื่อจำลองอินเตอร์แอคทีฟวิเคราะห์ราคาและการวางงบประมาณ
+              </span>
+              <h3 className="text-2xl font-bold text-slate-800 mt-2.5">
+                เครื่องคำนวณภาระต้นทุนสายส่งและการติดตั้ง Topology เชิงพาณิชย์
+              </h3>
+              <p className="text-[14.5px] text-slate-500 mt-1">
+                ปรับแต่งสถิติทางกายภาพของจำนวนโหนด ระยะสาย และชนิดอุปกรณ์ เพื่อวิเคราะห์ปริมาณความยาวสายรวม ($m$) และงบประมาณเปรียบเทียบในแต่ละรูปแบบ
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              
+              {/* Left Column: Parameter Adjusters (Col 5) */}
+              <div className="lg:col-span-5 bg-slate-50/80 border border-slate-100 rounded-2xl p-5 md:p-6 space-y-6">
+                <span className="text-[13px] font-bold text-slate-400 uppercase tracking-wider block border-b border-slate-200 pb-2">
+                  แผงควบคุมปัจจัยทางกายภาพ (Inputs)
+                </span>
+
+                {/* Number of Nodes Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-semibold text-slate-700">
+                    <span>จำนวนอุปกรณ์คอมพิวเตอร์ (Nodes):</span>
+                    <span className="font-mono text-indigo-600">{numNodes} เครื่อง</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="2"
+                    max="12"
+                    step="1"
+                    value={numNodes}
+                    onChange={(e) => setNumNodes(parseInt(e.target.value))}
+                    className="w-full accent-indigo-600 cursor-pointer"
+                  />
+                  <span className="text-[11px] text-slate-400 block leading-tight">
+                    *โหนดที่มากขึ้นส่งผลทวีคูณต่อสาย Mesh: $N(N-1)/2$ = {(numNodes * (numNodes - 1)) / 2} เส้นสัญญาณ
+                  </span>
+                </div>
+
+                {/* Distance Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-semibold text-slate-700">
+                    <span>ระยะทางเฉลี่ยระหว่างโหนด (Distance):</span>
+                    <span className="font-mono text-indigo-600">{avgDistance} เมตร</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="100"
+                    step="5"
+                    value={avgDistance}
+                    onChange={(e) => setAvgDistance(parseInt(e.target.value))}
+                    className="w-full accent-indigo-600 cursor-pointer"
+                  />
+                </div>
+
+                {/* Cable Type Dropdown */}
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 block">ชนิดสายเคเบิลสื่อกลาง (Transmission Medium):</label>
+                  <select
+                    value={cableType}
+                    onChange={(e) => setCableType(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 cursor-pointer"
+                  >
+                    <option value="utp">สายคู่ตีเกลียว UTP Cat6 (15 บิต/เมตร)</option>
+                    <option value="coaxial">สายโคแอกเชียล Coaxial (25 บิต/เมตร)</option>
+                    <option value="fiber">สายใยแก้วนำแสง Fiber Optic (45 บิต/เมตร)</option>
+                  </select>
+                </div>
+
+                {/* Switch Class Dropdown */}
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 block">เกรดสวิตช์แกนกลาง Star (Switch Quality):</label>
+                  <select
+                    value={switchType}
+                    onChange={(e) => setSwitchType(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 cursor-pointer"
+                  >
+                    <option value="basic">Basic Business Switch (8-16 ports Unmanaged)</option>
+                    <option value="managed">Managed Enterprise Switch (Security & VLans)</option>
+                  </select>
+                </div>
+
+              </div>
+
+              {/* Right Column: Comparative Dashboard (Col 7) */}
+              <div className="lg:col-span-7 space-y-6">
+                <span className="text-[13px] font-bold text-slate-400 uppercase tracking-wider block">
+                  รายงานผลลัพธ์และเปรียบเทียบงบประมาณ (Outputs)
+                </span>
+
+                {/* Calculations logic nested dynamically in rendering */}
+                {(() => {
+                  const cablePrice = cableType === 'utp' ? 15 : cableType === 'fiber' ? 45 : 25;
+                  
+                  // 1. Bus
+                  const busCableLength = (numNodes - 1) * avgDistance + (numNodes * 2);
+                  const busCableCost = busCableLength * cablePrice;
+                  const busDeviceCost = 2 * 150 + numNodes * 100; 
+                  const busTotalCost = busCableCost + busDeviceCost;
+
+                  // 2. Star
+                  const starCableLength = numNodes * avgDistance;
+                  const starCableCost = starCableLength * cablePrice;
+                  let starDeviceCost = 0;
+                  if (switchType === 'basic') {
+                    starDeviceCost = numNodes <= 8 ? 1200 : 2400;
+                  } else {
+                    starDeviceCost = numNodes <= 8 ? 4500 : 8500;
+                  }
+                  const starTotalCost = starCableCost + starDeviceCost;
+
+                  // 3. Ring
+                  const ringCableLength = numNodes * avgDistance;
+                  const ringCableCost = ringCableLength * cablePrice;
+                  const ringDeviceCost = numNodes * 350; 
+                  const ringTotalCost = ringCableCost + ringDeviceCost;
+
+                  // 4. Full Mesh
+                  const meshLinks = (numNodes * (numNodes - 1)) / 2;
+                  const meshCableLength = meshLinks * avgDistance;
+                  const meshCableCost = meshCableLength * cablePrice;
+                  const meshDeviceCost = numNodes * (numNodes - 1) * 450; 
+                  const meshTotalCost = meshCableCost + meshDeviceCost;
+
+                  // Find max cost for styling progress bars proportionally
+                  const maxCost = Math.max(busTotalCost, starTotalCost, ringTotalCost, meshTotalCost);
+
+                  // Technical recommendation text generator
+                  let recTitle = "";
+                  let recDesc = "";
+                  if (numNodes <= 4 && avgDistance <= 20) {
+                    recTitle = "Bus / Star (ขนาดกะทัดรัด ประหยัดสายส่งสูง)";
+                    recDesc = "จำนวนอุปกรณ์น้อยและพื้นที่จำกัด การวางสาย Bus เส้นเดียวหรือการติดตั้ง Star Switch 8 พอร์ตรุ่นเริ่มต้น จะมีความคุ้มค่าที่สุด โดยไม่จำเป็นต้องใช้สายใยแก้วนำแสงหรือระบบ Managed ราคาแพง.";
+                  } else if (numNodes > 8 || avgDistance > 45) {
+                    recTitle = "Star Topology (แนะแนวระดับวิชาชีพในองค์กร)";
+                    recDesc = "โหนดมากกว่า 8 เครื่อง และระยะสายห่างกัน การวางแบบ Star เกรด Managed Switch จะมอบเสถียรภาพสูงสุด เนื่องจากสายขาดจุดเดียวไม่กระทบจุดอื่น และการชนของข้อมูลเกือบเป็นศูนย์ ในขณะที่ Mesh จะกินต้นทุนค่าสายมหาศาล.";
+                  } else if (meshTotalCost > 35000 && numNodes <= 6) {
+                    recTitle = "Mesh / Star Hybrid (ทนทานสูง ปราศจาก SPOF)";
+                    recDesc = "ระบบ Mesh มอบสายสำรองที่ทนทานสูงมาก แต่ต้นทุนจะพุ่งขึ้นเรื่อยๆ ตามเครื่องคอมพิวเตอร์ที่เพิ่ม หากไม่ต้องการระบบ Redundancy ซ้ำซ้อน ให้เลือก Star เพื่อความสมดุลด้านราคา.";
+                  } else {
+                    recTitle = "Star Topology (สากลประหยัดงบและขยายพอร์ตง่าย)";
+                    recDesc = "การติดตั้งแบบ Star ได้รับการประเมินว่ามอบค่าเฉลี่ยประสิทธิภาพและราคาดีที่สุด มีความยืดหยุ่นสูง ซ่อมบำรุงและกู้คืนปัญหาไดรเวอร์พอร์ตเครือข่ายขัดข้องได้สะดวกรวดเร็ว.";
+                  }
+
+                  return (
+                    <div className="space-y-5">
+                      {/* Cost Bars comparison list */}
+                      <div className="space-y-3 bg-slate-50 border border-slate-100 rounded-2xl p-5">
+                        
+                        {/* Bus Cost Row */}
+                        <div className="space-y-1.5">
+                          <div className="flex justify-between text-xs font-bold text-slate-600">
+                            <span>1. Bus Topology (สายรวม {busCableLength} เมตร)</span>
+                            <span className="font-mono text-slate-800">{busTotalCost.toLocaleString()} บาท</span>
+                          </div>
+                          <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                            <div className="bg-amber-500 h-3 rounded-full transition-all duration-300" style={{ width: `${(busTotalCost / maxCost) * 100}%` }} />
+                          </div>
+                        </div>
+
+                        {/* Star Cost Row */}
+                        <div className="space-y-1.5">
+                          <div className="flex justify-between text-xs font-bold text-slate-600">
+                            <span>2. Star Topology (สายรวม {starCableLength} เมตร + Switch)</span>
+                            <span className="font-mono text-slate-800">{starTotalCost.toLocaleString()} บาท</span>
+                          </div>
+                          <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                            <div className="bg-indigo-600 h-3 rounded-full transition-all duration-300" style={{ width: `${(starTotalCost / maxCost) * 100}%` }} />
+                          </div>
+                        </div>
+
+                        {/* Ring Cost Row */}
+                        <div className="space-y-1.5">
+                          <div className="flex justify-between text-xs font-bold text-slate-600">
+                            <span>3. Ring Topology (สายรวม {ringCableLength} เมตร + Adapters)</span>
+                            <span className="font-mono text-slate-800">{ringTotalCost.toLocaleString()} บาท</span>
+                          </div>
+                          <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                            <div className="bg-emerald-500 h-3 rounded-full transition-all duration-300" style={{ width: `${(ringTotalCost / maxCost) * 100}%` }} />
+                          </div>
+                        </div>
+
+                        {/* Mesh Cost Row */}
+                        <div className="space-y-1.5">
+                          <div className="flex justify-between text-xs font-bold text-slate-600">
+                            <span>4. Full Mesh Topology (สายรวม {meshCableLength} เมตร + {meshLinks} ลิงก์)</span>
+                            <span className="font-mono text-slate-800">{meshTotalCost.toLocaleString()} บาท</span>
+                          </div>
+                          <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                            <div className="bg-rose-500 h-3 rounded-full transition-all duration-300" style={{ width: `${(meshTotalCost / maxCost) * 100}%` }} />
+                          </div>
+                        </div>
+
+                      </div>
+
+                      {/* Technical Recommendation Box */}
+                      <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 space-y-2">
+                        <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider block">
+                          คำแนะนำจากวิศวกรระบบและอาจารย์ที่ปรึกษา:
+                        </span>
+                        <h4 className="text-base font-bold text-indigo-900 leading-snug">
+                          {recTitle}
+                        </h4>
+                        <p className="text-[13.5px] text-indigo-700 leading-relaxed font-medium">
+                          {recDesc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+              </div>
+
+            </div>
+
           </div>
 
         </section>
