@@ -33,7 +33,7 @@ export default function StandardHeader({
   }, [mainTitle, subTitle]);
 
   return (
-    <header className={`${transparent ? '' : 'bg-gradient-to-br from-[#f0fdfa] via-white to-[#ecfeff]'} border-b ${transparent ? 'border-transparent' : 'border-gray-100'} relative z-20 ${isCard ? 'p-6 md:p-8' : 'pt-8 pb-4 md:pt-10 md:pb-5 w-full'} overflow-hidden`}>
+    <header className={`${transparent ? '' : 'bg-gradient-to-br from-[#f0fdfa] via-white to-[#ecfeff]'} border-b ${transparent ? 'border-transparent' : 'border-gray-100'} relative z-20 ${isCard ? 'p-6 md:p-8' : 'pt-6 pb-2 md:pt-8 md:pb-3 w-full'} overflow-hidden`}>
       <div className="absolute top-0 right-0 p-12 opacity-40 pointer-events-none">
         <div className="w-64 h-64 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>

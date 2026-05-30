@@ -63,7 +63,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
     if (isImmersive) {
       const ImmersiveComponent = COMPONENT_MAP[immersivePart];
       return (
-        <section className="w-full immersive-page-wrapper bg-[#f1f5f9] min-h-screen" aria-label="Immersive Lesson" id="immersive-lesson-wrapper">
+        <section className="w-full immersive-page-wrapper bg-[#FAFAFA] min-h-screen" aria-label="Immersive Lesson" id="immersive-lesson-wrapper">
           <StandardHeader 
             chapterTitle={chapter?.title}
             mainTitle={mainTitle}
@@ -114,7 +114,7 @@ export default function LessonViewer({ lesson, chapter, onComplete, onNext, onPr
   };
 
   return (
-    <div className="pb-20 w-full" id="lesson-viewer-root">
+    <div className="pb-20 w-full bg-[#FAFAFA]" id="lesson-viewer-root">
       {renderContent()}
 
       {/* Navigation buttons: Previous / Next */}

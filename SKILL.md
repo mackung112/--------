@@ -85,6 +85,22 @@
   - ข้อความคำอธิบายเนื้อหาและทฤษฎีทั่วไป: บังคับใช้ `text-[16px]` หรือ `text-base` ร่วมกับ `leading-relaxed`
   - ส่วนคำอธิบายปลีกย่อย, ปุ่มคีย์บอร์ดตัวเลือก, ป้ายข้อความ: บังคับใช้ขนาด `text-sm` หรือ `text-[13px]` เป็นขั้นต่ำ ห้ามใช้ `text-xs` หรือ `text-[11px]` เด็ดขาดเพื่อสุขภาวะการอ่าน
   - กล่องโค้ดภาษาและหน้าจอ Virtual Terminal: บังคับใช้ขนาดตัวอักษรขั้นต่ำ `text-[13px]` หรือ `text-[13.5px]` เสมอ
+- **Compact Card Spacing Standard (30 May 2026)**: กำหนดมาตรฐานระยะห่างระหว่างการ์ดใน Layer 3 (Flexible Subtopics) ให้กระชับและสมดุลสายตายิ่งขึ้น โดยบังคับใช้ `space-y-6 md:space-y-8` ในแท็ก `<main>` เสมอ ห้ามเว้นระยะห่างกว้างเกินไปจนเคว้ง
+- **Unified Background & Dynamic Ambient Standard (30 May 2026)**: กำหนดมาตรฐานพื้นหลังหลักทั่วทั้งบทเรียนเป็นสีเดียวกันเพื่อความลื่นไหลสม่ำเสมอ (เช่นสีโทนสว่างคงที่ #FAFAFA) โดยใช้ Layer 1 (Ambient Backdrop) เรืองแสงฟุ้งขวางขอบเฟรม และทำการสุ่มโทนสี Gradients ตามธีมรายวิชาหรือตามระดับเนื้อหา/หัวข้อย่อยอย่างเป็นอิสระ เพื่อสร้างมิติสีสันสวยงามเฉพาะตัวในแต่ละหน้านั้นๆ
+- **Clickable Hover Visual Standard (30 May 2026)**: มาตรฐานการบอกเบาะแสให้ผู้เรียนรู้ว่าปุ่มหรือการ์ดนั้นคลิกโต้ตอบได้ (Affordance Indicator) บังคับใช้คลาส `cursor-pointer` ร่วมกับเอฟเฟกต์โฮเวอร์ เช่น `hover:scale-[1.02]` หรือ `hover:-translate-y-1` และ `hover:shadow-md` หรือ `hover:shadow-lg` ในปุ่มและการ์ดอินเตอร์แอคทีฟทั้งหมดทุกหน้าเพื่อการใช้งานลื่นไหลและเข้าใจการทำงานทันที
+- **Glassmorphism & Pulsing Interactive Icon Standard (30 May 2026)**: บัญญัติมาตรฐานดีไซน์ระดับพรีเมียมสำหรับการอัปเกรดบทเรียน โดยทุกคอมโพเนนต์ต้องใช้โครงสร้างการ์ดกระจกใสกึ่งโปร่งแสง `bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl` ผสานกับจานรองไอคอนแบบ `group` ที่ตอบสนองโฮเวอร์ด้วยการขยับ/หมุนเบาๆ (เช่น `group-hover:rotate-12 group-hover:scale-110`) หรือกะพริบชีพจร (`group-hover:animate-pulse`) เพื่อยกระดับความสวยงามและเพิ่มความน่าสนใจในการใช้งาน
+- **Clean Reusable Data Mapping Standard (30 May 2026)**: บัญญัติมาตรฐานการเขียนโค้ดเพื่อลดความซ้ำซ้อนของคำสั่ง (Deduplication) โดยกำหนดให้แปลงเนื้อหาที่เป็นบล็อกโครงสร้างย่อยที่มีความคล้ายกัน ให้มาอยู่ในรูปแบบของอาร์เรย์โครงสร้างข้อมูล (Array of Objects) แล้วเรนเดอร์ออกทางหน้าจออย่างไดนามิกผ่านการ `.map()` และการใช้ Local State ร่วมกัน แทนการเขียนโค้ด HTML/JSX ซ้ำๆ แบบ Hardcode ช่วยลดความยาวของไฟล์ลงมากกว่า 50% เพิ่มประสิทธิภาพการบำรุงรักษาโค้ด แต่ยังคงรายละเอียดทฤษฎีและระบบโต้ตอบย่อยครบถ้วนสมบูรณ์ 100%
+- **OO-style Composition Standard — Shared Base Components (30 May 2026, อัปเดต 30 May 2026)**: บัญญัติมาตรฐานการสร้างและนำ "แม่พิมพ์ (Base Components)" กลับมาใช้ซ้ำข้ามบทเรียน โดยเก็บไว้ที่ `\Teach\LMS-React\src\components\interactive\shared\` และนำเข้าผ่าน Barrel Export ที่ `shared/index.js` มีหลักการดังนี้:
+  - **SimulatorShell** = แม่พิมพ์การ์ดหลัก (light/dark mode) พร้อม Glassmorphism + Hover animations — ใช้แทนโครงสร้างการ์ดที่เขียนซ้ำทุกบทเรียน
+  - **ConsoleScreen** = กล่องจำลอง Python Terminal/Console — ใช้แทนการเขียน dark code output panel ซ้ำทุกการ์ด
+  - **OptionSelector** = ปุ่มตัวเลือก Grid รองรับ pill/card mode — ใช้แทน button grid ที่ซ้ำกันทุกบทเรียน
+  - **QuizEngine** = เกมตอบคำถาม Multiple Choice ที่จัดการ state ครบ (level/win/fail/reset) ด้วยตัวเอง — ลด ~225 บรรทัด เหลือแค่ ~40 บรรทัดข้อมูล
+  - **AmbientBackdrop** = Layer 1 Background blobs พร้อม Theme Presets (PY1–4, SQL1) — ใช้แทนการ copy-paste วงกลมเรืองแสง fixed inset-0 ทุกบทเรียน
+  - **ConceptCard** = การ์ดแนวคิดพรีเมียม สีขาว มีวงกลม accent ต่างสีมุมขวาบน (12 accent presets) + code strip + result badge — ใช้สำหรับ operators, keywords, data types ทุกบทเรียน
+  - **SectionBlock** = กรอบส่วน gradient ล้อมรอบกลุ่ม concept cards — ใช้แบ่งกลุ่มหัวข้อในบทเรียนที่มีหลาย concept ต่างประเภท
+  - **LogicGateSimulator** = จำลองวงจรตรรกะ boolean แบบ visual flow (input → operator → output) รองรับ binary (and/or/==) และ unary (not) มี toggle-able inputs และ formula bar ด้านล่าง
+  - **กฎเหล็กการใช้งาน**: เมื่อสร้างบทเรียนใหม่ให้ **ต้อง** import จาก `../shared` ก่อนเสมอ และเขียน custom component เพิ่มเฉพาะส่วนที่ต้องการตรรกะเฉพาะของบทเรียนนั้น ๆ เท่านั้น เพื่อประสิทธิภาพสูงสุด
+- **Concept Card Visual System Standard (30 May 2026)**: ดูรายละเอียดและ Semantic Accent Color Palette ครบถ้วนได้ที่ `\Teach\DESIGN.md` ส่วนที่ 5 (§5.1–5.5) — ห้ามใช้สีตามอำเภอใจ ต้องใช้สีตาม semantic ที่กำหนดเท่านั้น (เช่น == → amber, != → rose, and → purple, True → emerald)
 
 ---
 

@@ -8,7 +8,7 @@
 - **Primary**: `#4F46E5` (`indigo-600`) - Actions หลัก, สถานะ Active, ปุ่ม CTA (💡 **Auto-Theme**: AI ต้องเปลี่ยนสี Primary และ Secondary อัตโนมัติให้เข้ากับรายวิชา เช่น วิชาวิทยาการข้อมูลอาจใช้สีฟ้า, OOP อาจใช้สีส้ม)
 - **Secondary**: `#06B6D4` (`cyan-500`) - ลิงก์, จุดเน้น
 - **Tertiary**: `#F97316` (`orange-500`) - แจ้งเตือนด่วน หรือความเร่งด่วน
-- **Background**: `#FAFAFA` (`[#FAFAFA]`) - พื้นหลังของแพลตฟอร์ม
+- **Background**: `#FAFAFA` (`[#FAFAFA]`) - สีพื้นหลังหลักที่คงที่เหมือนกันทุกหน้าเพื่อความเสถียรและราบรื่นสายตา
 - **Surface**: `#FFFFFF` (`white`) - พื้นผิวของการ์ด, Modals
 - **Success**: `#22C55E` (`green-500`) | **Warning**: `#F59E0B` (`amber-500`) | **Error**: `#EF4444` (`red-500`)
 
@@ -26,14 +26,24 @@
 
 ---
 
-## 🧱 3. Component Standards
+## 🧱 3. Component Standards & Clickable Hover Indicators
 - **Buttons**:
-  - Primary: `bg-[#4F46E5] text-white hover:bg-[#4338CA] active:scale-98 rounded-[8px] font-semibold transition-all`
-  - Secondary: `border border-[#4F46E5] text-[#4F46E5] hover:bg-[#EEF2FF] active:scale-98 rounded-[8px] font-semibold`
+  - Primary: `bg-[#4F46E5] text-white hover:bg-[#4338CA] hover:scale-[1.02] hover:shadow-md active:scale-98 rounded-[8px] font-semibold cursor-pointer transition-all duration-200`
+  - Secondary: `border border-[#4F46E5] text-[#4F46E5] hover:bg-[#EEF2FF] hover:scale-[1.02] active:scale-98 rounded-[8px] font-semibold cursor-pointer transition-all duration-200`
   - ขนาด: h-8 (Small), h-[38px] (Medium - ค่าเริ่มต้น), h-[46px] (Large)
 - **Inputs**: `h-[38px] border-[#E4E4E7] rounded-[8px] focus:border-[#4F46E5] focus:ring-3 focus:ring-[#4F46E5]/12`
 - **Border Radius**: Small(4px), Medium(8px), Large(12px), XL(20px), Full(9999px)
 - **Shadow/Elevation**: ใช้ Tailwind standard `shadow-sm`, `shadow-md`, `shadow-xl`, หรือ Custom Drag `shadow-[0_12px_24px_-4px_rgba(79,70,229,0.15)]`
+- **Clickable Hover Visual Standards (มาตรฐานสัญลักษณ์และเอฟเฟกต์ชี้วัดเมื่อโฮเวอร์)**:
+  - ทุกองค์ประกอบที่กดโต้ตอบได้ (เช่น ปุ่ม, คีย์บอร์ดตัวเลือก, หรือการ์ด) **ต้อง** แสดงสัญลักษณ์ชัดเจนเมื่อนำเมาส์มาวางด้านบน (Hover):
+    1. **บังคับใช้** `cursor-pointer` เสมอในทุกปุ่มและการ์ดที่กดคลิกได้
+    2. **การ์ดที่กดได้ (Interactive Cards)**: บังคับใส่เอฟเฟกต์ยกลอยและแสงเงาเมื่อโฮเวอร์ เช่น `hover:-translate-y-1 hover:shadow-lg hover:border-indigo-500/30 transition-all duration-200`
+    3. **ปุ่มหรือตัวเลือกย่อย (Buttons/Badges)**: บังคับใส่เอฟเฟกต์ขยายตัวและปรับความสว่าง/เฉดสี เช่น `hover:scale-[1.02] hover:shadow-sm transition-all duration-200`
+- **Glassmorphism Design Standard (มาตรฐานแผงโปร่งแสงแบบกระจกแก้ว)**:
+  - บังคับใช้คลาส `bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl` หรือ `bg-slate-900/80 backdrop-blur-xl border border-white/10` สำหรับบอร์ดมืด ร่วมกับการมีวงกลมเรืองแสงฟุ้ง (Ambient Gradients) ในเลเยอร์ 1 ด้านล่าง เพื่อสร้างมิติพื้นผิวที่ลอยเด่นและดึงดูดใจ
+- **Interactive Icon Standard (มาตรฐานไอคอนโต้ตอบขยับได้)**:
+  - ทุกปุ่มหรือการ์ดที่โต้ตอบได้ ควรหุ้มด้วย Wrapper ที่มีสถานะกลุ่ม (`group cursor-pointer`) และมีจานรองไอคอนกึ่งโปร่งแสง (เช่น `p-3 rounded-2xl bg-indigo-50/80 text-indigo-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:bg-indigo-100 shadow-inner`)
+  - ไอคอนของ Lucide-React ต้องเปลี่ยนสีและเคลื่อนไหวอย่างสมูทเมื่อถูกโฮเวอร์ เช่น หมุนเบาๆ (`transition-transform group-hover:rotate-12 duration-300`), สวิงตามรอบ, หรือกะพริบเป็นจังหวะชีพจรความร้อน (`group-hover:animate-pulse`) เพื่อให้ UI รู้สึกมีชีวิตชีวา
 - **Interaction**: เมื่อคลิกหรือโต้ตอบ ห้ามมีอาการหน่วงเกิน 200ms
 
 ---
@@ -41,9 +51,10 @@
 ## 🌌 4. Immersive Full-Page Standard (มาตรฐานเลย์เอาต์ระดับพรีเมียม)
 ทุกบทเรียนแบบ Interactive/Simulator ต้องถูกสร้างแบบ "หน้าต่างไร้ขอบ (Seamless)" เรียงตัว 4 เลเยอร์ตามแนวดิ่ง (Vertical Stack) ดังนี้:
 
-**1️⃣ Layer 1: Ambient Backdrop**
-- พื้นหลังเรืองแสงฟุ้งข้ามขอบเฟรม สร้างมิติและบรรยากาศ (ปรับสีได้ตามธีม)
-- ใช้ `<div className="fixed inset-0 overflow-hidden pointer-events-none z-0">...วงกลม blur-[120px]...</div>`
+**1️⃣ Layer 1: Ambient Backdrop & Dynamic Theme Gradients**
+- สีพื้นหลังหลักของบอดี้ภายนอกต้อง **เป็นอันเดียวกันเสมอกันทุกบทเรียน** (เช่น โทนสว่างคงที่ #FAFAFA หรือธีมมืดคงที่ตามระบบ)
+- เพื่อสร้างมิติเด่น ให้ใช้ **เลเยอร์ล่างสุด (Layer 1)** ทำการไล่โทนสีเรืองแสง (Gradients) ฟุ้งข้ามขอบเฟรม โดยสามารถสุ่มเฉดหรือปรับแต่งคู่สีอิสระสะท้อนธีมแต่ละบทเรียน/หัวข้อ (สุ่มอิสระตามหัวข้อ) เพื่อความสวยงามแปลกใหม่และไม่จำเจ
+- ใช้โครงสร้าง `<div className="fixed inset-0 overflow-hidden pointer-events-none z-0">...วงกลมเรืองแสงสุ่มโทนสีฟุ้ง blur-[120px] หรือ blur-[160px]...</div>`
 
 **2️⃣ Layer 2: Standardized Hero Header**
 - ส่วนหัวพรีเมียมที่ประกอบด้วย: รหัสหัวข้อย่อยสีเด่น, ชื่อบทภาษาไทยตัวหนา, ส่วนขยายภาษาอังกฤษสไตล์ Gradient และกล่องคำอธิบายแนวคิดขอบหนาด้านซ้าย
@@ -58,7 +69,9 @@
 
 **3️⃣ Layer 3: Flexible Subtopics & Interactives**
 - พื้นที่อิสระตรงกลางสำหรับ Simulator หรือมินิเกม
-- **ข้อกำหนดเพิ่มเติม (Alignment Standard):** ต้องห่อหุ้มเนื้อหาทั้งหมดใน Layer 3 ด้วยแท็ก `<main>` ที่มีคลาสระยะขอบพื้นฐาน (Default Margin) คือ `max-w-7xl mx-auto px-6 lg:px-12 pt-10 space-y-8` (หรือ `space-y-16` ตามความเหมาะสม) เสมอ เพื่อให้เส้นขอบซ้าย-ขวา (Alignment) ตรงกับกล่องข้อความของ StandardHeader ด้านบนอย่างสมบูรณ์แบบ
+- **ข้อกำหนดเพิ่มเติม (Alignment Standard & Compact Card Spacing):**
+  - ต้องห่อหุ้มเนื้อหาทั้งหมดใน Layer 3 ด้วยแท็ก `<main>` ที่มีคลาสระยะขอบพื้นฐานคือ `max-w-7xl mx-auto px-6 lg:px-12 pt-6 space-y-6 md:space-y-8` เสมอ เพื่อลดระยะห่างระหว่างการ์ดให้สมดุลพอดี ไม่ห่างเกินไปจนเคว้ง
+  - เส้นขอบขวา-ซ้าย (Alignment) ของการ์ดและปุ่มต้องตรงแนวเดียวกับ StandardHeader และ TeacherTask ด้านล่างอย่างสมบูรณ์แบบ
 - ต้องรักษาความหรูหราแบบ Genesis (Clean, ฟอนต์ Outfit/Inter, มีการเคลื่อนไหวตอบสนองนุ่มนวล)
 
 **4️⃣ Layer 4: Standardized TeacherTask Footer**
@@ -67,6 +80,72 @@
 
 ---
 
-## 🧠 5. Continuous Training (การเรียนรู้รสนิยมด้านความงาม)
+## 🃏 5. ระบบการ์ดและตัวจำลองเนื้อหา (Content Card & Simulator Design Principles)
+
+> **หลักการสำคัญ**: ส่วนนี้กำหนด **แนวคิด** ในการออกแบบ ไม่ใช่กฎตายตัว AI ต้องนำหลักการไปประยุกต์ใช้กับเนื้อหาทุกประเภท และมีความยืดหยุ่นสร้างสรรค์รูปแบบใหม่ที่เหมาะสมกับบริบทนั้นๆ ได้เสมอ
+
+### 5.1 หลักการ: สีต้องสื่อความหมาย (Semantic Color)
+แต่ละ concept ในบทเรียนควรมีสีประจำตัวที่ **สะท้อนบุคลิกของมัน** ไม่ใช่สุ่มสี — แต่ก็ไม่ต้องผูกมัดกับสีเดิมซ้ำๆ ทุกครั้ง
+
+**วิธีคิดเลือกสี:**
+- ค่า/แนวคิดที่มีความหมาย "บวก/เพิ่ม/ถูกต้อง" → โทนเขียว หรือ อบอุ่น (emerald, teal, amber)
+- ค่า/แนวคิดที่มีความหมาย "ลบ/ลด/ผิด" → โทนแดง-ชมพู (rose, red, pink)
+- ค่า/แนวคิดที่เชื่อมต่อ/รวม → โทนม่วง-คราม (violet, purple, indigo)
+- ค่า/แนวคิดที่แยก/ต่าง → โทนส้ม-อำพัน (orange, amber)
+- กลุ่มแนวคิดหนึ่งๆ ใช้ accent สีเดียวกันสม่ำเสมอ เพื่อให้ผู้เรียนจดจำกลุ่มได้
+- ใน **บทเรียนเดียวกัน** ห้ามใช้สีซ้ำกัน 2 concepts เพื่อให้แยกแยะได้ชัดเจน
+
+### 5.2 หลักการ: พื้นหลังการ์ดต้องมีชีวิต (Card Background Vitality)
+การ์ดเปล่าสีขาว 100% คือสิ่งที่ต้องหลีกเลี่ยง แต่การตกแต่งต้องไม่รบกวนเนื้อหา
+
+**แนวทางที่ใช้ได้:**
+- **Corner Accent Blob**: วงกลม/รูปทรงสีฟุ้ง opacity ต่ำที่มุมการ์ด — ให้ความรู้สึก "มีสีสัน" โดยไม่ดึงความสนใจ
+- **Gradient Background**: ไล่สีอ่อนๆ สองโทนเดียวกัน เช่น `from-violet-50 to-white` หรือ `from-slate-50 to-indigo-50/30`
+- **Subtle Border**: ขอบบางพอดูออก ไม่ต้องหนาเกิน — อาจ match สีกับ accent ของหัวข้อ
+- **ลูกเล่นอื่นๆ ได้**: pattern SVG, diagonal stripe, inner glow — ขึ้นอยู่กับบริบทของบทเรียน
+- **สิ่งที่ต้องคงไว้**: พื้นที่เนื้อหาต้องอ่านง่าย ไม่มีสีพื้นหลังที่ขัดกับตัวอักษร
+
+### 5.3 หลักการ: Hierarchy ที่ชัดเจนในการ์ด (Visual Hierarchy)
+ภายในการ์ดหนึ่งใบ ต้องมีลำดับความสำคัญที่ตาอ่านได้ทันที:
+
+1. **ระดับ 1 — สัญลักษณ์/หัวข้อหลัก**: ใหญ่ที่สุด, มีสี accent, font mono หรือ bold ตามความเหมาะสม
+2. **ระดับ 2 — ชื่อ/คำอธิบายสั้น**: ขนาดกลาง, สีเข้มพอ่านง่าย (`text-slate-800`)
+3. **ระดับ 3 — รายละเอียด/คำอธิบายยาว**: ขนาดเล็กลง, สีเบาลง (`text-slate-500`)
+4. **ระดับ 4 — Interactive Strip/ตัวอย่าง**: พื้นหลังแตกต่างจากการ์ด เช่น `bg-slate-50` เพื่อสร้างความแตกต่างระดับ
+
+### 5.4 หลักการ: Simulator ต้องสื่อ Flow ได้ด้วยตา (Visual Flow Design)
+ตัวจำลองควรออกแบบให้ผู้เรียน **เข้าใจ input → process → output** โดยไม่ต้องอ่านอธิบาย
+
+**แนวคิดการออกแบบ Simulator:**
+- มี **ทิศทางการไหล** ชัดเจน: ซ้ายไปขวา หรือบนลงล่าง
+- **Input** ต้องดูคลิกได้ (affordance) — มีสีหรือ border บอกว่าเปลี่ยนได้
+- **Operator/Process node** ต้องเด่นชัดแยกจาก input/output — สีต่างกัน, รูปทรงต่างกัน
+- **Output** ต้องเปลี่ยนสีหรือรูปร่างตามผลลัพธ์ทันทีที่ input เปลี่ยน
+- **Formula Bar** ด้านล่าง (ถ้ามี) แสดงสูตรพร้อมสีตาม semantic — สีเขียว=True, สีแดง=False
+- รูปแบบไม่ตายตัว: บางบทเรียนเหมาะ flow แนวนอน บางบทเหมาะ tree diagram หรือ circular
+
+### 5.5 หลักการ: Grid ต้องสมดุลและหายใจได้ (Balanced Grid)
+การจัดวางการ์ดหลายใบต้องดูสมดุลในทุกขนาดหน้าจอ
+
+- เนื้อหา **2–4 หัวข้อ**: grid 2–3 คอลัมน์ คือช่วงที่สวยที่สุด
+- เนื้อหา **5–6 หัวข้อ**: 3 คอลัมน์ หรือ 2 แถว 3 คอลัมน์ (3+3)
+- เนื้อหา **7+ หัวข้อ**: พิจารณาแบ่ง Section หรือใช้ Tabs แทน — อย่ายัดทุกอย่างในกริดเดียว
+- Gap ระหว่างการ์ด: อย่างน้อย `gap-4` ให้การ์ดหายใจ ไม่ชนกัน
+- ระยะห่างระหว่างกลุ่ม Section: `space-y-10` ขึ้นไป
+
+### 5.6 หลักการ: Section Grouping เมื่อเนื้อหาซับซ้อน (Content Grouping)
+เมื่อบทเรียนมีแนวคิดหลายประเภท (เช่น ทั้ง operators และ boolean values และ simulator) ให้แยกเป็น Section มีกรอบล้อมรอบ
+
+**แนวคิด:**
+- แต่ละ Section มีชื่อและอาจมีสี accent ของตัวเอง
+- พื้นหลัง Section ต่างจากพื้นหลังหน้า — gradient อ่อน, มุมโค้ง, shadow เบา
+- Section ไม่จำเป็นต้องหน้าตาเหมือนกัน — Section หนึ่งอาจเป็น card grid, อีก Section เป็น simulator, อีกอันเป็น code example
+
+---
+
+## 🧠 6. Continuous Training (การเรียนรู้รสนิยมด้านความงาม)
 - **จับทางดีไซน์**: ให้ AI สังเกตและจดจำรสนิยมของผู้ใช้ (เช่น ผู้ใช้อาจชอบความโปร่งใสแบบ Glassmorphism มากขึ้น หรือชอบสี Gradient โทนใดเป็นพิเศษ)
 - หากผู้ใช้สั่งแก้ UI ให้เป็นไปในทิศทางเดียวกันหลายๆ ครั้ง ให้คุณเพิ่มกฎใหม่นั้นลงในหมวด `Design Tokens` หรือ `Component Standards` ของไฟล์นี้ทันที เพื่อให้ไม่ต้องถูกสั่งแก้ซ้ำอีก
+- **ความชอบล่าสุด (30 May 2026)**: ผู้ใช้ชอบ Concept Card แบบสีขาวมีพื้นการ์ดมีชีวิต, สีต่างกันต่อ concept ตาม semantic, Grid layout สมดุล, Section grouping เมื่อมีหลายประเภท, Logic/Flow simulator ที่ดูง่าย interactive ได้จริง
+- **หลักการสำคัญ**: UI "ต้องสวย สมดุล อย่างมีหลักการ" — ไม่ใช่แค่ใส่สีเยอะ แต่ทุกอย่างต้องมีเหตุผล สื่อความหมาย และอ่านง่าย
+
