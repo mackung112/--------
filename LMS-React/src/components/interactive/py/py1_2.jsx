@@ -23,7 +23,8 @@ import {
   Sliders,
   Globe,
   FileCode,
-  Compass
+  Compass,
+  ChevronRight
 } from 'lucide-react';
 
 export default function py1_2() {

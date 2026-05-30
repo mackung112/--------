@@ -24,7 +24,8 @@ import {
   Globe,
   Sliders,
   FileCode,
-  Smartphone
+  Smartphone,
+  Info
 } from 'lucide-react';
 
 export default function py1_1() {

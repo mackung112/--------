@@ -18,7 +18,8 @@ import {
   ShieldCheck, 
   Database,
   Cpu,
-  Layers
+  Layers,
+  X
 } from 'lucide-react';
 
 // ============================================================================

@@ -19,7 +19,8 @@ import {
   RefreshCcw,
   CheckCircle2,
   XCircle,
-  HelpCircle
+  HelpCircle,
+  Award
 } from 'lucide-react';
 
 // ============================================================================

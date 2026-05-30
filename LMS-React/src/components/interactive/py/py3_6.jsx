@@ -14,7 +14,9 @@ import {
   HelpCircle,
   AlertCircle,
   Settings,
-  RefreshCcw
+  RefreshCcw,
+  CheckCircle2,
+  XCircle
 } from 'lucide-react';
 
 // ============================================================================
