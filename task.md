@@ -6,52 +6,61 @@
 ---
 
 ## 📌 1. เป้าหมายปัจจุบัน (Active Objectives)
-- [ ] พัฒนาบทเรียนหน่วยการเรียนรู้ย่อย **"หน่วยที่ 4.1 อุปกรณ์เครือข่ายระดับฮาร์ดแวร์พื้นฐาน (Network Devices)"** ในระบบ LMS-React
+- [ ] พัฒนาบทเรียนหน่วยการเรียนรู้ย่อย **"หน่วยที่ 5.2 โครงสร้างและการจัดสรร Internet Protocol (IPv4 Address Structure)"** ในระบบ LMS-React
 
 ---
 
 ## 🔄 2. รายการงานที่กำลังดำเนินการและแผนงานถัดไป (Active Checklist)
-- [ ] ค้นคว้ารายละเอียดสเปกหลักสูตรวิชาการของหน่วยที่ 4.1
-- [ ] วางแผนพัฒนาเครื่องจำลอง/สื่อเชิงโต้ตอบสำหรับอุปกรณ์เครือข่าย (NIC MAC Address, Hub collision, Switch MAC Table learning, Router IP Routing)
-- [ ] เขียนโค้ดคอมโพเนนต์ `it4_1.jsx` (หัวข้อย่อย + Simulators + Quiz)
-- [ ] ทำการทดสอบบิลด์ระบบเพื่อตรวจสอบความสมบูรณ์และพร้อมใช้
+- [ ] พัฒนาคอมโพเนนต์ `it5_2.jsx` (ทฤษฎีวิชาการครบทั้ง 6 หัวข้อ + 4 Simulators + 5 Quiz + TeacherTask)
+  - [ ] Simulator 1: เครื่องจำลองวิเคราะห์โครงสร้าง IPv4 (IPv4 Header & Bin-to-Dec Converter)
+  - [ ] Simulator 2: แผงจำลองเปรียบเทียบประเภท Class-based IPv4 & Private IP Ranges
+  - [ ] Simulator 3: เครื่องจำลองตรรกะระดับบิต ANDing (Subnet Mask & Network ID Calculator)
+  - [ ] Simulator 4: แผนผังวิชวล Default Gateway Routing & การเปรียบเทียบ IPv4 vs IPv6
+- [ ] ทำการทดสอบบิลด์ด้วย `npm run build` เพื่อยืนยันความถูกต้อง 100%
 
 ---
 
 ## 📝 3. โน้ตส่งมอบงานและบันทึกประวัติ (Handoff Logs)
 *(เมื่อแต่ละงาน in Active Checklist ด้านบนทำสำเร็จลุล่วงแล้ว ให้ย้ายเนื้อหามาเขียนสรุปผลไว้ตรงนี้ และนำงานนั้นออกจาก Active Checklist ทันที และถ้างานใหม่เข้ามา ให้แทนที่ประวัติงานเก่าด้วยงานใหม่) (เก็บข้อความนี้ไว้ในทุกๆ ครั้งที่มีการส่งมอบงาน)*
 
-- **หน่วยที่ 3.4 การจัดการไดรเวอร์และการอัปเดต (it3_4.jsx)** [เสร็จสิ้น - 30/05/2026]
-    - พัฒนาเนื้อหาครบทั้ง 5 หัวข้อย่อยทางวิชาการการจัดการไดรเวอร์ตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามระดับพรีเมียม
-    - พัฒนา Driver Interpreter Flow Simulator จำลองผังวิชวลและการถอดรหัสระดับสัญญาณคำสั่ง USB, GPU assembly และ NIC frames ด้วย SVG (Absolute Center Connection)
-    - พัฒนา Windows Device Manager Simulator และ Hardware Support Center & Driver Installer Simulator สองคอมโพเนนต์เชื่อมโยงสอดคล้องกัน ให้ผู้เรียนเข้าProperties แกะ Hardware IDs (VEN & DEV) ไปดาวน์โหลดตรงผ่าน Official Vendor Portal ติดตั้งไฟล์สำเร็จเพื่อคลายขีดจำกัดสัญลักษณ์ตกใจสีเหลือง ⚠️ ในตรรกะระบบ
-    - พัฒนา Windows Update Center & Patch Simulator จำลองหน้าตรวจหาอุดช่องโหว่ความมั่นคง Cumulative Security patches (KB5034123) และไดรเวอร์ WHQL พร้อมคำสั่งบูตรีสตาร์ตระบบ
-    - พัฒนา Driver Troubleshooting & Action Panel Simulator บอร์ดวินิจฉัยเยียวยาเครื่องผิดปกติ 3 เคสศึกษาผ่านฟังก์ชัน Roll Back Driver, Disable/Enable Device และ Uninstall Device
+- **หน่วยที่ 5.1 มาตรฐานและแบบจำลองการสื่อสารข้อมูล (it5_1.jsx)** [เสร็จสิ้น - 30/05/2026]
+    - พัฒนาเนื้อหาครบทั้ง 5 หัวข้อย่อยทางวิชาการมาตรฐานและแบบจำลองการสื่อสารข้อมูลตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามและมีประสิทธิภาพสูงสุด
+    - พัฒนา OSI 7-Layer Interactive Inspector Simulator แบบจำลองผ่าแกนวิเคราะห์ OSI 7 ชั้น พร้อมระบบยิงแพ็กเก็ตวิ่งสตรีมไหลขึ้นลงข้ามสายทางกายภาพ ฝั่งส่งทำการห่อหุ้ม (Encapsulate) และฝั่งรับแกะถอดหัว (Decapsulate) แสดง Log สดทางคอนโซล
+    - พัฒนา OSI vs TCP/IP Mapping Tool Simulator เครื่องจำลองตรรกะเปรียบเทียบแบบเคียงข้างด้วยผังทางเชื่อมโยง SVG ชี้ตรงศูนย์กลาง (Absolute Center) ไฮไลท์การแมป Application Layer (OSI L7-5 ➔ TCP/IP Application), Transport (OSI L4 ➔ TCP/IP Transport), Internet (OSI L3 ➔ TCP/IP Internet) และ Network Access (OSI L2-1 ➔ TCP/IP Network Access)
+    - พัฒนา Data Encapsulation & Decapsulation Lab ห้องปฏิบัติการทดสอบประกอบและแกะห่อซองบิต PDU ของฝั่งส่งและฝั่งรับทีละขั้น สังเกตขนาดและรูปทรงข้อมูลที่ขยายตัว (Data ➔ Segment ➔ Packet ➔ Frame ➔ Bits) พร้อมป้อนข้อความดิบสแกนตรวจสอบได้ไดนามิก
+    - พัฒนา Protocol Port Router Board แผงไฟร์วอลล์และสวิตช์ควบคุมระบบกรองพอร์ต Well-known Ports สากล (HTTP 80, HTTPS 443, FTP 20/21, DNS 53, DHCP 67/68, SSH 22, Telnet 23) ผู้ใช้สแกนและตัดสินใจ Drop/Route/Redirect เพื่อขจัดอันตรายความมั่นคงและเสริม XP
     - แนบ Quiz 5 ข้อและภารกิจ TeacherTask ท้ายหน่วย ผ่านการคอมไพล์ build Vite ราบรื่น 100%
 
-- **หน่วยที่ 3.3 กระบวนการติดตั้งระบบปฏิบัติการและตั้งค่าพื้นฐาน (it3_3.jsx)** [เสร็จสิ้น - 30/05/2026]
-    - พัฒนาเนื้อหาครบทั้ง 5 หัวข้อย่อยทางวิชาการกระบวนการติดตั้งระบบปฏิบัติการตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามระดับพรีเมียม
-    - พัฒนา Windows Installer Welcome Wizard Simulator จำลองการส่งคำสั่งบูตผ่านสื่อบันทึกข้อมูล เลือกรายละเอียดภาษา คีย์บอร์ด และดำเนินการติดตั้ง (Install Now)
-    - พัฒนา Windows Setup Partition Manager Simulator จำลองการแบ่งพื้นที่ดิสก์ตรรกะ (System Reserved, Primary) การสั่งลบ (Delete) และฟอร์แมต (Format) ในรูปแบบตารางที่มีวิชวลแถบดิสก์สดสัดส่วนเรียลไทม์
-    - พัฒนา Windows OOBE Setup Wizard Simulator จำลองสภาพแวดล้อม OOBE สไตล์ Windows 11 แผงกระจกแก้วสลับคลิกเลือก Region, Keyboard Layout และจำลองการหาคลื่นสัญญาณ Wi-Fi เพื่อซิงค์เชื่อมต่ออย่างลื่นไหล
-    - พัฒนา Local vs Microsoft Account Portal Simulator จำลองการสร้างบัญชีท้องถิ่น (ต้องระบุคำถามความปลอดภัย) เทียบกับบัญชีกลุ่มเมฆไมโครซอฟท์ พร้อมตารางกริดเปรียบเทียบสิทธิประโยชน์อย่างชัดเจน
-    - พัฒนา Privacy Toggles & Secure PIN Pad Simulator บอร์ดเปิด-ปิดความเป็นส่วนตัว 4 ด้านควบคู่กับแป้นตัวเลขเพื่อป้อนรหัส PIN 4 หลัก โดยมีระบบตรวจสอบความเสี่ยงรหัสเดาง่าย ( sequential/repeating) อย่างมั่นคง
+- **หน่วยที่ 4.4 สื่อกลางการเชื่อมต่อแบบไร้สาย (it4_4.jsx)** [เสร็จสิ้น - 30/05/2026]
+    - พัฒนาเนื้อหาครบทั้ง 5 หัวข้อย่อยทางวิชาการสื่อกลางการเชื่อมต่อแบบไร้สายตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามและมีประสิทธิภาพสูงสุด
+    - พัฒนา Wireless Spectrum Wave Inspector Simulator เครื่องจำลองวัดสเปกตรัมและคลื่นความถี่วิทยุไร้สาย แสดงผล Sine Wave ทัศนศาสตร์ฟิสิกส์คลื่นวิทยุ, ไมโครเวฟ, และอินฟราเรด สดแบบเรียลไทม์
+    - พัฒนา IEEE 802.11 Standards Analyzer Simulator วิเคราะห์มาตรฐานแบนด์วิดท์ช่องสัญญาณ Wi-Fi 4 (n), Wi-Fi 5 (ac), และ Wi-Fi 6 (ax) แสดงความต่างของย่านความถี่ 2.4GHz และ 5GHz ความกว้างช่องสัญญาณ 20MHz ถึง 160MHz และความเสถียรในการใช้งาน
+    - พัฒนา Personal Bluetooth Pairing Simulator จำลองเครื่องสแกนและจับคู่พอร์ตอุปกรณ์ WPAN ไร้สายส่วนบุคคล โดยจำลอง Phone ค้นหาและป้อน Passkey PIN 6 หลักเพื่อจำลองการเข้ารหัสและสถาปัตยกรรมบิตของ BT
+    - พัฒนา Security Handshake & Antenna polarization Simulator แผงจำลองการแผ่คลื่นเราเตอร์ Omni-directional แบบสไลด์ปรับองศาเสาอากาศ (0 - 90 องศา) เพื่อสังเกต Radiation Pattern คู่ขนานไปกับแผงจำลองกุญแจตรวจสอบสิทธิ์ WPA 4-Way Handshake (ANonce, SNonce, MIC) ของ WPA2 และ WPA3
     - แนบ Quiz 5 ข้อและภารกิจ TeacherTask ท้ายหน่วย ผ่านการคอมไพล์ build Vite ราบรื่น 100%
 
-- **หน่วยที่ 3.2 การเตรียมการก่อนติดตั้งระบบปฏิบัติการ (it3_2.jsx)** [เสร็จสิ้น - 30/05/2026]
-  - พัฒนาเนื้อหาครบทั้ง 6 หัวข้อย่อยทางวิชาการการเตรียมความพร้อมระบบปฏิบัติการตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout)
-  - พัฒนา System Requirements Checker Simulator วิเคราะห์ความต้องการระบบขั้นต่ำในการติดตั้ง Windows 11, Windows 10 และ Ubuntu Server โดยเลือกประเมินสเปก CPU Cores, RAM, Disk Space, Secure Boot และโมดูล TPM 2.0
-  - พัฒนา Rufus Bootable USB Creator Simulator จำลองซอฟต์แวร์ Rufus โหมดมืดที่ประสานตรรกะความเข้ากันได้แบบสมมาตรของการจัด Partition Scheme และ Target System (GPT -> UEFI, MBR -> BIOS) พร้อมลูปแอนิเมชันสร้างสื่อติดตั้งและแสดงพอร์ต Console Logs
-  - พัฒนา File Copy Size Limitation Simulator แสดงความแตกต่างเชิงลึกของระบบไฟล์ FAT32, NTFS และ exFAT โดยสไลด์จำลองการเขียนข้อมูลเดี่ยวขนาดใหญ่และแสดงกล่องพ่นข้อผิดพลาดบักของ FAT32 เมื่อไฟล์เกิน 4GB
-  - พัฒนา Partition Scheme & Capacity Limit Simulator เปรียบเทียบขีดจำกัดขนาดตาราง MBR (ล็อกพื้นที่สูงสุดที่ 2.2TB และปล่อยพื้นที่เกินเป็น Unallocated/Unusable Space) เทียบกับตาราง GPT ยุคใหม่ 64-bit ที่สามารถใช้งานพื้นที่จัดเก็บข้อมูลได้สมบูรณ์ 100%
-  - จัดทำข้อมูลความแตกต่างลิขสิทธิ์ระดับอุตสาหกรรมในแผงกริดเปรียบเทียบ Retail, OEM และ Volume Licensing
-  - แนบ Quiz 5 ข้อความรู้การเตรียมระบบติดตั้งผ่าน QuizEngine โครงสร้างใหม่แบบระนาบเดียว และจัดวางภารกิจออกแบบสเปก TeacherTask สำหรับเครือข่ายสำนักงาน โดยคอมไพล์ผ่านกระบวนการ build ราบรื่น 100%
+- **หน่วยที่ 4.3 การเข้าหัวสายสัญญาณ UTP และการทดสอบ (it4_3.jsx)** [เสร็จสิ้น - 30/05/2026]
+    - พัฒนาเนื้อหาครบทั้ง 6 หัวข้อย่อยทางวิชาการการเข้าหัวสายสัญญาณ UTP และการทดสอบตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามและมีประสิทธิภาพสูงสุด
+    - พัฒนา RJ-45 Wire Color Arranger & Checker Simulator บอร์ดจัดเรียงลำดับสีสายไฟ UTP ทั้ง 8 เส้น โดยผู้ใช้สามารถสลับคู่สีของพินและทำการวัดความสอดคล้องตามมาตรฐาน T568A หรือ T568B พร้อมเฉลยลำดับบิตสีสากล Tx/Rx
+    - พัฒนา Pinout Wire Matcher Simulator ผังวิชวลแสดงการเชื่อมต่อระหว่าง Side A และ Side B ด้วยเส้น SVG โยงพินอย่างเป็นสมมาตร สามารถเปรียบเทียบตรรกะของสายตรง (Straight-through: T568B ➔ T568B) และสายไขว้ (Crossover: T568B ➔ T568A สลับคู่ 1➔3, 2➔6)
+    - พัฒนา Virtual Cable Tester Simulator จำลองเครื่องยิงไฟสแกนพิน LAN คู่ Master และ Remote พร้อมจำลองอาการชำรุด 3 กรณี: การทดสอบผ่านปกติ (Pass), สายพิน 5 ขาดใน (Open Circuit ดับทั้งฝั่งรับส่ง) และเข้าพินคู่ 1 และ 3 สลับพอร์ตกัน (Miswired/Short)
+    - พัฒนา Keystone Jack & Punch-Down Lab Simulator ห้องปฏิบัติการจำลอง punch-down สายทองแดงลงเต้ารับพลาสติกตัวเมียทีละสเตป ตั้งแต่การปอกสายไฟ (Strip), การสอดสายคู่สีมาตรฐาน T568B, และกดย้ำด้วย Impact Tool เพื่อยึดและสับทองแดงส่วนเกินทิ้ง
+    - แนบ Quiz 5 ข้อและภารกิจ TeacherTask ท้ายหน่วย ผ่านการคอมไพล์ build Vite ราบรื่น 100%
 
-- **หน่วยที่ 3.1 สถาปัตยกรรมและหลักการทำงานของระบบปฏิบัติการ (it3_1.jsx)** [เสร็จสิ้น - 30/05/2026]
-  - พัฒนาเนื้อหาครบทั้ง 5 หัวข้อย่อยทางวิชาการระบบปฏิบัติการตามหลักสูตรสากลแบบเปิดโปร่งโล่ง (Fluid Open-Air Layout)
-  - พัฒมนา OS Architectural Layer Bridge Simulator แสดงการไหลเวียนคำสั่ง System Calls จากผู้ใช้ผ่านเลเยอร์ OS ลงสู่ฮาร์ดแวร์จริงด้วยผัง SVG (Absolute Center Connection)
-  - พัฒนา CLI Terminal vs GUI File Explorer Simulator ให้เห็นภาพกระบวนการแปลงรหัสคำสั่งพิมพ์ (ls, mkdir, rm) เป็น Kernel system calls และการควบคุมพื้นที่จัดเก็บควบคู่กัน
-  - พัฒนา CPU Scheduler & Memory Swap Simulator แสดงกลไก Time-Slicing การคัดสรรสถานะคิวโปรเซส และการแก้ปัญหาแรมเต็มด้วยระบบ Paging Swapping ไปเก็บในหน่วยความจำเสมือน
-  - พัฒนา OS Families Matrix & Bit-Space Address Boundaries เปรียบเทียบ Windows, macOS, Linux (Client vs Server) และแสดงความกว้าง Address Space 32-bit (4GB Limit) เทียบกับ 64-bit
-  - แนบ Quiz 5 ข้อด้วย QuizEngine และภารกิจ TeacherTask ท้ายหน่วย ผ่านกระบวนการคอมไพล์ `npm run build` ผ่าน 100%
+- **หน่วยที่ 4.2 สื่อกลางการเชื่อมต่อแบบใช้สาย (it4_2.jsx)** [เสร็จสิ้น - 30/05/2026]
+    - พัฒนาเนื้อหาครบทั้ง 5 หัวข้อย่อยทางวิชาการสื่อกลางการเชื่อมต่อแบบใช้สายตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามและมีประสิทธิภาพสูงสุด
+    - พัฒนา Twisted Pair Crosstalk & EMI Lab Simulator จำลองสายคู่ตีเกลียวทองแดง 4 คู่ โดยผู้ใช้สามารถปรับระดับ Twist Rate (1-5) และโครงสร้างชีลด์ (UTP vs STP) เพื่อวัดผลลัพธ์ระดับสัญญาณรบกวน (NEXT) และสัญญาณวิทยุ (EMI) ผ่านผังคลื่นไฟฟ้า Oscilloscope สดเรียลไทม์
+    - พัฒนา Category Speed & Attenuation Range Meter Simulator จำลองเครื่องวิเคราะห์ระยะลากสายแลน UTP (10m - 150m) โดยคำนวณอัตราเสื่อมสัญญาณตามธรรมชาติไฟฟ้า (Attenuation dB) ควบคู่กับความเร็วแบนด์วิดท์สูงสุด (10 Gbps / 1 Gbps / 100 Mbps) ที่แปรเปลี่ยนตามสาย Cat 5e, Cat 6, และ Cat 6a
+    - พัฒนา Coaxial Layer Peeler Anatomy Simulator แผงผ่าแกนปอกเปลือกสายส่งคลื่นสัญญาณวิทยุโคแอกเชียลขนาด 5 ชั้น ให้ผู้เรียนคลิกสัมผัสจิ้มผ่าดูรายละเอียด เคมี หน้าที่และบทบาทตัวนำทองแดงเดี่ยว แกน Insulator, ชีลด์ฟอยล์อลูมิเนียม, ทองแดงถักสกัด RFI และ Jacket หุ้มกายภาพภายนอก
+    - พัฒนา Fiber Optic Propagation & Mode Simulator จำลองทัศนศาสตร์การเดินทางของแสงข้ามสายใยแก้วด้วยการสะท้อนกลับหมด (Total Internal Reflection) สังเกตความกว้างแกน Core และสลับโหมด Single-mode (แสงยิงตรงด้วยเลเซอร์, No Dispersion) เทียบกับ Multi-mode (แสงสะท้อนสลับฟันปลาหลายโหมด, Modal Dispersion)
+    - แนบ Quiz 5 ข้อและภารกิจ TeacherTask ท้ายหน่วย ผ่านการคอมไพล์ build Vite ราบรื่น 100%
+
+- **หน่วยที่ 4.1 อุปกรณ์เครือข่ายระดับฮาร์ดแวร์พื้นฐาน (it4_1.jsx)** [เสร็จสิ้น - 30/05/2026]
+    - พัฒนาเนื้อหาครบทั้ง 7 หัวข้อย่อยทางวิชาการอุปกรณ์เครือข่ายระดับฮาร์ดแวร์พื้นฐานตามหลักสูตรสากลในรูปแบบไร้กรอบเปิดโปร่งโล่ง (Fluid Open-Air Layout) สวยงามและมีประสิทธิภาพสูงสุด
+    - พัฒนา MAC Frame Builder & OUI Decoder Simulator จำลองโครงสร้างและถอดรหัสบิตข้อมูล MAC Address ขนาด 48 บิต แสดงสัดส่วน OUI (24 บิตแรก) กับ NIC Specific (24 บิตหลัง) พร้อมการจับคู่ค่ายแบรนด์ผู้ผลิตระดับสากล และการสลักบิต Ethernet II Frame
+    - พัฒนา Hub Broadcast & CSMA/CD Collision Simulator จำลองระบบบัสร่วมพอร์ตทางกายภาพ แสดงวิชวลการกระจายข้อมูล (Flooding/Broadcast) ไปทุกเครื่อง และจำลองสัญญาณชนกันในระดับบัสที่ต้องใช้โปรโตคอล CSMA/CD ในการสั่ง Jam Signal และสุ่มถอยเวลาพิมพ์ (Random Backoff)
+    - พัฒนา Switch MAC Address Table Learning Lab Simulator จำลองตาราง Dynamic CAM Table เรียนรู้พอร์ตพิกัดและจดจำ MAC Address ปลายทาง แสดงกระบวนการส่งต่อข้อมูลแบบเจาะจงรายพอร์ต (Unicast) เพื่อขจัด Collision Domain ข้ามช่องสัญญาณ
+    - พัฒนา Router Routing Table & NAT Gateway Simulator จำลองสะพานเชื่อมข้าม Subnet ด้วยไอพีแอดเดรส (Layer 3) แสดงวิชวลการตรวจสอบหัวโครงสร้าง IP Header (Source/Destination IP), การลดค่า TTL และการแปลงหมายเลข Private IP ➔ Public WAN IP (NAT Gateway)
+    - พัฒนา Triple Integrated Network Lab (WAP Wifi Attenuation, Hardware Firewall rules ACL & Modem Modulation Wave) แผงควบคุมร่วม 3 มิติย่อย แสดงความแรงสัญญาณ WiFi เสื่อมถอยข้ามสิ่งกีดขวางชนิดวัสดุและย่านความถี่, ระบบตั้งสิทธิ์ตัวกรองข้อมูล Firewall ACL และกราฟคณิตศาสตร์ Sine Wave จำลองการแปลงสัญญาณอนาล็อก (Modulation ASK/FSK/PSK)
+    - แนบ Quiz 5 ข้อและภารกิจ TeacherTask ท้ายหน่วย ผ่านการคอมไพล์ build Vite ราบรื่น 100%
 
