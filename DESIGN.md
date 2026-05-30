@@ -12,14 +12,19 @@
 - **Surface**: `#FFFFFF` (`white`) - พื้นผิวของการ์ด, Modals
 - **Success**: `#22C55E` (`green-500`) | **Warning**: `#F59E0B` (`amber-500`) | **Error**: `#EF4444` (`red-500`)
 
+---
+
 ## ✍️ 2. Typography & Thai Rules
 - **Font Family**: `Outfit` (Headlines), `Inter` (Body/UI Elements), `Source Code Pro` (Code), `Noto Sans Thai`
 - **Thai Rule**: งานที่มีภาษาไทย **บังคับใช้** `leading-relaxed` (1.625) หรือ `leading-loose` เสมอ เพื่อป้องกันสระ/วรรณยุกต์ทับซ้อนกัน
-- **สเกลตัวอักษร**: 
-  - Headline: `text-[38px] font-bold text-zinc-900`
-  - Subhead: `text-[26px] font-semibold text-zinc-900`
-  - Body: `text-[15px] font-normal text-zinc-600`
-  - Code: `text-[14px] font-mono text-zinc-800`
+- **สเกลตัวอักษรเพื่อสุขภาวะการอ่าน (Legible Font Scale - ค่าเริ่มต้นอัปเดต 30 May 2026)**: 
+  - Headline (หัวข้อหลักระดับบิ๊ก): `text-[38px] font-bold text-zinc-900`
+  - Subhead (หัวข้อย่อยและหัวการ์ด): `text-[26px] font-semibold text-zinc-900`
+  - Body (คำอธิบายทฤษฎีและเนื้อหาหลัก): `text-[16px] md:text-[17px] font-normal text-zinc-600` (ห้ามใช้ 15px เป็นค่าเริ่มต้นหลัก เพื่อสุขภาวะการอ่านที่อ่านสบายตา)
+  - Small / Explanatory (คำอธิบายปลีกย่อย, ป้ายสถานะ, คีย์บอร์ดปุ่มตัวเลือก): `text-sm` (14px) หรืออย่างต่ำ `text-[13px]` (ห้ามใช้ `text-xs` หรือ `text-[11px]` ในการแสดงทฤษฎีหรือตรรกะที่นักเรียนต้องเพ่งอ่านเป็นอันขาด)
+  - Code & Terminals (กล่องจำลองโค้ดโปรแกรมและกระดานเอาต์พุต): `text-[13.5px]` หรือ `text-sm` font-mono text-zinc-800
+
+---
 
 ## 🧱 3. Component Standards
 - **Buttons**:
@@ -30,6 +35,8 @@
 - **Border Radius**: Small(4px), Medium(8px), Large(12px), XL(20px), Full(9999px)
 - **Shadow/Elevation**: ใช้ Tailwind standard `shadow-sm`, `shadow-md`, `shadow-xl`, หรือ Custom Drag `shadow-[0_12px_24px_-4px_rgba(79,70,229,0.15)]`
 - **Interaction**: เมื่อคลิกหรือโต้ตอบ ห้ามมีอาการหน่วงเกิน 200ms
+
+---
 
 ## 🌌 4. Immersive Full-Page Standard (มาตรฐานเลย์เอาต์ระดับพรีเมียม)
 ทุกบทเรียนแบบ Interactive/Simulator ต้องถูกสร้างแบบ "หน้าต่างไร้ขอบ (Seamless)" เรียงตัว 4 เลเยอร์ตามแนวดิ่ง (Vertical Stack) ดังนี้:
@@ -57,6 +64,8 @@
 **4️⃣ Layer 4: Standardized TeacherTask Footer**
 - กล่องโจทย์หรือกิจกรรมท้ายบทเรียน ที่ออกแบบไว้สมบูรณ์แล้ว
 - **กฎเหล็ก: ห้ามแก้ไขโค้ดการทำงานของกล่อง TeacherTask เดิมเด็ดขาด** (ให้รักษารูปแบบที่มี Gradient Border, ปุ่มคัดลอกโจทย์ และ Box โค้ดด้านล่างเอาไว้เสมอ)
+
+---
 
 ## 🧠 5. Continuous Training (การเรียนรู้รสนิยมด้านความงาม)
 - **จับทางดีไซน์**: ให้ AI สังเกตและจดจำรสนิยมของผู้ใช้ (เช่น ผู้ใช้อาจชอบความโปร่งใสแบบ Glassmorphism มากขึ้น หรือชอบสี Gradient โทนใดเป็นพิเศษ)
