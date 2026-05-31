@@ -39,11 +39,17 @@
     1. **บังคับใช้** `cursor-pointer` เสมอในทุกปุ่มและการ์ดที่กดคลิกได้
     2. **การ์ดที่กดได้ (Interactive Cards)**: บังคับใส่เอฟเฟกต์ยกลอยและแสงเงาเมื่อโฮเวอร์ เช่น `hover:-translate-y-1 hover:shadow-lg hover:border-indigo-500/30 transition-all duration-200`
     3. **ปุ่มหรือตัวเลือกย่อย (Buttons/Badges)**: บังคับใส่เอฟเฟกต์ขยายตัวและปรับความสว่าง/เฉดสี เช่น `hover:scale-[1.02] hover:shadow-sm transition-all duration-200`
-- **Glassmorphism Design Standard (มาตรฐานแผงโปร่งแสงแบบกระจกแก้ว)**:
-  - บังคับใช้คลาส `bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl` หรือ `bg-slate-900/80 backdrop-blur-xl border border-white/10` สำหรับบอร์ดมืด ร่วมกับการมีวงกลมเรืองแสงฟุ้ง (Ambient Gradients) ในเลเยอร์ 1 ด้านล่าง เพื่อสร้างมิติพื้นผิวที่ลอยเด่นและดึงดูดใจ
+- **Glassmorphism Card Standard (มาตรฐานการ์ดโปร่งแสงสำหรับเนื้อหาทฤษฎี)**:
+  - การ์ดแสดงแนวคิด/ประเภทเนื้อหา: `bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-5 hover:-translate-y-1 hover:shadow-2xl hover:border-{accent}/40 transition-all duration-300 cursor-pointer group`
+  - Frosted Glass Callout (กล่องเน้นสำคัญ): `bg-{accent}-50/60 backdrop-blur-md border border-{accent}-200/60 rounded-2xl p-4 border-l-[3px] border-l-{accent}-500 leading-relaxed`
+  - Frosted Evolution/Info Panel: `bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-6 border-l-[3.5px] border-l-{accent}-500/80`
+- **Simulator Shell Dark Panel Standards (มาตรฐานกล่องจำลองมืด — 2 ระดับ)**:
+  - **Left Control Panel** (ฝั่งควบคุม/ซ้าย): `bg-slate-900/90 backdrop-blur-xl rounded-2xl p-5 border border-white/10 shadow-2xl` — ตามด้วย label ฉลากเล็ก `text-[9px] font-mono text-slate-500 absolute top-3 right-4 font-bold tracking-widest`
+  - **Right Data/Oscilloscope Panel** (ฝั่งแสดงผล/ขวา): `bg-slate-950/95 backdrop-blur-xl rounded-2xl p-6 border border-white/5 shadow-2xl` — ตามด้วย label `text-[9px] font-mono text-slate-500 absolute top-3 left-3`
+  - ห้ามใช้ `bg-[#0f172a]` หรือ `bg-slate-950` เดี่ยวๆ โดยไม่มี `backdrop-blur` — ต้องมีเสมอเพื่อความสอดคล้อง
 - **Interactive Icon Standard (มาตรฐานไอคอนโต้ตอบขยับได้)**:
-  - ทุกปุ่มหรือการ์ดที่โต้ตอบได้ ควรหุ้มด้วย Wrapper ที่มีสถานะกลุ่ม (`group cursor-pointer`) และมีจานรองไอคอนกึ่งโปร่งแสง (เช่น `p-3 rounded-2xl bg-indigo-50/80 text-indigo-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:bg-indigo-100 shadow-inner`)
-  - ไอคอนของ Lucide-React ต้องเปลี่ยนสีและเคลื่อนไหวอย่างสมูทเมื่อถูกโฮเวอร์ เช่น หมุนเบาๆ (`transition-transform group-hover:rotate-12 duration-300`), สวิงตามรอบ, หรือกะพริบเป็นจังหวะชีพจรความร้อน (`group-hover:animate-pulse`) เพื่อให้ UI รู้สึกมีชีวิตชีวา
+  - ทุกปุ่มหรือการ์ดที่โต้ตอบได้ ควรหุ้มด้วย Wrapper ที่มีสถานะกลุ่ม (`group cursor-pointer`) และมีจานรองไอคอนกึ่งโปร่งแสง (เช่น `p-3 rounded-2xl bg-{accent}-50/80 text-{accent}-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-inner`)
+  - ไอคอนของ Lucide-React ต้องเปลี่ยนสีและเคลื่อนไหวอย่างสมูทเมื่อถูกโฮเวอร์ เช่น หมุนเบาๆ (`transition-transform group-hover:rotate-12 duration-300`), กะพริบเป็นจังหวะ (`group-hover:animate-pulse`) เพื่อให้ UI รู้สึกมีชีวิตชีวา
 - **Interaction**: เมื่อคลิกหรือโต้ตอบ ห้ามมีอาการหน่วงเกิน 200ms
 
 ---
@@ -70,10 +76,26 @@
 **3️⃣ Layer 3: Flexible Subtopics & Interactives**
 - พื้นที่อิสระตรงกลางสำหรับ Simulator หรือมินิเกม
 - **ข้อกำหนดเพิ่มเติม (Alignment Standard & Compact Card Spacing):**
-  - ต้องห่อหุ้มเนื้อหาทั้งหมดใน Layer 3 ด้วยแท็ก `<main>` ที่มีคลาสระยะขอบพื้นฐานคือ `max-w-7xl mx-auto px-6 lg:px-12 pt-6 space-y-6 md:space-y-8` เสมอ เพื่อลดระยะห่างระหว่างการ์ดให้สมดุลพอดี ไม่ห่างเกินไปจนเคว้ง
+  - ต้องห่อหุ้มเนื้อหาทั้งหมดใน Layer 3 ด้วยแท็ก `<main>` ที่มีคลาสระยะขอบพื้นฐานคือ `max-w-7xl mx-auto px-6 lg:px-12 pt-6 space-y-12 md:space-y-16` เสมอ
   - เส้นขอบขวา-ซ้าย (Alignment) ของการ์ดและปุ่มต้องตรงแนวเดียวกับ StandardHeader และ TeacherTask ด้านล่างอย่างสมบูรณ์แบบ
   - **ดีไซน์เปิดโปร่งโล่งแบบไร้กรอบ (Fluid Open-Air Layout Standard)**: หลีกเลี่ยงการห่อหุ้มคำอธิบายทฤษฎีทั่วไปด้วยกรอบการ์ดที่ทึบและหนาซ้อนกล่อง แต่ให้ปล่อยพาดหัวและตัวอักษรเนื้อหาหลักเขียนตรงลงบนเลเยอร์พื้นหลังหน้าเว็บโดยตรง เพื่อให้เลย์เอาต์ดูโปร่งโล่ง สะอาดตา มีมิติเหมือนนิตยสารเทคโนโลยีหรือหน้าหนังสือเรียนดิจิทัลที่พรีเมียมและเบาสบายสายตา
   - **สเปสและระยะตั้งที่เชื่อมโยง (Tighter Spacing & Vertical Flow)**: กำหนดให้ใช้ระยะห่างแนวตั้ง `space-y-12 md:space-y-16` ในการคุมบล็อกและหัวข้อย่อยทั้งหมดบนหน้ากระดาษหลัก เพื่อให้การเลื่อนอ่านเชื่อมโยงเรียงกันลื่นไหลอย่างต่อเนื่อง
+- **Subtopic Section Header Standard (มาตรฐานหัวบล็อกหัวข้อย่อย — บังคับทุกหัวข้อ):**
+  - ทุก Section/หัวข้อย่อยใน Layer 3 ต้องขึ้นต้นด้วยโครงสร้างนี้เสมอ (ห้ามละ):
+  ```jsx
+  <section className="space-y-6">
+    <div className="border-b border-zinc-200/80 pb-4">
+      <span className="text-sm font-bold text-{accent}-600 tracking-wider uppercase">
+        {หมวดวิชาการ/ชื่อย่อหัวข้อภาษาไทย}
+      </span>
+      <h3 className="text-[26px] font-semibold text-zinc-900 leading-tight mt-1">
+        {ชื่อหัวข้อย่อยทางวิชาการเต็ม}
+      </h3>
+    </div>
+    {/* เนื้อหาทฤษฎีและ Simulator ด้านล่าง */}
+  </section>
+  ```
+  - `{accent}` ต้องสอดคล้องกับธีมสีของหน่วยการเรียน (เช่น `emerald` สำหรับหน่วย Network, `indigo` สำหรับ Wireless, `blue` สำหรับ OS เป็นต้น)
 - ต้องรักษาความหรูหราแบบ Genesis (Clean, ฟอนต์ Outfit/Inter, มีการเคลื่อนไหวตอบสนองนุ่มนวล)
 
 **4️⃣ Layer 4: Standardized TeacherTask Footer**
@@ -151,15 +173,21 @@
 ## 🧠 6. Continuous Training (การเรียนรู้รสนิยมด้านความงาม)
 - **จับทางดีไซน์**: ให้ AI สังเกตและจดจำรสนิยมของผู้ใช้ (เช่น ผู้ใช้อาจชอบความโปร่งใสแบบ Glassmorphism มากขึ้น หรือชอบสี Gradient โทนใดเป็นพิเศษ)
 - หากผู้ใช้สั่งแก้ UI ให้เป็นไปในทิศทางเดียวกันหลายๆ ครั้ง ให้คุณเพิ่มกฎใหม่นั้นลงในหมวด `Design Tokens` หรือ `Component Standards` ของไฟล์นี้ทันที เพื่อให้ไม่ต้องถูกสั่งแก้ซ้ำอีก
-- **ความชอบล่าสุด (30 May 2026)**:
+- **ความชอบล่าสุด (31 May 2026 — ยืนยันจาก Unit 4 ทั้งหมด)**:
+  - **Glassmorphism Cards**: ทุกการ์ดเนื้อหาทฤษฎีต้องเปลี่ยนจาก `bg-gradient-to-br from-{color}-50/60 to-white` → เป็น `bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl` ทันที
+  - **Frosted Glass Callout**: กล่องเน้นสำคัญต้องใช้ `bg-{accent}-50/60 backdrop-blur-md border border-{accent}-200/60 rounded-2xl p-4 border-l-[3px] border-l-{accent}-500` แทนกล่องสีเพลนธรรมดา
+  - **Simulator Dark Panel**: แผงควบคุม (ซ้าย) ใช้ `bg-slate-900/90 backdrop-blur-xl` | แผงแสดงผล (ขวา) ใช้ `bg-slate-950/95 backdrop-blur-xl` — **ห้ามใช้ `bg-[#0f172a]` ดิบๆ**
+  - **Interactive Icon Container**: ทุกไอคอนประกอบการ์ดต้องมี `p-3 rounded-2xl bg-{accent}-50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-inner shrink-0` เสมอ
+  - **Subtopic Section Header**: ทุกบล็อกหัวข้อย่อยต้องนำด้วย `<span className="text-sm font-bold text-{accent}-600 tracking-wider uppercase">` + `<h3 className="text-[26px] font-semibold text-zinc-900">` + เส้น divider `border-b border-zinc-200/80 pb-4`
+  - **Ambient Blobs**: ทุกหน่วยต้องมี 4 blob ในโทนสีที่ต่างกัน ขนาดสลับกัน และตำแหน่งอยู่ตามมุม 4 ด้าน (top-left, top-right, bottom-left, center-right) เพื่อมิติที่สมดุล
   - ผู้ใช้ชอบ Concept Card แบบสีขาวมีพื้นการ์ดมีชีวิต, สีต่างกันต่อ concept ตาม semantic, Grid layout สมดุล, Section grouping เมื่อมีหลายประเภท, Logic/Flow simulator ที่ดูง่าย interactive ได้จริง
-  - **ดีไซน์เปิดโปร่งโล่งแบบไร้กรอบ (Fluid Open-Air) & การลดระยะห่างกระชับ (Compact Spacing)**: 
-    - ปล่อยทฤษฎีอธิบายทั่วไปและพาดหัวเนื้อหาเขียนตรงลงบนเลเยอร์พื้นหลังหลักโดยตรง ปราศจากการ์ดหนาทึบล้อมรอบซ้อนกล่อง เพื่อสร้างลุคที่สะอาด สะดุดตา และเลิกใช้ระยะห่างที่ห่างเกินไป โดย**ปรับระยะห่างระหว่างบล็อกหัวข้อเป็นระดับกระชับชิด `space-y-8 md:space-y-12`**
+  - **ดีไซน์เปิดโปร่งโล่งแบบไร้กรอบ (Fluid Open-Air) & การลดระยะห่างกระชับ (Compact Spacing)**:
+    - ปล่อยทฤษฎีอธิบายทั่วไปและพาดหัวเนื้อหาเขียนตรงลงบนเลเยอร์พื้นหลังหลักโดยตรง ปราศจากการ์ดหนาทึบล้อมรอบซ้อนกล่อง เพื่อสร้างลุคที่สะอาด สะดุดตา
     - **การแต่งเติมความสวยงามในจุดข้อความเยอะ (Rich Typography for Text Blocks)**: ป้องกันไม่ให้จุดที่ข้อความเยอะดูจืดชืดหรือไม่มีลูกเล่น โดยการใช้:
       - ไฮไลท์คำศัพท์ทางเทคนิคหลัก (Key Vocabulary) ด้วยกล่องข้อความขนาดจิ๋ว (Mini Inline Badges) โทนสี HSL แบบโปร่งแสงกึ่งกระจก (เช่น `bg-teal-50/50 border border-teal-200/50 text-teal-700`)
       - ใช้บล็อกเน้นข้อความแบบโปร่งแสงขอบมน (Frosted Glass Callouts) ล้อมบางทฤษฎีสำคัญ พร้อมขอบสีนีออนหนา 3px ทางด้านซ้ายเพื่อดึงดูดสายตา
       - ตกแต่งจุดหัวข้อย่อยที่มีรายการ (Bulleted Lists) โดยเปลี่ยนจุดกลมสีดำดั้งเดิมเป็นไอคอนนำสายตารูปหัวลูกศร (เช่น `ArrowRight` ขนาดเล็ก) หรือเครื่องหมายติ๊กถูกสีเขียวนีออน
-  - **การเชื่อมต่อนิ่งตรงกึ่งกลาง (Absolute Center Connection)**: เส้นสายทางนำสัญญาณ (SVG trace paths) ทั้งหมดในการทำงานจำลองผังไหลหรือเมนบอร์ด ต้องเล็งเข้าและออกจากศูนย์กลางทางเรขาคณิต (Absolute Center) ของโมดูลเป้าหมาย 100% ปราศจากเส้นคดเคี้ยวหรือบิดเบี้ยว โดยใช้การวางแนวแบบสมมาตรตามแนวแกน (เช่น x = 400 กึ่งกลางพอดี)
+  - **การเชื่อมต่อนิ่งตรงกึ่งกลาง (Absolute Center Connection)**: เส้นสายทางนำสัญญาณ (SVG trace paths) ทั้งหมดในการทำงานจำลองผังไหลหรือเมนบอร์ด ต้องเล็งเข้าและออกจากศูนย์กลางทางเรขาคณิต (Absolute Center) ของโมดูลเป้าหมาย 100% ปราศจากเส้นคดเคี้ยวหรือบิดเบี้ยว
 - **หลักการสำคัญ**: UI "ต้องสวย สมดุล อย่างมีหลักการ" — ไม่ใช่แค่ใส่สีเยอะ แต่ทุกอย่างต้องมีเหตุผล สื่อความหมาย และอ่านง่าย
 
 

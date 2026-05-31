@@ -158,115 +158,77 @@ const itCourse = {
         },
         {
             id: 5,
-            title: "หน่วยที่ 5 โปรโตคอล การกำหนด IP Address และการเชื่อมต่อ",
+            title: "หน่วยที่ 5 การบำรุงรักษาและการใช้โปรแกรมอรรถประโยชน์",
             lessons: [
                 {
                     id: "5.1",
-                    title: "5.1 มาตรฐานและแบบจำลองการสื่อสารข้อมูล",
-                    mainTitle: "มาตรฐานและแบบจำลองการสื่อสารข้อมูล",
-                    subTitle: "(OSI Model & TCP/IP)",
-                    description: "ความหมายของโปรโตคอล เจาะลึก OSI 7 Layers, แบบจำลอง TCP/IP 4 Layers รวมถึงโปรโตคอลหลักเช่น HTTP, FTP, DNS, DHCP และการทำ Encapsulation",
+                    title: "5.1 การใช้โปรแกรมอรรถประโยชน์สำหรับระบบและไฟล์",
+                    mainTitle: "การใช้โปรแกรมอรรถประโยชน์สำหรับระบบและไฟล์",
+                    subTitle: "(Utility Programs)",
+                    description: "ความหมายซอฟต์แวร์ยูทิลิตี้ การจัดการบีบอัดไฟล์ (7-Zip) ล้างไฟล์ขยะระบบ (Disk Cleanup) การจัดระเบียบเศษไฟล์ข้อมูล (Defrag) และการกู้ระบบผ่าน sfc / chkdsk",
                     content: "[it5_1]"
                 },
                 {
                     id: "5.2",
-                    title: "5.2 โครงสร้างและการจัดสรร Internet Protocol",
-                    mainTitle: "โครงสร้างและการจัดสรร Internet Protocol",
-                    subTitle: "(IPv4 Address Structure)",
-                    description: "เจาะลึกโครงสร้าง IPv4 Address (Network/Host ID) การจำแนก Class A-E, ไอพีส่วนตัว (Private IP) กับไอพีสาธารณะ (Public IP), การคำนวณ ANDing และบทนำสู่ IPv6",
+                    title: "5.2 การรักษาความปลอดภัย การสำรอง และการกู้คืนข้อมูล",
+                    mainTitle: "การรักษาความปลอดภัย การสำรอง และการกู้คืนข้อมูล",
+                    subTitle: "(Data Security & Backup)",
+                    description: "ภัยคุกคามไซเบอร์ สแกนกำจัดไวรัส (Windows Defender) กฎสำรองข้อมูล 3-2-1 การสร้าง Restore Point การใช้งานกู้คืนไฟล์ข้อมูล และลิขสิทธิ์สิทธิ์ พ.ร.บ.คอมพิวเตอร์",
                     content: "[it5_2]"
                 },
                 {
                     id: "5.3",
-                    title: "5.3 การคำนวณและแบ่งเครือข่ายย่อย",
-                    mainTitle: "การคำนวณและแบ่งเครือข่ายย่อย",
-                    subTitle: "(Subnetting: FLSM & VLSM)",
-                    description: "วัตถุประสงค์ของการทำซับเน็ต การคำนวณแบ่งกลุ่มในรูปแบบ FLSM, การคำนวณและบริหารไอพีอย่างคุ้มค่าด้วย VLSM และการเขียนรหัสย่อแบบ CIDR",
+                    title: "5.3 การบำรุงรักษาฮาร์ดแวร์คอมพิวเตอร์เชิงป้องกัน",
+                    mainTitle: "การบำรุงรักษาฮาร์ดแวร์คอมพิวเตอร์เชิงป้องกัน",
+                    subTitle: "(Preventive Maintenance)",
+                    description: "ขอบข่ายงานบำรุงรักษาเชิงป้องกันคอมพิวเตอร์สำนักงาน การทำความสะอาดภายนอกและเป่ากำจัดฝุ่นละอองภายใน การใช้ S.M.A.R.T ตรวจสอบดิสก์ และบำรุงรักษาเครื่องพิมพ์",
                     content: "[it5_3]"
                 },
                 {
                     id: "5.4",
-                    title: "5.4 การตั้งค่าเครือข่าย การทดสอบ และการแชร์ทรัพยากร",
-                    mainTitle: "การตั้งค่าเครือข่าย การทดสอบ และการแชร์ทรัพยากร",
-                    subTitle: "(Network Setup, Testing & Sharing)",
-                    description: "การกำหนด Static IP และการรับแบบอัตโนมัติ DHCP การตรวจสอบสิทธิ์และเทสความเร็วผ่าน Command line (ipconfig, ping, tracert), การแชร์ข้อมูล ไฟล์ และเครื่องพิมพ์",
+                    title: "5.4 การเฝ้าระวังและวิเคราะห์ประสิทธิภาพระบบ",
+                    mainTitle: "การเฝ้าระวังและวิเคราะห์ประสิทธิภาพระบบ",
+                    subTitle: "(System & Network Monitoring)",
+                    description: "การตรวจเช็คทรัพยากรผ่าน Task Manager / Resource Monitor ตรรกะโปรแกรมตรวจสอบ Advanced IP Scanner / Wireshark และการตรวจบันทึก Log Event Viewer",
                     content: "[it5_4]"
                 }
             ]
         },
         {
             id: 6,
-            title: "หน่วยที่ 6 การบำรุงรักษาและการใช้โปรแกรมอรรถประโยชน์",
+            title: "หน่วยที่ 6 การวิเคราะห์ สรุปปัญหา และจัดทำรายงาน",
             lessons: [
                 {
                     id: "6.1",
-                    title: "6.1 การใช้โปรแกรมอรรถประโยชน์สำหรับระบบและไฟล์",
-                    mainTitle: "การใช้โปรแกรมอรรถประโยชน์สำหรับระบบและไฟล์",
-                    subTitle: "(Utility Programs)",
-                    description: "ความหมายซอฟต์แวร์ยูทิลิตี้ การจัดการบีบอัดไฟล์ (7-Zip) ล้างไฟล์ขยะระบบ (Disk Cleanup) การจัดระเบียบเศษไฟล์ข้อมูล (Defrag) และการกู้ระบบผ่าน sfc / chkdsk",
+                    title: "6.1 กระบวนการวิเคราะห์และแก้ไขปัญหาอย่างเป็นระบบ",
+                    mainTitle: "กระบวนการวิเคราะห์และแก้ไขปัญหาอย่างเป็นระบบ",
+                    subTitle: "(Systematic Troubleshooting Methodology)",
+                    description: "ขั้นตอนการแก้ไขปัญหา 6 สเตปตามมาตรฐานสากล เทคนิคสัมภาษณ์ผู้ใช้ การแยกลักษณะปัญหา ความหมาย Error/Debug LED/Beep Code และการวิเคราะห์ Configuration Changes",
                     content: "[it6_1]"
                 },
                 {
                     id: "6.2",
-                    title: "6.2 การรักษาความปลอดภัย การสำรอง และการกู้คืนข้อมูล",
-                    mainTitle: "การรักษาความปลอดภัย การสำรอง และการกู้คืนข้อมูล",
-                    subTitle: "(Data Security & Backup)",
-                    description: "ภัยคุกคามไซเบอร์ สแกนกำจัดไวรัส (Windows Defender) กฎสำรองข้อมูล 3-2-1 การสร้าง Restore Point การใช้งานกู้คืนไฟล์ข้อมูล และลิขสิทธิ์สิทธิ์ พ.ร.บ.คอมพิวเตอร์",
+                    title: "6.2 การวิเคราะห์และแก้ไขปัญหาระบบเครือข่าย",
+                    mainTitle: "การวิเคราะห์และแก้ไขปัญหาระบบเครือข่าย",
+                    subTitle: "(Network Troubleshooting)",
+                    description: "แก้ไขปัญหาเครือข่ายเชิงกายภาพแลน การตรวจแก้ไข IP ชน การหลุดแจกไอพี APIPA ใช้ nslookup, netstat, arp ตรวจสอบเซิร์ฟเวอร์ และแก้ไขสิทธิ์ SMB",
                     content: "[it6_2]"
                 },
                 {
                     id: "6.3",
-                    title: "6.3 การบำรุงรักษาฮาร์ดแวร์คอมพิวเตอร์เชิงป้องกัน",
-                    mainTitle: "การบำรุงรักษาฮาร์ดแวร์คอมพิวเตอร์เชิงป้องกัน",
-                    subTitle: "(Preventive Maintenance)",
-                    description: "ขอบข่ายงานบำรุงรักษาเชิงป้องกันคอมพิวเตอร์สำนักงาน การทำความสะอาดภายนอกและเป่ากำจัดฝุ่นละอองภายใน การใช้ S.M.A.R.T ตรวจสอบดิสก์ และบำรุงรักษาเครื่องพิมพ์",
+                    title: "6.3 การแก้ไขปัญหาอุปกรณ์ต่อพ่วงและการใช้แหล่งข้อมูลช่วยเหลือ",
+                    mainTitle: "การแก้ไขปัญหาอุปกรณ์ต่อพ่วงและการใช้แหล่งข้อมูลช่วยเหลือ",
+                    subTitle: "(Peripherals Troubleshooting)",
+                    description: "แก้ปัญหา Print Spooler ค้าง การอ้างอิงและเปิด Service Manuals ค้นหา Support Forums ช่างเทคนิค และประยุกต์ใช้ AI วินิจฉัยจุดบกพร่องระบบอัตโนมัติ",
                     content: "[it6_3]"
                 },
                 {
                     id: "6.4",
-                    title: "6.4 การเฝ้าระวังและวิเคราะห์ประสิทธิภาพระบบ",
-                    mainTitle: "การเฝ้าระวังและวิเคราะห์ประสิทธิภาพระบบ",
-                    subTitle: "(System & Network Monitoring)",
-                    description: "การตรวจเช็คทรัพยากรผ่าน Task Manager / Resource Monitor ตรรกะโปรแกรมตรวจสอบ Advanced IP Scanner / Wireshark และการตรวจบันทึก Log Event Viewer",
-                    content: "[it6_4]"
-                }
-            ]
-        },
-        {
-            id: 7,
-            title: "หน่วยที่ 7 การวิเคราะห์ สรุปปัญหา และจัดทำรายงาน",
-            lessons: [
-                {
-                    id: "7.1",
-                    title: "7.1 กระบวนการวิเคราะห์และแก้ไขปัญหาอย่างเป็นระบบ",
-                    mainTitle: "กระบวนการวิเคราะห์และแก้ไขปัญหาอย่างเป็นระบบ",
-                    subTitle: "(Systematic Troubleshooting Methodology)",
-                    description: "ขั้นตอนการแก้ไขปัญหา 6 สเตปตามมาตรฐานสากล เทคนิคสัมภาษณ์ผู้ใช้ การแยกลักษณะปัญหา ความหมาย Error/Debug LED/Beep Code และการวิเคราะห์ Configuration Changes",
-                    content: "[7.1]"
-                },
-                {
-                    id: "7.2",
-                    title: "7.2 การวิเคราะห์และแก้ไขปัญหาระบบเครือข่าย",
-                    mainTitle: "การวิเคราะห์และแก้ไขปัญหาระบบเครือข่าย",
-                    subTitle: "(Network Troubleshooting)",
-                    description: "แก้ไขปัญหาเครือข่ายเชิงกายภาพแลน การตรวจแก้ไข IP ชน การหลุดแจกไอพี APIPA ใช้ nslookup, netstat, arp ตรวจสอบเซิร์ฟเวอร์ และแก้ไขสิทธิ์ SMB",
-                    content: "[it7_2]"
-                },
-                {
-                    id: "7.3",
-                    title: "7.3 การแก้ไขปัญหาอุปกรณ์ต่อพ่วงและการใช้แหล่งข้อมูลช่วยเหลือ",
-                    mainTitle: "การแก้ไขปัญหาอุปกรณ์ต่อพ่วงและการใช้แหล่งข้อมูลช่วยเหลือ",
-                    subTitle: "(Peripherals Troubleshooting)",
-                    description: "แก้ปัญหา Print Spooler ค้าง การอ้างอิงและเปิด Service Manuals ค้นหา Support Forums ช่างเทคนิค และประยุกต์ใช้ AI วินิจฉัยจุดบกพร่องระบบอัตโนมัติ",
-                    content: "[it7_3]"
-                },
-                {
-                    id: "7.4",
-                    title: "7.4 การจัดการเอกสาร การบันทึกประวัติ และจัดทำรายงาน",
+                    title: "6.4 การจัดการเอกสาร การบันทึกประวัติ และจัดทำรายงาน",
                     mainTitle: "การจัดการเอกสาร การบันทึกประวัติ และจัดทำรายงาน",
                     subTitle: "(IT Maintenance Report & Inventory)",
                     description: "ลงทะเบียนประวัติซ่อมและคลังจัดเก็บ (Asset Logs) การทำใบงานแจ้งซ่อม IT Ticketing System การเขียนสรุปรายงาน RCA และจัดทำคู่มือสั้นพนักงาน (User Self-Help Guide)",
-                    content: "[it7_4]"
+                    content: "[it6_4]"
                 }
             ]
         }

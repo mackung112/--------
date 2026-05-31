@@ -5,34 +5,28 @@
  * Immersive Full-Page Standard (4 Layers) — Fluid Open-Air Layout
  * NO sounds | NO dynamic Tailwind | Local State only
  * Symmetrical Center SVG Connection Standard
+ * ✨ VISUAL OVERHAUL: Glassmorphism + Interactive Icons + Premium Typography
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  ShieldAlert, Settings, ChevronRight, FileText, Key, Award, AlertCircle,
-  Globe, Keyboard, ShieldCheck, Lock, Eye, EyeOff, Wifi, Download, Search, 
-  RefreshCw, Terminal, Layers, ArrowRight, RotateCcw, Play, Pause, Plus, Trash2, 
-  CheckCircle2, AlertTriangle, HelpCircle, Server, User, AppWindow, Database, Info, Check,
-  Cpu, Activity, Radio, LockKeyhole, Network, Sliders, Settings2, Scissors, Hammer, CheckSquare
+  Info, Check, RotateCcw, Play, Terminal, RefreshCw,
+  Cpu, Activity, Network, Sliders, Scissors, Hammer, CheckSquare
 } from 'lucide-react';
 import {
   AmbientBackdrop,
   SimulatorShell,
-  ConsoleScreen,
-  OptionSelector,
   QuizEngine,
-  ConceptCard,
-  SectionBlock
 } from '../shared';
 import TeacherTask from '../../ui/TeacherTask';
 
 /* ═══════════════════════════════════════════════════════════════════
-   AMBIENT BACKDROP THEME — IT Unit 4.3 (Teal/Emerald/Cyan/Slate)
+   AMBIENT BACKDROP THEME — IT Unit 4.3 (Emerald/Cyan/Teal/Indigo)
    ═══════════════════════════════════════════════════════════════════ */
 const IT4_3_BLOBS = [
-  { color: 'bg-emerald-350', size: 'w-[450px] h-[450px]', position: '-top-20 -left-20',       opacity: 'opacity-30' },
-  { color: 'bg-cyan-200',    size: 'w-[400px] h-[400px]', position: 'top-1/3 -right-20',      opacity: 'opacity-25' },
-  { color: 'bg-teal-300',    size: 'w-96 h-96', position: '-bottom-20 left-1/4',     opacity: 'opacity-20' },
-  { color: 'bg-indigo-200',  size: 'w-80 h-80', position: 'top-2/3 right-1/3',       opacity: 'opacity-20' },
+  { color: 'bg-emerald-300', size: 'w-[450px] h-[450px]', position: '-top-20 -left-20',    opacity: 'opacity-30' },
+  { color: 'bg-cyan-200',    size: 'w-[400px] h-[400px]', position: 'top-1/3 -right-20',   opacity: 'opacity-25' },
+  { color: 'bg-teal-300',    size: 'w-96 h-96',           position: '-bottom-20 left-1/4', opacity: 'opacity-20' },
+  { color: 'bg-indigo-200',  size: 'w-80 h-80',           position: 'top-2/3 right-1/3',   opacity: 'opacity-20' },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -96,6 +90,67 @@ const QUIZ_LEVELS = [
   }
 ];
 
+/* ─── Wire Color Palette ──────────────────────────────────────────── */
+const COLOR_PALETTES = [
+  { id: 0, name: 'ขาวส้ม',   hex: '#FFFFFF', border: '#F97316', bgText: 'text-orange-600' },
+  { id: 1, name: 'ส้ม',      hex: '#F97316', border: '#F97316', bgText: 'text-white' },
+  { id: 2, name: 'ขาวเขียว', hex: '#FFFFFF', border: '#10B981', bgText: 'text-emerald-600' },
+  { id: 3, name: 'ฟ้า',      hex: '#3B82F6', border: '#3B82F6', bgText: 'text-white' },
+  { id: 4, name: 'ขาวฟ้า',   hex: '#FFFFFF', border: '#3B82F6', bgText: 'text-blue-600' },
+  { id: 5, name: 'เขียว',    hex: '#10B981', border: '#10B981', bgText: 'text-white' },
+  { id: 6, name: 'ขาวน้ำตาล',hex: '#FFFFFF', border: '#78350F', bgText: 'text-amber-800' },
+  { id: 7, name: 'น้ำตาล',   hex: '#78350F', border: '#78350F', bgText: 'text-white' },
+];
+const STANDARDS = { T568B: [0, 1, 2, 3, 4, 5, 6, 7], T568A: [2, 5, 0, 3, 4, 1, 6, 7] };
+
+/* ─── Cable error type cards data ────────────────────────────────── */
+const ERROR_TYPE_CARDS = [
+  {
+    badge: '1. Open Circuit',
+    title: 'อาการสายขาดใน',
+    desc: 'เกิดจากช่างปอกสายกินเนื้อทองแดงขาด หรือกดย้ำหัวทองเหลืองลงไปไม่ลึกสัมผัสพลาสติก ส่งผลให้ไฟ LED ของพินที่ขาด ดับสนิททั้งฝั่ง Master และ Remote',
+    accent: 'emerald',
+    badgeBg: 'bg-emerald-100', badgeText: 'text-emerald-700',
+    hoverBorder: 'hover:border-emerald-400/40',
+  },
+  {
+    badge: '2. Short Circuit',
+    title: 'การลัดวงจรข้ามพิน',
+    desc: 'เกิดจากปลายโลหะทองเหลืองสัมผัสกันเอง หรือสายทองแดงชำรุดละลายชนกัน ส่งผลให้ไฟ LED พินที่แตะกัน สว่างโร่สลับช่องไม่เรียงแถวนาฬิกา',
+    accent: 'indigo',
+    badgeBg: 'bg-indigo-100', badgeText: 'text-indigo-700',
+    hoverBorder: 'hover:border-indigo-400/40',
+  },
+  {
+    badge: '3. Miswired / Reversed',
+    title: 'การเรียงลำดับสีสลับคู่',
+    desc: 'เกิดจากการเรียงบิตสีสลับพินที่ Side A หรือ Side B ส่งผลให้ไฟสแกนวิ่งไม่พร้อมเพรียงข้ามเครื่อง เช่น Master รันพิน 1 แต่ Remote เด้งไฟขึ้นพิน 3',
+    accent: 'cyan',
+    badgeBg: 'bg-cyan-100', badgeText: 'text-cyan-700',
+    hoverBorder: 'hover:border-cyan-400/40',
+  },
+];
+
+/* ─── Standard cards data ────────────────────────────────────────── */
+const STANDARD_CARDS = [
+  {
+    badge: 'มาตรฐาน T568B (นิยมในองค์กรสากล)',
+    title: 'เรียงลำดับสีคู่ส้มขึ้นต้น',
+    pinList: '1.ขาวส้ม  2.ส้ม  3.ขาวเขียว  4.ฟ้า  5.ขาวฟ้า  6.เขียว  7.ขาวน้ำตาล  8.น้ำตาล',
+    accent: 'emerald',
+    badgeBg: 'bg-emerald-100', badgeText: 'text-emerald-700',
+    hoverBorder: 'hover:border-emerald-400/40',
+  },
+  {
+    badge: 'มาตรฐาน T568A (นิยมในภาครัฐ/อดีต)',
+    title: 'เรียงลำดับสีคู่เขียวขึ้นต้น',
+    pinList: '1.ขาวเขียว  2.เขียว  3.ขาวส้ม  4.ฟ้า  5.ขาวฟ้า  6.ส้ม  7.ขาวน้ำตาล  8.น้ำตาล',
+    accent: 'cyan',
+    badgeBg: 'bg-cyan-100', badgeText: 'text-cyan-700',
+    hoverBorder: 'hover:border-cyan-400/40',
+  },
+];
+
 export default function ComponentName() {
   return (
     <>
@@ -104,7 +159,7 @@ export default function ComponentName() {
 
       {/* Layer 3: Flexible Subtopics & Fluid Open-Air Layout */}
       <main className="max-w-7xl mx-auto px-6 lg:px-12 pt-6 space-y-12 md:space-y-16 relative z-10">
-        
+
         {/* ─── SUBTOPIC 4.3.1 & 4.3.2 ─────────────────────────────────────── */}
         <section className="space-y-6">
           <div className="border-b border-zinc-200/80 pb-4">
@@ -113,33 +168,33 @@ export default function ComponentName() {
               โครงสร้างของหัวต่อ RJ-45 และมาตรฐานสากล T568A และ T568B
             </h3>
           </div>
-          
+
           <div className="text-[16px] md:text-[17px] font-normal text-zinc-600 leading-relaxed space-y-4">
             <p>
-              ในการต่อสาย LAN ทองแดงเข้ากับคอมพิวเตอร์ ชิ้นส่วนพลาสติกปลายสายที่ทำหน้าที่สวมต่อคือ <strong>หัวต่อ RJ-45 (Registered Jack 45)</strong> 
-              ซึ่งประกอบด้วยเข็มโลหะสัมผัสทองเหลือง 8 พิน (Pins) คอยกดย้ำแทงทะลุฉนวนพลาสติกเพื่อนำไฟฟ้ารับส่งข้อมูล 
-              การจัดลำดับสายสัญญาณไฟทั้ง 8 เส้นภายในจำเป็นต้องทำตามมาตรฐานสากลเพื่อการเชื่อมต่อที่เข้ากันได้ทั่วโลก 
+              ในการต่อสาย LAN ทองแดงเข้ากับคอมพิวเตอร์ ชิ้นส่วนพลาสติกปลายสายที่ทำหน้าที่สวมต่อคือ
+              <strong>หัวต่อ RJ-45 (Registered Jack 45)</strong> ซึ่งประกอบด้วยเข็มโลหะสัมผัสทองเหลือง 8 พิน (Pins)
+              คอยกดย้ำแทงทะลุฉนวนพลาสติกเพื่อนำไฟฟ้ารับส่งข้อมูล
+              การจัดลำดับสายสัญญาณไฟทั้ง 8 เส้นภายในจำเป็นต้องทำตามมาตรฐานสากลเพื่อการเชื่อมต่อที่เข้ากันได้ทั่วโลก
               ซึ่งกำหนดขึ้นโดยสมาคมอุตสาหกรรมโทรคมนาคมสากล <strong>TIA/EIA-568</strong>
             </p>
-            <p>
-              มาตรฐานดังกล่าวจำแนกออกเป็น 2 ลำดับการเรียงสีหลัก:
-            </p>
+            <p>มาตรฐานดังกล่าวจำแนกออกเป็น 2 ลำดับการเรียงสีหลัก:</p>
 
+            {/* Premium Glassmorphism Standard Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 text-left">
-              <div className="bg-gradient-to-br from-emerald-50/60 to-white p-5 rounded-2xl border border-emerald-100 shadow-sm space-y-2">
-                <span className="p-2 rounded-xl bg-emerald-100 text-emerald-700 font-mono font-bold text-xs inline-block">มาตรฐาน T568B (นิยมในองค์กรสากล)</span>
-                <h6 className="font-bold text-emerald-950 text-[15px]">เรียงลำดับสีคู่ส้มขึ้นต้น</h6>
-                <p className="text-xs text-zinc-550 leading-relaxed font-sans font-mono">
-                  1. ขาวส้ม, 2. ส้ม, 3. ขาวเขียว, 4. ฟ้า, 5. ขาวฟ้า, 6. เขียว, 7. ขาวน้ำตาล, 8. น้ำตาล
-                </p>
-              </div>
-              <div className="bg-gradient-to-br from-cyan-50/60 to-white p-5 rounded-2xl border border-cyan-100 shadow-sm space-y-2">
-                <span className="p-2 rounded-xl bg-cyan-100 text-cyan-700 font-mono font-bold text-xs inline-block">มาตรฐาน T568A (นิยมในภาครัฐ/อดีต)</span>
-                <h6 className="font-bold text-cyan-950 text-[15px]">เรียงลำดับสีคู่เขียวขึ้นต้น</h6>
-                <p className="text-xs text-zinc-555 leading-relaxed font-sans font-mono">
-                  1. ขาวเขียว, 2. เขียว, 3. ขาวส้ม, 4. ฟ้า, 5. ขาวฟ้า, 6. ออเรนจ์ (ส้ม), 7. ขาวน้ำตาล, 8. น้ำตาล
-                </p>
-              </div>
+              {STANDARD_CARDS.map((card) => (
+                <div
+                  key={card.badge}
+                  className={`bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-5 hover:-translate-y-1 hover:shadow-2xl ${card.hoverBorder} transition-all duration-300 cursor-pointer space-y-3 group`}
+                >
+                  <span className={`${card.badgeBg} ${card.badgeText} font-mono font-bold text-[13px] px-2 py-0.5 rounded-lg inline-block`}>
+                    {card.badge}
+                  </span>
+                  <h6 className="font-bold text-zinc-900 text-[15.5px] leading-tight group-hover:text-zinc-700 transition-colors">
+                    {card.title}
+                  </h6>
+                  <p className="text-[13.5px] text-zinc-500 leading-relaxed font-mono">{card.pinList}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -157,27 +212,35 @@ export default function ComponentName() {
           </div>
 
           <div className="text-[16px] md:text-[17px] font-normal text-zinc-600 leading-relaxed space-y-4">
-            <p>
-              ในการประกอบโครงร่างเครือข่าย ช่างไอทีระบบบำรุงรักษาต้องเลือกประเภทการประกอบสายสัญญาณให้เข้ากับตรรกะเชื่อมต่ออุปกรณ์ 2 รูปแบบหลัก:
-            </p>
+            <p>ในการประกอบโครงร่างเครือข่าย ช่างไอทีระบบบำรุงรักษาต้องเลือกประเภทการประกอบสายสัญญาณให้เข้ากับตรรกะเชื่อมต่ออุปกรณ์ 2 รูปแบบหลัก:</p>
+
             <ul className="space-y-4 my-4 text-left">
-              <li className="flex items-start">
-                <span className="inline-flex items-center justify-center p-1 rounded-full bg-emerald-100 text-emerald-600 mr-3 shrink-0 mt-0.5"><Check className="w-4 h-4" /></span>
+              <li className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center p-1 rounded-full bg-emerald-100 text-emerald-600 shrink-0 mt-0.5">
+                  <Check className="w-4 h-4" />
+                </span>
                 <div>
                   <strong>สายตรง (Straight-through Cable):</strong> ปลายทั้งสองฝั่งใช้มาตรฐานสีเดียวกันทั้งหมด (เช่น T568B ทั้ง Side A และ Side B) พินต่อเชื่อม 1➔1, 2➔2 เพื่อใช้ประสานงานส่งสัญญาณข้ามอุปกรณ์ต่างชนิดกัน (คอมพิวเตอร์ต่อพ่วงหา Switch หรือ Switch ต่อพ่วงหา Router)
                 </div>
               </li>
-              <li className="flex items-start">
-                <span className="inline-flex items-center justify-center p-1 rounded-full bg-emerald-100 text-emerald-600 mr-3 shrink-0 mt-0.5"><Check className="w-4 h-4" /></span>
+              <li className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center p-1 rounded-full bg-emerald-100 text-emerald-600 shrink-0 mt-0.5">
+                  <Check className="w-4 h-4" />
+                </span>
                 <div>
-                  <strong>สายไขว้ (Crossover Cable):</strong> ปลายข้างหนึ่งเป็นมาตรฐาน T568B และอีกข้างจัดสลับเรียงเป็น T568A โดยระบบจะทำการสลับพินคู่ส่งรับสัญญาณ (Tx ไปหา Rx) ได้แก่ พิน 1 สลับกับ 3 และพิน 2 สลับกับ 6 วัตถุประสงค์เพื่อต่อเชื่อมพิกัดระหว่างอุปกรณ์ชนิดเดียวกันโดยตรงโดยไม่พึ่งพากล่องสวิตช์กลาง (เช่น PC ต่อหา PC หรือ Switch ต่อหา Switch)
+                  <strong>สายไขว้ (Crossover Cable):</strong> ปลายข้างหนึ่งเป็นมาตรฐาน T568B และอีกข้างจัดสลับเรียงเป็น T568A โดยระบบจะทำการสลับพินคู่ส่งรับสัญญาณ (Tx ไปหา Rx) ได้แก่ พิน 1 สลับกับ 3 และพิน 2 สลับกับ 6 วัตถุประสงค์เพื่อต่อเชื่อมพิกัดระหว่างอุปกรณ์ชนิดเดียวกันโดยตรง (เช่น PC ต่อหา PC หรือ Switch ต่อหา Switch)
                 </div>
               </li>
             </ul>
 
-            {/* Pro-Tip callout block */}
-            <div className="p-5 bg-white/60 border border-slate-200 shadow-sm rounded-2xl border-l-[3px] border-l-emerald-500/80 leading-normal text-slate-500 text-xs">
-              💡 <strong>เทคนิคหน้างาน Auto-MDIX:</strong> ในอุปกรณ์เครือข่ายสวิตช์/การ์ดแลนสมัยใหม่จะมีฟังก์ชันตรวจเช็คพินอัตโนมัติที่ชื่อว่า <strong>Auto-MDIX</strong> คอยสลับขั้วส่งรับระดับอิเล็กทรอนิกส์ในพอร์ต ทำให้ช่างสามารถหยิบใช้สายตรง (Straight) เชื่อมต่ออุปกรณ์ชนิดเดียวกันได้โดยที่ระบบไม่ล่ม
+            {/* Frosted Glass Callout — Auto-MDIX */}
+            <div className="bg-emerald-50/60 backdrop-blur-md border border-emerald-200/60 rounded-2xl p-4 border-l-[3px] border-l-emerald-500 leading-relaxed">
+              <p className="text-[15px] text-emerald-800 flex items-start gap-2">
+                <Info className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                <span>
+                  <strong>เทคนิคหน้างาน Auto-MDIX:</strong> ในอุปกรณ์เครือข่ายสวิตช์/การ์ดแลนสมัยใหม่จะมีฟังก์ชันตรวจเช็คพินอัตโนมัติที่ชื่อว่า <strong>Auto-MDIX</strong> คอยสลับขั้วส่งรับระดับอิเล็กทรอนิกส์ในพอร์ต ทำให้ช่างสามารถหยิบใช้สายตรง (Straight) เชื่อมต่ออุปกรณ์ชนิดเดียวกันได้โดยที่ระบบไม่ล่ม
+                </span>
+              </p>
             </div>
           </div>
 
@@ -196,36 +259,28 @@ export default function ComponentName() {
 
           <div className="text-[16px] md:text-[17px] font-normal text-zinc-600 leading-relaxed space-y-4">
             <p>
-              หลังจากขั้นตอนเข้าหัวคีมย้ำ RJ-45 เสร็จสิ้น ช่างจำเป็นต้องตรวจสอบความมั่นคงปลอดภัยและความพร้อมใช้งานก่อนนำไปเสียบเข้าบอร์ดหลัก 
-              ผ่านอุปกรณ์ที่เรียกว่า <strong>LAN Cable Tester (เครื่องทดสอบสายสัญญาณ)</strong> 
+              หลังจากขั้นตอนเข้าหัวคีมย้ำ RJ-45 เสร็จสิ้น ช่างจำเป็นต้องตรวจสอบความมั่นคงปลอดภัยและความพร้อมใช้งานก่อนนำไปเสียบเข้าบอร์ดหลัก
+              ผ่านอุปกรณ์ที่เรียกว่า <strong>LAN Cable Tester (เครื่องทดสอบสายสัญญาณ)</strong>
               ซึ่งประกอบด้วยเครื่องปล่อยสัญญาณ (Master) และกล่องรับสัญญานปลายทาง (Remote) ทำการยิงไฟ LED สแกนเรียงลำดับทีละพินจาก 1 ถึง 8
             </p>
-            <p>
-              ลักษณะความเสียหายสำคัญ 3 แบบที่เครื่องสามารถวัดวิเคราะห์และวินิจฉัยจุดพังทลายได้สำเร็จ:
-            </p>
+            <p>ลักษณะความเสียหายสำคัญ 3 แบบที่เครื่องสามารถวัดวิเคราะห์และวินิจฉัยจุดพังทลายได้สำเร็จ:</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-4 text-left">
-              <div className="bg-gradient-to-br from-emerald-50/60 to-white p-5 rounded-2xl border border-emerald-150 shadow-sm space-y-2">
-                <span className="p-2 rounded-xl bg-emerald-100 text-emerald-700 inline-block font-bold font-mono text-xs">1. Open Circuit</span>
-                <h6 className="font-bold text-emerald-950 text-[14.5px]">อาการสายขาดใน</h6>
-                <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-                  เกิดจากช่างปอกสายกินเนื้อทองแดงขาด หรือกดย้ำหัวทองเหลืองลงไปไม่ลึกสัมผัสพลาสติก ส่งผลให้ไฟ LED ของพินที่ขาด ดับสนิททั้งฝั่ง Master และ Remote
-                </p>
-              </div>
-              <div className="bg-gradient-to-br from-indigo-50/60 to-white p-5 rounded-2xl border border-indigo-150 shadow-sm space-y-2">
-                <span className="p-2 rounded-xl bg-indigo-100 text-indigo-700 inline-block font-bold font-mono text-xs">2. Short Circuit</span>
-                <h6 className="font-bold text-indigo-950 text-[14.5px]">การลัดวงจรข้ามพิน</h6>
-                <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-                  เกิดจากปลายโลหะทองเหลืองสัมผัสกันเอง หรือสายทองแดงชำรุดละลายชนกัน ส่งผลให้ไฟ LED พินที่แตะกัน สว่างโร่สลับช่องไม่เรียงแถวนาฬิกา
-                </p>
-              </div>
-              <div className="bg-gradient-to-br from-cyan-50/60 to-white p-5 rounded-2xl border border-cyan-150 shadow-sm space-y-2">
-                <span className="p-2 rounded-xl bg-cyan-100 text-cyan-700 inline-block font-bold font-mono text-xs">3. Miswired / Reversed</span>
-                <h6 className="font-bold text-cyan-950 text-[14.5px]">การเรียงลำดับสีสลับคู่</h6>
-                <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-                  เกิดจากการเรียงบิตสีสลับพินที่ Side A หรือ Side B ส่งผลให้ไฟสแกนวิ่งไม่พร้อมเพรียงข้ามเครื่อง เช่น Master รันพิน 1 แต่ Remote เด้งไฟขึ้นพิน 3
-                </p>
-              </div>
+            {/* Premium Glassmorphism Error Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 my-4 text-left">
+              {ERROR_TYPE_CARDS.map((card) => (
+                <div
+                  key={card.badge}
+                  className={`bg-white/60 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-5 hover:-translate-y-1 hover:shadow-2xl ${card.hoverBorder} transition-all duration-300 cursor-pointer space-y-2.5 group`}
+                >
+                  <span className={`${card.badgeBg} ${card.badgeText} font-mono font-bold text-[13px] px-2 py-0.5 rounded-lg inline-block`}>
+                    {card.badge}
+                  </span>
+                  <h6 className="font-bold text-zinc-900 text-[15px] leading-tight group-hover:text-zinc-700 transition-colors">
+                    {card.title}
+                  </h6>
+                  <p className="text-[13.5px] text-zinc-500 leading-relaxed font-sans">{card.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -244,13 +299,13 @@ export default function ComponentName() {
 
           <div className="text-[16px] md:text-[17px] font-normal text-zinc-600 leading-relaxed space-y-4">
             <p>
-              ในขอบเขตการติดตั้งสายเดินระบบอาคารสากล สาย LAN จะไม่ลากพาดพื้นห้องโดยตรง ทว่าจะเดินผ่านฝ้าเพดานลงมาเก็บพิกัดปลายทางที่เต้ารับตัวเมียติดฝาผนัง 
-              <strong>(RJ-45 Keystone Jack)</strong> และรวมตัวกันด้านหลังของตู้แร็คเซิร์ฟเวอร์บนแผงกระจายสายสัญญาณ 
+              ในขอบเขตการติดตั้งสายเดินระบบอาคารสากล สาย LAN จะไม่ลากพาดพื้นห้องโดยตรง ทว่าจะเดินผ่านฝ้าเพดานลงมาเก็บพิกัดปลายทางที่เต้ารับตัวเมียติดฝาผนัง
+              <strong>(RJ-45 Keystone Jack)</strong> และรวมตัวกันด้านหลังของตู้แร็คเซิร์ฟเวอร์บนแผงกระจายสายสัญญาณ
               <strong>(Patch Panel)</strong>
             </p>
             <p>
-              เครื่องมือและทักษะช่างที่สำคัญในขอบเขตนี้คือการสั่งการย้ำสายด้วยเครื่องมือ 
-              <strong>Impact Punch-down Tool (ตัวกระแทกสาย)</strong> เพื่อสลักลวดทองแดงลงล็อกพลาสติกแผงเชื่อมต่อ 
+              เครื่องมือและทักษะช่างที่สำคัญในขอบเขตนี้คือการสั่งการย้ำสายด้วยเครื่องมือ
+              <strong>Impact Punch-down Tool (ตัวกระแทกสาย)</strong> เพื่อสลักลวดทองแดงลงล็อกพลาสติกแผงเชื่อมต่อ
               ช่วยยึดแน่น แบนด์วิดท์ไม่หลวม และลด Attenuation ได้มั่นคงสูง
             </p>
           </div>
@@ -267,7 +322,6 @@ export default function ComponentName() {
               แบบทดสอบวัดความรู้บทเรียนย่อย
             </h3>
           </div>
-
           <div className="max-w-4xl mx-auto">
             <QuizEngine levels={QUIZ_LEVELS} />
           </div>
@@ -292,25 +346,9 @@ export default function ComponentName() {
 /* ═══════════════════════════════════════════════════════════════════
    1. RJ-45 WIRE COLOR ARRANGER & CHECKER (Subtopics 4.3.1 & 4.3.2)
    ═══════════════════════════════════════════════════════════════════ */
-const COLOR_PALETTES = [
-  { id: 0, name: 'ขาวส้ม', hex: '#FFFFFF', border: '#F97316', bgText: 'text-orange-600' },
-  { id: 1, name: 'ส้ม', hex: '#F97316', border: '#F97316', bgText: 'text-white' },
-  { id: 2, name: 'ขาวเขียว', hex: '#FFFFFF', border: '#10B981', bgText: 'text-emerald-600' },
-  { id: 3, name: 'ฟ้า', hex: '#3B82F6', border: '#3B82F6', bgText: 'text-white' },
-  { id: 4, name: 'ขาวฟ้า', hex: '#FFFFFF', border: '#3B82F6', bgText: 'text-blue-600' },
-  { id: 5, name: 'เขียว', hex: '#10B981', border: '#10B981', bgText: 'text-white' },
-  { id: 6, name: 'ขาวน้ำตาล', hex: '#FFFFFF', border: '#78350F', bgText: 'text-amber-800' },
-  { id: 7, name: 'น้ำตาล', hex: '#78350F', border: '#78350F', bgText: 'text-white' }
-];
-
-const STANDARDS = {
-  T568B: [0, 1, 2, 3, 4, 5, 6, 7],
-  T568A: [2, 5, 0, 3, 4, 1, 6, 7]
-};
-
 function Rj45WireArranger() {
   const [standard, setStandard] = useState('T568B');
-  const [wireOrder, setWireOrder] = useState([1, 0, 3, 2, 5, 4, 7, 6]); // Initial shuffled state
+  const [wireOrder, setWireOrder] = useState([1, 0, 3, 2, 5, 4, 7, 6]);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [feedback, setFeedback] = useState('กรุณาคลิกเลือกสายสองขั้วเพื่อกดสลับที่ (Swap) จัดเรียงลำดับสีให้สมบูรณ์');
   const [isMatch, setIsMatch] = useState(false);
@@ -319,12 +357,10 @@ function Rj45WireArranger() {
     if (selectedIndex === null) {
       setSelectedIndex(idx);
     } else {
-      // Swap positions
       const newOrder = [...wireOrder];
       const temp = newOrder[selectedIndex];
       newOrder[selectedIndex] = newOrder[idx];
       newOrder[idx] = temp;
-      
       setWireOrder(newOrder);
       setSelectedIndex(null);
       setFeedback('กดสลับตำแหน่งสำเร็จ ตรวจสอบความถูกต้องถัดไป');
@@ -345,7 +381,7 @@ function Rj45WireArranger() {
   const handleApplyAnswer = () => {
     setWireOrder([...STANDARDS[standard]]);
     setIsMatch(true);
-    setFeedback(`💡 เผยลำดับพินเฉลยสีสากลตามมาตรมาตรฐาน ${standard} เรียบร้อย`);
+    setFeedback(`💡 เผยลำดับพินเฉลยสีสากลตามมาตรฐาน ${standard} เรียบร้อย`);
   };
 
   const handleReset = () => {
@@ -363,150 +399,135 @@ function Rj45WireArranger() {
       iconColor="text-emerald-600"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch select-none text-left font-sans">
-        
-        {/* Left Column interactive SVG visual plug and slots */}
-        <div className="bg-[#0f172a] rounded-2xl p-5 border border-slate-800 flex flex-col justify-between shadow-2xl relative min-h-[420px] text-xs text-slate-200">
-          <span className="text-[9px] font-mono text-slate-500 absolute top-3 right-4 font-bold">RJ-45 PINOUT BUILDER</span>
-          
-          <div className="space-y-4">
+
+        {/* Left Column: Frosted Dark Glass Configurator */}
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-5 border border-white/10 flex flex-col justify-between shadow-2xl relative min-h-[420px] text-xs text-slate-200">
+          <span className="text-[9px] font-mono text-slate-500 absolute top-3 right-4 font-bold tracking-widest">RJ-45 PINOUT BUILDER</span>
+
+          <div className="space-y-4 pt-1">
             <div>
-              <h6 className="text-[13px] font-bold text-white flex items-center gap-1.5"><Sliders className="w-4 h-4 text-emerald-400" /> Standard & Color slots</h6>
-              <p className="text-[10px] text-slate-400 leading-normal">
+              <h6 className="text-[13px] font-bold text-white flex items-center gap-2">
+                <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-400"><Sliders className="w-3.5 h-3.5" /></span>
+                Standard & Color Slots
+              </h6>
+              <p className="text-[11px] text-slate-400 leading-normal mt-1">
                 ปุ่มเลือกมาตรฐานสากล และกดสลับสีทองแดงให้ถูกต้องก่อนสอดเข้าหัวพลาสติก
               </p>
             </div>
 
-            {/* Standard selector tab */}
-            <div className="flex gap-2 bg-slate-950 p-1 rounded-xl border border-slate-850">
-              <button
-                onClick={() => { setStandard('T568B'); handleReset(); }}
-                className={`w-full py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
-                  standard === 'T568B' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-450 hover:text-white'
-                }`}
-              >
-                มาตรฐาน T568B (นิยมในออฟฟิศ)
-              </button>
-              <button
-                onClick={() => { setStandard('T568A'); handleReset(); }}
-                className={`w-full py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
-                  standard === 'T568A' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-450 hover:text-white'
-                }`}
-              >
-                มาตรฐาน T568A (ข้าราชการ/เก่า)
-              </button>
+            {/* Standard selector */}
+            <div className="flex gap-2 bg-slate-950/80 p-1 rounded-xl border border-slate-800/50">
+              {['T568B', 'T568A'].map(std => (
+                <button
+                  key={std}
+                  onClick={() => { setStandard(std); handleReset(); }}
+                  className={`w-full py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
+                    standard === std ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {std === 'T568B' ? 'มาตรฐาน T568B (ออฟฟิศ)' : 'มาตรฐาน T568A (ภาครัฐ)'}
+                </button>
+              ))}
             </div>
 
-            {/* Symmetrical SVG RJ-45 visual plug */}
-            <div className="w-full py-2 flex justify-center bg-slate-900/40 rounded-xl border border-slate-900 relative">
+            {/* SVG RJ-45 visual plug */}
+            <div className="w-full py-2 flex justify-center bg-slate-950/50 rounded-xl border border-slate-900/60 relative">
               <svg viewBox="0 0 240 120" className="w-56 h-28 overflow-visible">
-                {/* Plug body */}
-                <rect x="30" y="20" width="180" height="80" rx="8" fill="#1E293B" fillOpacity="0.4" stroke="#475569" strokeWidth="2" />
-                
-                {/* 8 Pin slots for wires - Symmetrically aligned */}
+                <rect x="30" y="20" width="180" height="80" rx="8" fill="#1E293B" fillOpacity="0.6" stroke="#475569" strokeWidth="2" />
                 {wireOrder.map((colorId, idx) => {
                   const xCoord = 45 + idx * 20;
                   const c = COLOR_PALETTES[colorId];
                   return (
                     <g key={idx}>
-                      {/* Pin metal contact brass */}
                       <rect x={xCoord} y="15" width="10" height="12" fill="#F59E0B" rx="1.5" />
-                      
-                      {/* Copper wire slot */}
                       <rect
-                        x={xCoord + 1}
-                        y="27"
-                        width="8"
-                        height="65"
-                        fill={c.hex}
-                        stroke={c.border}
-                        strokeWidth="1.5"
-                        rx="1"
-                        className={`transition-all duration-300 ${
-                          selectedIndex === idx ? 'stroke-cyan-400 stroke-2 animate-[pulse_0.8s_infinite]' : ''
-                        }`}
+                        x={xCoord + 1} y="27" width="8" height="65"
+                        fill={c.hex} stroke={selectedIndex === idx ? '#22D3EE' : c.border}
+                        strokeWidth={selectedIndex === idx ? '2.5' : '1.5'} rx="1"
+                        className="transition-all duration-300 cursor-pointer hover:opacity-80"
                         onClick={() => handleWireClick(idx)}
                       />
-                      {/* Pin numbers */}
                       <text x={xCoord + 5} y="100" fill="#94A3B8" fontSize="7" textAnchor="middle" fontWeight="bold" fontFamily="mono">{idx + 1}</text>
                     </g>
                   );
                 })}
               </svg>
             </div>
+
+            {/* Wire chip buttons */}
+            <div className="grid grid-cols-4 gap-1.5">
+              {wireOrder.map((colorId, idx) => {
+                const c = COLOR_PALETTES[colorId];
+                const isSelected = selectedIndex === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => handleWireClick(idx)}
+                    style={{ backgroundColor: c.hex, borderColor: isSelected ? '#22D3EE' : c.border }}
+                    className={`p-2 border text-[10.5px] rounded-lg font-bold transition-all cursor-pointer active:scale-95 text-center ${c.bgText} ${
+                      isSelected ? 'border-2 shadow-lg shadow-cyan-500/20' : ''
+                    }`}
+                  >
+                    พิน {idx + 1}
+                    <span className="block text-[8.5px] font-normal leading-none mt-0.5 opacity-90">{c.name}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="p-3 bg-slate-950 border border-slate-850 rounded-xl mt-4 leading-normal text-slate-400 text-[10px]">
+          <div className="p-3 bg-slate-950/60 border border-slate-800/40 rounded-xl mt-3 leading-normal text-slate-400 text-[10px]">
             💡 <strong>ลำดับที่เรียงปัจจุบัน:</strong> {wireOrder.map(id => COLOR_PALETTES[id].name).join(', ')}
           </div>
         </div>
 
-        {/* Right Details selection and verification */}
-        <div className="flex flex-col justify-between space-y-6">
+        {/* Right Column: Verify / Feedback */}
+        <div className="flex flex-col justify-between space-y-5">
           <div className="space-y-4">
             <span className="text-[13px] font-bold text-slate-400 uppercase tracking-wider block">การเรียงพิกัดบิตส่ง Tx/Rx สหรัฐอเมริกา</span>
-            
-            <div className="text-slate-650 text-sm leading-relaxed space-y-4 font-sans">
+            <div className="text-slate-600 text-[14.5px] leading-relaxed font-sans space-y-3">
               <p>
-                จัดเรียงลำดับสีโดยกดสลับตำแหน่งทีละคู่ โดยพินนำสัญญาณ <strong>1 และ 2 (ใช้สำหรับส่ง Tx)</strong> 
-                และพินที่ <strong>3 และ 6 (ใช้สำหรับรับ Rx)</strong> จำเป็นต้องตีคู่สีตามมาตรฐาน TTIA/EIA
+                จัดเรียงลำดับสีโดยกดสลับตำแหน่งทีละคู่ โดยพินนำสัญญาณ <strong>1 และ 2 (ใช้สำหรับส่ง Tx)</strong>
+                และพินที่ <strong>3 และ 6 (ใช้สำหรับรับ Rx)</strong> จำเป็นต้องตีคู่สีตามมาตรฐาน TIA/EIA
               </p>
-
-              {/* Wire selector chips with dynamic layout */}
-              <div className="grid grid-cols-4 gap-2 pt-2">
-                {wireOrder.map((colorId, idx) => {
-                  const c = COLOR_PALETTES[colorId];
-                  const isSelected = selectedIndex === idx;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => handleWireClick(idx)}
-                      style={{ backgroundColor: c.hex, borderColor: isSelected ? '#22D3EE' : c.border }}
-                      className={`p-2 border text-[10.5px] rounded-lg font-bold transition-all cursor-pointer active:scale-95 text-center ${c.bgText} ${
-                        isSelected ? 'border-2 shadow-lg shadow-cyan-500/20' : ''
-                      }`}
-                    >
-                      พิน {idx + 1}
-                      <span className="block text-[8.5px] font-normal leading-none mt-1 opacity-90">{c.name}</span>
-                    </button>
-                  );
-                })}
-              </div>
+              <p className="text-[13px] text-slate-400 leading-relaxed">
+                คลิกสลับสายทีละ 2 ตำแหน่งในบล็อกซ้าย เพื่อให้ได้ลำดับสีที่ถูกต้อง แล้วกด <strong>Verify</strong> ตรวจสอบ
+              </p>
             </div>
-          </div>
 
-          {/* Action buttons */}
-          <div className="space-y-3 pt-4">
-            {/* Feedback box */}
-            <div className={`p-3.5 rounded-xl border flex gap-3 text-xs leading-normal ${
-              isMatch ? 'border-emerald-500/20 bg-emerald-500/5 text-emerald-300' : 'border-slate-800 bg-slate-950 text-slate-400'
+            {/* Frosted status callout */}
+            <div className={`p-3.5 rounded-xl border flex gap-3 text-xs leading-normal backdrop-blur-md ${
+              isMatch
+                ? 'border-emerald-500/30 bg-emerald-50/60 text-emerald-700'
+                : 'border-white/30 bg-white/40 text-slate-500'
             }`}>
               <Info className="w-5 h-5 shrink-0" />
               <p className="font-sans leading-relaxed">{feedback}</p>
             </div>
+          </div>
 
-            <div className="flex gap-2">
-              <button
-                onClick={handleVerify}
-                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 shadow-md"
-              >
-                🔍 ตรวจสอบสีการจัดวาง (VERIFY)
-              </button>
-              <button
-                onClick={handleApplyAnswer}
-                className="w-1/2 py-2.5 bg-indigo-600 hover:bg-indigo-755 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 border border-indigo-500/30"
-              >
-                ดูเฉลยพิน
-              </button>
-              <button
-                onClick={handleReset}
-                className="p-2.5 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-xl cursor-pointer active:scale-95"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-            </div>
+          {/* Action buttons */}
+          <div className="flex gap-2 pt-2">
+            <button
+              onClick={handleVerify}
+              className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 shadow-lg shadow-emerald-500/20 transition-all"
+            >
+              🔍 ตรวจสอบสีการจัดวาง (VERIFY)
+            </button>
+            <button
+              onClick={handleApplyAnswer}
+              className="w-[38%] py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 border border-indigo-500/30 transition-all"
+            >
+              ดูเฉลยพิน
+            </button>
+            <button
+              onClick={handleReset}
+              className="p-2.5 bg-slate-800/80 border border-slate-700/50 text-slate-400 hover:text-white rounded-xl cursor-pointer active:scale-95 transition-all"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
           </div>
         </div>
-
       </div>
     </SimulatorShell>
   );
@@ -516,7 +537,7 @@ function Rj45WireArranger() {
    2. PINOUT WIRE MATCHER (Subtopic 4.3.3 & 4.3.4)
    ═══════════════════════════════════════════════════════════════════ */
 function PinoutWireMatcher() {
-  const [cableType, setCableType] = useState('straight'); // straight | crossover
+  const [cableType, setCableType] = useState('straight');
 
   return (
     <SimulatorShell
@@ -526,48 +547,34 @@ function PinoutWireMatcher() {
       iconColor="text-emerald-600"
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch select-none text-left font-sans">
-        
-        {/* Left Column SVG visual map with symmetrical orthogonal center pathing */}
-        <div className="bg-slate-950 rounded-2xl p-6 border border-slate-800 flex flex-col justify-between items-center relative min-h-[380px] lg:col-span-2">
-          <span className="text-[10px] font-mono text-slate-500 absolute top-3 left-3">PINOUT TRANSMISSION PATHWAYS</span>
-          
-          <svg viewBox="0 0 350 260" className="w-full max-w-[320px] h-64 z-10 my-auto">
-            {/* Absolute Center x=175.
-               Side A pins x=40
-               Side B pins x=310
-               Y ranges from 30 to 240 in steps of 30 units
-            */}
 
-            {/* Map wire lines */}
+        {/* Left: SVG Pinout visual  */}
+        <div className="bg-slate-950/95 backdrop-blur-xl rounded-2xl p-6 border border-white/5 flex flex-col justify-between items-center relative min-h-[380px] lg:col-span-2 shadow-2xl">
+          <span className="text-[10px] font-mono text-slate-500 absolute top-3 left-3">PINOUT TRANSMISSION PATHWAYS</span>
+
+          <svg viewBox="0 0 350 260" className="w-full max-w-[320px] h-64 z-10 my-auto">
             {Array.from({ length: 8 }).map((_, idx) => {
               const pinNum = idx + 1;
               const yStart = 25 + idx * 28;
-              let yEnd = yStart; // Default for straight
-
+              let yEnd = yStart;
               if (cableType === 'crossover') {
-                if (pinNum === 1) yEnd = 25 + 2 * 28; // 1 -> 3
-                else if (pinNum === 2) yEnd = 25 + 5 * 28; // 2 -> 6
-                else if (pinNum === 3) yEnd = 25 + 0 * 28; // 3 -> 1
-                else if (pinNum === 6) yEnd = 25 + 1 * 28; // 6 -> 2
+                if (pinNum === 1) yEnd = 25 + 2 * 28;
+                else if (pinNum === 2) yEnd = 25 + 5 * 28;
+                else if (pinNum === 3) yEnd = 25 + 0 * 28;
+                else if (pinNum === 6) yEnd = 25 + 1 * 28;
               }
-
               return (
                 <path
                   key={idx}
                   d={`M 40 ${yStart} C 140 ${yStart}, 210 ${yEnd}, 310 ${yEnd}`}
                   fill="none"
-                  stroke={
-                    cableType === 'crossover' && [1, 2, 3, 6].includes(pinNum)
-                      ? '#F59E0B'
-                      : '#10B981'
-                  }
+                  stroke={cableType === 'crossover' && [1, 2, 3, 6].includes(pinNum) ? '#F59E0B' : '#10B981'}
                   strokeWidth="2.5"
                   className="transition-all duration-500"
                 />
               );
             })}
 
-            {/* Side A Nodes (Master T568B) */}
             {Array.from({ length: 8 }).map((_, idx) => {
               const y = 25 + idx * 28;
               return (
@@ -578,20 +585,16 @@ function PinoutWireMatcher() {
               );
             })}
 
-            {/* Side B Nodes (Remote target T568B or T568A) */}
             {Array.from({ length: 8 }).map((_, idx) => {
               const y = 25 + idx * 28;
-              let displayPin = idx + 1;
-
               return (
                 <g key={idx}>
                   <circle cx="310" cy={y} r="10" fill="#1E293B" stroke="#475569" strokeWidth="1.5" />
-                  <text x="310" y={y + 3} fill="#FFFFFF" fontSize="8" fontWeight="bold" textAnchor="middle" fontFamily="mono">{displayPin}</text>
+                  <text x="310" y={y + 3} fill="#FFFFFF" fontSize="8" fontWeight="bold" textAnchor="middle" fontFamily="mono">{idx + 1}</text>
                 </g>
               );
             })}
 
-            {/* Side labels */}
             <text x="40" y="255" fill="#94A3B8" fontSize="8.5" fontWeight="bold" textAnchor="middle">Side A (T568B)</text>
             <text x="310" y="255" fill="#94A3B8" fontSize="8.5" fontWeight="bold" textAnchor="middle">
               {cableType === 'straight' ? 'Side B (T568B)' : 'Side B (T568A)'}
@@ -599,46 +602,43 @@ function PinoutWireMatcher() {
           </svg>
         </div>
 
-        {/* Right Info and Controls panel */}
+        {/* Right: Control panel */}
         <div className="flex flex-col justify-between space-y-4 lg:col-span-1">
           <div className="space-y-4">
             <span className="text-[12px] font-bold text-slate-400 uppercase tracking-wider block">สับเปลี่ยนการจำลองคู่เข็มส่งต่อ</span>
-            
             <div className="flex flex-col gap-2.5">
-              <button
-                onClick={() => setCableType('straight')}
-                className={`p-3 rounded-xl border text-left cursor-pointer transition-all font-bold ${
-                  cableType === 'straight'
-                    ? 'border-emerald-500 bg-emerald-50 text-emerald-950'
-                    : 'bg-white border-slate-200 hover:border-slate-350 text-slate-700'
-                }`}
-              >
-                สายตรง (Straight-through)
-                <span className="block text-[9.5px] font-normal leading-normal text-slate-500 mt-1">ใช้ต่อ: คอมพิวเตอร์ ➔ Switch หรือ Switch ➔ Router (ต่างชนิดกัน)</span>
-              </button>
-
-              <button
-                onClick={() => setCableType('crossover')}
-                className={`p-3 rounded-xl border text-left cursor-pointer transition-all font-bold ${
-                  cableType === 'crossover'
-                    ? 'border-amber-500 bg-amber-50 text-amber-950'
-                    : 'bg-white border-slate-200 hover:border-slate-350 text-slate-700'
-                }`}
-              >
-                สายไขว้ (Crossover Cable)
-                <span className="block text-[9.5px] font-normal leading-normal text-slate-500 mt-1">ใช้ต่อ: คอมพิวเตอร์ ➔ คอมพิวเตอร์ หรือ Switch ➔ Switch (ชนิดเดียวกัน)</span>
-              </button>
+              {[
+                { key: 'straight', label: 'สายตรง (Straight-through)', info: 'ใช้ต่อ: คอมพิวเตอร์ ➔ Switch หรือ Switch ➔ Router (ต่างชนิดกัน)' },
+                { key: 'crossover', label: 'สายไขว้ (Crossover Cable)', info: 'ใช้ต่อ: คอมพิวเตอร์ ➔ คอมพิวเตอร์ หรือ Switch ➔ Switch (ชนิดเดียวกัน)' },
+              ].map(item => (
+                <button
+                  key={item.key}
+                  onClick={() => setCableType(item.key)}
+                  className={`p-3 rounded-xl border text-left cursor-pointer transition-all font-bold active:scale-98 ${
+                    cableType === item.key
+                      ? item.key === 'straight'
+                        ? 'border-emerald-500/40 bg-emerald-50/60 backdrop-blur-md text-emerald-900'
+                        : 'border-amber-500/40 bg-amber-50/60 backdrop-blur-md text-amber-900'
+                      : 'bg-white/60 backdrop-blur-sm border-white/40 hover:border-slate-300 text-slate-700'
+                  }`}
+                >
+                  {item.label}
+                  <span className="block text-[9.5px] font-normal leading-normal text-slate-500 mt-1">{item.info}</span>
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 font-sans text-xs space-y-1.5">
-            <h6 className="font-bold text-slate-800 flex items-center gap-1.5"><Info className="w-4 h-4 text-emerald-500" /> กลไกการสื่อสารบิต:</h6>
+          {/* Info callout */}
+          <div className="p-4 rounded-xl border border-emerald-200/50 bg-emerald-50/50 backdrop-blur-md text-zinc-600 font-sans text-xs space-y-1.5">
+            <h6 className="font-bold text-zinc-800 flex items-center gap-1.5">
+              <Info className="w-4 h-4 text-emerald-500" /> กลไกการสื่อสารบิต:
+            </h6>
             <p className="text-[12px] leading-relaxed">
               ในสายไขว้ พิน <strong>1 (Tx+) ไขว้ไปหา 3 (Rx+)</strong> และพิน <strong>2 (Tx-) ไขว้ไปหา 6 (Rx-)</strong> เพื่อให้พอร์ตปล่อยกระแสเชื่อมเข้าสู่จุดรับสัญญาณปลายทางโดยไม่ต้องผ่านตัวถอดสัญญาณสลับพอร์ต
             </p>
           </div>
         </div>
-
       </div>
     </SimulatorShell>
   );
@@ -648,8 +648,8 @@ function PinoutWireMatcher() {
    3. LAN CABLE TESTER SIMULATOR (Subtopic 4.3.5)
    ═══════════════════════════════════════════════════════════════════ */
 function VirtualCableTester() {
-  const [scenario, setScenario] = useState('pass'); // pass | open | short
-  const [activePin, setActivePin] = useState(null); // null or 1 to 8
+  const [scenario, setScenario] = useState('pass');
+  const [activePin, setActivePin] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
   const [logs, setLogs] = useState(['[READY] เครื่องวัดสัญญาณ LAN สแตนด์บาย...']);
   const loopTimer = useRef(null);
@@ -667,20 +667,13 @@ function VirtualCableTester() {
       currentPin += 1;
       if (currentPin <= 8) {
         setActivePin(currentPin);
-        
-        // Analyze outputs based on scenario
         let masterOn = true;
         let remoteOn = true;
         let remoteTargetPin = currentPin;
 
         if (scenario === 'open') {
-          // Pin 5 wire is broken
-          if (currentPin === 5) {
-            masterOn = false; // or remains on, but remote is definitely off
-            remoteOn = false;
-          }
+          if (currentPin === 5) { masterOn = false; remoteOn = false; }
         } else if (scenario === 'short') {
-          // Pins 1 and 3 are reversed
           if (currentPin === 1) remoteTargetPin = 3;
           else if (currentPin === 3) remoteTargetPin = 1;
         }
@@ -716,9 +709,7 @@ function VirtualCableTester() {
   };
 
   useEffect(() => {
-    return () => {
-      if (loopTimer.current) clearInterval(loopTimer.current);
-    };
+    return () => { if (loopTimer.current) clearInterval(loopTimer.current); };
   }, []);
 
   return (
@@ -729,17 +720,16 @@ function VirtualCableTester() {
       iconColor="text-emerald-600"
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch select-none text-left font-sans">
-        
-        {/* Left Column visual dynamic tester boxes */}
-        <div className="bg-slate-950 rounded-2xl p-5 border border-slate-800 flex flex-col justify-between items-center relative min-h-[350px] lg:col-span-2">
+
+        {/* Left: Frosted Dark LED Boxes */}
+        <div className="bg-slate-950/95 backdrop-blur-xl rounded-2xl p-5 border border-white/5 flex flex-col justify-between items-center relative min-h-[350px] lg:col-span-2 shadow-2xl">
           <span className="text-[9px] font-mono text-slate-500 absolute top-3 left-3">Virtual Tester LED Indicators</span>
-          
+
           <div className="my-auto w-full grid grid-cols-2 gap-8 text-center text-slate-200">
-            {/* Master Unit box */}
-            <div className="bg-[#0f172a] rounded-2xl p-4 border border-slate-800 relative">
+            {/* Master Unit */}
+            <div className="bg-slate-900/80 rounded-2xl p-4 border border-slate-800/60 relative">
               <span className="text-[8px] font-mono text-emerald-400 absolute top-2 right-3">MASTER</span>
-              <span className="text-xs font-bold block mb-3 border-b border-slate-900 pb-1 text-slate-400">TX GENERATOR</span>
-              
+              <span className="text-xs font-bold block mb-3 border-b border-slate-800 pb-1 text-slate-400">TX GENERATOR</span>
               <div className="grid grid-cols-4 gap-y-2.5 gap-x-1.5 max-w-xs mx-auto">
                 {Array.from({ length: 8 }).map((_, idx) => {
                   const pin = idx + 1;
@@ -747,13 +737,11 @@ function VirtualCableTester() {
                   const isOff = scenario === 'open' && pin === 5 && isActive;
                   return (
                     <div key={idx} className="flex flex-col items-center">
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center font-bold text-[9px] ${
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center font-bold text-[9px] transition-all duration-200 ${
                         isActive && !isOff
-                          ? 'bg-emerald-500 text-slate-950 animate-[pulse_0.4s_infinite] shadow-md shadow-emerald-500/20'
-                          : 'bg-slate-900 text-slate-650'
-                      }`}>
-                        {pin}
-                      </div>
+                          ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/40'
+                          : 'bg-slate-800 text-slate-600'
+                      }`}>{pin}</div>
                       <span className="text-[8px] text-slate-600 font-mono mt-0.5">LED</span>
                     </div>
                   );
@@ -761,19 +749,15 @@ function VirtualCableTester() {
               </div>
             </div>
 
-            {/* Remote Unit box */}
-            <div className="bg-[#0f172a] rounded-2xl p-4 border border-slate-800 relative">
+            {/* Remote Unit */}
+            <div className="bg-slate-900/80 rounded-2xl p-4 border border-slate-800/60 relative">
               <span className="text-[8px] font-mono text-cyan-400 absolute top-2 right-3">REMOTE</span>
-              <span className="text-xs font-bold block mb-3 border-b border-slate-900 pb-1 text-slate-400">RX TERMINATION</span>
-
+              <span className="text-xs font-bold block mb-3 border-b border-slate-800 pb-1 text-slate-400">RX TERMINATION</span>
               <div className="grid grid-cols-4 gap-y-2.5 gap-x-1.5 max-w-xs mx-auto">
                 {Array.from({ length: 8 }).map((_, idx) => {
                   const pin = idx + 1;
-                  
-                  // Calculate if remote LED is active
                   let isRemoteActive = false;
                   let isRemoteOff = false;
-
                   if (activePin !== null) {
                     if (scenario === 'pass') {
                       isRemoteActive = activePin === pin;
@@ -786,16 +770,13 @@ function VirtualCableTester() {
                       else if (activePin !== 1 && activePin !== 3) isRemoteActive = activePin === pin;
                     }
                   }
-
                   return (
                     <div key={idx} className="flex flex-col items-center">
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center font-bold text-[9px] ${
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center font-bold text-[9px] transition-all duration-200 ${
                         isRemoteActive && !isRemoteOff
-                          ? 'bg-cyan-500 text-slate-950 animate-[pulse_0.4s_infinite] shadow-md shadow-cyan-500/20'
-                          : 'bg-slate-900 text-slate-650'
-                      }`}>
-                        {pin}
-                      </div>
+                          ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/40'
+                          : 'bg-slate-800 text-slate-600'
+                      }`}>{pin}</div>
                       <span className="text-[8px] text-slate-600 font-mono mt-0.5">LED</span>
                     </div>
                   );
@@ -804,31 +785,30 @@ function VirtualCableTester() {
             </div>
           </div>
 
-          <div className="w-full flex gap-3 text-slate-500 text-[10px] font-mono justify-between items-center border-t border-slate-900 pt-3.5">
-            <span>SCENARIO ACTIVE: <span className="font-bold text-cyan-400">{scenario.toUpperCase()}</span></span>
-            <button onClick={handleReset} className="px-2.5 py-1 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded cursor-pointer active:scale-95 transition-all text-right font-bold">RESET TESTING</button>
+          <div className="w-full flex gap-3 text-slate-500 text-[10px] font-mono justify-between items-center border-t border-slate-800/60 pt-3.5">
+            <span>SCENARIO: <span className="font-bold text-cyan-400">{scenario.toUpperCase()}</span></span>
+            <button onClick={handleReset} className="px-2.5 py-1 bg-slate-800/80 border border-slate-700/40 text-slate-400 hover:text-white rounded cursor-pointer active:scale-95 transition-all font-bold text-[9px]">RESET</button>
           </div>
         </div>
 
-        {/* Right Info and Controls selection */}
+        {/* Right: Controls */}
         <div className="flex flex-col justify-between space-y-4 lg:col-span-1">
           <div className="space-y-4">
             <span className="text-[12px] font-bold text-slate-400 uppercase tracking-wider block">เลือกมาตรการอาการชำรุดของสาย UTP</span>
-            
             <div className="flex flex-col gap-2.5">
               {[
-                { key: 'pass', label: '1. สายผ่านมาตรฐาน (PASS)', info: 'เข็มไฟฟ้าสแกนเรียงตรงขนานกันสมบูรณ์' },
-                { key: 'open', label: '2. สายขาดในพิน 5 (OPEN)', info: 'สายไฟฟ้าพิน 5 ขาด สลักทองเหลืองไม่สัมผัส' },
-                { key: 'short', label: '3. สลับพิน 1 กับ 3 (MISWIRED)', info: 'เข้าลำดับสีผิดสลับพอร์ตฝั่ง Remote' }
+                { key: 'pass',  label: '1. สายผ่านมาตรฐาน (PASS)',   info: 'เข็มไฟฟ้าสแกนเรียงตรงขนานกันสมบูรณ์' },
+                { key: 'open',  label: '2. สายขาดในพิน 5 (OPEN)',    info: 'สายไฟฟ้าพิน 5 ขาด สลักทองเหลืองไม่สัมผัส' },
+                { key: 'short', label: '3. สลับพิน 1 กับ 3 (MISWIRED)', info: 'เข้าลำดับสีผิดสลับพอร์ตฝั่ง Remote' },
               ].map(item => (
                 <button
                   key={item.key}
                   onClick={() => { setScenario(item.key); handleReset(); }}
                   disabled={isRunning}
-                  className={`p-3 rounded-xl border text-left cursor-pointer transition-all font-bold ${
+                  className={`p-3 rounded-xl border text-left cursor-pointer transition-all font-bold active:scale-98 ${
                     scenario === item.key
-                      ? 'border-emerald-500 bg-emerald-50 text-emerald-950'
-                      : 'bg-white border-slate-200 hover:border-slate-350 text-slate-700'
+                      ? 'border-emerald-500/40 bg-emerald-50/60 backdrop-blur-md text-emerald-900'
+                      : 'bg-white/60 backdrop-blur-sm border-white/40 hover:border-slate-300 text-slate-700'
                   } disabled:opacity-50`}
                 >
                   {item.label}
@@ -840,39 +820,30 @@ function VirtualCableTester() {
             <button
               onClick={startTest}
               disabled={isRunning}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 shadow-md flex items-center justify-center gap-1.5 disabled:bg-slate-800 disabled:text-slate-500"
+              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-1.5 disabled:bg-slate-700 disabled:text-slate-400 transition-all"
             >
               <Play className="w-4 h-4" /> เริ่มวัดยิงสัญญาณไฟ (RUN TEST)
             </button>
           </div>
         </div>
-
       </div>
 
-      {/* Dynamic log console */}
-      <div className="bg-slate-950 rounded-xl p-4 border border-slate-900 mt-5 text-left font-mono">
-        <div className="text-slate-500 text-[10px] font-mono mb-2 uppercase tracking-wider flex justify-between items-center border-b border-slate-900 pb-1.5 font-sans">
-          <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5" /> virtual Cable Analyzer Logs</span>
-          {isRunning && (
-            <span className="text-cyan-400 flex items-center gap-1 text-[9px]"><RefreshCw className="w-2.5 h-2.5 animate-spin" /> SCANNING PINS</span>
-          )}
+      {/* Log Console */}
+      <div className="bg-slate-950/90 backdrop-blur-xl rounded-xl p-4 border border-slate-800/40 mt-5 text-left font-mono">
+        <div className="text-slate-500 text-[10px] font-mono mb-2 uppercase tracking-wider flex justify-between items-center border-b border-slate-800/50 pb-1.5 font-sans">
+          <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5" /> Virtual Cable Analyzer Logs</span>
+          {isRunning && <span className="text-cyan-400 flex items-center gap-1 text-[9px]"><RefreshCw className="w-2.5 h-2.5 animate-spin" /> SCANNING</span>}
         </div>
-
         <div className="space-y-1.5 min-h-[90px] max-h-[110px] overflow-y-auto leading-relaxed">
           {logs.map((log, index) => (
             <div key={index} className="flex gap-2 text-xs font-mono">
-              <span className="text-slate-700 select-none">&gt;&gt;</span>
-              <p className={`${
-                log.includes('✅') || log.includes('[OK]')
-                  ? 'text-emerald-400 font-bold' 
-                  : log.startsWith('❌') || log.includes('ALERT')
-                  ? 'text-rose-450 font-bold'
-                  : log.startsWith('[START]')
-                  ? 'text-cyan-300 font-bold' 
-                  : 'text-slate-350'
-              }`}>
-                {log}
-              </p>
+              <span className="text-slate-700 select-none">{'>>'}</span>
+              <p className={
+                log.includes('✅') || log.includes('[OK]') ? 'text-emerald-400 font-bold'
+                  : log.includes('❌') || log.includes('ALERT') ? 'text-rose-400 font-bold'
+                  : log.startsWith('[START]') ? 'text-cyan-300 font-bold'
+                  : 'text-slate-400'
+              }>{log}</p>
             </div>
           ))}
         </div>
@@ -885,7 +856,7 @@ function VirtualCableTester() {
    4. KEYSTONE JACK & PUNCH-DOWN SIMULATOR (Subtopic 4.3.6)
    ═══════════════════════════════════════════════════════════════════ */
 function KeystonePunchdownLab() {
-  const [step, setStep] = useState(0); // 0: Strip -> 1: Arrange -> 2: Punch -> 3: Complete
+  const [step, setStep] = useState(0);
   const [logs, setLogs] = useState(['[READY] เต้ารับตัวเมียว่างเปล่า พร้อมสอดเข้าคู่สาย...']);
 
   const handleNextStep = () => {
@@ -906,7 +877,7 @@ function KeystonePunchdownLab() {
       setStep(3);
       setLogs(current => [
         '🔨 [IMPACT PUNCH-DOWN] นำตัวกระแทกสายแลน (Impact Punch-down Tool) กดย้ำทองแดงลงบล็อกพลาสติกแน่นหนา',
-        '🔨 ใบมีดสับปลายทองแดงส่วนเกินกระเด็นขาดเรียบสนิท บิตสัญญาณนาฬิกาไม่สูญเสียความถึ่',
+        '🔨 ใบมีดสับปลายทองแดงส่วนเกินกระเด็นขาดเรียบสนิท บิตสัญญาณนาฬิกาไม่สูญเสียความถี่',
         '✅ [SUCCESS] เต้ารับ Keystone Jack ตัวเมียเข้าหัวมาตรฐานเสร็จสมบูรณ์ พร้อมครอบฝาและขันยึดผนังบล็อกห้องเรียน',
         ...current
       ]);
@@ -918,6 +889,19 @@ function KeystonePunchdownLab() {
     setLogs(['[READY] เต้ารับตัวเมียว่างเปล่า พร้อมสอดเข้าคู่สาย...']);
   };
 
+  const STEP_ICONS = [
+    <Scissors className="w-12 h-12 text-slate-400 animate-pulse mx-auto" key="s" />,
+    <Sliders className="w-12 h-12 text-cyan-400 mx-auto" style={{ animation: 'bounce 2s infinite' }} key="sl" />,
+    <Hammer className="w-12 h-12 text-amber-500 animate-pulse mx-auto" key="h" />,
+    <CheckSquare className="w-12 h-12 text-emerald-400 mx-auto" key="c" />,
+  ];
+  const STEP_LABELS = [
+    { title: 'ขั้นตอนที่ 1: ปอกเปลือกสาย LAN UTP', sub: 'ปอกปลอก PVC นอกสุดเพื่อให้เห็นสายไฟตีเกลียว 4 คู่' },
+    { title: 'ขั้นตอนที่ 2: สอดสายไฟลงช่องร่องพลาสติก', sub: 'แยกสายไฟ 8 เส้นลงไปตามขั้วสีมาตรฐาน T568B ด้านข้างเต้ารับ' },
+    { title: 'ขั้นตอนที่ 3: กระแทกยึดลวดและใบมีดตัด', sub: 'กดย้ำ Impact Punch-down Tool ให้พินทอง brass กดลึก และเลียปลายขาด' },
+    { title: 'ขั้นตอนที่ 4: เต้ารับตัวเมียพร้อมใช้งาน!', sub: 'ครอบพลาสติกกันฝุ่น ขันเข้าบล็อกติดกำแพงเรียบร้อย 100%' },
+  ];
+
   return (
     <SimulatorShell
       icon={<Scissors className="w-6 h-6 text-emerald-500" />}
@@ -926,68 +910,44 @@ function KeystonePunchdownLab() {
       iconColor="text-emerald-600"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch select-none text-left font-sans">
-        
-        {/* Left Visual Interactive step display panel */}
-        <div className="bg-[#0f172a] rounded-2xl p-5 border border-slate-800 flex flex-col justify-between shadow-2xl relative min-h-[340px] text-xs text-slate-200">
-          <span className="text-[9px] font-mono text-slate-500 absolute top-3 right-4 font-bold">PUNCH-DOWN WORKFLOW</span>
-          
-          <div className="space-y-4">
+
+        {/* Left: Step display */}
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-5 border border-white/10 flex flex-col justify-between shadow-2xl relative min-h-[340px] text-xs text-slate-200">
+          <span className="text-[9px] font-mono text-slate-500 absolute top-3 right-4 font-bold tracking-widest">PUNCH-DOWN WORKFLOW</span>
+
+          <div className="space-y-4 pt-2">
             <div>
-              <h6 className="text-[13px] font-bold text-white flex items-center gap-1.5"><Sliders className="w-4 h-4 text-emerald-400" /> Virtual Punch-down process</h6>
-              <p className="text-[10px] text-slate-400 leading-normal">
+              <h6 className="text-[13px] font-bold text-white flex items-center gap-2">
+                <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-400"><Sliders className="w-3.5 h-3.5" /></span>
+                Virtual Punch-down Process
+              </h6>
+              <p className="text-[11px] text-slate-400 leading-normal mt-1">
                 จำลองทักษะการปฏิบัติเข้าหัวเต้ารับพิกัดตัวเมีย ด้วยตัวกระแทกสาย Impact Tool
               </p>
             </div>
 
-            {/* Interactive visual progress illustration */}
-            <div className="bg-slate-950 p-4 rounded-xl border border-slate-900 relative min-h-[140px] flex flex-col justify-center items-center">
-              {step === 0 && (
-                <div className="text-center space-y-3">
-                  <Scissors className="w-12 h-12 text-slate-500 animate-pulse mx-auto" />
-                  <div>
-                    <p className="font-bold text-white text-xs">ขั้นตอนที่ 1: ปอกเปลือกสาย LAN UTP</p>
-                    <p className="text-[10px] text-slate-500">ปอกปลอก PVC นอกสุดเพื่อให้เห็นสายไฟตีเกลียว 4 คู่</p>
-                  </div>
-                </div>
-              )}
-              
-              {step === 1 && (
-                <div className="text-center space-y-3">
-                  <Sliders className="w-12 h-12 text-cyan-400 animate-[bounce_2s_infinite] mx-auto" />
-                  <div>
-                    <p className="font-bold text-white text-xs">ขั้นตอนที่ 2: สอดสายไฟลงช่องร่องพลาสติก</p>
-                    <p className="text-[10px] text-slate-500">แยกสายไฟ 8 เส้นลงไปตามขั้วสีมาตรฐาน T568B ด้านข้างเต้ารับ</p>
-                  </div>
-                </div>
-              )}
+            {/* Step visual */}
+            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800/40 min-h-[140px] flex flex-col justify-center items-center gap-3">
+              {STEP_ICONS[step]}
+              <div className="text-center">
+                <p className={`font-bold text-xs ${step === 3 ? 'text-emerald-400' : 'text-white'}`}>{STEP_LABELS[step].title}</p>
+                <p className="text-[10px] text-slate-500 mt-1">{STEP_LABELS[step].sub}</p>
+              </div>
+            </div>
 
-              {step === 2 && (
-                <div className="text-center space-y-3">
-                  <Hammer className="w-12 h-12 text-amber-500 animate-pulse mx-auto" />
-                  <div>
-                    <p className="font-bold text-white text-xs">ขั้นตอนที่ 3: กระแทกยึดลวดและใบมีดตัด</p>
-                    <p className="text-[10px] text-slate-500">กดย้ำ Impact Punch-down Tool ให้พินทอง brass กดลึก และเลียปลายขาด</p>
-                  </div>
-                </div>
-              )}
-
-              {step === 3 && (
-                <div className="text-center space-y-3">
-                  <CheckSquare className="w-12 h-12 text-emerald-450 mx-auto" />
-                  <div>
-                    <p className="font-bold text-emerald-400 text-xs">ขั้นตอนที่ 4: เต้ารับตัวเมียพร้อมใช้งาน!</p>
-                    <p className="text-[10px] text-slate-500">ครอบพลาสติกกันฝุ่น ขันเข้าบล็อกติดกำแพงเรียบร้อย 100%</p>
-                  </div>
-                </div>
-              )}
+            {/* Step progress indicator */}
+            <div className="flex gap-1.5 justify-center">
+              {[0, 1, 2, 3].map(i => (
+                <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${step >= i ? 'bg-emerald-500 w-8' : 'bg-slate-700 w-4'}`} />
+              ))}
             </div>
           </div>
 
-          <div className="flex gap-2 border-t border-slate-900 pt-3">
+          <div className="flex gap-2 border-t border-slate-800/50 pt-3 mt-3">
             {step < 3 ? (
               <button
                 onClick={handleNextStep}
-                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 shadow-md"
+                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 shadow-lg shadow-emerald-500/20 transition-all"
               >
                 {step === 0 ? 'กดยิงปอกเปลือกสาย LAN (Strip)' :
                  step === 1 ? 'กดสอดสายลงบล็อกคู่สี (Insert)' :
@@ -996,7 +956,7 @@ function KeystonePunchdownLab() {
             ) : (
               <button
                 onClick={handleReset}
-                className="w-full py-2.5 bg-slate-900 hover:bg-slate-850 text-slate-400 hover:text-white font-bold text-xs rounded-xl cursor-pointer border border-slate-800 active:scale-98 transition-all"
+                className="w-full py-2.5 bg-slate-800/80 border border-slate-700/40 hover:bg-slate-700 text-slate-400 hover:text-white font-bold text-xs rounded-xl cursor-pointer active:scale-98 transition-all"
               >
                 ประกอบเต้ารับใหม่ (RESET)
               </button>
@@ -1004,32 +964,24 @@ function KeystonePunchdownLab() {
           </div>
         </div>
 
-        {/* Right Info events Logger panel */}
-        <div className="flex flex-col justify-between lg:col-span-1">
-          <div className="bg-slate-950 rounded-xl p-4 border border-slate-900 min-h-[300px] flex flex-col justify-between">
-            <div className="text-slate-500 text-[10px] font-mono mb-2 uppercase tracking-wider flex justify-between items-center border-b border-slate-900 pb-1.5 font-sans">
-              <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5" /> Keystone Punch logs</span>
-            </div>
-
-            <div className="space-y-1.5 min-h-[220px] max-h-[220px] overflow-y-auto leading-relaxed">
-              {logs.map((log, index) => (
-                <div key={index} className="flex gap-2 text-xs font-mono">
-                  <span className="text-slate-700 select-none">&gt;</span>
-                  <p className={`${
-                    log.startsWith('✅') 
-                      ? 'text-emerald-400 font-bold' 
-                      : log.startsWith('🔨') || log.startsWith('🔪')
-                      ? 'text-cyan-300 font-bold'
-                      : 'text-slate-400'
-                  }`}>
-                    {log}
-                  </p>
-                </div>
-              ))}
-            </div>
+        {/* Right: Log console */}
+        <div className="bg-slate-950/95 backdrop-blur-xl rounded-2xl p-5 border border-white/5 shadow-2xl min-h-[340px] flex flex-col">
+          <div className="text-slate-500 text-[10px] font-mono mb-2 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800/50 pb-1.5 font-sans">
+            <Terminal className="w-3.5 h-3.5" /> Keystone Punch-down Logs
+          </div>
+          <div className="space-y-1.5 min-h-[200px] overflow-y-auto leading-relaxed flex-1 mt-2">
+            {logs.map((log, index) => (
+              <div key={index} className="flex gap-2 text-xs font-mono">
+                <span className="text-slate-700 select-none">{'>'}</span>
+                <p className={
+                  log.startsWith('✅') ? 'text-emerald-400 font-bold'
+                    : log.startsWith('🔨') || log.startsWith('🔪') ? 'text-cyan-300 font-bold'
+                    : 'text-slate-400'
+                }>{log}</p>
+              </div>
+            ))}
           </div>
         </div>
-
       </div>
     </SimulatorShell>
   );
